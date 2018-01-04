@@ -1,0 +1,446 @@
+homeassistant:
+  # Omitted values in this section will be auto detected using freegeoip.io
+
+  # Location required to calculate the time the sun rises and sets.  
+  # Coordinates are also used for location for weather related components.
+  # Google Maps can be used to determine more precise GPS coordinates.
+  latitude: !secret lat_secret
+  longitude: !secret lon_secret
+
+  # Impacts weather/sunrise data
+  elevation: 130
+
+  # 'metric' for Metric System, 'imperial' for imperial system
+  unit_system: imperial
+
+  # Pick yours from here:
+  # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/New_York
+
+  # Name of the location where Home Assistant is running
+  name: Home
+  
+  # Customize names
+  customize: !include customize.yaml
+  customize_domain: {}
+  customize_glob: {}
+  
+# Deletes old history after 7 days
+recorder:
+  purge_interval: 2
+  purge_keep_days: 7
+#  db_url: mysql://hass:my-password@core-mariadb/homeassistant
+
+logger: 
+  default: error
+  logs:
+    homeassistant.components.device_tracker: critical
+    homeassistant.components.media_player: critical
+    homeassistant.components.calendar.visitor: critical
+    homeassistant.components.calendar.vacation: critical
+    homeassistant.components.sensor.cert_expiry: critical
+    homeassistant.setup: critical
+
+# Enables the frontend
+frontend:
+  themes:
+    red_day:
+      primary-color: "#73000A"
+    red_night:
+    # Main colors that can be changed
+      dark-primary-color: "#c66900"
+      disabled-text-color: "#545454"
+      divider-color: "rgba(255, 255, 255, 0.12)"
+      light-primary-color: "#e06c6c"
+      paper-card-background-color: "#1d1d1d"
+      paper-grey-200: "#191919"
+      paper-item-icon-color: "#d3d3d3"
+      paper-listbox-background-color: "#202020"
+      primary-background-color: "#303030"
+      primary-color: "#73000A"
+      primary-text-color: "#cfcfcf"
+      secondary-background-color: "#131313"
+      sidebar-text_-_background: "#606060" 
+    # Colors based on variables, see above
+      paper-card-header-color: "var(--paper-item-icon-color)" 
+      paper-item-icon-active-color: "var(--primary-color)"
+      paper-item-icon_-_color: "var(--primary-text-color)"
+      paper-listbox-color: "var(--primary-text-color)"
+      paper-grey-50: "var(--primary-text-color)"
+      paper-slider-active-color: "var(--primary-color)"
+      paper-slider-knob-color: "var(--primary-color)"
+      paper-slider-knob-start-color: "var(--primary-color)"
+      paper-slider-pin-color: "var(--primary-color)"
+      paper-slider-secondary-color: "var(--light-primary-color)"
+      paper-toggle-button-checked-ink-color: "var(--dark-primary-color)"
+      paper-toggle-button-checked-button-color: "var(--primary-color)"
+      paper-toggle-button-checked-bar-color: "var(--light-primary-color)"
+      paper-toggle-button-unchecked-bar-color: "var(--primary-text-color)"
+      secondary-text-color: "var(--primary-color)"
+      table-row-background-color: "var(--paper-card-background-color)"
+      table-row-alternative-background-color: "var(--sidebar-text_-_background)"
+
+python_script:
+
+zwave:
+  usb_path: /dev/ttyACM0
+
+# Enables Alexa to handle everything like a switch
+#emulated_hue:
+#  type: alexa
+#  host_ip: !secret pi_ip
+#  off_maps_to_on_domains:
+#    - scene
+#  expose_by_default: true
+#  exposed_domains:
+#    - switch
+#    - group
+#    - light
+#    - input_boolean
+#    - media_player
+#    - scene
+#    - script
+    
+cloud:
+  alexa:
+    filter:
+      include_domains:
+        - switch
+        - group
+        - light
+        - input_boolean
+        - media_player
+        - scene
+        - script
+      exclude_entities:
+        - group.webcam
+        - group.weather
+        - group.hvac
+        - group.vacation
+        - group.visitor
+        - group.websecure
+        - group.whenhome
+        - group.monthly
+        - group.hass_group
+        - group.system
+        - group.network
+        - group.light_on_auto
+        - group.light_off_auto
+        - group.notify_auto
+        - group.other_auto
+        - group.scripts
+        - group.all_automations
+        - group.hue_lights
+        - group.switch_lights
+        - group.all_devices
+        - group.all_scripts
+        - group.all_ff
+        - group.all_sf
+        - group.all_bf
+        - group.automations
+        - group.basement_floor
+        - group.calendar
+        - group.defualt_view
+        - group.residents
+        - group.statistics
+        - group.basement_left
+        - group.basement_right
+        - script.cable_watch_off
+        - script.netflix_watch_off
+        - script.pandora_listen_off
+        - script.ps3_off
+        - script.radio_listen_off
+        - script.steam_off
+        - script.switch_off
+        - script.vinyl_off
+        - script.wiiu_off
+        - script.timed_cpu_off
+        - script.reset_switch
+        - script.masterbath_off
+        - script.ecobee_reset
+        - script.cpu_off
+        - script.home_mode
+        - script.climate_reset
+        - switch.webcam_night_vision
+        - switch.webcam_exposure_lock
+        - switch.webcam_focus
+        - switch.webcam_frontfacing_camera
+        - switch.webcam_gps_active
+        - switch.webcam_overlay
+        - switch.webcam_torch
+        - switch.webcam_video_recording
+        - switch.webcam_white_balance_lock
+        - switch.fluxer
+
+http:
+  api_password: !secret ha_password
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
+  base_url: kengineer.duckdns.org:8123
+  
+zone: !include zone.yaml
+
+automation: !include automations.yaml
+
+group: !include groups.yaml
+
+scene: !include scene.yaml
+
+script: !include scripts.yaml
+
+# Checks for available updates
+updater:
+  include_used_components: true
+
+config:
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+    
+# Enables support for tracking state changes over time.
+history:
+  include:
+      domains:
+        - light
+        - media_player
+      entities:
+        - device_tracker.kennyworkphone
+        - device_tracker.mere_iphone
+        - device_tracker.kenny_pixelxl
+        - group.residents
+        - sensor.speedtest_download
+        - sensor.speedtest_upload
+        - sensor.speedtest_ping
+        - sensor.average_load_15m
+        - sensor.cpu_use
+        - sensor.ram_use
+        - sensor.swap_use
+        - sensor.pws_feelslike_f
+        - sensor.webcam_light_level
+        - sensor.webcam_motion
+        - sensor.webcam_battery_level
+        - climate.main_floor
+        - sensor.pws_precip_today_in
+        - sensor.pws_relative_humidity
+        - switch.outlet
+        - switch.bedfan
+        - switch.officefan
+        - switch.craftfan
+        - switch.masterbath
+        - switch.kitchensw
+        - switch.guestbed
+        - input_boolean.vacation
+        - input_boolean.visitor
+        - sensor.basement_multisensor_burglar
+        - sensor.basement_multisensor_luminance
+        - sensor.basement_multisensor_relative_humidity
+        - sensor.basement_multisensor_temperature
+        - sensor.bedroom_multisensor_burglar
+        - sensor.bedroom_multisensor_luminance
+        - sensor.bedroom_multisensor_relative_humidity
+        - sensor.bedroom_multisensor_temperature
+
+# View all events in a logbook
+logbook:
+  exclude:
+    domains:
+      - group
+      - sensor
+      - device_tracker
+      - android_ip_webcam
+    entities:
+      - switch.webcam_video_recording
+      - automation.update_watt_hour
+      - automation.keep_windows_open
+      - automation.temperature_vacation
+  include:
+    entities:
+      - device_tracker.kenny_pixelc
+      - device_tracker.kenny_pixelxl
+      - device_tracker.mere_iphone
+      - device_tracker.mere_lap
+      - device_tracker.pc
+
+# Router Info
+device_tracker:
+  - platform: netgear
+    host: !secret router_ip
+    username: !secret wifi_username
+    password: !secret wifi_password
+    
+google:
+  client_id: !secret gcal_ID
+  client_secret: !secret gcal_secret
+
+switch:
+  - platform: tplink
+    host: !secret outlet_ip
+    name: outlet
+  - platform: tplink
+    host: !secret airhockey_ip
+    name: airhockey
+  - platform: tplink
+    host: !secret bedfan_ip
+    name: bedfan
+  - platform: tplink
+    host: !secret officefan_ip
+    name: officefan
+  - platform: tplink
+    host: !secret craftfan_ip
+    name: craftfan
+  - platform: tplink
+    host: !secret masterbath_ip
+    name: masterbath
+  - platform: tplink
+    host: !secret kitchen_ip
+    name: kitchensw
+  - platform: tplink
+    host: !secret guestbed_ip
+    name: guestbed
+  - platform: wake_on_lan
+    mac_address: !secret mac_secret
+    name: desktopPC
+    host: !secret pc_ip
+    turn_off:
+      service: script.turn_on
+      entity_id: script.cpu_off
+    
+shell_command:
+  ami: /config/command_line/ambiOn.sh
+    
+sensor: !include sensors.yaml
+
+# lights
+light:
+  - platform: hue
+    host: !secret hue_ip
+    allow_unreachable: true
+  - platform: lightpack
+    host: !secret pc_ip
+    port: 3636
+    api_key: "ambibox"
+#  - platform: lightpack2
+#    host: !secret pc_ip
+#    port: 3636
+#    api_key: "ambibox"
+      
+android_ip_webcam:
+  host: !secret webcam_ip
+  name: Webcam
+  username: !secret camname_secret
+  password: !secret campass_secret
+  sensors:
+    - audio_connections
+    - battery_level
+    - battery_temp
+    - battery_voltage
+    - light
+    - motion
+    - pressure
+  switches:
+    - exposure_lock
+    - ffc
+    - focus
+    - gps_active
+    - night_vision
+    - overlay
+    - torch
+    - whitebalance_lock
+    - video_recording
+ 
+# media player
+media_player:
+  - platform: gpmdp
+    host: !secret pc_ip
+    name: Desktop Media
+  - platform: yamaha
+    source_ignore:
+      - "Rhapsody"
+      - "SIRIUS InternetRadio"
+      - "NET RADIO"
+      - "DOCK"
+      - "USB"
+      - "SIRIUS"
+      - "HDMI1"
+      - "AV1"
+      - "AV2"
+      - "AV3"
+      - "AV5"
+      - "AV6"
+      - "iPod (USB)"
+      - "iPod"
+      - "V-AUX"
+      - "UAW"
+      - "Bluetooth"
+      - "AUDIO1"
+    source_names:
+       AUDIO2: "Vinyl"
+       AV4: "TV"
+       HDMI1: "Switch"
+       HDMI2: "Cable"
+       HDMI3: "PS3"
+       HDMI4: "WiiU"
+       HDMI5: "SteamOS"
+       PC: "PC"
+       Pandora: "Pandora"
+       TUNER: "Radio"
+  - platform: lg_netcast
+    host: !secret lg_ip
+    access_token: 542850
+#  - platform: braviatv
+#    host: 192.168.1.14
+
+# ifttt
+ifttt:
+  key: !secret ifttt_key
+  
+ecobee:
+  api_key: !secret ecobee_key
+  
+# Inputs
+input_boolean:
+  vacation:
+    name: Vacation Mode
+    icon: mdi:airplane-takeoff
+  visitor:
+    name: Visitor Mode
+    icon: mdi:account-multiple
+  window:
+    name: Windows
+    icon: mdi:window-
+  bedroom:
+    name: Bedroom Occupancy
+  basement:
+    name: Basement Occupancy
+  bedroom_motion:
+    name: Bedroom Motion
+  basement_motion:
+    name: Basement Motion
+  all_firstfloor:
+    name: All First Floor
+    icon: mdi:numeric-1-box
+  all_secondfloor:
+    name: All Second Floor
+    icon: mdi:numeric-2-box
+  all_basement:
+    name: All Basement
+    icon: mdi:arrow-down-bold-box
+  all_break:
+    name: Break for All
+    
+# Track the sun
+sun:
+  
+notify:
+  - platform: pushbullet
+    api_key: !secret push_key
+    name: pushbullet
+  
+panel_iframe:
+  configurator:
+    title: Configurator
+    icon: mdi:wrench
+    url: !secret url_secret

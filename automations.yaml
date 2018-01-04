@@ -1,0 +1,1107 @@
+- id: update_wh
+  alias: Update Watt Hour
+  trigger:
+    platform: time
+    minutes: 30
+    seconds: 0
+  action:
+    service: python_script.watthour
+- id: update_notifications
+  alias: Update notifications
+  trigger:
+    platform: state
+    entity_id: updater.updater
+  action:
+    service: notify.pushbullet
+    data:
+      title: New Home Assistant Release
+      message: Home Assistant  {{ states.updater.updater.state }}  is now available.
+- id: camera_battery
+  alias: Camera Battery
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.webcam_battery_level
+    below: 20
+  action:
+    service: notify.pushbullet
+    data:
+      title: Web Camera Low Battery
+      message: The web camera has very low battery.
+- id: vacation_on
+  alias: Vacation ON
+  trigger:
+    platform: state
+    entity_id: calendar.vacations
+    from: 'off'
+    to: 'on'
+  action:
+    service: input_boolean.turn_on
+    data:
+      entity_id: input_boolean.vacation
+- id: vacation_off
+  alias: Vacation OFF
+  trigger:
+    - platform: state
+      entity_id: calendar.vacations
+      from: 'on'
+      to: 'off'
+    - platform: state
+      entity_id: group.residents
+      to: home
+  condition:
+  - condition: state
+    entity_id: input_boolean.vacation
+    state: 'on'
+  action:
+    service: input_boolean.turn_off
+    data:
+      entity_id: input_boolean.vacation
+- id: visitor_on
+  alias: Visitor ON
+  trigger:
+    platform: state
+    entity_id: calendar.visitors
+    from: 'off'
+    to: 'on'
+  action:
+  - service: input_boolean.turn_on
+    data:
+      entity_id: input_boolean.visitor
+  - service: notify.pushbullet
+    data:
+      title: Visitors Coming
+      message: Change Ecobee Sleep to include downstairs
+- id: visitor_off
+  alias: Visitor OFF
+  trigger:
+    platform: state
+    entity_id: calendar.visitors
+    from: 'on'
+    to: 'off'
+  action:
+  - service: input_boolean.turn_off
+    data:
+      entity_id: input_boolean.visitor
+  - service: notify.pushbullet
+    data:
+      title: Visitors Left
+      message: Change Ecobee Sleep to remove downstairs
+- id: turn_off_all_lights_at_night_on_vacation
+  alias: Turn off all lights at night on vacation
+  trigger:
+    platform: time
+    at: '23:30:00'
+  condition:
+  - condition: state
+    entity_id: input_boolean.vacation
+    state: 'on'
+  action:
+    - service: light.turn_off
+    - service: homeassistant.turn_off
+      entity_id: group.firstfloor
+    - service: homeassistant.turn_off
+      entity_id: group.bedroom
+- id: turn_off_all_lights_at_morning_on_vacation
+  alias: Turn off all lights at morning on vacation
+  trigger:
+    platform: time
+    at: '9:30:00'
+  condition:
+  - condition: state
+    entity_id: input_boolean.vacation
+    state: 'on'
+  action:
+    - service: light.turn_off
+    - service: homeassistant.turn_off
+      entity_id: group.firstfloor
+    - service: homeassistant.turn_off
+      entity_id: group.bedroom
+- id: kenny_wake_up
+  alias: Kenny Wake Up
+  trigger:
+    platform: time
+    at: 06:45:00
+  condition:
+    condition: or
+    conditions:
+    - condition: state
+      entity_id: input_boolean.vacation
+      state: 'on'
+    - condition: and
+      conditions:
+      - condition: state
+        entity_id: device_tracker.kenny_pixelxl
+        state: home
+      - condition: time
+        weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+  action:
+    service: scene.turn_on
+    entity_id: scene.wakeup_kenny
+- id: mere_wake_up_gym_day
+  alias: Mere Wake Up Gym Day
+  trigger:
+    platform: time
+    at: 05:30:00
+  condition:
+    condition: or
+    conditions:
+    - condition: state
+      entity_id: input_boolean.vacation
+      state: 'on'
+    - condition: and
+      conditions:
+      - condition: state
+        entity_id: device_tracker.mere_iphone
+        state: home
+      - condition: time
+        weekday:
+        - mon
+        - tue
+        - wed
+        - fri
+  action:
+    service: homeassistant.turn_on
+    entity_id: group.firstfloor
+- id: mere_leave_gym_day
+  alias: Mere Leave Gym Day
+  trigger:
+    platform: state
+    entity_id: device_tracker.mere_iphone
+    from: home
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      before: '7:00:00'
+    - condition: time
+      weekday:
+      - mon
+      - tue
+      - wed
+      - fri
+  action:
+    service: homeassistant.turn_off
+    entity_id: group.firstfloor
+- id: mere_wake_up
+  alias: Mere Wake Up
+  trigger:
+    platform: time
+    at: 06:30:00
+  condition:
+    condition: or
+    conditions:
+    - condition: state
+      entity_id: input_boolean.vacation
+      state: 'on'
+    - condition: and
+      conditions:
+      - condition: state
+        entity_id: device_tracker.mere_iphone
+        state: home
+      - condition: time
+        weekday:
+        - thu
+  action:
+    service: homeassistant.turn_on
+    entity_id: group.firstfloor
+- id: kenny_awake
+  alias: Kenny Awake
+  trigger:
+    platform: time
+    at: 07:20:00
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: device_tracker.kenny_pixelxl
+      state: home
+    - condition: time
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+  action:
+    service: homeassistant.turn_on
+    entity_id: group.firstfloor
+- id: turn_on_outside_light_at_sunrise
+  alias: Turn on outside light at sunrise
+  trigger:
+    platform: sun
+    event: sunrise
+    offset: -01:00:00
+  action:
+    service: light.turn_on
+    entity_id: light.front_outside
+- id: turn_off_outside_light_at_sunrise
+  alias: Turn off outside light at sunrise
+  trigger:
+    platform: sun
+    event: sunrise
+    offset: +00:30:00
+  action:
+    service: light.turn_off
+    entity_id: light.front_outside
+- id: turn_on_outside_light_at_sunset
+  alias: Turn on outside light at sunset
+  trigger:
+    platform: sun
+    event: sunset
+    offset: +00:30:00
+  action:
+    service: light.turn_on
+    entity_id: light.front_outside
+- id: fade_in_lights_for_sunset
+  alias: Fade in lights for sunset
+  trigger:
+    platform: sun
+    event: sunset
+    offset: -00:45:00
+  condition:
+    condition: or
+    conditions:
+    - condition: state
+      entity_id: input_boolean.vacation
+      state: 'on'
+    - condition: state
+      entity_id: group.residents
+      state: home
+    - condition: state
+      entity_id: input_boolean.visitor
+      state: 'on'
+  action:
+  - service: scene.turn_on
+    entity_id: scene.sunset
+  - service: script.turn_on
+    entity_id: script.sunset_switch
+- id: turn_on_lights_after_sunset
+  alias: Turn on lights after sunset
+  trigger:
+    platform: state
+    entity_id: group.residents
+    to: home
+  condition:
+    condition: and
+    conditions:
+    - condition: sun
+      after: sunset
+      after_offset: -00:45:00
+    - condition: time
+      before: '23:59:00'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: group.firstfloor
+    - service: light.turn_on
+      entity_id: light.deck_light
+- id: turn_on_lights_after_sunset_visitors
+  alias: Turn on lights after sunset visitors
+  trigger:
+    platform: state
+    entity_id: group.residents
+    to: home
+  condition:
+    condition: and
+    conditions:
+    - condition: sun
+      after: sunset
+      after_offset: -00:45:00
+    - condition: time
+      before: '23:59:00'
+    - condition: state
+      entity_id: input_boolean.visitor
+      state: 'on'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: group.guest
+    - service: light.turn_on
+      entity_id: light.deck_light
+- id: turn_on_bedroom_light
+  alias: Turn on Bedroom light
+  trigger:
+    platform: time
+    at: '21:00:00'
+  action:
+    service: homeassistant.turn_on
+    entity_id: group.bedroom
+- id: bedtime_first_try
+  alias: Bedtime first try
+  trigger:
+    platform: time
+    at: '23:30:00'
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.living_room_bee_occupancy
+      state: 'off'
+    - condition: numeric_state
+      entity_id: sensor.living_room_motion_stats_mean
+      below: '2'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: group.firstfloor
+    - service: light.turn_off
+      entity_id: light.deck_light
+- id: bedtime_after
+  alias: Bedtime after
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.living_room_bee_occupancy
+    to: 'off'
+  - platform: numeric_state
+    entity_id: sensor.living_room_motion_stats_mean
+    below: '2'
+  condition:
+  - condition: time
+    after: '23:30:00'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: group.firstfloor
+    - service: light.turn_off
+      entity_id: light.deck_light
+- id: turn_off_all_lights_at_night
+  alias: Turn off all lights at night
+  trigger:
+    platform: time
+    at: 01:30:00
+  action:
+    service: light.turn_off
+- id: turn_off_away_mode
+  alias: Turn off away mode
+  trigger:
+    platform: state
+    entity_id: group.residents
+    to: home
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: 06:30:00
+    - condition: time
+      before: '22:00:00'
+  action:
+    service: script.turn_on
+    entity_id: script.home_mode
+- id: turn_off_away_mode_night
+  alias: Turn off away mode night
+  trigger:
+    platform: state
+    entity_id: group.residents
+    to: home
+  condition:
+    condition: or
+    conditions:
+    - condition: time
+      before: 06:30:00
+    - condition: time
+      after: '22:00:00'
+  action:
+    service: script.turn_on
+    entity_id: script.sleep_mode
+- id: off_lights_kenny_leave
+  alias: Off lights Kenny Leave
+  trigger:
+    platform: state
+    entity_id: device_tracker.kenny_pixelxl
+    from: home
+  condition:
+  - condition: state
+    entity_id: device_tracker.mere_iphone
+    state: not_home
+  action:
+    service: script.turn_on
+    entity_id: script.away_mode
+- id: off_lights_mere_leave
+  alias: Off lights Mere Leave
+  trigger:
+    platform: state
+    entity_id: device_tracker.mere_iphone
+    from: home
+  condition:
+  - condition: state
+    entity_id: device_tracker.kenny_pixelxl
+    state: not_home
+  action:
+    service: script.turn_on
+    entity_id: script.away_mode
+- id: turn_on_lights_day_dark
+  alias: Turn on Lights Day Dark
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.webcam_light_level
+    below: 6
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: 06:30:00
+    - condition: time
+      before: '22:00:00'
+    - condition: state
+      entity_id: light.floor_lamp
+      state: 'off'
+  action:
+    service: light.turn_on
+    entity_id: light.floor_lamp
+- id: turn_off_lights_day_dark
+  alias: Turn off Lights Day Dark
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.webcam_light_level
+    above: 12
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: 06:30:00
+    - condition: time
+      before: '22:00:00'
+    - condition: state
+      entity_id: light.rock_lamp
+      state: 'off'
+    - condition: state
+      entity_id: light.floor_lamp
+      state: 'on'
+  action:
+    service: light.turn_off
+    entity_id: light.floor_lamp
+- id: ecobee_false_positive
+  alias: Ecobee Fasle Positive
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.basement_bee_occupancy
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.bedroom_bee_occupancy
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.living_room_bee_occupancy
+    to: 'on'
+  - platform: state
+    entity_id: binary_sensor.main_floor_bee_occupancy
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: 09:00:00
+    - condition: time
+      before: '16:30:00'
+    - condition: state
+      entity_id: group.residents
+      state: not_home
+    - condition: state
+      entity_id: input_boolean.visitor
+      state: 'off'
+    - condition: time
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+  action:
+    service: script.turn_on
+    entity_id: script.ecobee_reset
+- id: watch_tv
+  alias: Watch TV
+  trigger:
+    platform: state
+    entity_id: media_player.lg_tv_remote
+    to: playing
+  condition:
+  - condition: state
+    entity_id: media_player.yamaha_receiver
+    state: 'off'
+  action:
+    service: media_player.turn_on
+    entity_id: media_player.yamaha_receiver
+- id: tv_off
+  alias: TV Off
+  trigger:
+    platform: state
+    entity_id: media_player.yamaha_receiver
+    to: 'off'
+  action:
+    service: media_player.turn_off
+    entity_id: media_player.lg_tv_remote
+- id: turn_on_pc_morning
+  alias: Turn on PC morning
+  trigger:
+  - platform: time
+    at: 07:00:00
+  condition:
+  - condition: state
+    entity_id: device_tracker.kenny_pixelxl
+    state: home
+  action:
+    service: switch.turn_on
+    entity_id: switch.desktopPC
+- id: turn_off_pc_night_weekend
+  alias: Turn off PC night weekend
+  trigger:
+  - platform: time
+    at: 03:30:00
+  condition:
+  - condition: time
+    weekday:
+    - fri
+    - sat
+  action:
+    service: script.turn_on
+    entity_id: script.cpu_off
+- id: turn_off_pc_night_weekday
+  alias: Turn off PC night weekday
+  trigger:
+  - platform: time
+    at: 01:30:00
+  condition:
+  - condition: time
+    weekday:
+    - sun
+    - mon
+    - tue
+    - wed
+    - thu
+  action:
+    service: script.turn_on
+    entity_id: script.cpu_off
+- id: turn_off_pc_not_home
+  alias: Turn off PC not home
+  trigger:
+  - platform: state
+    entity_id: device_tracker.kenny_pixelxl
+    from: home
+  action:
+    service: script.turn_on
+    entity_id: script.timed_cpu_off
+- id: turn_on_pc_home
+  alias: Turn on PC home
+  trigger:
+  - platform: state
+    entity_id: device_tracker.kenny_pixelxl
+    to: home
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      after: 06:30:00
+    - condition: time
+      before: '23:00:00'
+  action:
+    service: switch.turn_on
+    entity_id: switch.desktopPC
+- id: pc_after_dark
+  alias: PC after dark
+  trigger:
+  - platform: state
+    entity_id: media_player.desktop_media
+    to: playing
+  condition:
+  - condition: time
+    after: '22:00:00'
+  action:
+    service: script.turn_on
+    entity_id: script.after_dark
+- action:
+  - alias: script.turn_on
+    service: script.windows_open
+  alias: Open Windows
+  id: '1502333598838'
+  trigger:
+  - entity_id: input_boolean.window
+    from: 'off'
+    platform: state
+    to: 'on'
+- action:
+  - alias: script.turn_on
+    service: script.windows_closed
+  alias: Close Windows
+  id: '1502333664564'
+  trigger:
+  - entity_id: input_boolean.window
+    from: 'on'
+    platform: state
+    to: 'off'
+- id: keep_windows_open
+  alias: Keep Windows Open
+  trigger:
+  - platform: time
+    minutes: 0
+    seconds: 5
+  condition:
+    condition: and
+    conditions:
+    - condition: numeric_state
+      entity_id: sensor.pws_temp_f
+      below: 80
+    - condition: numeric_state
+      entity_id: sensor.pws_temp_f
+      above: 65
+    - condition: state
+      entity_id: input_boolean.window
+      state: 'on'
+  action:
+  - service: script.turn_on
+    entity_id: script.windows_open
+- id: close_windows_auto
+  alias: Close Windows Auto
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.pws_temp_f
+    above: 80
+  - platform: numeric_state
+    entity_id: sensor.pws_temp_f
+    below: 65
+  condition:
+  - condition: state
+    entity_id: input_boolean.window
+    state: 'on'
+  action:
+  - service: script.turn_on
+    entity_id: script.climate_reset
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.window
+  - service: notify.pushbullet
+    data:
+      title: Windows Closed
+      message: Weather is changing.  Time to close the windows.
+- id: temperature_vacation
+  alias: Temperature Vacation
+  trigger:
+  - platform: time
+    minutes: 0
+    seconds: 5
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.visitor
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.vacation
+      state: 'on'
+    - condition: state
+      entity_id: group.residents
+      state: not_home
+  action:
+  - service: script.turn_on
+    entity_id: script.vacation_temp
+- id: cert_alert
+  alias: SSL Certification Alert
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.ssl_certificate_expiry
+    below: 25
+  action:
+    service: notify.pushbullet
+    data:
+      title: SSL Certification Alert
+      message: Check to make sure your SSL certificate doesn't expire soon.
+- id: weather_alert
+  alias: Weather Alert
+  trigger:
+    platform: state
+    entity_id: sensor.pws_alerts
+  condition:
+  - condition: numeric_state
+    entity_id: sensor.pws_alerts
+    above: 0
+  action:
+    service: notify.pushbullet
+    data:
+      title: Weather Alert
+      message: "{{ states.sensor.pws_alerts.attributes.Message }}"
+- id: bedroom_lights_on
+  alias: Bedroom Lights ON
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.bedroom_multisensor_burglar
+    above: 4
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: group.residents
+      state: home
+    - condition: numeric_state
+      entity_id: sensor.bedroom_multisensor_luminance
+      below: 13
+    - condition: state
+      entity_id: input_boolean.bedroom
+      state: 'on'
+  action:
+    - service: light.turn_on
+      entity_id: light.swirl_lamp
+    - service: switch.turn_on
+      entity_id: switch.bedfan
+- id: bedroom_lights_off
+  alias: Bedroom Lights OFF
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.bedroom_multisensor_burglar
+    below: 4
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.vacation
+      state: 'off'
+    - condition: state
+      entity_id: group.bedroom
+      state: 'on'
+    - condition: time
+      after: '8:00:00'
+  action:
+    service: script.turn_on
+    entity_id: script.bedroom_off
+- id: basement_lights_on
+  alias: Basement Lights ON
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.basement_multisensor_burglar
+    above: 4
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: group.residents
+      state: home
+    - condition: numeric_state
+      entity_id: sensor.basement_multisensor_luminance
+      below: 13
+    - condition: state
+      entity_id: input_boolean.basement
+      state: 'on'
+  action:
+    service: homeassistant.turn_on
+    entity_id: group.basement
+- id: basement_lights_off
+  alias: Basement Lights OFF
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.basement_multisensor_burglar
+    below: 4
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.vacation
+      state: 'off'
+    - condition: state
+      entity_id: group.basement
+      state: 'on'
+    - condition: time
+      after: '8:00:00'
+  action:
+    service: script.turn_on
+    entity_id: script.basement_off
+- action:
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.basement
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.bedroom
+  alias: Allow Motion
+  condition: []
+  id: '1510762918483'
+  trigger:
+  - at: '8:00:00'
+    platform: time
+- action:
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.bedroom
+  alias: Bedroom Stop Motion
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.bedroom_motion
+        state: 'off'
+      - condition: or
+        conditions:
+        - condition: time
+          after: '21:00:00'
+        - condition: time
+          before: '8:00:00'
+  id: '1510763024266'
+  trigger:
+  - entity_id: switch.bedfan
+    platform: state
+    to: 'off'
+  - entity_id: light.swirl_lamp
+    platform: state
+    to: 'off'
+- action:
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.basement
+  alias: Basement Stop Motion
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.basement_motion
+        state: 'off'
+      - condition: or
+        conditions:
+        - condition: time
+          after: '21:00:00'
+        - condition: time
+          before: '8:00:00'
+  id: '1510763024266'
+  trigger:
+  - entity_id: light.basement_1
+    platform: state
+    to: 'off'
+- id: drive_watthour_update
+  alias: Drive Watthour Update
+  trigger:
+    platform: time
+    at: '12:00:00'
+  action:
+    service: ifttt.trigger
+    data_template: {"event":"WattHour_Month", "value1":"{{ states.sensor.watthour.state }}", "value2":"20"}
+- id: turn_off_sewing
+  alias: Turn off Sewing
+  trigger:
+    platform: state
+    entity_id: switch.craftfan
+    to: 'off'
+  action:
+    service: light.turn_off
+    entity_id: light.sewing_light
+- id: turn_on_sewing
+  alias: Turn off Sewing
+  trigger:
+    platform: state
+    entity_id: switch.craftfan
+    to: 'on'
+  action:
+    service: light.turn_on
+    entity_id: light.sewing_light
+- id: set_theme_startup_day
+  alias: Set Theme at Startup Day
+  trigger:
+   platform: homeassistant
+   event: start
+  condition:
+  - condition: state
+    entity_id: sun.sun
+    state: 'above_horizon'
+  action:
+    service: frontend.set_theme
+    data:
+      name: red_day
+- id: set_theme_startup_night
+  alias: Set Theme at Startup Night
+  trigger:
+   platform: homeassistant
+   event: start
+  condition:
+  - condition: state
+    entity_id: sun.sun
+    state: 'below_horizon'
+  action:
+    service: frontend.set_theme
+    data:
+      name: red_night
+- id: night_theme
+  alias: Set Night Theme
+  trigger:
+    - platform: state
+      entity_id: sun.sun
+      from: 'above_horizon'
+      to: 'below_horizon'
+  action:
+    service: frontend.set_theme
+    data:
+      name: red_night
+- id: day_theme
+  alias: Set Day Theme
+  trigger:
+    - platform: state
+      entity_id: sun.sun
+      from: 'below_horizon'
+      to: 'above_horizon'
+  action:
+    service: frontend.set_theme
+    data:
+      name: red_day
+- id: kenny_bed
+  alias: Kenny Bed
+  trigger:
+    - platform: state
+      entity_id: group.firstfloor
+      to: 'off'
+  condition:
+    condition: or
+    conditions:
+      - condition: time
+        after: '23:35'
+      - condition: time
+        before: '3:30'
+  action:
+    service: script.turn_on
+    entity_id: script.goodnight_kenny
+- id: turn_off_all_first_floor
+  alias: Turn Off All First Floor
+  trigger:
+    - platform: state
+      entity_id: input_boolean.all_firstfloor
+      to: 'off'
+  condition:
+  - condition: state
+    entity_id: group.first_floor
+    state: 'on'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: group.first_floor
+- id: turn_off_all_second_floor
+  alias: Turn Off All Second Floor
+  trigger:
+    - platform: state
+      entity_id: input_boolean.all_secondfloor
+      to: 'off'
+  condition:
+  - condition: state
+    entity_id: group.second_floor
+    state: 'on'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: group.second_floor
+- id: turn_off_all_basement_floor
+  alias: Turn Off All Basement Floor
+  trigger:
+    - platform: state
+      entity_id: input_boolean.all_basement
+      to: 'off'
+  condition:
+  - condition: state
+    entity_id: group.basement_floor
+    state: 'on'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: group.basement_floor
+- id: turn_ib_first_floor
+  alias: Turn IB First Floor
+  trigger:
+    - platform: state
+      entity_id: group.first_floor
+      to: 'on'
+  action:
+    - service: script.turn_on
+      entity_id: script.first_floor_break
+- id: turn_ib_second_floor
+  alias: Turn IB Second Floor
+  trigger:
+    - platform: state
+      entity_id: group.second_floor
+      to: 'on'
+  action:
+    - service: script.turn_on
+      entity_id: script.second_floor_break
+- id: turn_ib_basement_floor
+  alias: Turn IB Basement Floor
+  trigger:
+    - platform: state
+      entity_id: group.basement_floor
+      to: 'on'
+  action:
+    - service: script.turn_on
+      entity_id: script.basement_floor_break
+- id: turn_off_ib_first_floor
+  alias: Turn off IB First Floor
+  trigger:
+    - platform: state
+      entity_id: group.first_floor
+      to: 'off'
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.all_firstfloor
+- id: turn_off_ib_second_floor
+  alias: Turn off IB Second Floor
+  trigger:
+    - platform: state
+      entity_id: group.second_floor
+      to: 'off'
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.all_secondfloor
+- id: turn_off_ib_basement_floor
+  alias: Turn off IB Basement Floor
+  trigger:
+    - platform: state
+      entity_id: group.basement_floor
+      to: 'off'
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.all_basement
+- id: turn_on_all_first_floor
+  alias: Turn On All First Floor
+  trigger:
+    - platform: state
+      entity_id: input_boolean.all_firstfloor
+      to: 'on'
+  condition:
+  - condition: state
+    entity_id: input_boolean.all_break
+    state: 'off'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: group.first_floor
+- id: turn_on_all_second_floor
+  alias: Turn On All Second Floor
+  trigger:
+    - platform: state
+      entity_id: input_boolean.all_secondfloor
+      to: 'on'
+  condition:
+  - condition: state
+    entity_id: input_boolean.all_break
+    state: 'off'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: group.second_floor
+- id: turn_on_all_basement_floor
+  alias: Turn On All Basement Floor
+  trigger:
+    - platform: state
+      entity_id: input_boolean.all_basement
+      to: 'on'
+  condition:
+  - condition: state
+    entity_id: input_boolean.all_break
+    state: 'off'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: group.basement_floor
+- id: delay_automations_on_restart
+  alias: Delay automations on restart
+  trigger:
+     platform: homeassistant
+     event: start
+  action:
+    - service: automation.turn_off
+      data:
+        entity_id:
+          - group.all_automations
+    - delay:
+        seconds: 5
+    - service: automation.turn_on
+      data:
+        entity_id:
+          - group.all_automations
+- id: keep_ambibx
+  alias: Keep Ambibox
+  trigger:
+    - platform: state
+      entity_id: switch.desktopPC
+      to: 'on'
+  action:
+    - service: script.turn_on
+      entity_id: script.keep_ambi_working_on

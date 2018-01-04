@@ -1,0 +1,661 @@
+home_mode:
+  sequence:
+    - condition: state
+      entity_id: input_boolean.window
+      state: 'off'
+    - service: climate.set_hold_mode
+      data:
+        entity_id: climate.main_floor
+        hold_mode: 'home'
+        
+night_mode:
+  sequence:
+    - condition: state
+      entity_id: input_boolean.window
+      state: 'off'
+    - service: climate.set_hold_mode
+      data:
+        entity_id: climate.main_floor
+        hold_mode: 'sleep'
+        
+away_mode:
+  sequence:
+    - service: light.turn_off
+      data:
+        entity_id: group.hue_lights
+    - service: light.turn_off
+      data:
+        entity_id: light.dining_lights_level
+    - service: switch.turn_off
+      data:
+        entity_id: group.switch_lights
+    - condition: state
+      entity_id: input_boolean.window
+      state: 'off'
+    - service: climate.set_hold_mode
+      data:
+        entity_id: climate.main_floor
+        hold_mode: 'away'
+        
+sunset_switch:
+  sequence:
+    - delay:
+        minutes: 30
+    - service: switch.turn_on
+      entity_id: switch.kitchensw
+    - service: light.turn_on
+      entity_id: light.dining_lights_level
+#    - service: switch.turn_on
+#      entity_id: switch.outlet
+    - condition: state
+      entity_id: input_boolean.visitor
+      state: 'on'
+    - service: switch.turn_on
+      entity_id: switch.guestbed
+        
+windows_open:
+  sequence:
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.main_floor
+        target_temp_high: 85
+        target_temp_low: 60
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.window
+        
+vacation_temp:
+  sequence:
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.main_floor
+        target_temp_high: 200
+        target_temp_low: 60
+        
+climate_reset:
+  sequence:
+    - service: climate.set_hold_mode
+      data:
+        entity_id: climate.main_floor
+        hold_mode: None
+        
+movie_time:
+  sequence:
+    - service: light.turn_off
+      entity_id: light.chair_lamp
+    - service: light.turn_off
+      entity_id: light.dining_lights_level
+    - service: homeassistant.turn_off
+      entity_id: group.kitchen
+    - service: light.turn_on
+      entity_id: light.rock_lamp
+      data:
+        brightness: 64
+    - service: scene.turn_on
+      entity_id: scene.red_lamp_scene
+    - service: script.turn_on
+      entity_id: script.netflix_watch_on
+      
+movie_finish:
+  sequence:
+    - service: light.turn_on
+      entity_id: light.chair_lamp
+    - service: light.turn_on
+      entity_id: light.rock_lamp
+      data:
+        brightness: 255
+    - service: scene.turn_on
+      entity_id: scene.normal_lamp_scene
+    - service: light.turn_on
+      entity_id: light.floor_lamp
+      data:
+        brightness: 255
+        
+goodnight_kenny:
+  sequence:
+    - service: switch.turn_on
+      entity_id: switch.officefan
+    - delay:
+        minutes: 5
+    - service: switch.turn_off
+      entity_id: switch.officefan
+        
+first_floor_break:
+  sequence:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.all_break
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.all_firstfloor
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.all_break
+        
+second_floor_break:
+  sequence:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.all_break
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.all_secondfloor
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.all_break
+      
+basement_floor_break:
+  sequence:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.all_break
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.all_basement
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.all_break
+      
+timed_cpu_off:
+  sequence:
+    - delay:
+        minutes: 5
+    - condition: state
+      entity_id: device_tracker.kenny_pixelxl
+      state: not_home
+    - service: script.turn_on
+      entity_id: script.cpu_off
+
+keep_ambi_working_on:
+  sequence:
+    - delay:
+        minutes: 60
+    - condition: state
+      entity_id: switch.desktopPC
+      state: 'on'
+    - service: script.turn_on
+      entity_id: script.keep_ambi_working_off
+    - condition: state
+      entity_id: light.lightpack
+      state: 'on'
+    - service: light.turn_off
+      entity_id: light.lightpack
+    - service: light.turn_on
+      entity_id: light.lightpack
+    - service: script.turn_on
+      entity_id: script.keep_ambi_working_on
+    
+keep_ambi_working_off:
+  sequence:
+    - condition: state
+      entity_id: light.lightpack
+      state: 'off'
+    - service: light.turn_on
+      entity_id: light.lightpack
+    - service: light.turn_off
+      entity_id: light.lightpack
+    - service: script.turn_on
+      entity_id: script.keep_ambi_working_on
+      
+bedroom_off:
+  sequence:
+    - delay:
+        minutes: 5
+    - condition: numeric_state
+      entity_id: sensor.bedroom_multisensor_burglar
+      below: 4 
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.bedroom_motion
+    - delay:
+        seconds: 2
+    - service: homeassistant.turn_off
+      entity_id: group.bedroom
+    - delay:
+        seconds: 2
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.bedroom_motion
+      
+basement_off:
+  sequence:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.basement_motion
+    - delay:
+        seconds: 2
+    - service: homeassistant.turn_off
+      entity_id: group.basement
+    - delay:
+        seconds: 2
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.basement_motion
+    
+cpu_off:
+  sequence:
+    - service: light.turn_off
+      data:
+        entity_id: light.lightpack
+    - delay:
+        minutes: 1
+    - service: hassio.addon_stdin
+      data:
+        addon: core_rpc_shutdown
+        input: Desktop-Shutdown
+      
+after_dark:
+  sequence:
+    - service: light.turn_on
+      entity_id: light.lightpack
+    - service: switch.turn_off
+      entity_id: switch.officefan
+
+dinner_time:
+  sequence:
+    - service: switch.turn_off
+      entity_id: switch.kitchensw
+    - service: homeassistant.turn_off
+      entity_id: group.livingroom
+    - service: light.turn_on
+      entity_id: light.oven
+      data:
+        brightness: 25
+    - service: light.turn_on
+      entity_id: light.dining_lights_level
+      data:
+        brightness: 75
+      
+ecobee_reset:
+  sequence:
+    - delay:
+        seconds: 30
+    - service: climate.set_hold_mode
+      data:
+        entity_id: climate.main_floor
+        hold_mode: None
+        
+game_on:
+  alias: "Game On"
+  sequence:
+    - service: scene.turn_on
+      entity_id: scene.fun_basement
+    - delay:
+        seconds: 2
+    - service: light.turn_on
+      entity_id: group.basement_left
+      data:
+        brightness: 255
+    - service: light.turn_off
+      entity_id: group.basement_left
+    - service: light.turn_on
+      entity_id: group.basement_right
+      data:
+        brightness: 255
+    - service: light.turn_off
+      entity_id: group.basement_right
+    - service: light.turn_on
+      entity_id: group.basement_left
+    - service: light.turn_off
+      entity_id: group.basement_left
+    - service: light.turn_on
+      entity_id: group.basement_right
+    - service: light.turn_off
+      entity_id: group.basement_right
+    - service: light.turn_on
+      entity_id: group.basement_left
+    - service: light.turn_off
+      entity_id: group.basement_left
+    - service: light.turn_on
+      entity_id: group.basement_right
+    - service: light.turn_off
+      entity_id: group.basement_right
+    - delay:
+        seconds: 1
+    - service: switch.turn_on
+      entity_id: switch.airhockey
+    - service: scene.turn_on
+      entity_id: scene.fun_basement_2
+        
+############################
+#              STEREO SCRIPTS                   #
+############################
+
+vinyl_on:
+  alias: "The Stereo Vinyl"
+  sequence:
+    - service: script.turn_on
+      data:
+        entity_id: script.vinyl_off
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'on'
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'playing'
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'idle'
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.yamaha_receiver
+        source: AUDIO2
+        
+vinyl_off:
+  sequence:
+    - delay:
+        seconds: 1
+    - condition: state
+      entity_id: media_player.yamaha_receiver
+      state: 'off'
+    - service: media_player.turn_on
+      data:
+        entity_id: media_player.yamaha_receiver
+    - delay:
+        seconds: 5
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.yamaha_receiver
+        source: AUDIO2
+
+netflix_watch_on:
+  alias: "The Stereo Movies"
+  sequence:
+    - service: script.turn_on
+      data:
+        entity_id: script.netflix_watch_off
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'on'
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'playing'
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'idle'
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.yamaha_receiver
+        source: AV4
+        
+netflix_watch_off:
+  sequence:
+    - delay:
+        seconds: 1
+    - condition: state
+      entity_id: media_player.yamaha_receiver
+      state: 'off'
+    - service: media_player.turn_on
+      data:
+        entity_id: media_player.yamaha_receiver
+    - delay:
+        seconds: 5
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.yamaha_receiver
+        source: AV4
+        
+cable_watch_on:
+  alias: "The Stereo to Watch Cable"
+  sequence:
+    - service: script.turn_on
+      data:
+        entity_id: script.cable_watch_off
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'on'
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'playing'
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'idle'
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.yamaha_receiver
+        source: HDMI2
+        
+cable_watch_off:
+  sequence:
+    - delay:
+        seconds: 1
+    - condition: state
+      entity_id: media_player.yamaha_receiver
+      state: 'off'
+    - service: media_player.turn_on
+      data:
+        entity_id: media_player.yamaha_receiver
+    - delay:
+        seconds: 5
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.yamaha_receiver
+        source: HDMI2
+  
+        
+pandora_listen_on:
+  alias: "The Stereo Music"
+  sequence:
+    - service: script.turn_on
+      data:
+        entity_id: script.pandora_listen_off
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'on'
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'playing'
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'idle'
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.yamaha_receiver
+        source: Pandora
+        
+pandora_listen_off:
+  sequence:
+    - delay:
+        seconds: 1
+    - condition: state
+      entity_id: media_player.yamaha_receiver
+      state: 'off'
+    - service: media_player.turn_on
+      data:
+        entity_id: media_player.yamaha_receiver
+    - delay:
+        seconds: 5
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.yamaha_receiver
+        source: Pandora
+        
+radio_listen_on:
+  alias: "The Stereo Radio"
+  sequence:
+    - service: script.turn_on
+      data:
+        entity_id: script.radio_listen_off
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'on'
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'playing'
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'idle'
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.yamaha_receiver
+        source: TUNER
+        
+radio_listen_off:
+  sequence:
+    - delay:
+        seconds: 1
+    - condition: state
+      entity_id: media_player.yamaha_receiver
+      state: 'off'
+    - service: media_player.turn_on
+      data:
+        entity_id: media_player.yamaha_receiver
+    - delay:
+        seconds: 5
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.yamaha_receiver
+        source: TUNER
+        
+ps3_on:
+  alias: "The PS3"
+  sequence:
+    - service: script.turn_on
+      data:
+        entity_id: script.ps3_off
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'on'
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'playing'
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'idle'
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.yamaha_receiver
+        source: HDMI3
+        
+ps3_off:
+  sequence:
+    - delay:
+        seconds: 1
+    - condition: state
+      entity_id: media_player.yamaha_receiver
+      state: 'off'
+    - service: media_player.turn_on
+      data:
+        entity_id: media_player.yamaha_receiver
+    - delay:
+        seconds: 5
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.yamaha_receiver
+        source: HDMI3
+        
+wiiu_on:
+  alias: "The Wii U"
+  sequence:
+    - service: script.turn_on
+      data:
+        entity_id: script.wiiu_off
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'on'
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'playing'
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'idle'
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.yamaha_receiver
+        source: HDMI4
+        
+wiiu_off:
+  sequence:
+    - delay:
+        seconds: 1
+    - condition: state
+      entity_id: media_player.yamaha_receiver
+      state: 'off'
+    - service: media_player.turn_on
+      data:
+        entity_id: media_player.yamaha_receiver
+    - delay:
+        seconds: 5
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.yamaha_receiver
+        source: HDMI4
+        
+steam_on:
+  alias: "Steam"
+  sequence:
+    - service: script.turn_on
+      data:
+        entity_id: script.steam_off
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'on'
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'playing'
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'idle'
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.yamaha_receiver
+        source: HDMI5
+        
+steam_off:
+  sequence:
+    - delay:
+        seconds: 1
+    - condition: state
+      entity_id: media_player.yamaha_receiver
+      state: 'off'
+    - service: media_player.turn_on
+      data:
+        entity_id: media_player.yamaha_receiver
+    - delay:
+        seconds: 5
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.yamaha_receiver
+        source: HDMI5
+        
+switch_on:
+  alias: "Switch"
+  sequence:
+    - service: script.turn_on
+      data:
+        entity_id: script.switch_off
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'on'
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'playing'
+        - condition: state
+          entity_id: media_player.yamaha_receiver
+          state: 'idle'
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.yamaha_receiver
+        source: HDMI1
+        
+switch_off:
+  sequence:
+    - delay:
+        seconds: 1
+    - condition: state
+      entity_id: media_player.yamaha_receiver
+      state: 'off'
+    - service: media_player.turn_on
+      data:
+        entity_id: media_player.yamaha_receiver
+    - delay:
+        seconds: 5
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.yamaha_receiver
+        source: HDMI1
