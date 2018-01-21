@@ -321,14 +321,6 @@
       entity_id: group.guest
     - service: light.turn_on
       entity_id: light.deck_light
-- id: turn_on_bedroom_light
-  alias: Turn on Bedroom light
-  trigger:
-    platform: time
-    at: '21:00:00'
-  action:
-    service: homeassistant.turn_on
-    entity_id: group.bedroom
 - id: bedtime_first_try
   alias: Bedtime first try
   trigger:
@@ -378,32 +370,9 @@
     platform: state
     entity_id: group.residents
     to: home
-  condition:
-    condition: and
-    conditions:
-    - condition: time
-      after: 06:30:00
-    - condition: time
-      before: '22:00:00'
   action:
     service: script.turn_on
     entity_id: script.home_mode
-- id: turn_off_away_mode_night
-  alias: Turn off away mode night
-  trigger:
-    platform: state
-    entity_id: group.residents
-    to: home
-  condition:
-    condition: or
-    conditions:
-    - condition: time
-      before: 06:30:00
-    - condition: time
-      after: '22:00:00'
-  action:
-    service: script.turn_on
-    entity_id: script.sleep_mode
 - id: off_lights_kenny_leave
   alias: Off lights Kenny Leave
   trigger:

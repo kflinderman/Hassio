@@ -3,20 +3,52 @@ home_mode:
     - condition: state
       entity_id: input_boolean.window
       state: 'off'
+    - service: script.turn_on
+      entity_id: script.home_mode_check1
+    - condition: time
+      weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+    - condition: time
+      after: '9:00:00'
+      before: '16:30:00'
     - service: climate.set_hold_mode
       data:
         entity_id: climate.main_floor
         hold_mode: 'home'
         
-night_mode:
+home_mode_check1:
   sequence:
-    - condition: state
-      entity_id: input_boolean.window
-      state: 'off'
+    - service: script.turn_on
+      entity_id: script.home_mode_check2
+    - condition: time
+      weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+    - condition: time
+      after: '16:30:00'
+      before: '9:00:00'
     - service: climate.set_hold_mode
       data:
         entity_id: climate.main_floor
-        hold_mode: 'sleep'
+        hold_mode: None
+        
+home_mode_check2:
+  sequence:
+    - condition: time
+      weekday:
+          - sat
+          - sun
+    - service: climate.set_hold_mode
+      data:
+        entity_id: climate.main_floor
+        hold_mode: None
         
 away_mode:
   sequence:

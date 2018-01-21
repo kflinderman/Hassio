@@ -29,7 +29,7 @@ homeassistant:
 recorder:
   purge_interval: 2
   purge_keep_days: 7
-#  db_url: mysql://hass:my-password@core-mariadb/homeassistant
+  db_url: mysql://hass:my-password@core-mariadb/homeassistant
 
 logger: 
   default: error
@@ -121,22 +121,19 @@ cloud:
         - group.websecure
         - group.whenhome
         - group.monthly
-        - group.hass_group
         - group.system
         - group.network
         - group.light_on_auto
         - group.light_off_auto
         - group.notify_auto
+        - group.pc_auto
+        - group.location_auto
         - group.other_auto
-        - group.scripts
         - group.all_automations
         - group.hue_lights
         - group.switch_lights
         - group.all_devices
         - group.all_scripts
-        - group.all_ff
-        - group.all_sf
-        - group.all_bf
         - group.automations
         - group.basement_floor
         - group.calendar
@@ -170,13 +167,12 @@ cloud:
         - switch.webcam_torch
         - switch.webcam_video_recording
         - switch.webcam_white_balance_lock
-        - switch.fluxer
 
 http:
   api_password: !secret ha_password
   ssl_certificate: /ssl/fullchain.pem
   ssl_key: /ssl/privkey.pem
-  base_url: kengineer.duckdns.org:8123
+  base_url: !secret url4_secret
   
 zone: !include zone.yaml
 
@@ -308,9 +304,6 @@ switch:
       service: script.turn_on
       entity_id: script.cpu_off
     
-shell_command:
-  ami: /config/command_line/ambiOn.sh
-    
 sensor: !include sensors.yaml
 
 # lights
@@ -325,7 +318,7 @@ light:
 #  - platform: lightpack2
 #    host: !secret pc_ip
 #    port: 3636
-#    api_key: "ambibox"
+#    api_key: 
       
 android_ip_webcam:
   host: !secret webcam_ip
@@ -390,8 +383,6 @@ media_player:
   - platform: lg_netcast
     host: !secret lg_ip
     access_token: 542850
-#  - platform: braviatv
-#    host: 192.168.1.14
 
 # ifttt
 ifttt:
@@ -444,3 +435,7 @@ panel_iframe:
     title: Configurator
     icon: mdi:wrench
     url: !secret url_secret
+  terminal:
+    title: Terminal
+    icon: mdi:console
+    url: !secret url3_secret

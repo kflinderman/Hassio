@@ -277,7 +277,6 @@ light_on_auto:
     - automation.mere_wake_up_gym_day
     - automation.turn_on_outside_light_at_sunset
     - automation.turn_on_outside_light_at_sunrise
-    - automation.turn_on_bedroom_light
     - automation.fade_in_lights_for_sunset
     - automation.turn_on_lights_after_sunset
     - automation.turn_on_lights_after_sunset_visitors
@@ -338,7 +337,6 @@ location_auto:
     - automation.vacation_off
     - automation.temperature_vacation
     - automation.turn_off_away_mode
-    - automation.turn_off_away_mode_night
     - automation.keep_away_mode
     - automation.ecobee_fasle_positive
     
@@ -406,9 +404,3 @@ webcam:
   name: Web Camera
   entities:
     - camera.webcam
-    
-websecure:
-  name: Web Security
-  entities:
-    - sensor.breaches_kennylindermangmailcom
-    - sensor.breaches_meredithfeignoldgmailcom
