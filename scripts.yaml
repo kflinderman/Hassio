@@ -1,3 +1,19 @@
+##############################
+# Jump to Section            #
+#                            #
+# #0 Location Scripts        #
+# #1 PC Scripts              #
+# #2 Temperature Scripts     #
+# #3 Manual Call Scripts     #
+# #4 Other Scripts           #
+# #5 Random Vacation Scripts #
+# #6 Stereo Scripts          #
+##############################
+
+#####################
+#0 Location Scripts #
+#####################
+
 home_mode:
   sequence:
     - condition: state
@@ -68,22 +84,74 @@ away_mode:
       data:
         entity_id: climate.main_floor
         hold_mode: 'away'
-        
-sunset_switch:
+
+###############
+#1 PC Scripts #
+###############
+
+keep_ambi_working_on:
   sequence:
     - delay:
-        minutes: 30
-    - service: switch.turn_on
-      entity_id: switch.kitchensw
-    - service: light.turn_on
-      entity_id: light.dining_lights_level
-#    - service: switch.turn_on
-#      entity_id: switch.outlet
+        minutes: 60
     - condition: state
-      entity_id: input_boolean.visitor
+      entity_id: switch.desktopPC
       state: 'on'
-    - service: switch.turn_on
-      entity_id: switch.guestbed
+    - service: script.turn_on
+      entity_id: script.keep_ambi_working_off
+    - condition: state
+      entity_id: light.lightpack
+      state: 'on'
+    - service: light.turn_off
+      entity_id: light.lightpack
+    - service: light.turn_on
+      entity_id: light.lightpack
+    - service: script.turn_on
+      entity_id: script.keep_ambi_working_on
+    
+keep_ambi_working_off:
+  sequence:
+    - condition: state
+      entity_id: light.lightpack
+      state: 'off'
+    - service: light.turn_on
+      entity_id: light.lightpack
+    - service: light.turn_off
+      entity_id: light.lightpack
+    - service: script.turn_on
+      entity_id: script.keep_ambi_working_on
+
+cpu_off:
+  sequence:
+    - service: light.turn_off
+      data:
+        entity_id: light.lightpack
+    - delay:
+        minutes: 1
+    - service: hassio.addon_stdin
+      data:
+        addon: core_rpc_shutdown
+        input: Desktop-Shutdown
+      
+after_dark:
+  sequence:
+    - service: light.turn_on
+      entity_id: light.lightpack
+    - service: switch.turn_off
+      entity_id: switch.officefan
+      
+timed_cpu_off:
+  sequence:
+    - delay:
+        minutes: 5
+    - condition: state
+      entity_id: device_tracker.kenny_pixelxl
+      state: not_home
+    - service: script.turn_on
+      entity_id: script.cpu_off
+        
+########################
+#2 Temperature Scripts #
+########################
         
 windows_open:
   sequence:
@@ -110,6 +178,19 @@ climate_reset:
       data:
         entity_id: climate.main_floor
         hold_mode: None
+        
+ecobee_reset:
+  sequence:
+    - delay:
+        seconds: 30
+    - service: climate.set_hold_mode
+      data:
+        entity_id: climate.main_floor
+        hold_mode: None
+        
+########################
+#3 Manual Call Scripts #
+########################
         
 movie_time:
   sequence:
@@ -143,12 +224,86 @@ movie_finish:
       data:
         brightness: 255
         
+dinner_time:
+  sequence:
+    - service: switch.turn_off
+      entity_id: switch.kitchensw
+    - service: homeassistant.turn_off
+      entity_id: group.livingroom
+    - service: light.turn_on
+      entity_id: light.oven
+      data:
+        brightness: 25
+    - service: light.turn_on
+      entity_id: light.dining_lights_level
+      data:
+        brightness: 75
+        
+game_on:
+  alias: "Game On"
+  sequence:
+    - service: scene.turn_on
+      entity_id: scene.fun_basement
+    - delay:
+        seconds: 2
+    - service: light.turn_on
+      entity_id: group.basement_left
+      data:
+        brightness: 255
+    - service: light.turn_off
+      entity_id: group.basement_left
+    - service: light.turn_on
+      entity_id: group.basement_right
+      data:
+        brightness: 255
+    - service: light.turn_off
+      entity_id: group.basement_right
+    - service: light.turn_on
+      entity_id: group.basement_left
+    - service: light.turn_off
+      entity_id: group.basement_left
+    - service: light.turn_on
+      entity_id: group.basement_right
+    - service: light.turn_off
+      entity_id: group.basement_right
+#    - service: light.turn_on
+#      entity_id: group.basement_left
+#    - service: light.turn_off
+#      entity_id: group.basement_left
+#    - service: light.turn_on
+#      entity_id: group.basement_right
+#    - service: light.turn_off
+#      entity_id: group.basement_right
+    - delay:
+        seconds: 1
+    - service: switch.turn_on
+      entity_id: switch.airhockey
+    - service: scene.turn_on
+      entity_id: scene.fun_basement_2
+        
+##################
+#4 Other Scripts #
+##################
+sunset_switch:
+  sequence:
+    - delay:
+        minutes: 30
+    - service: switch.turn_on
+      entity_id: switch.kitchensw
+    - service: light.turn_on
+      entity_id: light.dining_lights_level
+    - condition: state
+      entity_id: input_boolean.visitor
+      state: 'on'
+    - service: switch.turn_on
+      entity_id: switch.guestbed
+        
 goodnight_kenny:
   sequence:
     - service: switch.turn_on
       entity_id: switch.officefan
     - delay:
-        minutes: 5
+        minutes: 2
     - service: switch.turn_off
       entity_id: switch.officefan
         
@@ -178,47 +333,6 @@ basement_floor_break:
       entity_id: input_boolean.all_basement
     - service: input_boolean.turn_off
       entity_id: input_boolean.all_break
-      
-timed_cpu_off:
-  sequence:
-    - delay:
-        minutes: 5
-    - condition: state
-      entity_id: device_tracker.kenny_pixelxl
-      state: not_home
-    - service: script.turn_on
-      entity_id: script.cpu_off
-
-keep_ambi_working_on:
-  sequence:
-    - delay:
-        minutes: 60
-    - condition: state
-      entity_id: switch.desktopPC
-      state: 'on'
-    - service: script.turn_on
-      entity_id: script.keep_ambi_working_off
-    - condition: state
-      entity_id: light.lightpack
-      state: 'on'
-    - service: light.turn_off
-      entity_id: light.lightpack
-    - service: light.turn_on
-      entity_id: light.lightpack
-    - service: script.turn_on
-      entity_id: script.keep_ambi_working_on
-    
-keep_ambi_working_off:
-  sequence:
-    - condition: state
-      entity_id: light.lightpack
-      state: 'off'
-    - service: light.turn_on
-      entity_id: light.lightpack
-    - service: light.turn_off
-      entity_id: light.lightpack
-    - service: script.turn_on
-      entity_id: script.keep_ambi_working_on
       
 bedroom_off:
   sequence:
@@ -251,94 +365,212 @@ basement_off:
     - service: input_boolean.turn_off
       entity_id: input_boolean.basement_motion
     
-cpu_off:
-  sequence:
-    - service: light.turn_off
-      data:
-        entity_id: light.lightpack
-    - delay:
-        minutes: 1
-    - service: hassio.addon_stdin
-      data:
-        addon: core_rpc_shutdown
-        input: Desktop-Shutdown
-      
-after_dark:
-  sequence:
-    - service: light.turn_on
-      entity_id: light.lightpack
-    - service: switch.turn_off
-      entity_id: switch.officefan
+        
+############################
+#5 Random Vacation Scripts #
+############################
 
-dinner_time:
+rand_vac1:
   sequence:
-    - service: switch.turn_off
-      entity_id: switch.kitchensw
-    - service: homeassistant.turn_off
+    - condition: numeric_state
+      entity_id: sensor.vacation_randomizer
+      above: 0
+    - service: script.turn_on
+      data:
+        entity_id: script.rand_vac2
+    - condition: numeric_state
+      entity_id: sensor.vacation_randomizer
+      below: 2
+    - service: script.turn_on
+      data:
+        entity_id: script.vac_living
+    - service: script.turn_on
+      data:
+        entity_id: script.vac_bed
+
+rand_vac2:
+  sequence:
+    - condition: numeric_state
+      entity_id: sensor.vacation_randomizer
+      above: 1
+    - service: script.turn_on
+      data:
+        entity_id: script.rand_vac3
+    - condition: numeric_state
+      entity_id: sensor.vacation_randomizer
+      below: 3
+    - service: script.turn_on
+      data:
+        entity_id: script.vac_living
+    - service: script.turn_on
+      data:
+        entity_id: script.vac_office
+
+rand_vac3:
+  sequence:
+    - condition: numeric_state
+      entity_id: sensor.vacation_randomizer
+      above: 2
+    - service: script.turn_on
+      data:
+        entity_id: script.rand_vac4
+    - condition: numeric_state
+      entity_id: sensor.vacation_randomizer
+      below: 4
+    - service: script.turn_on
+      data:
+        entity_id: script.vac_living
+    - service: script.turn_on
+      data:
+        entity_id: script.vac_craft
+
+rand_vac4:
+  sequence:
+    - condition: numeric_state
+      entity_id: sensor.vacation_randomizer
+      above: 3
+    - service: script.turn_on
+      data:
+        entity_id: script.rand_vac5
+    - condition: numeric_state
+      entity_id: sensor.vacation_randomizer
+      below: 5
+    - service: script.turn_on
+      data:
+        entity_id: script.vac_living
+
+rand_vac5:
+  sequence:
+    - condition: numeric_state
+      entity_id: sensor.vacation_randomizer
+      above: 4
+    - service: script.turn_on
+      data:
+        entity_id: script.rand_vac6
+    - condition: numeric_state
+      entity_id: sensor.vacation_randomizer
+      below: 6
+    - service: script.turn_on
+      data:
+        entity_id: script.vac_bed
+    - service: script.turn_on
+      data:
+        entity_id: script.vac_office
+
+rand_vac6:
+  sequence:
+    - condition: numeric_state
+      entity_id: sensor.vacation_randomizer
+      above: 5
+    - service: script.turn_on
+      data:
+        entity_id: script.rand_vac7
+    - condition: numeric_state
+      entity_id: sensor.vacation_randomizer
+      below: 7
+    - service: script.turn_on
+      data:
+        entity_id: script.vac_bed
+    - service: script.turn_on
+      data:
+        entity_id: script.vac_craft
+
+rand_vac7:
+  sequence:
+    - condition: numeric_state
+      entity_id: sensor.vacation_randomizer
+      above: 6
+    - service: script.turn_on
+      data:
+        entity_id: script.rand_vac8
+    - condition: numeric_state
+      entity_id: sensor.vacation_randomizer
+      below: 8
+    - service: script.turn_on
+      data:
+        entity_id: script.vac_bed
+
+rand_vac8:
+  sequence:
+    - condition: numeric_state
+      entity_id: sensor.vacation_randomizer
+      above: 7
+    - service: script.turn_on
+      data:
+        entity_id: script.rand_vac9
+    - condition: numeric_state
+      entity_id: sensor.vacation_randomizer
+      below: 9
+    - service: script.turn_on
+      data:
+        entity_id: script.vac_office
+    - service: script.turn_on
+      data:
+        entity_id: script.vac_craft
+
+rand_vac9:
+  sequence:
+    - condition: numeric_state
+      entity_id: sensor.vacation_randomizer
+      above: 8
+    - service: script.turn_on
+      data:
+        entity_id: script.rand_vac10
+    - condition: numeric_state
+      entity_id: sensor.vacation_randomizer
+      below: 10
+    - service: script.turn_on
+      data:
+        entity_id: script.vac_office
+
+rand_vac10:
+  sequence:
+    - condition: numeric_state
+      entity_id: sensor.vacation_randomizer
+      above: 9
+    - service: script.turn_on
+      data:
+        entity_id: script.vac_craft
+        
+vac_living:
+  sequence:
+    - delay: '{{ (range(0, 1)|random|int) }}:{{ (range(1, 59)|random|int) }}:00'
+    - service: light.turn_on
       entity_id: group.livingroom
-    - service: light.turn_on
-      entity_id: light.oven
-      data:
-        brightness: 25
-    - service: light.turn_on
-      entity_id: light.dining_lights_level
-      data:
-        brightness: 75
-      
-ecobee_reset:
+    - delay: '{{ (range(0, 2)|random|int) }}:{{ (range(1, 59)|random|int) }}:00'
+    - service: light.turn_off
+      entity_id: group.livingroom
+
+vac_bed:
   sequence:
-    - delay:
-        seconds: 30
-    - service: climate.set_hold_mode
-      data:
-        entity_id: climate.main_floor
-        hold_mode: None
-        
-game_on:
-  alias: "Game On"
+    - delay: '{{ (range(0, 1)|random|int) }}:{{ (range(1, 59)|random|int) }}:00'
+    - service: homeassistant.turn_on
+      entity_id: group.bedroom
+    - delay: '{{ (range(0, 2)|random|int) }}:{{ (range(1, 59)|random|int) }}:00'
+    - service: homeassistant.turn_off
+      entity_id: group.bedroom
+
+vac_office:
   sequence:
-    - service: scene.turn_on
-      entity_id: scene.fun_basement
-    - delay:
-        seconds: 2
-    - service: light.turn_on
-      entity_id: group.basement_left
-      data:
-        brightness: 255
-    - service: light.turn_off
-      entity_id: group.basement_left
-    - service: light.turn_on
-      entity_id: group.basement_right
-      data:
-        brightness: 255
-    - service: light.turn_off
-      entity_id: group.basement_right
-    - service: light.turn_on
-      entity_id: group.basement_left
-    - service: light.turn_off
-      entity_id: group.basement_left
-    - service: light.turn_on
-      entity_id: group.basement_right
-    - service: light.turn_off
-      entity_id: group.basement_right
-    - service: light.turn_on
-      entity_id: group.basement_left
-    - service: light.turn_off
-      entity_id: group.basement_left
-    - service: light.turn_on
-      entity_id: group.basement_right
-    - service: light.turn_off
-      entity_id: group.basement_right
-    - delay:
-        seconds: 1
+    - delay: '{{ (range(0, 1)|random|int) }}:{{ (range(1, 59)|random|int) }}:00'
     - service: switch.turn_on
-      entity_id: switch.airhockey
-    - service: scene.turn_on
-      entity_id: scene.fun_basement_2
+      entity_id: group.office
+    - delay: '{{ (range(0, 2)|random|int) }}:{{ (range(1, 59)|random|int) }}:00'
+    - service: switch.turn_off
+      entity_id: group.office
+
+vac_craft:
+  sequence:
+    - delay: '{{ (range(0, 1)|random|int) }}:{{ (range(1, 59)|random|int) }}:00'
+    - service: homeassistant.turn_on
+      entity_id: group.craft
+    - delay: '{{ (range(0, 2)|random|int) }}:{{ (range(1, 59)|random|int) }}:00'
+    - service: homeassistant.turn_off
+      entity_id: group.craft
         
-############################
-#              STEREO SCRIPTS                   #
-############################
+###################
+#6 Stereo Scripts #
+###################
 
 vinyl_on:
   alias: "The Stereo Vinyl"
@@ -656,6 +888,8 @@ steam_off:
 switch_on:
   alias: "Switch"
   sequence:
+    - service: switch.turn_on
+      entity_id: switch.desktopPC
     - service: script.turn_on
       data:
         entity_id: script.switch_off

@@ -1,10 +1,6 @@
-######################################
-#                                                                                  #
-#                                                                                  #
-#                                VIEWS                                        #
-#                                                                                  #
-#                                                                                  #
-######################################
+#############################
+#           VIEWS           #
+#############################
 
 default_view:
   view: yes
@@ -13,7 +9,6 @@ default_view:
     - device_tracker.kenny_pixelxl
     - device_tracker.mere_iphone
     - persistent_notification.invalid_config
-#    - switch.outlet
     - group.webcam
     - group.outside
     - group.hvac
@@ -26,7 +21,7 @@ First Floor:
   view: yes
   icon: mdi:numeric-1-box
   entities:
-    - sensor.webcam_motion
+    - sensor.living_room_motion_stats_mean
     - sensor.webcam_light_level
     - sensor.living_room_bee_temperature
     - group.livingroom
@@ -40,9 +35,10 @@ Second Floor:
     - sensor.bedroom_multisensor_burglar
     - sensor.bedroom_multisensor_luminance
     - sensor.bedroom_bee_temperature
-    - group.bedroom
+    - group.bedroom_constant
     - group.craft
     - group.office
+    - group.webcam2
     
 Basement Floor:
   view: yes
@@ -63,6 +59,7 @@ Statistics:
     - group.system
     - group.network
     - group.whenhome
+    - group.power
     - group.monthly
     
 Automations:
@@ -74,84 +71,35 @@ Automations:
     - group.notify_auto
     - group.pc_auto
     - group.location_auto
+    - group.theme_auto
+    - group.mastersw_auto
     - group.other_auto
-#    - group.scripts
-
-######################################
-#                                                                                  #
-#                                                                                  #
-#                                GROUPS                                      #
-#                                                                                  #
-#                                                                                  #
-######################################
-
-master:
-  name: Master Switches
-  entities:
-    - input_boolean.all_firstfloor
-    - input_boolean.all_secondfloor
-    - input_boolean.all_basement
     
-Hue Lights:
-  view: no
+##############################
+#           GROUPS           #
+##############################
+
+################
+# Default View #
+################
+
+webcam:
+  name: Web Camera
   entities:
-    - group.livingroom
-    - light.oven
-    - light.swirl_lamp
-    - light.basement_1
-    - light.basement_2
-    - light.basement_3
-    - light.basement_4
-    - light.sewing_light
+    - camera.webcam
+    
+outside:
+  name: Outside
+  entities:
+    - light.front_outside
     - light.deck_light
     
-Switch Lights:
-  view: no
-  entities:
-    - switch.outlet
-    - switch.officefan
-    - switch.bedfan
-    - switch.craftfan
-    - switch.masterbath
-    - switch.kitchensw
-    - switch.guestbed
-    
-system:
-  name: Pi System Monitor
-  entities:
-    - sensor.average_load_15m
-    - sensor.cpu_use
-    - sensor.ram_use
-    - sensor.since_last_boot
-    - sensor.swap_use
-    - sensor.uptime
-
-vacation:
-  name: Vacation Mode
-  entities:
-    - input_boolean.vacation
-    - calendar.vacations
-    
-visitor:
-  name: Visitor Mode
-  entities:
-    - input_boolean.visitor
-    - calendar.visitors
-
 hvac:
   name: Climate
   entities:
     - climate.main_floor
     - input_boolean.window
     
-network:
-  name: Network
-  entities:
-    - sensor.ssl_certificate_expiry
-    - sensor.speedtest_ping
-    - sensor.speedtest_upload
-    - sensor.speedtest_download
-
 weather:
   name: Weather
   entities:
@@ -163,6 +111,29 @@ weather:
     - sensor.pws_precip_1d_in
     - sensor.pws_precip_1d
     - sensor.pws_alerts
+    
+master:
+  name: Master Switches
+  entities:
+    - input_boolean.all_firstfloor
+    - input_boolean.all_secondfloor
+    - input_boolean.all_basement
+    
+vacation:
+  name: Vacation Mode
+  entities:
+    - input_boolean.vacation
+    - calendar.vacations
+    
+visitor:
+  name: Visitor Mode
+  entities:
+    - input_boolean.visitor
+    - calendar.visitors
+    
+###############
+# First Floor #
+###############
 
 livingroom:
   name: Living Room
@@ -183,38 +154,24 @@ dining_room:
   name: Dining
   entities:
     - light.dining_lights_level
+    
+################
+# Second Floor #
+################
 
-basement:
-  name: Basement Lights
+bedroom_constant:
+  name: Bedroom
   entities:
-#   - media_player.sony_bravia_tv
-   - switch.outlet
-#   - light.basement_hue_2
-   - light.basement_1
-   - light.basement_2
-   - light.basement_3
-   - light.basement_4
-   
-basement_left:
+    - light.swirl_lamp
+    - switch.bedfan
+    - switch.masterbath
+    
+craft:
+  name: Craft Room
   entities:
-   - light.basement_1
-   - light.basement_3
-   
-basement_right:
-  entities:
-   - light.basement_2
-   - light.basement_4
-   
-guest:
-  name: Guest Room
-  entities:
-    - switch.guestbed
-   
-games:
-  name: Games
-  entities:
-   - switch.airhockey
-      
+    - switch.craftfan
+    - light.sewing_light
+    
 bedroom:
   name: Bedroom
   entities:
@@ -231,46 +188,110 @@ office:
     - light.lightpack
     - light.lightpack2
     
-craft:
-  name: Craft Room
+webcam2:
+  name: Web Camera
   entities:
-    - switch.craftfan
-    - light.sewing_light
-
-outside:
-  name: Outside
-  entities:
-    - light.front_outside
-    - light.deck_light
-
-residents:
-  name: Residents
-  entities:
-    - device_tracker.kenny_pixelxl
-    - device_tracker.mere_iphone
-
-firstfloor:
-  name: First Floor Lights
-  entities:
-    - light.floor_lamp
-    - light.rock_lamp
-    - light.chair_lamp
-    - light.oven
-    - light.dining_lights_level
-    - switch.kitchensw
-#    - switch.outlet
+    - camera.webcam_2
     
-secondfloor:
-  name: Second Floor Lights
+##################
+# Basement Floor #
+##################
+
+guest:
+  name: Guest Room
   entities:
-    - light.swirl_lamp
-    - switch.bedfan
-    - switch.craftfan
-    - switch.officefan
+    - switch.guestbed
+    
+basement:
+  name: Basement Lights
+  entities:
+   - switch.outlet
+   - light.basement_1
+   - light.basement_2
+   - light.basement_3
+   - light.basement_4
+   
+games:
+  name: Games
+  entities:
+   - switch.airhockey
+    
+##############
+# Statistics #
+##############
+
+websecure:
+  name: Web Security
+  entities:
+    - !secret kpwn
+    - !secret mpwn
+    
+system:
+  name: Pi System Monitor
+  entities:
+    - sensor.average_load_15m
+    - sensor.cpu_use
+    - sensor.ram_use
+    - sensor.since_last_boot
+    - sensor.swap_use
+    - sensor.uptime
+    
+network:
+  name: Network
+  entities:
+    - sensor.ssl_certificate_expiry
+    - sensor.speedtest_ping
+    - sensor.speedtest_upload
+    - sensor.speedtest_download
+    
+whenhome:
+  name: How Long We've Been Home This Week
+  entities:
+    - sensor.meredith
+    - sensor.kenny
+    
+power:
+  name: Daily Power Usage
+  entities:
+    - sensor.watthour
+    - sensor.cpuwhr
+    - sensor.auxwhr
+    - sensor.totalwhr
+    
+monthly:
+  name: Daily Light Use
+  entities:
+    - sensor.rock_lamp_light_hours
+    - sensor.floor_lamp_light_hours
+    - sensor.chair_lamp_light_hours
+    - sensor.swirl_lamp_light_hours
+    - sensor.oven_light_hours
+    - sensor.front_door_light_hours
+    - sensor.dining_room_light_hours
+    - sensor.basement_light_hours
+    - sensor.basement_1_light_hours
+    - sensor.basement_2_light_hours
+    - sensor.basement_3_light_hours
+    - sensor.basement_4_light_hours
+    - sensor.bedroom_fan_hours
+    - sensor.craft_room_fan_hours
+    - sensor.master_bathroom_hours
+    - sensor.office_fan_hours
+    - sensor.prep_area_hours
+    - sensor.guest_bedroom_fan_hours
+    - sensor.sewing_light_hours
+    - sensor.deck_light_hours
+    - sensor.computer_hours
+    - sensor.hvac_heat_hours
+    
+###############
+# Automations #
+###############
 
 light_on_auto:
   name: Light On Automations
   entities:
+    - automation.kenny_wake_up
     - automation.kenny_awake
     - automation.kenny_wake_upsa
     - automation.mere_wake_up
@@ -283,10 +304,12 @@ light_on_auto:
     - automation.turn_on_lights_day_dark
     - automation.basement_lights_on
     - automation.bedroom_lights_on
+    - automation.turn_on_sewing
+    - automation.kenny_bed
     - automation.turn_on_all_first_floor
     - automation.turn_on_all_second_floor
     - automation.turn_on_all_basement_floor
-    - automation.turn_on_sewing
+    - automation.living_room_motion
 
 light_off_auto:
   name: Light Off Automations
@@ -297,6 +320,7 @@ light_off_auto:
     - automation.mere_leave_gym_day
     - automation.bedtime
     - automation.turn_off_outside_light_at_sunrise
+    - automation.vacation_bedtime
     - automation.turn_off_all_lights_at_night_on_vacation
     - automation.turn_off_all_lights_at_morning_on_vacation
     - automation.bedtime_first_try
@@ -308,6 +332,7 @@ light_off_auto:
     - automation.turn_off_all_first_floor
     - automation.turn_off_all_second_floor
     - automation.turn_off_all_basement_floor
+    - automation.living_room_stop_motion
 
 notify_auto:
   name: Notification Automations
@@ -336,9 +361,28 @@ location_auto:
     - automation.vacation_on
     - automation.vacation_off
     - automation.temperature_vacation
+    - automation.vacation_random_script
     - automation.turn_off_away_mode
     - automation.keep_away_mode
     - automation.ecobee_fasle_positive
+    
+theme_auto:
+  name: Theme Automations
+  entities:
+    - automation.set_theme_startup_day
+    - automation.set_theme_startup_night
+    - automation.night_theme
+    - automation.day_theme
+  
+mastersw_auto:
+  name: Master Switches Automations
+  entities:
+    - automation.turn_ib_first_floor
+    - automation.turn_ib_second_floor
+    - automation.turn_ib_basement_floor
+    - automation.turn_off_ib_first_floor
+    - automation.turn_off_ib_second_floor
+    - automation.turn_off_ib_basement_floor
     
 other_auto:
   name: Other Automations
@@ -355,52 +399,74 @@ other_auto:
     - automation.allow_motion
     - automation.basement_stop_motion
     - automation.bedroom_stop_motion
+    - automation.update_wh
     - automation.drive_watthour_update
     - automation.set_theme_startup_day
     - automation.set_theme_startup_night
     - automation.night_theme
     - automation.day_theme
-    - automation.turn_ib_first_floor
-    - automation.turn_ib_second_floor
-    - automation.turn_ib_basement_floor
-    - automation.turn_off_ib_first_floor
-    - automation.turn_off_ib_second_floor
-    - automation.turn_off_ib_basement_floor
     - automation.delay_automations_on_restart
-      
-monthly:
-  name: Daily Light Use
-  entities:
-    - sensor.rock_lamp_light_hours
-    - sensor.floor_lamp_light_hours
-    - sensor.chair_lamp_light_hours
-    - sensor.swirl_lamp_light_hours
-    - sensor.oven_light_hours
-    - sensor.front_door_light_hours
-    - sensor.dining_room_light_hours
-    - sensor.basement_light_hours
-    - sensor.basement_1_light_hours
-    - sensor.basement_2_light_hours
-    - sensor.basement_3_light_hours
-    - sensor.basement_4_light_hours
-    - sensor.bedroom_fan_hours
-    - sensor.craft_room_fan_hours
-    - sensor.master_bathroom_hours
-    - sensor.office_fan_hours
-    - sensor.prep_area_hours
-    - sensor.guest_bedroom_fan_hours
-    - sensor.sewing_light_hours
-    - sensor.deck_light_hours
-    - sensor.computer_hours
-    - sensor.watthour
+    - automation.bedroom_fan_on
+    - automation.bedroom_fan_off
     
-whenhome:
-  name: How Long We've Been Home This Week
+################
+# Other Groups #
+################
+
+Hue Lights:
+  view: no
   entities:
-    - sensor.meredith
-    - sensor.kenny
+    - group.livingroom
+    - light.oven
+    - light.swirl_lamp
+    - light.basement_1
+    - light.basement_2
+    - light.basement_3
+    - light.basement_4
+    - light.sewing_light
+    - light.deck_light
     
-webcam:
-  name: Web Camera
+Switch Lights:
+  view: no
   entities:
-    - camera.webcam
+    - switch.outlet
+    - switch.officefan
+    - switch.bedfan
+    - switch.craftfan
+    - switch.masterbath
+    - switch.kitchensw
+    - switch.guestbed
+   
+basement_left:
+  entities:
+   - light.basement_1
+   - light.basement_3
+   
+basement_right:
+  entities:
+   - light.basement_2
+   - light.basement_4
+   
+residents:
+  name: Residents
+  entities:
+    - device_tracker.kenny_pixelxl
+    - device_tracker.mere_iphone
+
+firstfloor:
+  name: First Floor Lights
+  entities:
+    - light.floor_lamp
+    - light.rock_lamp
+    - light.chair_lamp
+    - light.oven
+    - light.dining_lights_level
+    - switch.kitchensw
+    
+secondfloor:
+  name: Second Floor Lights
+  entities:
+    - light.swirl_lamp
+    - switch.bedfan
+    - switch.craftfan
+    - switch.officefan

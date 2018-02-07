@@ -3,7 +3,6 @@
        light.swirl_lamp:
            state: on
            transition: 1800
-#           xy_color: [0.6621,0.3023]
            brightness: 255
 
  - name: Goodnight Mere
@@ -12,7 +11,6 @@
            state: off
            transition: 600
            xy_color: [0.6621,0.3023]
-#           brightness: 0
 
  - name: Sunset
    entities:

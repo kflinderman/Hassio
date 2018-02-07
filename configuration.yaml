@@ -1,31 +1,23 @@
 homeassistant:
-  # Omitted values in this section will be auto detected using freegeoip.io
-
-  # Location required to calculate the time the sun rises and sets.  
-  # Coordinates are also used for location for weather related components.
-  # Google Maps can be used to determine more precise GPS coordinates.
+  #Location information
   latitude: !secret lat_secret
   longitude: !secret lon_secret
-
-  # Impacts weather/sunrise data
-  elevation: 130
-
-  # 'metric' for Metric System, 'imperial' for imperial system
-  unit_system: imperial
-
-  # Pick yours from here:
-  # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: America/New_York
-
-  # Name of the location where Home Assistant is running
-  name: Home
+  elevation: 130
+  unit_system: imperial
   
-  # Customize names
+  # Customization
+  name: Home
   customize: !include customize.yaml
   customize_domain: {}
   customize_glob: {}
   
-# Deletes old history after 7 days
+http:
+  api_password: !secret ha_password
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
+  base_url: !secret url4_secret
+  
 recorder:
   purge_interval: 2
   purge_keep_days: 7
@@ -39,9 +31,78 @@ logger:
     homeassistant.components.calendar.visitor: critical
     homeassistant.components.calendar.vacation: critical
     homeassistant.components.sensor.cert_expiry: critical
+    homeassistant.components.light.lightpack: critical
     homeassistant.setup: critical
+    homeassistant.core: critical
+    homeassistant.entity_component: critical
+    
+history:
+  include:
+      domains:
+        - light
+        - media_player
+      entities:
+        - device_tracker.kennyworkphone
+        - device_tracker.mere_iphone
+        - device_tracker.kenny_pixelxl
+        - group.residents
+        - sensor.speedtest_download
+        - sensor.speedtest_upload
+        - sensor.speedtest_ping
+        - sensor.average_load_15m
+        - sensor.cpu_use
+        - sensor.ram_use
+        - sensor.swap_use
+        - sensor.pws_feelslike_f
+        - sensor.webcam_light_level
+        - sensor.webcam_motion
+        - sensor.webcam_battery_level
+        - sensor.webcam_2_light_level
+        - sensor.webcam_2_motion
+        - sensor.webcam_2_battery_level
+        - climate.main_floor
+        - sensor.pws_precip_today_in
+        - sensor.pws_relative_humidity
+        - switch.outlet
+        - switch.bedfan
+        - switch.officefan
+        - switch.craftfan
+        - switch.masterbath
+        - switch.kitchensw
+        - switch.guestbed
+        - input_boolean.vacation
+        - input_boolean.visitor
+        - sensor.basement_multisensor_burglar
+        - sensor.basement_multisensor_luminance
+        - sensor.basement_multisensor_relative_humidity
+        - sensor.basement_multisensor_temperature
+        - sensor.bedroom_multisensor_burglar
+        - sensor.bedroom_multisensor_luminance
+        - sensor.bedroom_multisensor_relative_humidity
+        - sensor.bedroom_multisensor_temperature
+        - sensor.living_room_motion_stats_mean
 
-# Enables the frontend
+logbook:
+  exclude:
+    domains:
+      - group
+      - sensor
+      - device_tracker
+      - android_ip_webcam
+    entities:
+      - switch.webcam_video_recording
+      - switch.webcam_2_video_recording
+      - automation.update_watt_hour
+      - automation.keep_windows_open
+      - automation.temperature_vacation
+  include:
+    entities:
+      - device_tracker.kenny_pixelc
+      - device_tracker.kenny_pixelxl
+      - device_tracker.mere_iphone
+      - device_tracker.mere_lap
+      - device_tracker.pc
+
 frontend:
   themes:
     red_day:
@@ -84,8 +145,10 @@ python_script:
 
 zwave:
   usb_path: /dev/ttyACM0
+  device_config:
+    light.dining_lights_level:
+      refresh_value: true
 
-# Enables Alexa to handle everything like a switch
 #emulated_hue:
 #  type: alexa
 #  host_ip: !secret pi_ip
@@ -100,20 +163,23 @@ zwave:
 #    - media_player
 #    - scene
 #    - script
-    
+
 cloud:
   alexa:
     filter:
       include_domains:
         - switch
         - group
-        - light
         - input_boolean
         - media_player
-        - scene
         - script
+      include_entities:
+        - light.dining_lights_level
+        - light.lightpack
       exclude_entities:
+        - group.bedroom_constant
         - group.webcam
+        - group.webcam2
         - group.weather
         - group.hvac
         - group.vacation
@@ -142,6 +208,9 @@ cloud:
         - group.statistics
         - group.basement_left
         - group.basement_right
+        - group.default_view
+        - group.power
+        - script.away_mode
         - script.cable_watch_off
         - script.netflix_watch_off
         - script.pandora_listen_off
@@ -158,6 +227,30 @@ cloud:
         - script.cpu_off
         - script.home_mode
         - script.climate_reset
+        - script.keep_ambi_working_on
+        - script.keep_ambi_working_off
+        - script.home_mode_check1
+        - script.home_mode_check2
+        - script.rand_vac1
+        - script.rand_vac2
+        - script.rand_vac3
+        - script.rand_vac4
+        - script.rand_vac5
+        - script.rand_vac6
+        - script.rand_vac7
+        - script.rand_vac8
+        - script.rand_vac9
+        - script.rand_vac10
+        - script.vac_craft
+        - script.vac_office
+        - script.vac_bed
+        - script.vac_living
+        - script.vacation_temp
+        - script.first_floor_break
+        - script.second_floor_break
+        - script.basement_off
+        - script.bedroom_off
+        - script.basement_floor_break
         - switch.webcam_night_vision
         - switch.webcam_exposure_lock
         - switch.webcam_focus
@@ -167,109 +260,40 @@ cloud:
         - switch.webcam_torch
         - switch.webcam_video_recording
         - switch.webcam_white_balance_lock
-
-http:
-  api_password: !secret ha_password
-  ssl_certificate: /ssl/fullchain.pem
-  ssl_key: /ssl/privkey.pem
-  base_url: !secret url4_secret
-  
-zone: !include zone.yaml
+        - switch.webcam_2_night_vision
+        - switch.webcam_2_exposure_lock
+        - switch.webcam_2_focus
+        - switch.webcam_2_frontfacing_camera
+        - switch.webcam_2_gps_active
+        - switch.webcam_2_overlay
+        - switch.webcam_2_torch
+        - switch.webcam_2_video_recording
+        - switch.webcam_2_white_balance_lock
 
 automation: !include automations.yaml
-
-group: !include groups.yaml
 
 scene: !include scene.yaml
 
 script: !include scripts.yaml
 
-# Checks for available updates
+zone: !include zone.yaml
+
+group: !include groups.yaml
+
 updater:
   include_used_components: true
 
 config:
 
-# Discover some devices automatically
 discovery:
 
-# Allows you to issue voice commands from the frontend in enabled browsers
-conversation:
-    
-# Enables support for tracking state changes over time.
-history:
-  include:
-      domains:
-        - light
-        - media_player
-      entities:
-        - device_tracker.kennyworkphone
-        - device_tracker.mere_iphone
-        - device_tracker.kenny_pixelxl
-        - group.residents
-        - sensor.speedtest_download
-        - sensor.speedtest_upload
-        - sensor.speedtest_ping
-        - sensor.average_load_15m
-        - sensor.cpu_use
-        - sensor.ram_use
-        - sensor.swap_use
-        - sensor.pws_feelslike_f
-        - sensor.webcam_light_level
-        - sensor.webcam_motion
-        - sensor.webcam_battery_level
-        - climate.main_floor
-        - sensor.pws_precip_today_in
-        - sensor.pws_relative_humidity
-        - switch.outlet
-        - switch.bedfan
-        - switch.officefan
-        - switch.craftfan
-        - switch.masterbath
-        - switch.kitchensw
-        - switch.guestbed
-        - input_boolean.vacation
-        - input_boolean.visitor
-        - sensor.basement_multisensor_burglar
-        - sensor.basement_multisensor_luminance
-        - sensor.basement_multisensor_relative_humidity
-        - sensor.basement_multisensor_temperature
-        - sensor.bedroom_multisensor_burglar
-        - sensor.bedroom_multisensor_luminance
-        - sensor.bedroom_multisensor_relative_humidity
-        - sensor.bedroom_multisensor_temperature
+#conversation:
 
-# View all events in a logbook
-logbook:
-  exclude:
-    domains:
-      - group
-      - sensor
-      - device_tracker
-      - android_ip_webcam
-    entities:
-      - switch.webcam_video_recording
-      - automation.update_watt_hour
-      - automation.keep_windows_open
-      - automation.temperature_vacation
-  include:
-    entities:
-      - device_tracker.kenny_pixelc
-      - device_tracker.kenny_pixelxl
-      - device_tracker.mere_iphone
-      - device_tracker.mere_lap
-      - device_tracker.pc
-
-# Router Info
 device_tracker:
   - platform: netgear
     host: !secret router_ip
     username: !secret wifi_username
     password: !secret wifi_password
-    
-google:
-  client_id: !secret gcal_ID
-  client_secret: !secret gcal_secret
 
 switch:
   - platform: tplink
@@ -303,48 +327,41 @@ switch:
     turn_off:
       service: script.turn_on
       entity_id: script.cpu_off
-    
+
+input_boolean:
+  vacation:
+    name: Vacation Mode
+    icon: mdi:airplane-takeoff
+  visitor:
+    name: Visitor Mode
+    icon: mdi:account-multiple
+  window:
+    name: Windows
+    icon: mdi:window-
+  bedroom:
+    name: Bedroom Occupancy
+  basement:
+    name: Basement Occupancy
+  bedroom_motion:
+    name: Bedroom Motion
+  basement_motion:
+    name: Basement Motion
+  all_firstfloor:
+    name: All First Floor
+    icon: mdi:numeric-1-box
+  all_secondfloor:
+    name: All Second Floor
+    icon: mdi:numeric-2-box
+  all_basement:
+    name: All Basement
+    icon: mdi:arrow-down-bold-box
+  all_break:
+    name: Break for All
+
 sensor: !include sensors.yaml
 
-# lights
-light:
-  - platform: hue
-    host: !secret hue_ip
-    allow_unreachable: true
-  - platform: lightpack
-    host: !secret pc_ip
-    port: 3636
-    api_key: "ambibox"
-#  - platform: lightpack2
-#    host: !secret pc_ip
-#    port: 3636
-#    api_key: 
-      
-android_ip_webcam:
-  host: !secret webcam_ip
-  name: Webcam
-  username: !secret camname_secret
-  password: !secret campass_secret
-  sensors:
-    - audio_connections
-    - battery_level
-    - battery_temp
-    - battery_voltage
-    - light
-    - motion
-    - pressure
-  switches:
-    - exposure_lock
-    - ffc
-    - focus
-    - gps_active
-    - night_vision
-    - overlay
-    - torch
-    - whitebalance_lock
-    - video_recording
- 
-# media player
+sun:
+
 media_player:
   - platform: gpmdp
     host: !secret pc_ip
@@ -384,52 +401,83 @@ media_player:
     host: !secret lg_ip
     access_token: 542850
 
-# ifttt
+light:
+  - platform: lightpack
+    host: !secret pc_ip
+    port: 3636
+    api_key: "ambibox"
+#  - platform: lightpack2
+#    host: !secret pc_ip
+#    port: 3636
+#    api_key: 
+
+hue:
+  bridges:
+    - host: !secret hue_ip
+      allow_unreachable: true
+      allow_hue_groups: true
+
+android_ip_webcam:
+  - host: !secret webcam_ip
+    name: Webcam
+    username: !secret camname_secret
+    password: !secret campass_secret
+    sensors:
+      - audio_connections
+      - battery_level
+      - battery_temp
+      - battery_voltage
+      - light
+      - motion
+      - pressure
+    switches:
+      - exposure_lock
+      - ffc
+      - focus
+      - gps_active
+      - night_vision
+      - overlay
+      - torch
+      - whitebalance_lock
+      - video_recording
+  - host: !secret webcam_ip2
+    name: Webcam 2
+    username: !secret camname_secret
+    password: !secret campass_secret
+    sensors:
+      - audio_connections
+      - battery_level
+      - battery_temp
+      - battery_voltage
+      - light
+      - motion
+      - pressure
+    switches:
+      - exposure_lock
+      - ffc
+      - focus
+      - gps_active
+      - night_vision
+      - overlay
+      - torch
+      - whitebalance_lock
+      - video_recording
+
 ifttt:
   key: !secret ifttt_key
-  
+
+google:
+  client_id: !secret gcal_ID
+  client_secret: !secret gcal_secret
+ 
 ecobee:
   api_key: !secret ecobee_key
-  
-# Inputs
-input_boolean:
-  vacation:
-    name: Vacation Mode
-    icon: mdi:airplane-takeoff
-  visitor:
-    name: Visitor Mode
-    icon: mdi:account-multiple
-  window:
-    name: Windows
-    icon: mdi:window-
-  bedroom:
-    name: Bedroom Occupancy
-  basement:
-    name: Basement Occupancy
-  bedroom_motion:
-    name: Bedroom Motion
-  basement_motion:
-    name: Basement Motion
-  all_firstfloor:
-    name: All First Floor
-    icon: mdi:numeric-1-box
-  all_secondfloor:
-    name: All Second Floor
-    icon: mdi:numeric-2-box
-  all_basement:
-    name: All Basement
-    icon: mdi:arrow-down-bold-box
-  all_break:
-    name: Break for All
-    
-# Track the sun
-sun:
-  
+ 
 notify:
   - platform: pushbullet
     api_key: !secret push_key
     name: pushbullet
-  
+
 panel_iframe:
   configurator:
     title: Configurator
