@@ -35,6 +35,8 @@ Second Floor:
     - sensor.bedroom_multisensor_burglar
     - sensor.bedroom_multisensor_luminance
     - sensor.bedroom_bee_temperature
+    - sensor.office_motion_stats_mean
+    - sensor.webcam_2_light_level
     - group.bedroom_constant
     - group.craft
     - group.office
@@ -339,6 +341,7 @@ notify_auto:
   entities:
     - automation.update_notifications
     - automation.camera_battery
+    - automation.camera_2_battery
     - automation.mere_new_breach
     - automation.kenny_new_breach
     - automation.weather_alert

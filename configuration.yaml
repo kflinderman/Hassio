@@ -31,6 +31,7 @@ logger:
     homeassistant.components.calendar.visitor: critical
     homeassistant.components.calendar.vacation: critical
     homeassistant.components.sensor.cert_expiry: critical
+    homeassistant.components.sensor.statistics: critical
     homeassistant.components.light.lightpack: critical
     homeassistant.setup: critical
     homeassistant.core: critical
@@ -81,6 +82,7 @@ history:
         - sensor.bedroom_multisensor_relative_humidity
         - sensor.bedroom_multisensor_temperature
         - sensor.living_room_motion_stats_mean
+        - sensor.office_motion_stats_mean
 
 logbook:
   exclude:
@@ -149,127 +151,214 @@ zwave:
     light.dining_lights_level:
       refresh_value: true
 
-#emulated_hue:
-#  type: alexa
-#  host_ip: !secret pi_ip
-#  off_maps_to_on_domains:
-#    - scene
-#  expose_by_default: true
-#  exposed_domains:
-#    - switch
-#    - group
-#    - light
-#    - input_boolean
-#    - media_player
-#    - scene
-#    - script
+emulated_hue:
+  host_ip: !secret pi_ip
+  off_maps_to_on_domains:
+    - scene
+  exposed_domains:
+    - input_boolean
+    - media_player
+    - scene
+  entities:
+    light.dining_lights_level:
+      hidden: false
+    light.lightpack:
+      hidden: false
+    switch.airhockey:
+      hidden: false
+    switch.bedfan:
+      hidden: false
+    switch.craftfan:
+      hidden: false
+    switch.desktoppc:
+      hidden: false
+    switch.guestbed:
+      hidden: false
+    switch.kitchensw:
+      hidden: false
+    switch.masterbath:
+      hidden: false
+    switch.officefan:
+      hidden: false
+    switch.outlet:
+      hidden: false
+    group.basement:
+      hidden: false
+    group.bedroom:
+      hidden: false
+    group.firstfloor:
+      hidden: false
+    group.office:
+      hidden: false
+    group.craft:
+      hidden: false
+    group.master:
+      hidden: false
+    group.kitchen:
+      hidden: false
+    group.secondfloor:
+      hidden: false
+    group.guest:
+      hidden: false
+    group.all_switches:
+      hidden: false
+    group.outside:
+      hidden: false
+    group.livingroom:
+      hidden: false
+    group.games:
+      hidden: false
+    group.dining_room:
+      hidden: false
+    group.all_lights:
+      hidden: false
+    group.second_floor:
+      hidden: false
+    group.first_floor:
+      hidden: false
+    media_player.yamaha_receiver_zone_2:
+      hidden: true
+    script.movie_time:
+      hidden: false
+    script.steam_on:
+      hidden: false
+    script.goodnight_kenny:
+      hidden: false
+    script.wiiu_on:
+      hidden: false
+    script.netflix_watch_on:
+      hidden: false
+    script.after_dark:
+      hidden: false
+    script.game_on:
+      hidden: false
+    script.switch_on:
+      hidden: false
+    script.sunset_switch:
+      hidden: false
+    script.windows_open:
+      hidden: false
+    script.pandora_listen_on:
+      hidden: false
+    script.cable_watch_on:
+      hidden: false
+    script.dinner_time:
+      hidden: false
+    script.vinyl_on:
+      hidden: false
+    script.ps3_on:
+      hidden: false
+    script.movie_finish:
+      hidden: false
+    script.radio_listen_on:
+      hidden: false
 
-cloud:
-  alexa:
-    filter:
-      include_domains:
-        - switch
-        - group
-        - input_boolean
-        - media_player
-        - script
-      include_entities:
-        - light.dining_lights_level
-        - light.lightpack
-      exclude_entities:
-        - group.bedroom_constant
-        - group.webcam
-        - group.webcam2
-        - group.weather
-        - group.hvac
-        - group.vacation
-        - group.visitor
-        - group.websecure
-        - group.whenhome
-        - group.monthly
-        - group.system
-        - group.network
-        - group.light_on_auto
-        - group.light_off_auto
-        - group.notify_auto
-        - group.pc_auto
-        - group.location_auto
-        - group.other_auto
-        - group.all_automations
-        - group.hue_lights
-        - group.switch_lights
-        - group.all_devices
-        - group.all_scripts
-        - group.automations
-        - group.basement_floor
-        - group.calendar
-        - group.defualt_view
-        - group.residents
-        - group.statistics
-        - group.basement_left
-        - group.basement_right
-        - group.default_view
-        - group.power
-        - script.away_mode
-        - script.cable_watch_off
-        - script.netflix_watch_off
-        - script.pandora_listen_off
-        - script.ps3_off
-        - script.radio_listen_off
-        - script.steam_off
-        - script.switch_off
-        - script.vinyl_off
-        - script.wiiu_off
-        - script.timed_cpu_off
-        - script.reset_switch
-        - script.masterbath_off
-        - script.ecobee_reset
-        - script.cpu_off
-        - script.home_mode
-        - script.climate_reset
-        - script.keep_ambi_working_on
-        - script.keep_ambi_working_off
-        - script.home_mode_check1
-        - script.home_mode_check2
-        - script.rand_vac1
-        - script.rand_vac2
-        - script.rand_vac3
-        - script.rand_vac4
-        - script.rand_vac5
-        - script.rand_vac6
-        - script.rand_vac7
-        - script.rand_vac8
-        - script.rand_vac9
-        - script.rand_vac10
-        - script.vac_craft
-        - script.vac_office
-        - script.vac_bed
-        - script.vac_living
-        - script.vacation_temp
-        - script.first_floor_break
-        - script.second_floor_break
-        - script.basement_off
-        - script.bedroom_off
-        - script.basement_floor_break
-        - switch.webcam_night_vision
-        - switch.webcam_exposure_lock
-        - switch.webcam_focus
-        - switch.webcam_frontfacing_camera
-        - switch.webcam_gps_active
-        - switch.webcam_overlay
-        - switch.webcam_torch
-        - switch.webcam_video_recording
-        - switch.webcam_white_balance_lock
-        - switch.webcam_2_night_vision
-        - switch.webcam_2_exposure_lock
-        - switch.webcam_2_focus
-        - switch.webcam_2_frontfacing_camera
-        - switch.webcam_2_gps_active
-        - switch.webcam_2_overlay
-        - switch.webcam_2_torch
-        - switch.webcam_2_video_recording
-        - switch.webcam_2_white_balance_lock
-
+#cloud:
+#  alexa:
+#    filter:
+#      include_domains:
+#        - switch
+#        - group
+#        - input_boolean
+#        - media_player
+#        - script
+#      include_entities:
+#        - light.dining_lights_level
+#        - light.lightpack
+#      exclude_entities:
+#        - group.bedroom_constant
+#        - group.webcam
+#        - group.webcam2
+#        - group.weather
+#        - group.hvac
+#        - group.vacation
+#        - group.visitor
+#        - group.websecure
+#        - group.whenhome
+#        - group.monthly
+#        - group.system
+#        - group.network
+#        - group.light_on_auto
+#        - group.light_off_auto
+#        - group.notify_auto
+#        - group.pc_auto
+#        - group.location_auto
+#        - group.other_auto
+#        - group.all_automations
+#        - group.hue_lights
+#        - group.switch_lights
+#        - group.all_devices
+#        - group.all_scripts
+#        - group.automations
+#        - group.basement_floor
+#        - group.calendar
+#        - group.defualt_view
+#        - group.residents
+#        - group.statistics
+#        - group.basement_left
+#        - group.basement_right
+#        - group.default_view
+#        - group.power
+#        - script.away_mode
+#        - script.cable_watch_off
+#        - script.netflix_watch_off
+#        - script.pandora_listen_off
+#        - script.ps3_off
+#        - script.radio_listen_off
+#        - script.steam_off
+#        - script.switch_off
+#        - script.vinyl_off
+#        - script.wiiu_off
+#        - script.timed_cpu_off
+#        - script.reset_switch
+#        - script.masterbath_off
+#        - script.ecobee_reset
+#        - script.cpu_off
+#        - script.home_mode
+#        - script.climate_reset
+#        - script.keep_ambi_working_on
+#        - script.keep_ambi_working_off
+#        - script.home_mode_check1
+#        - script.home_mode_check2
+#        - script.rand_vac1
+#        - script.rand_vac2
+#        - script.rand_vac3
+#        - script.rand_vac4
+#        - script.rand_vac5
+#        - script.rand_vac6
+#        - script.rand_vac7
+#        - script.rand_vac8
+#        - script.rand_vac9
+#        - script.rand_vac10
+#        - script.vac_craft
+#        - script.vac_office
+#        - script.vac_bed
+#        - script.vac_living
+#        - script.vacation_temp
+#        - script.first_floor_break
+#        - script.second_floor_break
+#        - script.basement_off
+#        - script.bedroom_off
+#        - script.basement_floor_break
+#        - switch.webcam_night_vision
+#        - switch.webcam_exposure_lock
+#        - switch.webcam_focus
+#        - switch.webcam_frontfacing_camera
+#        - switch.webcam_gps_active
+#        - switch.webcam_overlay
+#        - switch.webcam_torch
+#        - switch.webcam_video_recording
+#        - switch.webcam_white_balance_lock
+#        - switch.webcam_2_night_vision
+#        - switch.webcam_2_exposure_lock
+#        - switch.webcam_2_focus
+#        - switch.webcam_2_frontfacing_camera
+#        - switch.webcam_2_gps_active
+#        - switch.webcam_2_overlay
+#        - switch.webcam_2_torch
+#        - switch.webcam_2_video_recording
+#        - switch.webcam_2_white_balance_lock
+      
 automation: !include automations.yaml
 
 scene: !include scene.yaml
@@ -480,7 +569,7 @@ notify:
 
 panel_iframe:
   configurator:
-    title: Configurator
+    title: Files
     icon: mdi:wrench
     url: !secret url_secret
   terminal:

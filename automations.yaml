@@ -7,7 +7,7 @@
 # #3 PC Automations              #
 # #4 Location Automations        #
 # #5 Theme Automations           #
-# #6 Master Switches Auotmations #
+# #6 Master Switches Automations #
 # #7 Other Automations           #
 ##################################
 
@@ -519,7 +519,7 @@
       entity_id: group.kitchen
     - service: homeassistant.turn_off
       entity_id: group.dining_room
-    - service: light.turn_off
+    - service: homeassistant.turn_off
       entity_id: group.outside
       
 - id: bedtime_after
@@ -539,7 +539,7 @@
       entity_id: group.kitchen
     - service: homeassistant.turn_off
       entity_id: group.dining_room
-    - service: light.turn_off
+    - service: homeassistant.turn_off
       entity_id: group.outside
       
 - id: turn_off_lights_day_dark
@@ -664,15 +664,15 @@
   trigger:
     - platform: numeric_state
       entity_id: sensor.living_room_motion_stats_mean
-      below: 4
+      below: 10
       for:
-        minutes: 15
+        minutes: 10
   condition:
     condition: state
     entity_id: group.livingroom
     state: 'on'
   action:
-    - service: light.turn_off
+    - service: homeassistant.turn_off
       entity_id: group.livingroom
 
 #############################
@@ -699,7 +699,19 @@
     service: notify.pushbullet
     data:
       title: Web Camera Low Battery
-      message: The web camera has very low battery.
+      message: The living room web camera has very low battery.
+      
+- id: camera_2_battery
+  alias: Camera 2 Battery
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.webcam_2_battery_level
+    below: 20
+  action:
+    service: notify.pushbullet
+    data:
+      title: Web Camera Low Battery
+      message: The office web camera has very low battery.
       
 - id: kenny_new_breach
   alias: Kenny New Breach

@@ -35,13 +35,13 @@ sensor.webcam_motion:
   friendly_name: Living Room Motion
   unit_of_measurement: motion
 sensor.webcam_2_motion:
-  friendly_name: Webcam 2 Motion
+  friendly_name: Office Motion
   unit_of_measurement: motion
 sensor.webcam_light_level:
   friendly_name: Living Room Light
   unit_of_measurement: lux
 sensor.webcam_2_light_level:
-  friendly_name: Webcam 2 Light
+  friendly_name: Office Light
   unit_of_measurement: lux
 sensor.basement_multisensor_burglar:
   friendly_name: Basement Motion
@@ -59,6 +59,8 @@ sensor.living_room_bee_temperature:
   friendly_name: Living Room Temperature
 sensor.living_room_motion_stats_mean:
   friendly_name: Living Room Motion
+sensor.office_motion_stats_mean:
+  friendly_name: Office Motion
 switch.outlet:
   friendly_name: Basement Floor Light
   icon: mdi:lamp
@@ -92,23 +94,18 @@ light.dining_lights_level:
 light.basement_hue_2:
   friendly_name: Basement Ceiling Lights
   icon: mdi:ceiling-light
-  emulated_hue_hidden: true
 light.basement_1:
   friendly_name: Basement Ceiling Light
   icon: mdi:ceiling-light
-  emulated_hue_hidden: true
 light.basement_2:
   friendly_name: Basement Ceiling Light
   icon: mdi:ceiling-light
-  emulated_hue_hidden: true
 light.basement_3:
   friendly_name: Basement Ceiling Light
   icon: mdi:ceiling-light
-  emulated_hue_hidden: true
 light.basement_4:
   friendly_name: Basement Ceiling Light
   icon: mdi:ceiling-light
-  emulated_hue_hidden: true
 !secret kpwn:
   friendly_name: Kenny Breaches
 !secret mpwn:
@@ -120,186 +117,17 @@ light.basement_4:
 
 light.front_outside:
   icon: mdi:spotlight-beam
-  emulated_hue_hidden: true
 light.deck_light:
   icon: mdi:spotlight-beam
-  emulated_hue_hidden: true
 light.floor_lamp:
   icon: mdi:lamp
-  emulated_hue_hidden: true
 light.rock_lamp:
   icon: mdi:lamp
-  emulated_hue_hidden: true
 light.chair_lamp:
   icon: mdi:lamp
-  emulated_hue_hidden: true
 light.sewing_light:
   icon: mdi:lamp
-  emulated_hue_hidden: true
 light.oven:
   icon: mdi:ceiling-light
-  emulated_hue_hidden: true
 light.swirl_lamp:
   icon: mdi:lamp
-  emulated_hue_hidden: true
-
-#######################
-# Emulated Hue Hidden #
-#######################
-
-group.webcam:
-  emulated_hue_hidden: true
-group.webcam2:
-  emulated_hue_hidden: true
-group.weather:
-  emulated_hue_hidden: true
-group.hvac:
-  emulated_hue_hidden: true
-group.vacation:
-  emulated_hue_hidden: true
-group.visitor:
-  emulated_hue_hidden: true
-group.websecure:
-  emulated_hue_hidden: true
-group.whenhome:
-  emulated_hue_hidden: true
-group.monthly:
-  emulated_hue_hidden: true
-group.hass_group:
-  emulated_hue_hidden: true
-group.system:
-  emulated_hue_hidden: true
-group.network:
-  emulated_hue_hidden: true
-group.light_on_auto:
-  emulated_hue_hidden: true
-group.light_off_auto:
-  emulated_hue_hidden: true
-group.notify_auto:
-  emulated_hue_hidden: true
-group.other_auto:
-  emulated_hue_hidden: true
-group.scripts:
-  emulated_hue_hidden: true
-group.all_automations:
-  emulated_hue_hidden: true
-group.hue_lights:
-  emulated_hue_hidden: true
-group.switch_lights:
-  emulated_hue_hidden: true
-group.all_devices:
-  emulated_hue_hidden: true
-group.all_scripts:
-  emulated_hue_hidden: true
-group.automations:
-  emulated_hue_hidden: true
-group.basement_floor:
-  emulated_hue_hidden: true
-group.calendar:
-  emulated_hue_hidden: true
-group.defualt_view:
-  emulated_hue_hidden: true
-group.residents:
-  emulated_hue_hidden: true
-group.statistics:
-  emulated_hue_hidden: true
-group.basement_left:
-  emulated_hue_hidden: true
-group.basement_right:
-  emulated_hue_hidden: true
-script.cable_watch_off:
-  emulated_hue_hidden: true
-script.netflix_watch_off:
-  emulated_hue_hidden: true
-script.pandora_listen_off:
-  emulated_hue_hidden: true
-script.ps3_off:
-  emulated_hue_hidden: true
-script.radio_listen_off:
-  emulated_hue_hidden: true
-script.steam_off:
-  emulated_hue_hidden: true
-script.switch_off:
-  emulated_hue_hidden: true
-script.vinyl_off:
-  emulated_hue_hidden: true
-script.wiiu_off:
-  emulated_hue_hidden: true
-script.timed_cpu_off:
-  emulated_hue_hidden: true
-script.reset_switch:
-  emulated_hue_hidden: true
-script.masterbath_off:
-  emulated_hue_hidden: true
-script.ecobee_reset:
-  emulated_hue_hidden: true
-script.cpu_off:
-  emulated_hue_hidden: true
-script.home_mode:
-  emulated_hue_hidden: true
-script.climate_reset:
-  emulated_hue_hidden: true
-media_player.yamaha_receiver_zone_2:
-  emulated_hue_hidden: true
-switch.webcam_2_night_vision:
-  emulated_hue_hidden: true
-switch.webcam_2_exposure_lock:
-  emulated_hue_hidden: true
-switch.webcam_2_focus:
-  emulated_hue_hidden: true
-switch.webcam_2_frontfacing_camera:
-  emulated_hue_hidden: true
-switch.webcam_2_gps_active:
-  emulated_hue_hidden: true
-switch.webcam_2_overlay:
-  emulated_hue_hidden: true
-switch.webcam_2_torch:
-  emulated_hue_hidden: true
-switch.webcam_2_video_recording:
-  emulated_hue_hidden: true
-switch.webcam_2_white_balance_lock:
-  emulated_hue_hidden: true
-switch.webcam_night_vision:
-  emulated_hue_hidden: true
-switch.webcam_exposure_lock:
-  emulated_hue_hidden: true
-switch.webcam_focus:
-  emulated_hue_hidden: true
-switch.webcam_frontfacing_camera:
-  emulated_hue_hidden: true
-switch.webcam_gps_active:
-  emulated_hue_hidden: true
-switch.webcam_overlay:
-  emulated_hue_hidden: true
-switch.webcam_torch:
-  emulated_hue_hidden: true
-switch.webcam_video_recording:
-  emulated_hue_hidden: true
-switch.webcam_white_balance_lock:
-  emulated_hue_hidden: true
-scene.fun_basement:
-  emulated_hue_hidden: true
-scene.red_lamp_scene:
-  emulated_hue_hidden: true
-scene.normal_lamp_scene:
-  emulated_hue_hidden: true
-scene.sunset:
-  emulated_hue_hidden: true
-scene.fun_basement_2:
-  emulated_hue_hidden: true
-scene.wakeup_kenny:
-  emulated_hue_hidden: true
-scene.goodnight_mere:
-  emulated_hue_hidden: true
-light.all_hue_lights:
-  emulated_hue_hidden: true
-light.basement_hue:
-  emulated_hue_hidden: true
-light.front_door_hue:
-  emulated_hue_hidden: true
-light.kitchen_hue:
-  emulated_hue_hidden: true
-light.living_room_hue:
-  emulated_hue_hidden: true
-light.master_bedroom_hue:
-  emulated_hue_hidden: true

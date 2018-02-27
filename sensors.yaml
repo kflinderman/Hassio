@@ -36,6 +36,11 @@
   name: Living Room Motion Stats
   max_age:
     minutes: 5
+- platform: statistics
+  entity_id: sensor.webcam_2_motion
+  name: Office Motion Stats
+  max_age:
+    minutes: 5
 - platform: random
   name: Vacation Randomizer
   minimum: 0
