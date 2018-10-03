@@ -10,14 +10,14 @@ import homeassistant.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 
-DOMAIN = 'light'
+DOMAIN = 'light.lightpack'
 ATTR_NAME = 'profile'
 
 # Validation of the user's configuration
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Required(CONF_HOST): cv.string,
     vol.Required(CONF_PORT): cv.port,
-    vol.Required(CONF_API_KEY): cv.string
+    vol.Optional(CONF_API_KEY): cv.string
 })
 
 def setup_platform(hass, config, add_devices, discovery_info=None):
@@ -60,23 +60,19 @@ class Lightpack(Light):
     def is_on(self):
         """Return true if light is on."""
         try:
-            telnet = telnetlib.Telnet(self._host, self._port)
-            if (self._api_key != "ambibox"):
-                telnet.write(("apikey:" + self._api_key + "\n").encode('ascii'))
-                telnet.read_until(b"ok\n", timeout=0.2)
-                telnet.write(("getstatus\n").encode('ascii'))
-                self._state = telnet.read_until(b"\n", timeout=0.2).strip() == b"status:on"
+            telnet = telnetlib.Telnet((self._host, self._port),300)
+            telnet.write(("\n").encode('ascii'))
+            telnet.write(("getstatus\n").encode('ascii'))
+            if (telnet.read_until(b"status:on\n", timeout=0.3)[60:-2] == b"status:on"):
+                self._state = True
             else:
-                telnet.write(("\n").encode('ascii'))
-                telnet.write(("getstatus\n").encode('ascii'))
-                if (telnet.read_until(b"status:on\n", timeout=0.3)[60:-2] == b"status:on"):
-                    self._state = True
-                else:
-                    self._state = False
+                self._state = False
             telnet.close()
-        except IOError as error:
-            _LOGGER.error('Command "%s" failed with exception: %s', command, repr(error))
-
+#		except socket.timeout:
+#			self._state = False
+        except:
+            self._state = False
+            
         return self._state
 
     def turn_on(self, **kwargs):
@@ -89,25 +85,20 @@ class Lightpack(Light):
 
     def set_lightpack(self, enabled, profile = None):
         try:
-            telnet = telnetlib.Telnet(self._host, self._port)
-            if (self._api_key != "ambibox"):
-                telnet.write(("apikey:" + self._api_key + "\n").encode('ascii'))
-                telnet.read_until(b"\n", timeout=0.2)
+            telnet = telnetlib.Telnet((self._host, self._port),300)
             telnet.write(("lock\n").encode('ascii'))
             telnet.read_until(b"\n", timeout=0.2)
             if (enabled == True):
                 telnet.write(("setstatus:on\n").encode('ascii'))
-                if (profile != None):
-                    telnet.read_until(b"\n", timeout=0.2)
-                    telnet.write(("setprofile:" + profile + "\n").encode('ascii'))
-                    _LOGGER.error('lightpack profile set to : ' + profile)
             else:
                 telnet.write(("setstatus:off\n").encode('ascii'))
             telnet.read_until(b"\n", timeout=0.2)
             telnet.write(("unlock\n").encode('ascii'))
             telnet.read_until(b"\n", timeout=0.2)
-            self._state = enabled
             telnet.close()
+            self._state = enabled
+#		except socket.timeout:
+#			return None
         except IOError as error:
             _LOGGER.error('Command "%s" failed with exception: %s', command, repr(error))
             return None
