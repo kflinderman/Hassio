@@ -1,0 +1,1243 @@
+resources:
+  - url: /local/custom_ui/weather-card.js
+    type: js
+  - url: /local/custom_ui/thermostat-card.js?v=0.1.1
+    type: module
+  - url: /local/custom_ui/mini-media-player.js?ver=0.8
+    type: module
+  - url: /local/custom_ui/toggle-lock-entity-row.js
+    type: js
+  - url: /local/custom_ui/bignumber-card.js?v=0.0.1
+    type: js
+  - url: /local/custom_ui/tracker-card.js?v=0.1.5
+    type: js
+  - url: /local/custom_ui/folding-group-entity-row.js?v=98faea
+    type: js
+
+title: Home
+views:
+  - title: Default
+    icon: mdi:home
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: picture-entity
+                image: /local/kenny_home.jpg
+                entity: device_tracker.kenny_pixelxl
+                state_image:
+                  'not_home': /local/kenny_away.jpg
+                name: Kenny
+              - type: picture-entity
+                image: /local/mere_away.jpg
+                entity: device_tracker.mere_iphone
+                state_image:
+                  'home': /local/mere_home.jpg
+                name: Meredith
+          - type: picture-entity
+            tap_action: toggle
+            entity: input_boolean.im_home
+            image: /local/imhome.jpg
+      - type: vertical-stack
+        cards:
+          - type: picture-elements
+            image: /local/room_pic/camera_error.jpg
+            elements:
+              - type: image
+                entity: camera.front_door
+                camera_image: camera.front_door
+                style:
+                  top: 50%
+                  left: 50%
+                  width: 100%
+              - type: image
+                image: /local/room_pic/black_bar.jpg
+                filter: alpha(opacity=10)
+                tap_action: none
+                style:
+                  top: 92%
+                  left: 50%
+                  width: 100%
+              - type: state-icon
+                entity: binary_sensor.skybell_front_door_button
+                style:
+                  top: 91.3%
+                  left: 5%
+              - type: state-icon
+                entity: binary_sensor.skybell_front_door_motion
+                style:
+                  top: 91.3%
+                  left: 15%
+              - type: state-icon
+                tap_action: toggle
+                entity: switch.skybell_front_door_motion_sensor
+                style:
+                  top: 91.3%
+                  left: 75%
+              - type: state-icon
+                tap_action: toggle
+                entity: switch.skybell_front_door_do_not_disturb
+                style:
+                  top: 91.3%
+                  left: 85%
+              - type: state-icon
+                tap_action: toggle
+                entity: light.front_outside
+                style:
+                  top: 91.3%
+                  left: 95%
+          - type: picture-elements
+            image: /local/room_pic/camera_error.jpg
+            elements:
+              - type: image
+                entity: camera.backyard_camera
+                camera_image: camera.backyard_camera
+                style:
+                  top: 50%
+                  left: 50%
+                  width: 100%
+              - type: image
+                image: /local/room_pic/black_bar.jpg
+                filter: opacity(0)
+                tap_action: none
+                style:
+                  top: 92%
+                  left: 50%
+                  width: 100%
+              - type: state-icon
+                entity: sensor.backyard_camera_motion_detected
+                style:
+                  top: 91.3%
+                  left: 5%
+              - type: state-icon
+                tap_action: toggle
+                entity: light.deck_light
+                style:
+                  top: 91.3%
+                  left: 85%
+              - type: state-icon
+                tap_action: toggle
+                entity: switch.deck_ceiling_outlet_switch
+                style:
+                  top: 91.3%
+                  left: 95%
+      - type: vertical-stack
+        cards:
+          - type: "custom:weather-card"
+            entity_weather: weather.yweather
+            entity_sun: sun.sun
+          - type: horizontal-stack
+            cards:
+              - type: "custom:thermostat-card"
+                title: Climate
+                entity: climate.main_floor
+                chevron_size: 100
+                highlight_tap: true
+                step: 1
+              - type: picture-entity
+                entity: input_boolean.window
+                tap_action: toggle
+                state_image:
+                  "on": /local/window_open.png
+                  "off": /local/window_closed.png
+      - type: entities
+        title: Master
+        entities:
+          - entity: input_boolean.all_firstfloor
+            type: custom:toggle-lock-entity-row
+          - entity: input_boolean.all_secondfloor
+            type: custom:toggle-lock-entity-row
+          - entity: input_boolean.all_basement
+            type: custom:toggle-lock-entity-row
+          - entity: input_boolean.all_outside
+            type: custom:toggle-lock-entity-row
+      - type: vertical-stack
+        cards:
+          - type: entities
+            title: Vacation
+            show_header_toggle: false
+            entities:
+              - entity: input_boolean.vacation
+                type: custom:toggle-lock-entity-row
+                users:
+                  - Kenny
+                  - Meredith
+              - entity: calendar.vacations
+          - type: entities
+            title: Visitor
+            show_header_toggle: false
+            entities:
+              - entity: input_boolean.visitor
+                type: custom:toggle-lock-entity-row
+              - entity: calendar.visitors
+  - title: First Floor
+    icon: mdi:numeric-1-box
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: picture-elements
+            image: /local/room_pic/camera_error.jpg
+            elements:
+              - type: image
+                entity: camera.webcam
+                camera_image: camera.webcam
+                style:
+                  top: 50%
+                  left: 50%
+                  width: 100%
+              - type: image
+                image: /local/room_pic/black_bar.jpg
+                filter: opacity(0.1)
+                tap_action: none
+                style:
+                  top: 92%
+                  left: 50%
+                  width: 100%
+              - type: state-icon
+                entity: binary_sensor.living_room_bay_occupancy
+                style:
+                  top: 91.3%
+                  left: 5%
+              - type: state-icon
+                entity: sensor.webcam_light_level
+                style:
+                  top: 88%
+                  left: 17%
+              - type: state-label
+                entity: sensor.webcam_light_level
+                style:
+                  top: 96%
+                  left: 17%
+                  color: white
+              - type: state-icon
+                entity: sensor.living_room_bee_temperature
+                style:
+                  top: 88%
+                  left: 29%
+              - type: state-label
+                entity: sensor.living_room_bee_temperature
+                style:
+                  top: 96%
+                  left: 29%
+                  color: white
+              - type: state-icon
+                entity: group.livingroom
+                style:
+                  top: 91.3%
+                  left: 39%
+              - type: state-icon
+                tap_action: toggle
+                entity: switch.outlet
+                style:
+                  top: 91.3%
+                  left: 65%
+              - type: state-icon
+                tap_action: toggle
+                entity: light.floor_lamp
+                style:
+                  top: 91.3%
+                  left: 75%
+              - type: state-icon
+                tap_action: toggle
+                entity: light.rock_lamp
+                style:
+                  top: 91.3%
+                  left: 85%
+              - type: state-icon
+                tap_action: toggle
+                entity: light.chair_lamp
+                style:
+                  top: 91.3%
+                  left: 95%
+          - type: media-control
+            entity: media_player.lg_tv_remote
+          - type: media-control
+            entity: media_player.stereo
+          - type: "custom:mini-media-player"
+            artwork_border: true
+            scroll_info: true
+            artwork: cover
+            entity: media_player.living_room_dot
+      - type: picture-elements
+        image: !secret kitchen_off
+        elements:
+          - type: image
+            entity: group.kitchen
+            tap_action: toggle
+            image: !secret kitchen_off
+            state_image:
+              "on": !secret kitchen_pic
+            style:
+              top: 50%
+              left: 50%
+              width: 100%
+          - type: image
+            image: /local/room_pic/black_bar.jpg
+            filter: alpha(opacity=10)
+            tap_action: none
+            style:
+              top: 92%
+              left: 50%
+              width: 100%
+          - type: state-icon
+            entity: binary_sensor.kitchen_occupancy
+            style:
+              top: 91.3%
+              left: 5%
+          - type: state-icon
+            entity: sensor.kitchen_luminance
+            style:
+              top: 88%
+              left: 17%
+          - type: state-label
+            entity: sensor.kitchen_luminance
+            style:
+              top: 96%
+              left: 17%
+              color: white
+          - type: state-icon
+            entity: sensor.kitchen_temperature
+            style:
+              top: 87%
+              left: 29%
+          - type: state-label
+            entity: sensor.kitchen_temperature
+            style:
+              top: 96%
+              left: 29%
+              color: white
+          - type: state-icon
+            entity: group.kitchen
+            style:
+              top: 91.3%
+              left: 39%
+          - type: state-icon
+            tap_action: toggle
+            entity: light.oven
+            style:
+              top: 91.3%
+              left: 85%
+          - type: state-icon
+            tap_action: toggle
+            entity: switch.kitchensw
+            style:
+              top: 91.3%
+              left: 95%
+      - type: picture-elements
+        image: !secret dining_off
+        elements:
+          - type: image
+            entity: group.dining_room
+            tap_action: toggle
+            image: !secret dining_off
+            state_image:
+              "on": !secret dining_pic
+            style:
+              top: 50%
+              left: 50%
+              width: 100%
+          - type: image
+            image: /local/room_pic/black_bar.jpg
+            filter: opacity(0.1)
+            tap_action: none
+            style:
+              top: 92%
+              left: 50%
+              width: 100%
+          - type: state-icon
+            tap_action: toggle
+            entity: light.dining_lights_level
+            style:
+              top: 91.3%
+              left: 95%
+  - title: Second Floor
+    icon: mdi:numeric-2-box
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: picture-elements
+            image: !secret bedroom_off
+            elements:
+              - type: image
+                entity: group.bedroom
+                tap_action: toggle
+                image: !secret bedroom_off
+                state_image:
+                  "on": !secret bedroom_pic
+                style:
+                  top: 50%
+                  left: 50%
+                  width: 100%
+              - type: image
+                image: /local/room_pic/black_bar.jpg
+                filter: opacity(0.1)
+                tap_action: none
+                style:
+                  top: 92%
+                  left: 50%
+                  width: 100%
+              - type: state-icon
+                entity: binary_sensor.bedroom_occupancy
+                style:
+                  top: 91.3%
+                  left: 5%
+              - type: state-icon
+                entity: sensor.bedroom_multisensor_luminance
+                style:
+                  top: 88%
+                  left: 17%
+              - type: state-label
+                entity: sensor.bedroom_multisensor_luminance
+                style:
+                  top: 96%
+                  left: 17%
+                  color: white
+              - type: state-icon
+                entity: sensor.bedroom_bee_temperature
+                style:
+                  top: 88%
+                  left: 29%
+              - type: state-label
+                entity: sensor.bedroom_bee_temperature
+                style:
+                  top: 96%
+                  left: 29%
+                  color: white
+              - type: state-icon
+                entity: group.bedroom
+                style:
+                  top: 91.3%
+                  left: 39%
+              - type: state-icon
+                tap_action: toggle
+                entity: light.swirl_lamp
+                style:
+                  top: 91.3%
+                  left: 75%
+              - type: state-icon
+                tap_action: toggle
+                entity: switch.bedfan
+                style:
+                  top: 91.3%
+                  left: 85%
+              - type: state-icon
+                tap_action: toggle
+                entity: switch.masterbath
+                style:
+                  top: 91.3%
+                  left: 95%
+          - type: "custom:mini-media-player"
+            artwork_border: true
+            scroll_info: true
+            artwork: cover
+            entity: media_player.bedroom_dot
+      - type: picture-elements
+        image: !secret craft_off
+        elements:
+          - type: image
+            entity: group.craft
+            tap_action: toggle
+            image: !secret craft_off
+            state_image:
+              "on": !secret craftroom_pic
+            style:
+              top: 50%
+              left: 50%
+              width: 100%
+          - type: image
+            image: /local/room_pic/black_bar.jpg
+            filter: opacity(0.1)
+            tap_action: none
+            style:
+              top: 92%
+              left: 50%
+              width: 100%
+          - type: state-icon
+            entity: binary_sensor.craft_room_occupancy
+            style:
+              top: 91.3%
+              left: 5%
+          - type: state-icon
+            entity: group.craft
+            style:
+              top: 91.3%
+              left: 15%
+          - type: state-icon
+            tap_action: toggle
+            entity: switch.craftfan
+            style:
+              top: 91.3%
+              left: 85%
+          - type: state-icon
+            tap_action: toggle
+            entity: light.sewing_light
+            style:
+              top: 91.3%
+              left: 95%
+      - type: vertical-stack
+        cards:
+          - type: picture-elements
+            image: !secret office_off
+            elements:
+              - type: image
+                entity: group.office
+                tap_action: toggle
+                image: !secret office_off
+                state_image:
+                  "on": !secret office_pic
+                style:
+                  top: 50%
+                  left: 50%
+                  width: 100%
+              - type: image
+                image: /local/room_pic/black_bar.jpg
+                filter: opacity(0.1)
+                tap_action: none
+                style:
+                  top: 92%
+                  left: 50%
+                  width: 100%
+              - type: state-icon
+                entity: binary_sensor.office_bay_occupancy
+                style:
+                  top: 91.3%
+                  left: 5%
+              - type: state-icon
+                entity: group.office
+                style:
+                  top: 91.3%
+                  left: 15%
+              - type: state-icon
+                tap_action: toggle
+                entity: switch.officefan
+                style:
+                  top: 91.3%
+                  left: 75%
+              - type: state-icon
+                tap_action: toggle
+                entity: switch.desktoppc
+                style:
+                  top: 91.3%
+                  left: 85%
+              - type: state-icon
+                tap_action: toggle
+                entity: light.lightpack
+                style:
+                  top: 91.3%
+                  left: 95%
+          - type: media-control
+            entity: media_player.office_stereo
+          - type: "custom:mini-media-player"
+            artwork_border: true
+            scroll_info: true
+            artwork: cover
+            entity: media_player.desktop_media
+  - title: Basement
+    icon: mdi:arrow-down-bold-box
+    cards:
+      - type: picture-elements
+        image: !secret guestroom_off
+        elements:
+          - type: image
+            entity: group.guest
+            tap_action: toggle
+            image: !secret guestroom_off
+            state_image:
+              "on": !secret guestroom_pic
+            style:
+              top: 50%
+              left: 50%
+              width: 100%
+          - type: image
+            image: /local/room_pic/black_bar.jpg
+            filter: opacity(0.1)
+            tap_action: none
+            style:
+              top: 92%
+              left: 50%
+              width: 100%
+          - type: state-icon
+            tap_action: toggle
+            entity: switch.guestbed
+            style:
+              top: 91.3%
+              left: 95%
+      - type: vertical-stack
+        cards:
+          - type: picture-elements
+            image: !secret basement_off
+            elements:
+              - type: image
+                entity: group.basement
+                tap_action: toggle
+                image: !secret basement_off
+                state_image:
+                  "on": !secret basement_pic
+                style:
+                  top: 50%
+                  left: 50%
+                  width: 100%
+              - type: image
+                image: /local/room_pic/black_bar.jpg
+                filter: opacity(0.1)
+                tap_action: none
+                style:
+                  top: 92%
+                  left: 50%
+                  width: 100%
+              - type: state-icon
+                entity: binary_sensor.basement_occupancy
+                style:
+                  top: 91.3%
+                  left: 5%
+              - type: state-icon
+                entity: sensor.basement_multisensor_luminance
+                style:
+                  top: 88%
+                  left: 17%
+              - type: state-label
+                entity: sensor.basement_multisensor_luminance
+                style:
+                  top: 96%
+                  left: 17%
+                  color: white
+              - type: state-icon
+                entity: sensor.basement_bee_temperature
+                style:
+                  top: 88%
+                  left: 29%
+              - type: state-label
+                entity: sensor.basement_bee_temperature
+                style:
+                  top: 96%
+                  left: 29%
+                  color: white
+              - type: state-icon
+                entity: group.basement
+                style:
+                  top: 91.3%
+                  left: 39%
+              - type: state-icon
+                tap_action: toggle
+                entity: light.basement_ceiling_lights
+                style:
+                  top: 91.3%
+                  left: 75%
+              - type: state-icon
+                tap_action: toggle
+                entity: switch.laundryroom
+                style:
+                  top: 91.3%
+                  left: 85%
+              - type: state-icon
+                tap_action: toggle
+                entity: switch.airhockey
+                style:
+                  top: 91.3%
+                  left: 95%
+          - type: "custom:mini-media-player"
+            artwork_border: true
+            scroll_info: true
+            artwork: cover
+            entity: media_player.basement_dot
+  - title: Statistics
+    icon: mdi:chart-bar
+    cards:
+      - type: picture-elements
+        image: /local/websecurity.jpeg
+        elements:
+          - type: state-label
+            entity: !secret kpwn
+            prefix: "Kenny: "
+            style:
+              top: 80%
+              left: 50%
+              color: white
+          - type: state-label
+            entity: !secret mpwn
+            prefix: "Meredith: "
+            style:
+              top: 90%
+              left: 50%
+              color: white
+      - type: picture-elements
+        image: /local/raspberry.jpg
+        elements:
+          - type: state-icon
+            entity: sensor.load_1m
+            style:
+              top: 17%
+              left: 17%
+          - type: state-label
+            entity: sensor.load_1m
+            prefix: "Load: "
+            style:
+              top: 25%
+              left: 17%
+              color: white
+          - type: state-icon
+            entity: sensor.processor_use
+            style:
+              top: 36%
+              left: 17%
+          - type: state-label
+            entity: sensor.processor_use
+            prefix: "Processor: "
+            style:
+              top: 44%
+              left: 17%
+              color: white
+          - type: state-icon
+            entity: sensor.memory_use_percent
+            style:
+              top: 54%
+              left: 17%
+          - type: state-label
+            entity: sensor.memory_use_percent
+            prefix: "Memory: "
+            style:
+              top: 62%
+              left: 17%
+              color: white
+          - type: state-icon
+            entity: sensor.swap_use_percent
+            style:
+              top: 72%
+              left: 17%
+          - type: state-label
+            entity: sensor.swap_use_percent
+            prefix: "Swap: "
+            style:
+              top: 80%
+              left: 17%
+              color: white
+          - type: state-icon
+            entity: sensor.since_last_boot_round
+            style:
+              top: 36%
+              left: 83%
+          - type: state-label
+            entity: sensor.since_last_boot_round
+            style:
+              top: 44%
+              left: 83%
+              color: white
+          - type: state-icon
+            entity: sensor.uptime
+            style:
+              top: 54%
+              left: 83%
+          - type: state-label
+            entity: sensor.uptime
+            prefix: "Uptime: "
+            style:
+              top: 62%
+              left: 83%
+              color: white
+      - type: picture-elements
+        image: /local/internet.jpg
+        elements:
+          - type: image
+            image: /local/room_pic/black_bar.jpg
+            filter: opacity(0.1)
+            tap_action: none
+            style:
+              top: 92%
+              left: 50%
+              width: 100%
+          - type: state-icon
+            entity: sensor.ssl_certificate_expiry
+            style:
+              top: 88%
+              left: 20%
+          - type: state-label
+            entity: sensor.ssl_certificate_expiry
+            style:
+              top: 96%
+              left: 20%
+              color: white
+          - type: state-icon
+            entity: sensor.speedtest_ping
+            style:
+              top: 88%
+              left: 40%
+          - type: state-label
+            entity: sensor.speedtest_ping
+            style:
+              top: 96%
+              left: 40%
+              color: white
+          - type: state-icon
+            entity: sensor.speedtest_upload
+            style:
+              top: 88%
+              left: 60%
+          - type: state-label
+            entity: sensor.speedtest_upload
+            style:
+              top: 96%
+              left: 60%
+              color: white
+          - type: state-icon
+            entity: sensor.speedtest_download
+            style:
+              top: 88%
+              left: 80%
+          - type: state-label
+            entity: sensor.speedtest_download
+            style:
+              top: 96%
+              left: 80%
+              color: white
+      - type: picture-elements
+        image: /local/Welcome-Mat.jpg
+        elements:
+          - type: state-label
+            entity: sensor.meredith
+            prefix: "Meredith: "
+            suffix: "rs"
+            style:
+              top: 6%
+              left: 33%
+              color: white
+          - type: state-label
+            entity: sensor.kenny
+            prefix: "Kenny: "
+            suffix: "rs"
+            style:
+              top: 6%
+              left: 66%
+              color: white
+      - type: horizontal-stack
+        cards:
+          - type: picture-elements
+            image: /local/light-bulbs.jpg
+            elements:
+              - type: state-icon
+                entity: sensor.watthour
+                style:
+                  top: 10%
+                  left: 10%
+              - type: state-label
+                entity: sensor.watthour
+                style:
+                  top: 6%
+                  left: 50%
+                  color: white
+          - type: picture-elements
+            image: /local/desktop.png
+            elements:
+              - type: state-icon
+                entity: sensor.cpuwhr
+                style:
+                  top: 10%
+                  left: 10%
+              - type: state-label
+                entity: sensor.cpuwhr
+                style:
+                  top: 6%
+                  left: 50%
+                  color: black
+          - type: picture-elements
+            image: /local/calendar.jpg
+            elements:
+              - type: state-icon
+                entity: sensor.totalwhr
+                style:
+                  top: 10%
+                  left: 10%
+              - type: state-label
+                entity: sensor.totalwhr
+                style:
+                  top: 6%
+                  left: 50%
+                  color: black
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: custom:bignumber-card
+                title: Rock Lamp
+                entity: sensor.rock_lamp_light_hours_round
+                scale: 30px
+                from: bottom
+                min: 0
+                max: 24
+                severity:
+                  - value: 12
+                    style: 'var(--label-badge-green)'
+                  - value: 18
+                    style: 'var(--label-badge-yellow)'
+                  - value: 24
+                    style: 'var(--label-badge-red)'
+              - type: custom:bignumber-card
+                title: Floor Lamp
+                entity: sensor.floor_lamp_light_hours_round
+                scale: 30px
+                from: bottom
+                min: 0
+                max: 24
+                severity:
+                  - value: 12
+                    style: 'var(--label-badge-green)'
+                  - value: 18
+                    style: 'var(--label-badge-yellow)'
+                  - value: 24
+                    style: 'var(--label-badge-red)'
+              - type: custom:bignumber-card
+                title: Chair Lamp
+                entity: sensor.chair_lamp_light_hours_round
+                scale: 30px
+                from: bottom
+                min: 0
+                max: 24
+                severity:
+                  - value: 12
+                    style: 'var(--label-badge-green)'
+                  - value: 18
+                    style: 'var(--label-badge-yellow)'
+                  - value: 24
+                    style: 'var(--label-badge-red)'
+          - type: horizontal-stack
+            cards:
+              - type: custom:bignumber-card
+                title: Prep Area Light
+                entity: sensor.prep_area_hours_round
+                scale: 30px
+                from: bottom
+                min: 0
+                max: 24
+                severity:
+                  - value: 12
+                    style: 'var(--label-badge-green)'
+                  - value: 18
+                    style: 'var(--label-badge-yellow)'
+                  - value: 24
+                    style: 'var(--label-badge-red)'
+              - type: custom:bignumber-card
+                title: Oven Light
+                entity: sensor.oven_light_hours_round
+                scale: 30px
+                from: bottom
+                min: 0
+                max: 24
+                severity:
+                  - value: 12
+                    style: 'var(--label-badge-green)'
+                  - value: 18
+                    style: 'var(--label-badge-yellow)'
+                  - value: 24
+                    style: 'var(--label-badge-red)'
+              - type: custom:bignumber-card
+                title: Dining Room
+                entity: sensor.dining_room_light_hours_round
+                scale: 30px
+                from: bottom
+                min: 0
+                max: 24
+                severity:
+                  - value: 12
+                    style: 'var(--label-badge-green)'
+                  - value: 18
+                    style: 'var(--label-badge-yellow)'
+                  - value: 24
+                    style: 'var(--label-badge-red)'
+          - type: horizontal-stack
+            cards:
+              - type: custom:bignumber-card
+                title: Bedroom Fan
+                entity: sensor.bedroom_fan_hours_round
+                scale: 30px
+                from: bottom
+                min: 0
+                max: 24
+                severity:
+                  - value: 12
+                    style: 'var(--label-badge-green)'
+                  - value: 18
+                    style: 'var(--label-badge-yellow)'
+                  - value: 24
+                    style: 'var(--label-badge-red)'
+              - type: custom:bignumber-card
+                title: Master Bath
+                entity: sensor.master_bathroom_hours_round
+                scale: 30px
+                from: bottom
+                min: 0
+                max: 24
+                severity:
+                  - value: 12
+                    style: 'var(--label-badge-green)'
+                  - value: 18
+                    style: 'var(--label-badge-yellow)'
+                  - value: 24
+                    style: 'var(--label-badge-red)'
+              - type: custom:bignumber-card
+                title: Swirl Lamp
+                entity: sensor.swirl_lamp_light_hours_round
+                scale: 30px
+                from: bottom
+                min: 0
+                max: 24
+                severity:
+                  - value: 12
+                    style: 'var(--label-badge-green)'
+                  - value: 18
+                    style: 'var(--label-badge-yellow)'
+                  - value: 24
+                    style: 'var(--label-badge-red)'
+          - type: horizontal-stack
+            cards:
+              - type: custom:bignumber-card
+                title: Craft Room Fan
+                entity: sensor.craft_room_fan_hours_round
+                scale: 30px
+                from: bottom
+                min: 0
+                max: 24
+                severity:
+                  - value: 12
+                    style: 'var(--label-badge-green)'
+                  - value: 18
+                    style: 'var(--label-badge-yellow)'
+                  - value: 24
+                    style: 'var(--label-badge-red)'
+              - type: custom:bignumber-card
+                title: Sewing Light
+                entity: sensor.sewing_light_hours_round
+                scale: 30px
+                from: bottom
+                min: 0
+                max: 24
+                severity:
+                  - value: 12
+                    style: 'var(--label-badge-green)'
+                  - value: 18
+                    style: 'var(--label-badge-yellow)'
+                  - value: 24
+                    style: 'var(--label-badge-red)'
+              - type: custom:bignumber-card
+                title: Office Fan
+                entity: sensor.office_fan_hours_round
+                scale: 30px
+                from: bottom
+                min: 0
+                max: 24
+                severity:
+                  - value: 12
+                    style: 'var(--label-badge-green)'
+                  - value: 18
+                    style: 'var(--label-badge-yellow)'
+                  - value: 24
+                    style: 'var(--label-badge-red)'
+          - type: horizontal-stack
+            cards:
+              - type: custom:bignumber-card
+                title: Front Door Light
+                entity: sensor.front_door_light_hours_round
+                scale: 30px
+                from: bottom
+                min: 0
+                max: 24
+                severity:
+                  - value: 12
+                    style: 'var(--label-badge-green)'
+                  - value: 18
+                    style: 'var(--label-badge-yellow)'
+                  - value: 24
+                    style: 'var(--label-badge-red)'
+              - type: custom:bignumber-card
+                title: Deck Light
+                entity: sensor.deck_light_hours_round
+                scale: 30px
+                from: bottom
+                min: 0
+                max: 24
+                severity:
+                  - value: 12
+                    style: 'var(--label-badge-green)'
+                  - value: 18
+                    style: 'var(--label-badge-yellow)'
+                  - value: 24
+                    style: 'var(--label-badge-red)'
+              - type: custom:bignumber-card
+                title: Guest Bedroom
+                entity: sensor.guest_bedroom_fan_hours_round
+                scale: 30px
+                from: bottom
+                min: 0
+                max: 24
+                severity:
+                  - value: 12
+                    style: 'var(--label-badge-green)'
+                  - value: 18
+                    style: 'var(--label-badge-yellow)'
+                  - value: 24
+                    style: 'var(--label-badge-red)'
+          - type: horizontal-stack
+            cards:
+              - type: custom:bignumber-card
+                title: Misc Light
+                entity: sensor.basement_light_hours_round
+                scale: 30px
+                from: bottom
+                min: 0
+                max: 24
+                severity:
+                  - value: 12
+                    style: 'var(--label-badge-green)'
+                  - value: 18
+                    style: 'var(--label-badge-yellow)'
+                  - value: 24
+                    style: 'var(--label-badge-red)'
+              - type: custom:bignumber-card
+                title: Basement 1
+                entity: sensor.basement_1_light_hours_round
+                scale: 30px
+                from: bottom
+                min: 0
+                max: 24
+                severity:
+                  - value: 12
+                    style: 'var(--label-badge-green)'
+                  - value: 18
+                    style: 'var(--label-badge-yellow)'
+                  - value: 24
+                    style: 'var(--label-badge-red)'
+              - type: custom:bignumber-card
+                title: Basement 2
+                entity: sensor.basement_2_light_hours_round
+                scale: 30px
+                from: bottom
+                min: 0
+                max: 24
+                severity:
+                  - value: 12
+                    style: 'var(--label-badge-green)'
+                  - value: 18
+                    style: 'var(--label-badge-yellow)'
+                  - value: 24
+                    style: 'var(--label-badge-red)'
+          - type: horizontal-stack
+            cards:
+              - type: custom:bignumber-card
+                title: Basement 3
+                entity: sensor.basement_3_light_hours_round
+                scale: 30px
+                from: bottom
+                min: 0
+                max: 24
+                severity:
+                  - value: 12
+                    style: 'var(--label-badge-green)'
+                  - value: 18
+                    style: 'var(--label-badge-yellow)'
+                  - value: 24
+                    style: 'var(--label-badge-red)'
+              - type: custom:bignumber-card
+                title: Basement 4
+                entity: sensor.basement_3_light_hours_round
+                scale: 30px
+                from: bottom
+                min: 0
+                max: 24
+                severity:
+                  - value: 12
+                    style: 'var(--label-badge-green)'
+                  - value: 18
+                    style: 'var(--label-badge-yellow)'
+                  - value: 24
+                    style: 'var(--label-badge-red)'
+              - type: custom:bignumber-card
+                title: Computer
+                entity: sensor.computer_hours_round
+                scale: 30px
+                from: bottom
+                min: 0
+                max: 24
+                severity:
+                  - value: 12
+                    style: 'var(--label-badge-green)'
+                  - value: 18
+                    style: 'var(--label-badge-yellow)'
+                  - value: 24
+                    style: 'var(--label-badge-red)'
+          - type: horizontal-stack
+            cards:
+              - type: custom:bignumber-card
+                title: Market Lights
+                entity: sensor.market_light_hours_round
+                scale: 30px
+                from: bottom
+                min: 0
+                max: 24
+                severity:
+                  - value: 12
+                    style: 'var(--label-badge-green)'
+                  - value: 18
+                    style: 'var(--label-badge-yellow)'
+                  - value: 24
+                    style: 'var(--label-badge-red)'
+              - type: custom:bignumber-card
+                title: Washroom Light
+                entity: sensor.washroom_light_hours_round
+                scale: 30px
+                from: bottom
+                min: 0
+                max: 24
+                severity:
+                  - value: 12
+                    style: 'var(--label-badge-green)'
+                  - value: 18
+                    style: 'var(--label-badge-yellow)'
+                  - value: 24
+                    style: 'var(--label-badge-red)'
+      - type: custom:tracker-card
+        show_installable: false
+        trackers:
+          - sensor.custom_card_tracker
+          - sensor.custom_component_tracker
+  - title: Automations
+    icon: mdi:recycle
+    cards:
+      - type: custom:folding-group-entity-row
+        entity: group.light_on_auto
+        group_config:
+          secondary_info: last-changed
+          type: custom:toggle-lock-entity-row
+      - type: custom:folding-group-entity-row
+        entity: group.light_off_auto
+        group_config:
+          secondary_info: last-changed
+          type: custom:toggle-lock-entity-row
+      - type: custom:folding-group-entity-row
+        entity: group.notify_auto
+        group_config:
+          secondary_info: last-changed
+          type: custom:toggle-lock-entity-row
+      - type: custom:folding-group-entity-row
+        entity: group.pc_auto
+        group_config:
+          secondary_info: last-changed
+          type: custom:toggle-lock-entity-row
+      - type: custom:folding-group-entity-row
+        entity: group.location_auto
+        group_config:
+          secondary_info: last-changed
+          type: custom:toggle-lock-entity-row
+      - type: custom:folding-group-entity-row
+        entity: group.theme_auto
+        group_config:
+          secondary_info: last-changed
+          type: custom:toggle-lock-entity-row
+      - type: custom:folding-group-entity-row
+        entity: group.mastersw_auto
+        group_config:
+          secondary_info: last-changed
+          type: custom:toggle-lock-entity-row
+      - type: custom:folding-group-entity-row
+        entity: group.other_auto
+        group_config:
+          secondary_info: last-changed
+          type: custom:toggle-lock-entity-row

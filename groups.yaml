@@ -9,21 +9,14 @@ default_view:
     - device_tracker.kenny_pixelxl
     - device_tracker.mere_iphone
     - persistent_notification.invalid_config
-    - group.webcam
+    - configurator.alexa_media_player
+    - configurator.alexa_media_player_2
     - group.outside
-    - group.hvac
-    - group.weather
-    - group.master
-    - group.vacation
-    - group.visitor
 
 First Floor:
   view: yes
   icon: mdi:numeric-1-box
   entities:
-    - sensor.living_room_motion_stats_mean
-    - sensor.webcam_light_level
-    - sensor.living_room_bee_temperature
     - group.livingroom
     - group.kitchen
     - group.dining_room
@@ -32,50 +25,16 @@ Second Floor:
   view: yes
   icon: mdi:numeric-2-box
   entities:
-    - sensor.bedroom_multisensor_burglar
-    - sensor.bedroom_multisensor_luminance
-    - sensor.bedroom_bee_temperature
-    - sensor.office_motion_stats_mean
-    - sensor.webcam_2_light_level
-    - group.bedroom_constant
+    - group.bedroom
     - group.craft
-    - group.office
-    - group.webcam2
+    - group.office_no_pc
     
 Basement Floor:
   view: yes
   icon: mdi:arrow-down-bold-box
   entities:
-    - sensor.basement_multisensor_burglar
-    - sensor.basement_multisensor_luminance
-    - sensor.basement_bee_temperature
     - group.guest
     - group.basement
-    - group.games
-
-Statistics:
-  view: yes
-  icon: mdi:chart-bar
-  entities:
-    - group.websecure
-    - group.system
-    - group.network
-    - group.whenhome
-    - group.power
-    - group.monthly
-    
-Automations:
-  view: yes
-  icon: mdi:recycle
-  entities:
-    - group.light_on_auto
-    - group.light_off_auto
-    - group.notify_auto
-    - group.pc_auto
-    - group.location_auto
-    - group.theme_auto
-    - group.mastersw_auto
-    - group.other_auto
     
 ##############################
 #           GROUPS           #
@@ -84,54 +43,13 @@ Automations:
 ################
 # Default View #
 ################
-
-webcam:
-  name: Web Camera
-  entities:
-    - camera.webcam
     
 outside:
-  name: Outside
+  name: Outside Lights
   entities:
     - light.front_outside
     - light.deck_light
-    
-hvac:
-  name: Climate
-  entities:
-    - climate.main_floor
-    - input_boolean.window
-    
-weather:
-  name: Weather
-  entities:
-    - sensor.pws_weather
-    - sensor.pws_temp_f
-    - sensor.pws_temp_high_1d_f
-    - sensor.pws_temp_low_1d_f
-    - sensor.pws_precip_today_in
-    - sensor.pws_precip_1d_in
-    - sensor.pws_precip_1d
-    - sensor.pws_alerts
-    
-master:
-  name: Master Switches
-  entities:
-    - input_boolean.all_firstfloor
-    - input_boolean.all_secondfloor
-    - input_boolean.all_basement
-    
-vacation:
-  name: Vacation Mode
-  entities:
-    - input_boolean.vacation
-    - calendar.vacations
-    
-visitor:
-  name: Visitor Mode
-  entities:
-    - input_boolean.visitor
-    - calendar.visitors
+    - switch.deck_ceiling_outlet_switch
     
 ###############
 # First Floor #
@@ -143,7 +61,7 @@ livingroom:
     - light.floor_lamp
     - light.rock_lamp
     - light.chair_lamp
-    - media_player.yamaha_receiver
+    - media_player.stereo
     - media_player.lg_tv_remote
 
 kitchen:
@@ -160,13 +78,6 @@ dining_room:
 ################
 # Second Floor #
 ################
-
-bedroom_constant:
-  name: Bedroom
-  entities:
-    - light.swirl_lamp
-    - switch.bedfan
-    - switch.masterbath
     
 craft:
   name: Craft Room
@@ -188,12 +99,15 @@ office:
     - media_player.desktop_media
     - switch.desktopPC
     - light.lightpack
-    - light.lightpack2
+    - media_player.office_stereo
     
-webcam2:
-  name: Web Camera
+office_no_pc:
+  name: Office
   entities:
-    - camera.webcam_2
+    - switch.officefan
+    - media_player.desktop_media
+    - light.lightpack
+    - media_player.office_stereo
     
 ##################
 # Basement Floor #
@@ -207,210 +121,9 @@ guest:
 basement:
   name: Basement Lights
   entities:
-   - switch.outlet
-   - light.basement_1
-   - light.basement_2
-   - light.basement_3
-   - light.basement_4
-   
-games:
-  name: Games
-  entities:
-   - switch.airhockey
-    
-##############
-# Statistics #
-##############
-
-websecure:
-  name: Web Security
-  entities:
-    - !secret kpwn
-    - !secret mpwn
-    
-system:
-  name: Pi System Monitor
-  entities:
-    - sensor.average_load_15m
-    - sensor.cpu_use
-    - sensor.ram_use
-    - sensor.since_last_boot
-    - sensor.swap_use
-    - sensor.uptime
-    
-network:
-  name: Network
-  entities:
-    - sensor.ssl_certificate_expiry
-    - sensor.speedtest_ping
-    - sensor.speedtest_upload
-    - sensor.speedtest_download
-    
-whenhome:
-  name: How Long We've Been Home This Week
-  entities:
-    - sensor.meredith
-    - sensor.kenny
-    
-power:
-  name: Daily Power Usage
-  entities:
-    - sensor.watthour
-    - sensor.cpuwhr
-    - sensor.auxwhr
-    - sensor.totalwhr
-    
-monthly:
-  name: Daily Light Use
-  entities:
-    - sensor.rock_lamp_light_hours
-    - sensor.floor_lamp_light_hours
-    - sensor.chair_lamp_light_hours
-    - sensor.swirl_lamp_light_hours
-    - sensor.oven_light_hours
-    - sensor.front_door_light_hours
-    - sensor.dining_room_light_hours
-    - sensor.basement_light_hours
-    - sensor.basement_1_light_hours
-    - sensor.basement_2_light_hours
-    - sensor.basement_3_light_hours
-    - sensor.basement_4_light_hours
-    - sensor.bedroom_fan_hours
-    - sensor.craft_room_fan_hours
-    - sensor.master_bathroom_hours
-    - sensor.office_fan_hours
-    - sensor.prep_area_hours
-    - sensor.guest_bedroom_fan_hours
-    - sensor.sewing_light_hours
-    - sensor.deck_light_hours
-    - sensor.computer_hours
-    - sensor.hvac_heat_hours
-    
-###############
-# Automations #
-###############
-
-light_on_auto:
-  name: Light On Automations
-  entities:
-    - automation.kenny_wake_up
-    - automation.kenny_awake
-    - automation.kenny_wake_upsa
-    - automation.mere_wake_up
-    - automation.mere_wake_up_gym_day
-    - automation.turn_on_outside_light_at_sunset
-    - automation.turn_on_outside_light_at_sunrise
-    - automation.fade_in_lights_for_sunset
-    - automation.turn_on_lights_after_sunset
-    - automation.turn_on_lights_after_sunset_visitors
-    - automation.turn_on_lights_day_dark
-    - automation.basement_lights_on
-    - automation.bedroom_lights_on
-    - automation.turn_on_sewing
-    - automation.kenny_bed
-    - automation.turn_on_all_first_floor
-    - automation.turn_on_all_second_floor
-    - automation.turn_on_all_basement_floor
-    - automation.living_room_motion
-
-light_off_auto:
-  name: Light Off Automations
-  entities:
-    - automation.turn_off_all_lights_at_night
-    - automation.off_lights_kenny_leave
-    - automation.off_lights_mere_leave
-    - automation.mere_leave_gym_day
-    - automation.bedtime
-    - automation.turn_off_outside_light_at_sunrise
-    - automation.vacation_bedtime
-    - automation.turn_off_all_lights_at_night_on_vacation
-    - automation.turn_off_all_lights_at_morning_on_vacation
-    - automation.bedtime_first_try
-    - automation.bedtime_after
-    - automation.turn_off_lights_day_dark
-    - automation.basement_lights_off
-    - automation.bedroom_lights_off
-    - automation.turn_off_sewing
-    - automation.turn_off_all_first_floor
-    - automation.turn_off_all_second_floor
-    - automation.turn_off_all_basement_floor
-    - automation.living_room_stop_motion
-
-notify_auto:
-  name: Notification Automations
-  entities:
-    - automation.update_notifications
-    - automation.camera_battery
-    - automation.camera_2_battery
-    - automation.mere_new_breach
-    - automation.kenny_new_breach
-    - automation.weather_alert
-    - automation.ssl_certification_alert
-    
-pc_auto:
-  name: PC Automations
-  entities:
-    - automation.turn_on_PC_morning
-    - automation.turn_off_PC_night_weekend
-    - automation.turn_off_PC_night_weekday
-    - automation.turn_off_PC_not_home
-    - automation.turn_on_PC_home
-    - automation.PC_after_dark
-    - automation.keep_ambibox
-    
-location_auto:
-  name: Location Automations
-  entities:
-    - automation.vacation_on
-    - automation.vacation_off
-    - automation.temperature_vacation
-    - automation.vacation_random_script
-    - automation.turn_off_away_mode
-    - automation.keep_away_mode
-    - automation.ecobee_fasle_positive
-    
-theme_auto:
-  name: Theme Automations
-  entities:
-    - automation.set_theme_startup_day
-    - automation.set_theme_startup_night
-    - automation.night_theme
-    - automation.day_theme
-  
-mastersw_auto:
-  name: Master Switches Automations
-  entities:
-    - automation.turn_ib_first_floor
-    - automation.turn_ib_second_floor
-    - automation.turn_ib_basement_floor
-    - automation.turn_off_ib_first_floor
-    - automation.turn_off_ib_second_floor
-    - automation.turn_off_ib_basement_floor
-    
-other_auto:
-  name: Other Automations
-  entities:
-    - automation.watch_tv
-    - automation.tv_off
-    - automation.visitor_on
-    - automation.visitor_off
-    - automation.close_windows
-    - automation.open_windows
-    - automation.close_windows_auto
-    - automation.keep_windows_open
-    - automation.update_wh
-    - automation.allow_motion
-    - automation.basement_stop_motion
-    - automation.bedroom_stop_motion
-    - automation.update_wh
-    - automation.drive_watthour_update
-    - automation.set_theme_startup_day
-    - automation.set_theme_startup_night
-    - automation.night_theme
-    - automation.day_theme
-    - automation.delay_automations_on_restart
-    - automation.bedroom_fan_on
-    - automation.bedroom_fan_off
+#   - switch.outlet
+   - light.basement_ceiling_lights
+   - switch.laundryroom
     
 ################
 # Other Groups #
@@ -440,16 +153,6 @@ Switch Lights:
     - switch.kitchensw
     - switch.guestbed
    
-basement_left:
-  entities:
-   - light.basement_1
-   - light.basement_3
-   
-basement_right:
-  entities:
-   - light.basement_2
-   - light.basement_4
-   
 residents:
   name: Residents
   entities:
@@ -471,5 +174,136 @@ secondfloor:
   entities:
     - light.swirl_lamp
     - switch.bedfan
+    - switch.masterbath
     - switch.craftfan
+    - light.sewing_light
     - switch.officefan
+    - light.lightpack
+    
+###############
+# Automations #
+###############
+
+light_on_auto:
+  name: Light On Automations
+  entities:
+    - automation.kenny_wake_up
+    - automation.kenny_awake
+    - automation.mere_wake_up
+    - automation.mere_wake_up_gym_day
+    - automation.turn_on_outside_light_at_sunset
+    - automation.turn_on_outside_light_at_sunrise
+    - automation.fade_in_lights_for_sunset
+    - automation.turn_on_lights_after_sunset
+    - automation.turn_on_lights_after_sunset_visitors
+    - automation.turn_on_lights_day_dark
+    - automation.basement_lights_on
+    - automation.bedroom_lights_on
+    - automation.kitchen_lights_on
+    - automation.turn_on_sewing
+    - automation.kenny_bed
+    - automation.turn_on_all_first_floor
+    - automation.turn_on_all_second_floor
+    - automation.turn_on_all_basement_floor
+    - automation.turn_on_all_outside
+    - automation.living_room_motion
+
+light_off_auto:
+  name: Light Off Automations
+  entities:
+    - automation.turn_off_all_lights_at_night
+    - automation.off_lights_kenny_leave
+    - automation.off_lights_mere_leave
+    - automation.mere_leave_gym_day
+    - automation.bedtime
+    - automation.turn_off_outside_light_at_sunrise
+    - automation.vacation_bedtime
+    - automation.turn_off_all_lights_at_night_on_vacation
+    - automation.turn_off_all_lights_at_morning_on_vacation
+    - automation.turn_off_lights_day_dark
+    - automation.basement_lights_off
+    - automation.bedroom_lights_off
+    - automation.kitchen_lights_off
+    - automation.living_room_lights_off
+    - automation.turn_off_sewing
+    - automation.turn_off_all_first_floor
+    - automation.turn_off_all_second_floor
+    - automation.turn_off_all_basement_floor
+    - automation.turn_off_all_outside
+    - automation.craft_room_no_occupancy
+    - automation.one_person_move_off_lights
+
+notify_auto:
+  name: Notification Automations
+  entities:
+    - automation.door_activity
+    - automation.camera_battery
+    - automation.kitchen_sensor_battery
+    - automation.mere_new_breach
+    - automation.kenny_new_breach
+    - automation.weather_alert
+    - automation.ssl_certification_alert
+    
+pc_auto:
+  name: PC Automations
+  entities:
+    - automation.turn_on_pc_morning
+    - automation.turn_off_pc_night_weekend
+    - automation.turn_off_pc_night_weekday
+    - automation.turn_off_pc_not_home
+    - automation.turn_on_pc_home
+    - automation.pc_after_dark
+    
+location_auto:
+  name: Location Automations
+  entities:
+    - automation.vacation_on
+    - automation.vacation_off
+    - automation.temperature_vacation
+    - automation.vacation_random_script
+    - automation.turn_off_away_mode
+    - automation.turn_off_home_switch
+    - automation.ecobee_fasle_positive
+    
+theme_auto:
+  name: Theme Automations
+  entities:
+    - automation.set_theme_at_startup_day
+    - automation.set_theme_at_startup_night
+    - automation.set_night_theme
+    - automation.set_day_theme
+  
+mastersw_auto:
+  name: Master Switches Automations
+  entities:
+    - automation.turn_ib_first_floor
+    - automation.turn_ib_second_floor
+    - automation.turn_ib_basement_floor
+    - automation.turn_ib_outside
+    - automation.turn_off_ib_first_floor
+    - automation.turn_off_ib_second_floor
+    - automation.turn_off_ib_basement_floor
+    - automation.turn_off_ib_outside
+    
+other_auto:
+  name: Other Automations
+  entities:
+    - automation.watch_tv
+    - automation.tv_off
+    - automation.visitor_on
+    - automation.visitor_off
+    - automation.close_windows
+    - automation.open_windows
+    - automation.close_windows_auto
+    - automation.keep_windows_open
+    - automation.update_watt_hour
+    - automation.basement_off_check
+    - automation.allow_motion
+    - automation.basement_stop_motion
+    - automation.bedroom_stop_motion
+    - automation.kitchen_stop_motion
+    - automation.living_room_stop_motion
+    - automation.drive_watthour_update
+    - automation.delay_automations_on_restart
+    - automation.bedroom_fan_on
+    - automation.bedroom_fan_off

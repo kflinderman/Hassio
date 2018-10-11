@@ -1,0 +1,28 @@
+#  - platform: lightpack
+#    host: !secret pc_ip
+#    port: 3636
+#    api_key: !secret lightpack_secret
+  - platform: skybell
+  - platform: group
+    name: Basement Ceiling Lights
+    entities:
+      - light.basement_1
+      - light.basement_2
+      - light.basement_3
+      - light.basement_4
+  - platform: group
+    name: Basement Left
+    entities:
+      - light.basement_1
+      - light.basement_3
+  - platform: group
+    name: Basement Right
+    entities:
+      - light.basement_2
+      - light.basement_4
+  - platform: group
+    name: Living Room Lights
+    entities:
+      - light.rock_lamp
+      - light.floor_lamp
+      - light.chair_lamp

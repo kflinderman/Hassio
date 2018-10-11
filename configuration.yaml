@@ -21,7 +21,7 @@ http:
 recorder:
   purge_interval: 2
   purge_keep_days: 7
-  db_url: mysql://hass:my-password@core-mariadb/homeassistant
+  db_url: !secret db_secret
 
 logger: 
   default: error
@@ -33,56 +33,22 @@ logger:
     homeassistant.components.sensor.cert_expiry: critical
     homeassistant.components.sensor.statistics: critical
     homeassistant.components.light.lightpack: critical
+    homeassistant.components.binary_sensor: critical
     homeassistant.setup: critical
     homeassistant.core: critical
     homeassistant.entity_component: critical
+    custom_components.light.lightpack: debug
     
-history:
-  include:
-      domains:
-        - light
-        - media_player
-      entities:
-        - device_tracker.kennyworkphone
-        - device_tracker.mere_iphone
-        - device_tracker.kenny_pixelxl
-        - group.residents
-        - sensor.speedtest_download
-        - sensor.speedtest_upload
-        - sensor.speedtest_ping
-        - sensor.average_load_15m
-        - sensor.cpu_use
-        - sensor.ram_use
-        - sensor.swap_use
-        - sensor.pws_feelslike_f
-        - sensor.webcam_light_level
-        - sensor.webcam_motion
-        - sensor.webcam_battery_level
-        - sensor.webcam_2_light_level
-        - sensor.webcam_2_motion
-        - sensor.webcam_2_battery_level
-        - climate.main_floor
-        - sensor.pws_precip_today_in
-        - sensor.pws_relative_humidity
-        - switch.outlet
-        - switch.bedfan
-        - switch.officefan
-        - switch.craftfan
-        - switch.masterbath
-        - switch.kitchensw
-        - switch.guestbed
-        - input_boolean.vacation
-        - input_boolean.visitor
-        - sensor.basement_multisensor_burglar
-        - sensor.basement_multisensor_luminance
-        - sensor.basement_multisensor_relative_humidity
-        - sensor.basement_multisensor_temperature
-        - sensor.bedroom_multisensor_burglar
-        - sensor.bedroom_multisensor_luminance
-        - sensor.bedroom_multisensor_relative_humidity
-        - sensor.bedroom_multisensor_temperature
-        - sensor.living_room_motion_stats_mean
-        - sensor.office_motion_stats_mean
+history: !include history.yaml
+
+influxdb:
+  host: a0d7b954-influxdb
+  port: 8086
+  database: homeassistant
+  username: homeassistant
+  password: !secret influxdb_secret
+  max_retries: 3
+  default_measurement: state
 
 logbook:
   exclude:
@@ -93,7 +59,6 @@ logbook:
       - android_ip_webcam
     entities:
       - switch.webcam_video_recording
-      - switch.webcam_2_video_recording
       - automation.update_watt_hour
       - automation.keep_windows_open
       - automation.temperature_vacation
@@ -105,43 +70,13 @@ logbook:
       - device_tracker.mere_lap
       - device_tracker.pc
 
-frontend:
-  themes:
-    red_day:
-      primary-color: "#73000A"
-    red_night:
-    # Main colors that can be changed
-      dark-primary-color: "#c66900"
-      disabled-text-color: "#545454"
-      divider-color: "rgba(255, 255, 255, 0.12)"
-      light-primary-color: "#e06c6c"
-      paper-card-background-color: "#1d1d1d"
-      paper-grey-200: "#191919"
-      paper-item-icon-color: "#d3d3d3"
-      paper-listbox-background-color: "#202020"
-      primary-background-color: "#303030"
-      primary-color: "#73000A"
-      primary-text-color: "#cfcfcf"
-      secondary-background-color: "#131313"
-      sidebar-text_-_background: "#606060" 
-    # Colors based on variables, see above
-      paper-card-header-color: "var(--paper-item-icon-color)" 
-      paper-item-icon-active-color: "var(--primary-color)"
-      paper-item-icon_-_color: "var(--primary-text-color)"
-      paper-listbox-color: "var(--primary-text-color)"
-      paper-grey-50: "var(--primary-text-color)"
-      paper-slider-active-color: "var(--primary-color)"
-      paper-slider-knob-color: "var(--primary-color)"
-      paper-slider-knob-start-color: "var(--primary-color)"
-      paper-slider-pin-color: "var(--primary-color)"
-      paper-slider-secondary-color: "var(--light-primary-color)"
-      paper-toggle-button-checked-ink-color: "var(--dark-primary-color)"
-      paper-toggle-button-checked-button-color: "var(--primary-color)"
-      paper-toggle-button-checked-bar-color: "var(--light-primary-color)"
-      paper-toggle-button-unchecked-bar-color: "var(--primary-text-color)"
-      secondary-text-color: "var(--primary-color)"
-      table-row-background-color: "var(--paper-card-background-color)"
-      table-row-alternative-background-color: "var(--sidebar-text_-_background)"
+custom_updater:
+  show_installable: false
+  track:
+    - components
+    - cards
+      
+frontend: !include theme.yaml
 
 python_script:
 
@@ -151,213 +86,9 @@ zwave:
     light.dining_lights_level:
       refresh_value: true
 
-emulated_hue:
-  host_ip: !secret pi_ip
-  off_maps_to_on_domains:
-    - scene
-  exposed_domains:
-    - input_boolean
-    - media_player
-    - scene
-  entities:
-    light.dining_lights_level:
-      hidden: false
-    light.lightpack:
-      hidden: false
-    switch.airhockey:
-      hidden: false
-    switch.bedfan:
-      hidden: false
-    switch.craftfan:
-      hidden: false
-    switch.desktoppc:
-      hidden: false
-    switch.guestbed:
-      hidden: false
-    switch.kitchensw:
-      hidden: false
-    switch.masterbath:
-      hidden: false
-    switch.officefan:
-      hidden: false
-    switch.outlet:
-      hidden: false
-    group.basement:
-      hidden: false
-    group.bedroom:
-      hidden: false
-    group.firstfloor:
-      hidden: false
-    group.office:
-      hidden: false
-    group.craft:
-      hidden: false
-    group.master:
-      hidden: false
-    group.kitchen:
-      hidden: false
-    group.secondfloor:
-      hidden: false
-    group.guest:
-      hidden: false
-    group.all_switches:
-      hidden: false
-    group.outside:
-      hidden: false
-    group.livingroom:
-      hidden: false
-    group.games:
-      hidden: false
-    group.dining_room:
-      hidden: false
-    group.all_lights:
-      hidden: false
-    group.second_floor:
-      hidden: false
-    group.first_floor:
-      hidden: false
-    media_player.yamaha_receiver_zone_2:
-      hidden: true
-    script.movie_time:
-      hidden: false
-    script.steam_on:
-      hidden: false
-    script.goodnight_kenny:
-      hidden: false
-    script.wiiu_on:
-      hidden: false
-    script.netflix_watch_on:
-      hidden: false
-    script.after_dark:
-      hidden: false
-    script.game_on:
-      hidden: false
-    script.switch_on:
-      hidden: false
-    script.sunset_switch:
-      hidden: false
-    script.windows_open:
-      hidden: false
-    script.pandora_listen_on:
-      hidden: false
-    script.cable_watch_on:
-      hidden: false
-    script.dinner_time:
-      hidden: false
-    script.vinyl_on:
-      hidden: false
-    script.ps3_on:
-      hidden: false
-    script.movie_finish:
-      hidden: false
-    script.radio_listen_on:
-      hidden: false
+emulated_hue: !include emulated_hue.yaml
 
-#cloud:
-#  alexa:
-#    filter:
-#      include_domains:
-#        - switch
-#        - group
-#        - input_boolean
-#        - media_player
-#        - script
-#      include_entities:
-#        - light.dining_lights_level
-#        - light.lightpack
-#      exclude_entities:
-#        - group.bedroom_constant
-#        - group.webcam
-#        - group.webcam2
-#        - group.weather
-#        - group.hvac
-#        - group.vacation
-#        - group.visitor
-#        - group.websecure
-#        - group.whenhome
-#        - group.monthly
-#        - group.system
-#        - group.network
-#        - group.light_on_auto
-#        - group.light_off_auto
-#        - group.notify_auto
-#        - group.pc_auto
-#        - group.location_auto
-#        - group.other_auto
-#        - group.all_automations
-#        - group.hue_lights
-#        - group.switch_lights
-#        - group.all_devices
-#        - group.all_scripts
-#        - group.automations
-#        - group.basement_floor
-#        - group.calendar
-#        - group.defualt_view
-#        - group.residents
-#        - group.statistics
-#        - group.basement_left
-#        - group.basement_right
-#        - group.default_view
-#        - group.power
-#        - script.away_mode
-#        - script.cable_watch_off
-#        - script.netflix_watch_off
-#        - script.pandora_listen_off
-#        - script.ps3_off
-#        - script.radio_listen_off
-#        - script.steam_off
-#        - script.switch_off
-#        - script.vinyl_off
-#        - script.wiiu_off
-#        - script.timed_cpu_off
-#        - script.reset_switch
-#        - script.masterbath_off
-#        - script.ecobee_reset
-#        - script.cpu_off
-#        - script.home_mode
-#        - script.climate_reset
-#        - script.keep_ambi_working_on
-#        - script.keep_ambi_working_off
-#        - script.home_mode_check1
-#        - script.home_mode_check2
-#        - script.rand_vac1
-#        - script.rand_vac2
-#        - script.rand_vac3
-#        - script.rand_vac4
-#        - script.rand_vac5
-#        - script.rand_vac6
-#        - script.rand_vac7
-#        - script.rand_vac8
-#        - script.rand_vac9
-#        - script.rand_vac10
-#        - script.vac_craft
-#        - script.vac_office
-#        - script.vac_bed
-#        - script.vac_living
-#        - script.vacation_temp
-#        - script.first_floor_break
-#        - script.second_floor_break
-#        - script.basement_off
-#        - script.bedroom_off
-#        - script.basement_floor_break
-#        - switch.webcam_night_vision
-#        - switch.webcam_exposure_lock
-#        - switch.webcam_focus
-#        - switch.webcam_frontfacing_camera
-#        - switch.webcam_gps_active
-#        - switch.webcam_overlay
-#        - switch.webcam_torch
-#        - switch.webcam_video_recording
-#        - switch.webcam_white_balance_lock
-#        - switch.webcam_2_night_vision
-#        - switch.webcam_2_exposure_lock
-#        - switch.webcam_2_focus
-#        - switch.webcam_2_frontfacing_camera
-#        - switch.webcam_2_gps_active
-#        - switch.webcam_2_overlay
-#        - switch.webcam_2_torch
-#        - switch.webcam_2_video_recording
-#        - switch.webcam_2_white_balance_lock
+#cloud: !include cloud.yaml
       
 automation: !include automations.yaml
 
@@ -369,14 +100,9 @@ zone: !include zone.yaml
 
 group: !include groups.yaml
 
-updater:
-  include_used_components: true
-
 config:
 
 discovery:
-
-#conversation:
 
 device_tracker:
   - platform: netgear
@@ -384,121 +110,19 @@ device_tracker:
     username: !secret wifi_username
     password: !secret wifi_password
 
-switch:
-  - platform: tplink
-    host: !secret outlet_ip
-    name: outlet
-  - platform: tplink
-    host: !secret airhockey_ip
-    name: airhockey
-  - platform: tplink
-    host: !secret bedfan_ip
-    name: bedfan
-  - platform: tplink
-    host: !secret officefan_ip
-    name: officefan
-  - platform: tplink
-    host: !secret craftfan_ip
-    name: craftfan
-  - platform: tplink
-    host: !secret masterbath_ip
-    name: masterbath
-  - platform: tplink
-    host: !secret kitchen_ip
-    name: kitchensw
-  - platform: tplink
-    host: !secret guestbed_ip
-    name: guestbed
-  - platform: wake_on_lan
-    mac_address: !secret mac_secret
-    name: desktopPC
-    host: !secret pc_ip
-    turn_off:
-      service: script.turn_on
-      entity_id: script.cpu_off
+switch: !include switch.yaml
 
-input_boolean:
-  vacation:
-    name: Vacation Mode
-    icon: mdi:airplane-takeoff
-  visitor:
-    name: Visitor Mode
-    icon: mdi:account-multiple
-  window:
-    name: Windows
-    icon: mdi:window-
-  bedroom:
-    name: Bedroom Occupancy
-  basement:
-    name: Basement Occupancy
-  bedroom_motion:
-    name: Bedroom Motion
-  basement_motion:
-    name: Basement Motion
-  all_firstfloor:
-    name: All First Floor
-    icon: mdi:numeric-1-box
-  all_secondfloor:
-    name: All Second Floor
-    icon: mdi:numeric-2-box
-  all_basement:
-    name: All Basement
-    icon: mdi:arrow-down-bold-box
-  all_break:
-    name: Break for All
+binary_sensor: !include binary_sensor.yaml
+
+input_boolean: !include input_boolean.yaml
 
 sensor: !include sensors.yaml
 
 sun:
 
-media_player:
-  - platform: gpmdp
-    host: !secret pc_ip
-    name: Desktop Media
-  - platform: yamaha
-    source_ignore:
-      - "Rhapsody"
-      - "SIRIUS InternetRadio"
-      - "NET RADIO"
-      - "DOCK"
-      - "USB"
-      - "SIRIUS"
-      - "HDMI1"
-      - "AV1"
-      - "AV2"
-      - "AV3"
-      - "AV5"
-      - "AV6"
-      - "iPod (USB)"
-      - "iPod"
-      - "V-AUX"
-      - "UAW"
-      - "Bluetooth"
-      - "AUDIO1"
-    source_names:
-       AUDIO2: "Vinyl"
-       AV4: "TV"
-       HDMI1: "Switch"
-       HDMI2: "Cable"
-       HDMI3: "PS3"
-       HDMI4: "WiiU"
-       HDMI5: "SteamOS"
-       PC: "PC"
-       Pandora: "Pandora"
-       TUNER: "Radio"
-  - platform: lg_netcast
-    host: !secret lg_ip
-    access_token: 542850
+media_player: !include media_player.yaml
 
-light:
-  - platform: lightpack
-    host: !secret pc_ip
-    port: 3636
-    api_key: "ambibox"
-#  - platform: lightpack2
-#    host: !secret pc_ip
-#    port: 3636
-#    api_key: 
+light: !include lights.yaml
 
 hue:
   bridges:
@@ -506,6 +130,25 @@ hue:
       allow_unreachable: true
       allow_hue_groups: true
 
+skybell:
+    username: !secret kemail
+    password: !secret skybell_secret
+      
+amcrest:
+  - host: !secret backyard_IP
+    username: !secret backyard_user
+    password: !secret backyard_pswd
+    name: "Backyard Camera"
+    sensors:
+      - motion_detector
+      - sdcard
+    switches:
+      - motion_detection
+      - motion_recording
+    resolution: low
+    stream_source: rtsp
+    port: !secret amcrest_port
+      
 android_ip_webcam:
   - host: !secret webcam_ip
     name: Webcam
@@ -529,29 +172,16 @@ android_ip_webcam:
       - torch
       - whitebalance_lock
       - video_recording
-  - host: !secret webcam_ip2
-    name: Webcam 2
-    username: !secret camname_secret
-    password: !secret campass_secret
-    sensors:
-      - audio_connections
-      - battery_level
-      - battery_temp
-      - battery_voltage
-      - light
-      - motion
-      - pressure
-    switches:
-      - exposure_lock
-      - ffc
-      - focus
-      - gps_active
-      - night_vision
-      - overlay
-      - torch
-      - whitebalance_lock
-      - video_recording
 
+ffmpeg:
+      
+weather:
+  - platform: yweather
+
+camera:
+  - platform: skybell
+  - platform: amcrest
+      
 ifttt:
   key: !secret ifttt_key
 
@@ -576,3 +206,7 @@ panel_iframe:
     title: Terminal
     icon: mdi:console
     url: !secret url3_secret
+  grafana:
+    title: Grafana
+    icon: mdi:chart-timeline
+    url: !secret url6_secret

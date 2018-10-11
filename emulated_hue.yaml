@@ -1,0 +1,124 @@
+  host_ip: !secret pi_ip
+  listen_port: 8300
+  expose_by_default: false
+  entities:
+  
+    ##### Lights #####
+    
+    light.dining_lights_level:
+      hidden: false
+    light.lightpack:
+      hidden: false
+      
+    ##### Switches #####
+    
+    switch.airhockey:
+      hidden: false
+    switch.bedfan:
+      hidden: false
+    switch.craftfan:
+      hidden: false
+    switch.desktoppc:
+      hidden: false
+    switch.guestbed:
+      hidden: false
+    switch.kitchensw:
+      hidden: false
+    switch.masterbath:
+      hidden: false
+    switch.officefan:
+      hidden: false
+    switch.outlet:
+      hidden: false
+    switch.deck_ceiling_outlet_switch:
+      hidden: false
+    switch.laundryroom:
+      hidden: false
+      
+    ##### Input Booleans #####
+    
+    input_boolean.vacation:
+      hidden: false
+    input_boolean.visitor:
+      hidden: false
+    input_boolean.window:
+      hidden: false
+    input_boolean.im_home:
+      hidden: false
+      
+    ##### Groups #####
+    
+    group.basement:
+      hidden: false
+    group.bedroom:
+      hidden: false
+    group.firstfloor:
+      hidden: false
+    group.office:
+      hidden: false
+    group.craft:
+      hidden: false
+    group.master:
+      hidden: false
+    group.kitchen:
+      hidden: false
+    group.secondfloor:
+      hidden: false
+    group.guest:
+      hidden: false
+    group.outside:
+      hidden: false
+    group.livingroom:
+      hidden: false
+    group.games:
+      hidden: false
+    group.dining_room:
+      hidden: false
+    group.second_floor:
+      hidden: false
+    group.first_floor:
+      hidden: false
+      
+    ##### Media Players #####
+    
+    media_player.office_stereo:
+      hidden: false
+    media_player.stereo:
+      hidden: false
+    media_player.lg_tv_remote:
+      hidden: false
+    media_player.desktop_media:
+      hidden: false
+
+    ##### Scripts #####
+    
+    script.movie_time:
+      hidden: false
+    script.steam_on:
+      hidden: false
+    script.wiiu_on:
+      hidden: false
+    script.netflix_watch_on:
+      hidden: false
+    script.after_dark:
+      hidden: false
+    script.game_on:
+      hidden: false
+    script.switch_on:
+      hidden: false
+    script.windows_open:
+      hidden: false
+    script.pandora_listen_on:
+      hidden: false
+    script.cable_watch_on:
+      hidden: false
+    script.dinner_time:
+      hidden: false
+    script.vinyl_on:
+      hidden: false
+    script.ps3_on:
+      hidden: false
+    script.movie_finish:
+      hidden: false
+    script.radio_listen_on:
+      hidden: false

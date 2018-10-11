@@ -68,15 +68,18 @@ home_mode_check2:
         
 away_mode:
   sequence:
-    - service: light.turn_off
+    - service: input_boolean.turn_off
       data:
-        entity_id: group.hue_lights
-    - service: light.turn_off
+        entity_id: input_boolean.all_firstfloor
+    - service: input_boolean.turn_off
       data:
-        entity_id: light.dining_lights_level
-    - service: switch.turn_off
+        entity_id: input_boolean.all_secondfloor
+    - service: input_boolean.turn_off
       data:
-        entity_id: group.switch_lights
+        entity_id: input_boolean.all_basement
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.all_outside
     - condition: state
       entity_id: input_boolean.window
       state: 'off'
@@ -88,37 +91,6 @@ away_mode:
 ###############
 #1 PC Scripts #
 ###############
-
-keep_ambi_working_on:
-  sequence:
-    - delay:
-        minutes: 60
-    - condition: state
-      entity_id: switch.desktopPC
-      state: 'on'
-    - service: script.turn_on
-      entity_id: script.keep_ambi_working_off
-    - condition: state
-      entity_id: light.lightpack
-      state: 'on'
-    - service: light.turn_off
-      entity_id: light.lightpack
-    - service: light.turn_on
-      entity_id: light.lightpack
-    - service: script.turn_on
-      entity_id: script.keep_ambi_working_on
-    
-keep_ambi_working_off:
-  sequence:
-    - condition: state
-      entity_id: light.lightpack
-      state: 'off'
-    - service: light.turn_on
-      entity_id: light.lightpack
-    - service: light.turn_off
-      entity_id: light.lightpack
-    - service: script.turn_on
-      entity_id: script.keep_ambi_working_on
 
 cpu_off:
   sequence:
@@ -187,7 +159,7 @@ ecobee_reset:
       data:
         entity_id: climate.main_floor
         hold_mode: None
-        
+
 ########################
 #3 Manual Call Scripts #
 ########################
@@ -247,33 +219,25 @@ game_on:
     - delay:
         seconds: 2
     - service: light.turn_on
-      entity_id: group.basement_left
+      entity_id: light.basement_left
       data:
         brightness: 255
     - service: light.turn_off
-      entity_id: group.basement_left
+      entity_id: light.basement_left
     - service: light.turn_on
-      entity_id: group.basement_right
+      entity_id: light.basement_right
       data:
         brightness: 255
     - service: light.turn_off
-      entity_id: group.basement_right
+      entity_id: light.basement_right
     - service: light.turn_on
-      entity_id: group.basement_left
+      entity_id: light.basement_left
     - service: light.turn_off
-      entity_id: group.basement_left
+      entity_id: light.basement_left
     - service: light.turn_on
-      entity_id: group.basement_right
+      entity_id: light.basement_right
     - service: light.turn_off
-      entity_id: group.basement_right
-#    - service: light.turn_on
-#      entity_id: group.basement_left
-#    - service: light.turn_off
-#      entity_id: group.basement_left
-#    - service: light.turn_on
-#      entity_id: group.basement_right
-#    - service: light.turn_off
-#      entity_id: group.basement_right
+      entity_id: light.basement_right
     - delay:
         seconds: 1
     - service: switch.turn_on
@@ -290,6 +254,8 @@ sunset_switch:
         minutes: 30
     - service: switch.turn_on
       entity_id: switch.kitchensw
+    - service: switch.turn_on
+      entity_id: switch.outlet
     - service: light.turn_on
       entity_id: light.dining_lights_level
     - condition: state
@@ -306,6 +272,15 @@ goodnight_kenny:
         minutes: 2
     - service: switch.turn_off
       entity_id: switch.officefan
+      
+door:
+  sequence:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.door
+    - delay:
+        minutes: 5
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.door
         
 first_floor_break:
   sequence:
@@ -334,6 +309,15 @@ basement_floor_break:
     - service: input_boolean.turn_off
       entity_id: input_boolean.all_break
       
+outside_break:
+  sequence:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.all_break
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.all_outside
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.all_break
+      
 bedroom_off:
   sequence:
     - delay:
@@ -352,6 +336,24 @@ bedroom_off:
     - service: input_boolean.turn_off
       entity_id: input_boolean.bedroom_motion
       
+kitchen_off:
+  sequence:
+    - delay:
+        minutes: 5
+    - condition: numeric_state
+      entity_id: sensor.kitchen_burglar
+      below: 4 
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.kitchen_motion
+    - delay:
+        seconds: 2
+    - service: homeassistant.turn_off
+      entity_id: group.kitchen
+    - delay:
+        seconds: 2
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.kitchen_motion
+      
 basement_off:
   sequence:
     - service: input_boolean.turn_on
@@ -364,8 +366,40 @@ basement_off:
         seconds: 2
     - service: input_boolean.turn_off
       entity_id: input_boolean.basement_motion
-    
-        
+
+livingroom_off:
+  sequence:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.livingroom_motion
+    - delay:
+        seconds: 2
+    - service: light.turn_off
+      entity_id: group.livingroom
+    - delay:
+        seconds: 2
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.livingroom_motion
+      
+basement_check:
+  sequence:
+    - service: light.turn_off
+      entity_id: light.basement_ceiling_lights
+    - delay:
+        minutes: 2
+    - condition: state
+      entity_id: light.basement_ceiling_lights
+      state: 'on'
+    - service: script.turn_on
+      entity_id: script.basement_check
+      
+basement_loop:
+  sequence:
+    - condition: state
+      entity_id: light.basement_ceiling_lights
+      state: 'off'
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.basement_light_off_loop
+      
 ############################
 #5 Random Vacation Scripts #
 ############################
@@ -581,35 +615,35 @@ vinyl_on:
     - condition: or
       conditions:
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'on'
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'playing'
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'idle'
     - service: media_player.select_source
       data:
-        entity_id: media_player.yamaha_receiver
-        source: AUDIO2
+        entity_id: media_player.stereo
+        source: AUDIO5
         
 vinyl_off:
   sequence:
     - delay:
         seconds: 1
     - condition: state
-      entity_id: media_player.yamaha_receiver
+      entity_id: media_player.stereo
       state: 'off'
     - service: media_player.turn_on
       data:
-        entity_id: media_player.yamaha_receiver
+        entity_id: media_player.stereo
     - delay:
         seconds: 5
     - service: media_player.select_source
       data:
-        entity_id: media_player.yamaha_receiver
-        source: AUDIO2
+        entity_id: media_player.stereo
+        source: AUDIO5
 
 netflix_watch_on:
   alias: "The Stereo Movies"
@@ -620,35 +654,35 @@ netflix_watch_on:
     - condition: or
       conditions:
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'on'
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'playing'
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'idle'
     - service: media_player.select_source
       data:
-        entity_id: media_player.yamaha_receiver
-        source: AV4
+        entity_id: media_player.stereo
+        source: AUDIO1
         
 netflix_watch_off:
   sequence:
     - delay:
         seconds: 1
     - condition: state
-      entity_id: media_player.yamaha_receiver
+      entity_id: media_player.stereo
       state: 'off'
     - service: media_player.turn_on
       data:
-        entity_id: media_player.yamaha_receiver
+        entity_id: media_player.stereo
     - delay:
         seconds: 5
     - service: media_player.select_source
       data:
-        entity_id: media_player.yamaha_receiver
-        source: AV4
+        entity_id: media_player.stereo
+        source: AUDIO1
         
 cable_watch_on:
   alias: "The Stereo to Watch Cable"
@@ -659,17 +693,17 @@ cable_watch_on:
     - condition: or
       conditions:
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'on'
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'playing'
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'idle'
     - service: media_player.select_source
       data:
-        entity_id: media_player.yamaha_receiver
+        entity_id: media_player.stereo
         source: HDMI2
         
 cable_watch_off:
@@ -677,16 +711,16 @@ cable_watch_off:
     - delay:
         seconds: 1
     - condition: state
-      entity_id: media_player.yamaha_receiver
+      entity_id: media_player.stereo
       state: 'off'
     - service: media_player.turn_on
       data:
-        entity_id: media_player.yamaha_receiver
+        entity_id: media_player.stereo
     - delay:
         seconds: 5
     - service: media_player.select_source
       data:
-        entity_id: media_player.yamaha_receiver
+        entity_id: media_player.stereo
         source: HDMI2
   
         
@@ -699,17 +733,17 @@ pandora_listen_on:
     - condition: or
       conditions:
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'on'
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'playing'
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'idle'
     - service: media_player.select_source
       data:
-        entity_id: media_player.yamaha_receiver
+        entity_id: media_player.stereo
         source: Pandora
         
 pandora_listen_off:
@@ -717,16 +751,16 @@ pandora_listen_off:
     - delay:
         seconds: 1
     - condition: state
-      entity_id: media_player.yamaha_receiver
+      entity_id: media_player.stereo
       state: 'off'
     - service: media_player.turn_on
       data:
-        entity_id: media_player.yamaha_receiver
+        entity_id: media_player.stereo
     - delay:
         seconds: 5
     - service: media_player.select_source
       data:
-        entity_id: media_player.yamaha_receiver
+        entity_id: media_player.stereo
         source: Pandora
         
 radio_listen_on:
@@ -738,17 +772,17 @@ radio_listen_on:
     - condition: or
       conditions:
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'on'
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'playing'
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'idle'
     - service: media_player.select_source
       data:
-        entity_id: media_player.yamaha_receiver
+        entity_id: media_player.stereo
         source: TUNER
         
 radio_listen_off:
@@ -756,16 +790,16 @@ radio_listen_off:
     - delay:
         seconds: 1
     - condition: state
-      entity_id: media_player.yamaha_receiver
+      entity_id: media_player.stereo
       state: 'off'
     - service: media_player.turn_on
       data:
-        entity_id: media_player.yamaha_receiver
+        entity_id: media_player.stereo
     - delay:
         seconds: 5
     - service: media_player.select_source
       data:
-        entity_id: media_player.yamaha_receiver
+        entity_id: media_player.stereo
         source: TUNER
         
 ps3_on:
@@ -777,35 +811,35 @@ ps3_on:
     - condition: or
       conditions:
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'on'
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'playing'
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'idle'
     - service: media_player.select_source
       data:
-        entity_id: media_player.yamaha_receiver
-        source: HDMI3
+        entity_id: media_player.stereo
+        source: HDMI5
         
 ps3_off:
   sequence:
     - delay:
         seconds: 1
     - condition: state
-      entity_id: media_player.yamaha_receiver
+      entity_id: media_player.stereo
       state: 'off'
     - service: media_player.turn_on
       data:
-        entity_id: media_player.yamaha_receiver
+        entity_id: media_player.stereo
     - delay:
         seconds: 5
     - service: media_player.select_source
       data:
-        entity_id: media_player.yamaha_receiver
-        source: HDMI3
+        entity_id: media_player.stereo
+        source: HDMI5
         
 wiiu_on:
   alias: "The Wii U"
@@ -816,17 +850,17 @@ wiiu_on:
     - condition: or
       conditions:
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'on'
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'playing'
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'idle'
     - service: media_player.select_source
       data:
-        entity_id: media_player.yamaha_receiver
+        entity_id: media_player.stereo
         source: HDMI4
         
 wiiu_off:
@@ -834,16 +868,16 @@ wiiu_off:
     - delay:
         seconds: 1
     - condition: state
-      entity_id: media_player.yamaha_receiver
+      entity_id: media_player.stereo
       state: 'off'
     - service: media_player.turn_on
       data:
-        entity_id: media_player.yamaha_receiver
+        entity_id: media_player.stereo
     - delay:
         seconds: 5
     - service: media_player.select_source
       data:
-        entity_id: media_player.yamaha_receiver
+        entity_id: media_player.stereo
         source: HDMI4
         
 steam_on:
@@ -855,35 +889,35 @@ steam_on:
     - condition: or
       conditions:
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'on'
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'playing'
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'idle'
     - service: media_player.select_source
       data:
-        entity_id: media_player.yamaha_receiver
-        source: HDMI5
+        entity_id: media_player.stereo
+        source: HDMI1
         
 steam_off:
   sequence:
     - delay:
         seconds: 1
     - condition: state
-      entity_id: media_player.yamaha_receiver
+      entity_id: media_player.stereo
       state: 'off'
     - service: media_player.turn_on
       data:
-        entity_id: media_player.yamaha_receiver
+        entity_id: media_player.stereo
     - delay:
         seconds: 5
     - service: media_player.select_source
       data:
-        entity_id: media_player.yamaha_receiver
-        source: HDMI5
+        entity_id: media_player.stereo
+        source: HDMI1
         
 switch_on:
   alias: "Switch"
@@ -896,32 +930,32 @@ switch_on:
     - condition: or
       conditions:
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'on'
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'playing'
         - condition: state
-          entity_id: media_player.yamaha_receiver
+          entity_id: media_player.stereo
           state: 'idle'
     - service: media_player.select_source
       data:
-        entity_id: media_player.yamaha_receiver
-        source: HDMI1
+        entity_id: media_player.stereo
+        source: HDMI3
         
 switch_off:
   sequence:
     - delay:
         seconds: 1
     - condition: state
-      entity_id: media_player.yamaha_receiver
+      entity_id: media_player.stereo
       state: 'off'
     - service: media_player.turn_on
       data:
-        entity_id: media_player.yamaha_receiver
+        entity_id: media_player.stereo
     - delay:
         seconds: 5
     - service: media_player.select_source
       data:
-        entity_id: media_player.yamaha_receiver
-        source: HDMI1
+        entity_id: media_player.stereo
+        source: HDMI3

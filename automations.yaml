@@ -90,7 +90,7 @@
       entity_id: group.kitchen
     - service: homeassistant.turn_on
       entity_id: group.dining_room
-      
+     
 - id: mere_wake_up_gym_day
   alias: Mere Wake Up Gym Day
   trigger:
@@ -126,8 +126,10 @@
     event: sunset
     offset: +00:30:00
   action:
-    service: light.turn_on
-    entity_id: light.front_outside
+  - service: homeassistant.turn_on
+    entity_id: group.outside
+  - service: switch.turn_on
+    entity_id: switch.outlet
     
 - id: turn_on_outside_light_at_sunrise
   alias: Turn on outside light at sunrise
@@ -136,15 +138,17 @@
     event: sunrise
     offset: -01:00:00
   action:
-    service: light.turn_on
-    entity_id: light.front_outside
+  - service: homeassistant.turn_on
+    entity_id: group.outside
+  - service: switch.turn_on
+    entity_id: switch.outlet
     
 - id: fade_in_lights_for_sunset
   alias: Fade in lights for sunset
   trigger:
     platform: sun
     event: sunset
-    offset: -00:45:00
+    offset: -01:00:00
   condition:
     condition: or
     conditions:
@@ -154,6 +158,9 @@
     - condition: state
       entity_id: group.residents
       state: home
+    - condition: state
+      entity_id: input_boolean.im_home
+      state: 'on'
     - condition: state
       entity_id: input_boolean.visitor
       state: 'on'
@@ -166,37 +173,43 @@
 - id: turn_on_lights_after_sunset
   alias: Turn on lights after sunset
   trigger:
-    platform: state
-    entity_id: group.residents
-    to: home
+    - platform: state
+      entity_id: group.residents
+      to: home
+    - platform: state
+      entity_id: input_boolean.im_home
+      to: 'on'
   condition:
     condition: and
     conditions:
     - condition: sun
       after: sunset
-      after_offset: -00:45:00
+      after_offset: -01:00:00
     - condition: time
       before: '23:59:00'
   action:
     - service: homeassistant.turn_on
-      entity_id: group.kitchen
-    - service: homeassistant.turn_on
       entity_id: group.dining_room
     - service: light.turn_on
       entity_id: light.deck_light
+    - service: switch.turn_on
+      entity_id: switch.deck_ceiling_outlet_switch
       
 - id: turn_on_lights_after_sunset_visitors
   alias: Turn on lights after sunset visitors
   trigger:
-    platform: state
-    entity_id: group.residents
-    to: home
+    - platform: state
+      entity_id: group.residents
+      to: home
+    - platform: state
+      entity_id: input_boolean.im_home
+      to: 'on'
   condition:
     condition: and
     conditions:
     - condition: sun
       after: sunset
-      after_offset: -00:45:00
+      after_offset: -01:00:00
     - condition: time
       before: '23:59:00'
     - condition: state
@@ -207,6 +220,8 @@
       entity_id: group.guest
     - service: light.turn_on
       entity_id: light.deck_light
+    - service: switch.turn_on
+      entity_id: switch.deck_ceiling_outlet_switch
       
 - id: turn_on_lights_day_dark
   alias: Turn on Lights Day Dark
@@ -225,8 +240,13 @@
       entity_id: group.residents
       state: not_home
     - condition: state
+      entity_id: input_boolean.im_home
+      state: 'off'
+    - condition: state
       entity_id: light.floor_lamp
       state: 'off'
+    - condition: or
+      conditions:
   action:
     service: light.turn_on
     entity_id: light.floor_lamp
@@ -240,15 +260,20 @@
   condition:
     condition: and
     conditions:
-    - condition: state
-      entity_id: group.residents
-      state: home
     - condition: numeric_state
       entity_id: sensor.basement_multisensor_luminance
       below: 13
     - condition: state
       entity_id: input_boolean.basement
       state: 'on'
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: group.residents
+          state: home
+        - condition: state
+          entity_id: input_boolean.im_home
+          state: 'on'
   action:
     service: homeassistant.turn_on
     entity_id: group.basement
@@ -262,20 +287,51 @@
   condition:
     condition: and
     conditions:
-    - condition: state
-      entity_id: group.residents
-      state: home
     - condition: numeric_state
       entity_id: sensor.bedroom_multisensor_luminance
       below: 13
     - condition: state
       entity_id: input_boolean.bedroom
       state: 'on'
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: group.residents
+          state: home
+        - condition: state
+          entity_id: input_boolean.im_home
+          state: 'on'
   action:
     - service: light.turn_on
       entity_id: light.swirl_lamp
     - service: switch.turn_on
       entity_id: switch.bedfan
+      
+- id: kitchen_lights_on
+  alias: Kitchen Lights ON
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.kitchen_burglar
+    above: 4
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.kitchen
+      state: 'on'
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: group.residents
+          state: home
+        - condition: state
+          entity_id: input_boolean.im_home
+          state: 'on'
+  action:
+    - service: light.turn_on
+      entity_id: light.oven
+    - service: switch.turn_on
+      entity_id: switch.kitchensw
       
 - id: turn_on_sewing
   alias: Turn on Sewing
@@ -346,18 +402,29 @@
     - service: homeassistant.turn_on
       entity_id: group.basement_floor
       
+- id: turn_on_all_outside
+  alias: Turn On All Outside
+  trigger:
+    - platform: state
+      entity_id: input_boolean.all_outside
+      to: 'on'
+  condition:
+  - condition: state
+    entity_id: input_boolean.all_break
+    state: 'off'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: group.outside
+      
 - id: living_room_motion
   alias: Living Room Motion
   trigger:
-    - platform: numeric_state
-      entity_id: sensor.webcam_motion
-      above: 4
+    - platform: state
+      entity_id: binary_sensor.living_room_bay_occupancy
+      to: 'on'
   condition:
     condition: and
     conditions:
-    - condition: state
-      entity_id: group.residents
-      state: home
     - condition: time
       before: '23:30:00'
     - condition: time
@@ -365,6 +432,17 @@
     - condition: numeric_state
       entity_id: sensor.webcam_light_level
       below: 12
+    - condition: state
+      entity_id: input_boolean.livingroom
+      state: 'on'
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: group.residents
+          state: home
+        - condition: state
+          entity_id: input_boolean.im_home
+          state: 'on'
   action:
     - service: light.turn_on
       entity_id: group.livingroom
@@ -378,8 +456,12 @@
     platform: time
     at: 02:30:00
   action:
-    service: light.turn_off
-    entity_id: group.all_lights
+    - service: homeassistant.turn_off
+      entity_id: group.all_lights
+    - service: homeassistant.turn_off
+      entity_id: group.outside
+    - service: switch.turn_off
+      entity_id: switch.outlet
     
 - id: off_lights_kenny_leave
   alias: Off lights Kenny Leave
@@ -444,8 +526,10 @@
     event: sunrise
     offset: +00:30:00
   action:
-    service: light.turn_off
-    entity_id: light.front_outside
+  - service: homeassistant.turn_off
+    entity_id: group.outside
+  - service: switch.turn_off
+    entity_id: switch.outlet
     
 - id: vacation_bedtime
   alias: Vacation Bedtime
@@ -475,7 +559,7 @@
     state: 'on'
   action:
     - delay: '{{ (range(0, 1)|random|int) }}:{{ (range(1, 59)|random|int) }}:00'
-    - service: light.turn_off
+    - service: homeassistant.turn_off
       entity_id: group.all_lights
     - service: homeassistant.turn_off
       entity_id: group.firstfloor
@@ -493,61 +577,43 @@
     state: 'on'
   action:
     - delay: '{{ (range(0, 1)|random|int) }}:{{ (range(1, 59)|random|int) }}:00'
-    - service: light.turn_off
+    - service: homeassistant.turn_off
       entity_id: group.all_lights
     - service: homeassistant.turn_off
       entity_id: group.firstfloor
     - service: homeassistant.turn_off
       entity_id: group.bedroom
       
-- id: bedtime_first_try
-  alias: Bedtime first try
+- id: bedtime
+  alias: Bedtime
   trigger:
-    platform: time
+  - platform: time
     at: '23:30:00'
+  - platform: state
+    entity_id: binary_sensor.living_room_bay_occupancy
+    to: 'off'
   condition:
     condition: and
     conditions:
     - condition: state
-      entity_id: binary_sensor.living_room_bee_occupancy
+      entity_id: binary_sensor.living_room_bay_occupancy
       state: 'off'
-    - condition: numeric_state
-      entity_id: sensor.living_room_motion_stats_mean
-      below: '5'
+    - condition: time
+      after: '23:30:00'
   action:
-    - service: homeassistant.turn_off
-      entity_id: group.kitchen
     - service: homeassistant.turn_off
       entity_id: group.dining_room
     - service: homeassistant.turn_off
       entity_id: group.outside
-      
-- id: bedtime_after
-  alias: Bedtime after
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.living_room_bee_occupancy
-    to: 'off'
-  - platform: numeric_state
-    entity_id: sensor.living_room_motion_stats_mean
-    below: '5'
-  condition:
-  - condition: time
-    after: '23:30:00'
-  action:
-    - service: homeassistant.turn_off
-      entity_id: group.kitchen
-    - service: homeassistant.turn_off
-      entity_id: group.dining_room
-    - service: homeassistant.turn_off
-      entity_id: group.outside
+    - service: switch.turn_off
+      entity_id: switch.outlet
       
 - id: turn_off_lights_day_dark
   alias: Turn off Lights Day Dark
   trigger:
   - platform: numeric_state
     entity_id: sensor.webcam_light_level
-    above: 12
+    above: 18
   condition:
     condition: and
     conditions:
@@ -558,6 +624,9 @@
     - condition: state
       entity_id: group.residents
       state: not_home
+    - condition: state
+      entity_id: input_boolean.im_home
+      state: 'off'
     - condition: state
       entity_id: light.floor_lamp
       state: 'on'
@@ -607,6 +676,27 @@
     service: script.turn_on
     entity_id: script.bedroom_off
     
+- id: kitchen_lights_off
+  alias: Kitchen Lights OFF
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.kitchen_burglar
+    below: 4
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.vacation
+      state: 'off'
+    - condition: state
+      entity_id: group.kitchen
+      state: 'on'
+    - condition: time
+      after: '8:00:00'
+  action:
+    service: script.turn_on
+    entity_id: script.kitchen_off
+    
 - id: turn_off_sewing
   alias: Turn off Sewing
   trigger:
@@ -643,7 +733,11 @@
     state: 'on'
   action:
     - service: homeassistant.turn_off
-      entity_id: group.second_floor
+      entity_id: group.secondfloor
+    - service: media_player.turn_off
+      entity_id: media_player.office_stereo
+    - service: script.turn_on
+      entity_id: script.timed_cpu_off
       
 - id: turn_off_all_basement_floor
   alias: Turn Off All Basement Floor
@@ -659,35 +753,151 @@
     - service: homeassistant.turn_off
       entity_id: group.basement_floor
       
-- id: living_room_stop_motion
-  alias: Living Room Stop Motion
+- id: turn_off_all_outside
+  alias: Turn Off All Outside
   trigger:
-    - platform: numeric_state
-      entity_id: sensor.living_room_motion_stats_mean
-      below: 10
+    - platform: state
+      entity_id: input_boolean.all_outside
+      to: 'off'
+  condition:
+  - condition: state
+    entity_id: group.outside
+    state: 'on'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: group.outside
+      
+- id: living_room_lights_off
+  alias: Living Room Lights Off
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.living_room_bay_occupancy
+      to: 'off'
       for:
-        minutes: 10
+        minutes: 15
   condition:
     condition: state
     entity_id: group.livingroom
     state: 'on'
   action:
+    - service: script.turn_on
+      entity_id: script.livingroom_off
+
+- id: craft_room_no_occupancy
+  alias: Craft Room No Occupancy
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.craft_room_occupancy
+      to: 'off'
+      for:
+        minutes: 15
+  condition:
+    condition: state
+    entity_id: group.craft
+    state: 'on'
+  action:
     - service: homeassistant.turn_off
-      entity_id: group.livingroom
+      entity_id: group.craft
+
+- id: one_person_move_off_lights
+  alias: One Person Move Off Lights
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.basement_occupancy
+      to: 'on'
+      for:
+        minutes: 15
+    - platform: state
+      entity_id: binary_sensor.bedroom_occupancy
+      to: 'on'
+      for:
+        minutes: 15
+    - platform: state
+      entity_id: binary_sensor.kitchen_occupancy
+      to: 'on'
+      for:
+        minutes: 15
+    - platform: state
+      entity_id: binary_sensor.living_room_bay_occupancy
+      to: 'on'
+      for:
+        minutes: 15
+    - platform: state
+      entity_id: binary_sensor.craft_room_occupancy
+      to: 'on'
+      for:
+        minutes: 15
+  condition:
+    condition: numeric_state
+    entity_id: sensor.numhome
+    below: 2
+  action:
+    - service: homeassistant.turn_off
+      entity_id: group.dining_room
+    - service: switch.turn_off
+      entity_id: switch.officefan
+    - service: light.turn_off
+      entity_id: light.lightpack
+
+- id: basement_off_check
+  alias: Basement Off Check
+  trigger:
+    - platform: state
+      entity_id: light.basement_1
+      to: 'off'
+      for:
+        minutes: 5
+    - platform: state
+      entity_id: light.basement_2
+      to: 'off'
+      for:
+        minutes: 5
+    - platform: state
+      entity_id: light.basement_3
+      to: 'off'
+      for:
+        minutes: 5
+    - platform: state
+      entity_id: light.basement_4
+      to: 'off'
+      for:
+        minutes: 5
+  condition:
+    - condition: state
+      entity_id: light.basement_ceiling_lights
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.basement_light_off_loop
+      state: 'off'
+  action:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.basement_light_off_loop
+    - service: script.turn_on
+      entity_id: script.basement_check
 
 #############################
 #2 Notification Automations #
 #############################
-- id: update_notifications
-  alias: Update notifications
+- id: door_activity
+  alias: Door Activity
   trigger:
-    platform: state
-    entity_id: updater.updater
+    - platform: state
+      entity_id: binary_sensor.skybell_front_door_button
+      to: 'detected'
+    - platform: state
+      entity_id: binary_sensor.skybell_front_door_motion
+      to: 'detected'
+  condition:
+    condition: state
+    entity_id: input_boolean.door
+    state: 'on'
   action:
-    service: notify.pushbullet
-    data:
-      title: New Home Assistant Release
-      message: Home Assistant  {{ states.updater.updater.state }}  is now available.
+    - service: notify.pushbullet
+      data:
+        title: Door Activity
+        message: There is activity at the front door...
+    - service: script.turn_on
+      entity_id: script.door
       
 - id: camera_battery
   alias: Camera Battery
@@ -701,18 +911,18 @@
       title: Web Camera Low Battery
       message: The living room web camera has very low battery.
       
-- id: camera_2_battery
-  alias: Camera 2 Battery
+- id: kitchen_sensor_battery
+  alias: Kitchen Sensor Battery
   trigger:
     platform: numeric_state
-    entity_id: sensor.webcam_2_battery_level
+    entity_id: sensor.kitchensensorbatt
     below: 20
   action:
     service: notify.pushbullet
     data:
-      title: Web Camera Low Battery
-      message: The office web camera has very low battery.
-      
+      title: Kitchen Sensor Low Battery
+      message: The kitchen sensor has very low battery.
+  
 - id: kenny_new_breach
   alias: Kenny New Breach
   trigger:
@@ -791,8 +1001,8 @@
   condition:
   - condition: time
     weekday:
-    - fri
     - sat
+    - sun
   action:
     service: script.turn_on
     entity_id: script.cpu_off
@@ -805,11 +1015,11 @@
   condition:
   - condition: time
     weekday:
-    - sun
     - mon
     - tue
     - wed
     - thu
+    - fri
   action:
     service: script.turn_on
     entity_id: script.cpu_off
@@ -853,16 +1063,6 @@
   action:
     service: script.turn_on
     entity_id: script.after_dark
-    
-- id: keep_ambibx
-  alias: Keep Ambibox
-  trigger:
-    - platform: state
-      entity_id: switch.desktopPC
-      to: 'on'
-  action:
-    - service: script.turn_on
-      entity_id: script.keep_ambi_working_on
 
 #########################
 #4 Location Automations #
@@ -889,6 +1089,9 @@
     - platform: state
       entity_id: group.residents
       to: home
+    - platform: state
+      entity_id: input_boolean.im_home
+      to: 'on'
   condition:
   - condition: state
     entity_id: input_boolean.vacation
@@ -916,6 +1119,9 @@
     - condition: state
       entity_id: group.residents
       state: not_home
+    - condition: state
+      entity_id: input_boolean.im_home
+      state: 'off'
   action:
   - service: script.turn_on
     entity_id: script.vacation_temp
@@ -936,12 +1142,29 @@
 - id: turn_off_away_mode
   alias: Turn off away mode
   trigger:
-    platform: state
-    entity_id: group.residents
-    to: home
+    - platform: state
+      entity_id: group.residents
+      to: home
+    - platform: state
+      entity_id: input_boolean.im_home
+      to: 'on'
   action:
-    service: script.turn_on
-    entity_id: script.home_mode
+    - service: script.turn_on
+      entity_id: script.home_mode
+      
+- id: turn_off_home_switch
+  alias: Turn off home switch
+  trigger:
+    - platform: state
+      entity_id: group.residents
+      to: home
+  condition:
+    - condition: state
+      entity_id: input_boolean.im_home
+      state: 'on'
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.im_home
     
 - id: ecobee_false_positive
   alias: Ecobee Fasle Positive
@@ -969,6 +1192,9 @@
       entity_id: group.residents
       state: not_home
     - condition: state
+      entity_id: input_boolean.im_home
+      state: 'off'
+    - condition: state
       entity_id: input_boolean.visitor
       state: 'off'
     - condition: time
@@ -981,6 +1207,7 @@
   action:
     service: script.turn_on
     entity_id: script.ecobee_reset
+    
 
 ######################
 #5 Theme Automations #
@@ -1070,6 +1297,16 @@
     - service: script.turn_on
       entity_id: script.basement_floor_break
       
+- id: turn_ib_outside
+  alias: Turn IB Outside
+  trigger:
+    - platform: state
+      entity_id: group.outside
+      to: 'on'
+  action:
+    - service: script.turn_on
+      entity_id: script.outside_break
+      
 - id: turn_off_ib_first_floor
   alias: Turn off IB First Floor
   trigger:
@@ -1099,6 +1336,16 @@
   action:
     - service: input_boolean.turn_off
       entity_id: input_boolean.all_basement
+      
+- id: turn_off_ib_outside
+  alias: Turn off IB Outside
+  trigger:
+    - platform: state
+      entity_id: group.outside
+      to: 'off'
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.all_outside
 
 ######################
 #7 Other Automations #
@@ -1111,17 +1358,17 @@
     to: playing
   condition:
   - condition: state
-    entity_id: media_player.yamaha_receiver
+    entity_id: media_player.stereo
     state: 'off'
   action:
     service: media_player.turn_on
-    entity_id: media_player.yamaha_receiver
+    entity_id: media_player.stereo
     
 - id: tv_off
   alias: TV Off
   trigger:
     platform: state
-    entity_id: media_player.yamaha_receiver
+    entity_id: media_player.stereo
     to: 'off'
   action:
     service: media_player.turn_off
@@ -1167,8 +1414,10 @@
     platform: state
     to: 'off'
   action:
-  - alias: script.turn_on
-    service: script.windows_closed
+  - service: script.turn_on
+    entity_id: script.climate_reset
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.window
     
 - id: open_windows
   alias: Open Windows
@@ -1247,11 +1496,21 @@
         - condition: state
           entity_id: input_boolean.bedroom
           state: 'off'
+        - condition: state
+          entity_id: input_boolean.livingroom
+          state: 'off'
+        - condition: state
+          entity_id: input_boolean.kitchen
+          state: 'off'
   action:
   - service: input_boolean.turn_on
     entity_id: input_boolean.basement
   - service: input_boolean.turn_on
     entity_id: input_boolean.bedroom
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.livingroom
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.kitchen
     
 - id: bedroom_stop_motion
   alias: Bedroom Stop Motion
@@ -1299,6 +1558,56 @@
   action:
   - service: input_boolean.turn_off
     entity_id: input_boolean.basement
+    
+- id: kitchen_stop_motion
+  alias: Kitchen Stop Motion
+  trigger:
+  - entity_id: light.oven
+    platform: state
+    to: 'off'
+  - entity_id: switch.kitchensw
+    platform: state
+    to: 'off'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.kitchen_motion
+        state: 'off'
+      - condition: or
+        conditions:
+        - condition: time
+          after: '21:00:00'
+        - condition: time
+          before: '8:00:00'
+  action:
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.kitchen
+    
+- id: living_room_stop_motion
+  alias: Living Room Stop Motion
+  trigger:
+  - entity_id: light.rock_lamp
+    platform: state
+    to: 'off'
+  - entity_id: light.chair_lamp
+    platform: state
+    to: 'off'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.livingroom_motion
+        state: 'off'
+      - condition: or
+        conditions:
+        - condition: time
+          after: '21:00:00'
+        - condition: time
+          before: '8:00:00'
+  action:
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.livingroom
     
 - id: update_wh
   alias: Update Watt Hour
@@ -1352,7 +1661,7 @@
   trigger:
     - platform: numeric_state
       entity_id: sensor.pws_feelslike_f
-      below: 70
+      below: 65
   action:
     service: group.set
     data:

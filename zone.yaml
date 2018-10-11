@@ -1,17 +1,17 @@
  - name: Home
-   latitude: 36.047178
-   longitude: -78.970221
+   latitude: !secret lat_secret
+   longitude: !secret lon_secret
    radius: 50
    icon: mdi:home
 
  - name: Work
-   latitude: 36.034819
-   longitude: -79.340815
+   latitude: !secret k_work_lat
+   longitude: !secret k_work_lon
    radius: 50
    icon: mdi:briefcase
 
  - name: Work
-   latitude: 35.913421
-   longitude: -78.899418
+   latitude: !secret m_work_lat
+   longitude: !secret m_work_lon
    radius: 75
    icon: mdi:briefcase
