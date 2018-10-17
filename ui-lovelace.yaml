@@ -1,26 +1,40 @@
 resources:
-  - url: /local/custom_ui/weather-card.js
+  - url: /local/custom-lovelace/weather-card.js
     type: js
-  - url: /local/custom_ui/thermostat-card.js?v=0.1.1
+  - url: /local/custom-lovelace/thermostat-card.js?v=0.1.1
     type: module
-  - url: /local/custom_ui/mini-media-player.js?ver=0.8
+  - url: /local/custom-lovelace/mini-media-player.js?ver=0.8
     type: module
-  - url: /local/custom_ui/toggle-lock-entity-row.js
+  - url: /local/custom-lovelace/toggle-lock-entity-row.js
     type: js
-  - url: /local/custom_ui/bignumber-card.js?v=0.0.1
+  - url: /local/custom-lovelace/bignumber-card.js?v=0.0.1
     type: js
-  - url: /local/custom_ui/tracker-card.js?v=0.1.5
+  - url: /local/custom-lovelace/tracker-card.js?v=0.1.5
     type: js
-  - url: /local/custom_ui/folding-group-entity-row.js?v=98faea
+  - url: /local/custom-lovelace/fold-entity-row.js?v=6cf802
+    type: js
+  - url: /local/custom-lovelace/long-press.js?v=252428
+    type: js
+  - url: /local/custom-lovelace/swipe-card/swipe-card.js?v=1.0.3
     type: js
 
 title: Home
 views:
+
+##############
+# Front View #
+##############
+
   - title: Default
     icon: mdi:home
     cards:
       - type: vertical-stack
         cards:
+        
+  ###############
+  # Home Status #
+  ###############
+        
           - type: horizontal-stack
             cards:
               - type: picture-entity
@@ -39,6 +53,11 @@ views:
             tap_action: toggle
             entity: input_boolean.im_home
             image: /local/imhome.jpg
+            
+  ##############
+  # Front Door #
+  ##############
+            
       - type: vertical-stack
         cards:
           - type: picture-elements
@@ -81,12 +100,19 @@ views:
                 style:
                   top: 91.3%
                   left: 85%
-              - type: state-icon
-                tap_action: toggle
-                entity: light.front_outside
+              - type: custom:long-press
+                child:
+                  type: state-icon
+                  entity: light.front_outside
+                  tap_action: toggle
                 style:
                   top: 91.3%
                   left: 95%
+
+  ##############
+  # Back Porch #
+  ##############
+                  
           - type: picture-elements
             image: /local/room_pic/camera_error.jpg
             elements:
@@ -110,23 +136,37 @@ views:
                 style:
                   top: 91.3%
                   left: 5%
-              - type: state-icon
-                tap_action: toggle
-                entity: light.deck_light
+              - type: custom:long-press
+                child:
+                  type: state-icon
+                  tap_action: toggle
+                  entity: light.deck_light
                 style:
                   top: 91.3%
                   left: 85%
-              - type: state-icon
-                tap_action: toggle
-                entity: switch.deck_ceiling_outlet_switch
+              - type: custom:long-press
+                child:
+                  type: state-icon
+                  tap_action: toggle
+                  entity: switch.deck_ceiling_outlet_switch
                 style:
                   top: 91.3%
                   left: 95%
+
+ ###########
+ # Weather #
+ ###########
+                  
       - type: vertical-stack
         cards:
           - type: "custom:weather-card"
             entity_weather: weather.yweather
             entity_sun: sun.sun
+            
+  ##############
+  # Thermostat #
+  ##############
+            
           - type: horizontal-stack
             cards:
               - type: "custom:thermostat-card"
@@ -135,12 +175,22 @@ views:
                 chevron_size: 100
                 highlight_tap: true
                 step: 1
+                
+  ######################
+  # Window Automations #
+  ######################
+                
               - type: picture-entity
                 entity: input_boolean.window
                 tap_action: toggle
                 state_image:
                   "on": /local/window_open.png
                   "off": /local/window_closed.png
+                  
+  ###################
+  # Master Switches #
+  ###################
+                  
       - type: entities
         title: Master
         entities:
@@ -152,7 +202,18 @@ views:
             type: custom:toggle-lock-entity-row
           - entity: input_boolean.all_outside
             type: custom:toggle-lock-entity-row
-      - type: vertical-stack
+            
+  ###################
+  # Calendar States #
+  ###################
+            
+      - type: custom:swipe-card
+        card_width: '90%'
+        parameters:
+          grabCursor: true
+          centeredSlides: true
+          slidesPerView: 'auto'
+          spaceBetween: 8
         cards:
           - type: entities
             title: Vacation
@@ -171,11 +232,21 @@ views:
               - entity: input_boolean.visitor
                 type: custom:toggle-lock-entity-row
               - entity: calendar.visitors
+              
+###############
+# First Floor #
+###############
+              
   - title: First Floor
     icon: mdi:numeric-1-box
     cards:
       - type: vertical-stack
         cards:
+        
+  ###############
+  # Living Room #
+  ###############
+        
           - type: picture-elements
             image: /local/room_pic/camera_error.jpg
             elements:
@@ -221,32 +292,43 @@ views:
                   top: 96%
                   left: 29%
                   color: white
-              - type: state-icon
-                entity: group.livingroom
+              - type: custom:long-press
+                child:
+                  type: state-icon
+                  entity: group.livingroom
+                  tap_action: toggle
                 style:
                   top: 91.3%
                   left: 39%
-              - type: state-icon
-                tap_action: toggle
-                entity: switch.outlet
+              - type: custom:long-press
+                child:
+                  type: state-icon
+                  tap_action: toggle
+                  entity: switch.outlet
                 style:
                   top: 91.3%
                   left: 65%
-              - type: state-icon
-                tap_action: toggle
-                entity: light.floor_lamp
+              - type: custom:long-press
+                child:
+                  type: state-icon
+                  tap_action: toggle
+                  entity: light.floor_lamp
                 style:
                   top: 91.3%
                   left: 75%
-              - type: state-icon
-                tap_action: toggle
-                entity: light.rock_lamp
+              - type: custom:long-press
+                child:
+                  type: state-icon
+                  tap_action: toggle
+                  entity: light.rock_lamp
                 style:
                   top: 91.3%
                   left: 85%
-              - type: state-icon
-                tap_action: toggle
-                entity: light.chair_lamp
+              - type: custom:long-press
+                child:
+                  type: state-icon
+                  tap_action: toggle
+                  entity: light.chair_lamp
                 style:
                   top: 91.3%
                   left: 95%
@@ -259,6 +341,11 @@ views:
             scroll_info: true
             artwork: cover
             entity: media_player.living_room_dot
+            
+  ###########
+  # Kitchen #
+  ###########
+            
       - type: picture-elements
         image: !secret kitchen_off
         elements:
@@ -312,18 +399,27 @@ views:
             style:
               top: 91.3%
               left: 39%
-          - type: state-icon
-            tap_action: toggle
-            entity: light.oven
+          - type: custom:long-press
+            child:
+              type: state-icon
+              tap_action: toggle
+              entity: light.oven
             style:
               top: 91.3%
               left: 85%
-          - type: state-icon
-            tap_action: toggle
-            entity: switch.kitchensw
+          - type: custom:long-press
+            child:
+              type: state-icon
+              tap_action: toggle
+              entity: switch.kitchensw
             style:
               top: 91.3%
               left: 95%
+      
+  ###############
+  # Dining Room #
+  ###############
+      
       - type: picture-elements
         image: !secret dining_off
         elements:
@@ -345,17 +441,29 @@ views:
               top: 92%
               left: 50%
               width: 100%
-          - type: state-icon
-            tap_action: toggle
-            entity: light.dining_lights_level
+          - type: custom:long-press
+            child:
+              type: state-icon
+              tap_action: toggle
+              entity: light.dining_lights_level
             style:
               top: 91.3%
               left: 95%
+              
+################
+# Second Floor #
+################
+              
   - title: Second Floor
     icon: mdi:numeric-2-box
     cards:
       - type: vertical-stack
         cards:
+        
+  ###########
+  # Bedroom #
+  ###########
+        
           - type: picture-elements
             image: !secret bedroom_off
             elements:
@@ -409,21 +517,27 @@ views:
                 style:
                   top: 91.3%
                   left: 39%
-              - type: state-icon
-                tap_action: toggle
-                entity: light.swirl_lamp
+              - type: custom:long-press
+                child:
+                  type: state-icon
+                  tap_action: toggle
+                  entity: light.swirl_lamp
                 style:
                   top: 91.3%
                   left: 75%
-              - type: state-icon
-                tap_action: toggle
-                entity: switch.bedfan
+              - type: custom:long-press
+                child:
+                  type: state-icon
+                  tap_action: toggle
+                  entity: switch.bedfan
                 style:
                   top: 91.3%
                   left: 85%
-              - type: state-icon
-                tap_action: toggle
-                entity: switch.masterbath
+              - type: custom:long-press
+                child:
+                  type: state-icon
+                  tap_action: toggle
+                  entity: switch.masterbath
                 style:
                   top: 91.3%
                   left: 95%
@@ -432,6 +546,11 @@ views:
             scroll_info: true
             artwork: cover
             entity: media_player.bedroom_dot
+            
+  ##############
+  # Craft Room #
+  ##############
+            
       - type: picture-elements
         image: !secret craft_off
         elements:
@@ -463,18 +582,27 @@ views:
             style:
               top: 91.3%
               left: 15%
-          - type: state-icon
-            tap_action: toggle
-            entity: switch.craftfan
+          - type: custom:long-press
+            child:
+              type: state-icon
+              tap_action: toggle
+              entity: switch.craftfan
             style:
               top: 91.3%
               left: 85%
-          - type: state-icon
-            tap_action: toggle
-            entity: light.sewing_light
+          - type: custom:long-press
+            child:
+              type: state-icon
+              tap_action: toggle
+              entity: light.sewing_light
             style:
               top: 91.3%
               left: 95%
+              
+  ##########
+  # Office #
+  ##########
+              
       - type: vertical-stack
         cards:
           - type: picture-elements
@@ -508,21 +636,27 @@ views:
                 style:
                   top: 91.3%
                   left: 15%
-              - type: state-icon
-                tap_action: toggle
-                entity: switch.officefan
+              - type: custom:long-press
+                child:
+                  type: state-icon
+                  tap_action: toggle
+                  entity: switch.officefan
                 style:
                   top: 91.3%
                   left: 75%
-              - type: state-icon
-                tap_action: toggle
-                entity: switch.desktoppc
+              - type: custom:long-press
+                child:
+                  type: state-icon
+                  tap_action: toggle
+                  entity: switch.desktoppc
                 style:
                   top: 91.3%
                   left: 85%
-              - type: state-icon
-                tap_action: toggle
-                entity: light.lightpack
+              - type: custom:long-press
+                child:
+                  type: state-icon
+                  tap_action: toggle
+                  entity: light.lightpack
                 style:
                   top: 91.3%
                   left: 95%
@@ -533,9 +667,19 @@ views:
             scroll_info: true
             artwork: cover
             entity: media_player.desktop_media
+            
+############
+# Basement #
+############
+            
   - title: Basement
     icon: mdi:arrow-down-bold-box
     cards:
+    
+  ##############
+  # Guest Room #
+  ##############
+    
       - type: picture-elements
         image: !secret guestroom_off
         elements:
@@ -557,12 +701,19 @@ views:
               top: 92%
               left: 50%
               width: 100%
-          - type: state-icon
-            tap_action: toggle
-            entity: switch.guestbed
+          - type: custom:long-press
+            child:
+              type: state-icon
+              tap_action: toggle
+              entity: switch.guestbed
             style:
               top: 91.3%
               left: 95%
+              
+  ############
+  # Basement #
+  ############
+              
       - type: vertical-stack
         cards:
           - type: picture-elements
@@ -618,21 +769,27 @@ views:
                 style:
                   top: 91.3%
                   left: 39%
-              - type: state-icon
-                tap_action: toggle
-                entity: light.basement_ceiling_lights
+              - type: custom:long-press
+                child:
+                  type: state-icon
+                  tap_action: toggle
+                  entity: light.basement_ceiling_lights
                 style:
                   top: 91.3%
                   left: 75%
-              - type: state-icon
-                tap_action: toggle
-                entity: switch.laundryroom
+              - type: custom:long-press
+                child:
+                  type: state-icon
+                  tap_action: toggle
+                  entity: switch.laundryroom
                 style:
                   top: 91.3%
                   left: 85%
-              - type: state-icon
-                tap_action: toggle
-                entity: switch.airhockey
+              - type: custom:long-press
+                child:
+                  type: state-icon
+                  tap_action: toggle
+                  entity: switch.airhockey
                 style:
                   top: 91.3%
                   left: 95%
@@ -641,9 +798,19 @@ views:
             scroll_info: true
             artwork: cover
             entity: media_player.basement_dot
+            
+##############
+# Statistics #
+##############
+            
   - title: Statistics
     icon: mdi:chart-bar
     cards:
+    
+  ################
+  # Web Security #
+  ################
+    
       - type: picture-elements
         image: /local/websecurity.jpeg
         elements:
@@ -661,6 +828,11 @@ views:
               top: 90%
               left: 50%
               color: white
+              
+  ######################
+  # Raspberry Pi Stats #
+  ######################
+              
       - type: picture-elements
         image: /local/raspberry.jpg
         elements:
@@ -735,6 +907,11 @@ views:
               top: 62%
               left: 83%
               color: white
+              
+  ##################
+  # Internet Stats #
+  ##################
+              
       - type: picture-elements
         image: /local/internet.jpg
         elements:
@@ -790,6 +967,11 @@ views:
               top: 96%
               left: 80%
               color: white
+              
+  ##################
+  # Resident Stats #
+  ##################
+              
       - type: picture-elements
         image: /local/Welcome-Mat.jpg
         elements:
@@ -809,6 +991,11 @@ views:
               top: 6%
               left: 66%
               color: white
+              
+  ######################
+  # Power Usage Totals #
+  ######################
+              
       - type: horizontal-stack
         cards:
           - type: picture-elements
@@ -853,391 +1040,377 @@ views:
                   top: 6%
                   left: 50%
                   color: black
-      - type: vertical-stack
+                  
+  ##########################
+  # Individual Power Usage #
+  ##########################
+                  
+      - type: custom:swipe-card
+        card_width: '40%'
+        start_card: 2
+        parameters:
+          grabCursor: true
+          centeredSlides: true
+          slidesPerView: 'auto'
+          spaceBetween: 8
+          pagination:
+            type: 'progressbar'
         cards:
-          - type: horizontal-stack
-            cards:
-              - type: custom:bignumber-card
-                title: Rock Lamp
-                entity: sensor.rock_lamp_light_hours_round
-                scale: 30px
-                from: bottom
-                min: 0
-                max: 24
-                severity:
-                  - value: 12
-                    style: 'var(--label-badge-green)'
-                  - value: 18
-                    style: 'var(--label-badge-yellow)'
-                  - value: 24
-                    style: 'var(--label-badge-red)'
-              - type: custom:bignumber-card
-                title: Floor Lamp
-                entity: sensor.floor_lamp_light_hours_round
-                scale: 30px
-                from: bottom
-                min: 0
-                max: 24
-                severity:
-                  - value: 12
-                    style: 'var(--label-badge-green)'
-                  - value: 18
-                    style: 'var(--label-badge-yellow)'
-                  - value: 24
-                    style: 'var(--label-badge-red)'
-              - type: custom:bignumber-card
-                title: Chair Lamp
-                entity: sensor.chair_lamp_light_hours_round
-                scale: 30px
-                from: bottom
-                min: 0
-                max: 24
-                severity:
-                  - value: 12
-                    style: 'var(--label-badge-green)'
-                  - value: 18
-                    style: 'var(--label-badge-yellow)'
-                  - value: 24
-                    style: 'var(--label-badge-red)'
-          - type: horizontal-stack
-            cards:
-              - type: custom:bignumber-card
-                title: Prep Area Light
-                entity: sensor.prep_area_hours_round
-                scale: 30px
-                from: bottom
-                min: 0
-                max: 24
-                severity:
-                  - value: 12
-                    style: 'var(--label-badge-green)'
-                  - value: 18
-                    style: 'var(--label-badge-yellow)'
-                  - value: 24
-                    style: 'var(--label-badge-red)'
-              - type: custom:bignumber-card
-                title: Oven Light
-                entity: sensor.oven_light_hours_round
-                scale: 30px
-                from: bottom
-                min: 0
-                max: 24
-                severity:
-                  - value: 12
-                    style: 'var(--label-badge-green)'
-                  - value: 18
-                    style: 'var(--label-badge-yellow)'
-                  - value: 24
-                    style: 'var(--label-badge-red)'
-              - type: custom:bignumber-card
-                title: Dining Room
-                entity: sensor.dining_room_light_hours_round
-                scale: 30px
-                from: bottom
-                min: 0
-                max: 24
-                severity:
-                  - value: 12
-                    style: 'var(--label-badge-green)'
-                  - value: 18
-                    style: 'var(--label-badge-yellow)'
-                  - value: 24
-                    style: 'var(--label-badge-red)'
-          - type: horizontal-stack
-            cards:
-              - type: custom:bignumber-card
-                title: Bedroom Fan
-                entity: sensor.bedroom_fan_hours_round
-                scale: 30px
-                from: bottom
-                min: 0
-                max: 24
-                severity:
-                  - value: 12
-                    style: 'var(--label-badge-green)'
-                  - value: 18
-                    style: 'var(--label-badge-yellow)'
-                  - value: 24
-                    style: 'var(--label-badge-red)'
-              - type: custom:bignumber-card
-                title: Master Bath
-                entity: sensor.master_bathroom_hours_round
-                scale: 30px
-                from: bottom
-                min: 0
-                max: 24
-                severity:
-                  - value: 12
-                    style: 'var(--label-badge-green)'
-                  - value: 18
-                    style: 'var(--label-badge-yellow)'
-                  - value: 24
-                    style: 'var(--label-badge-red)'
-              - type: custom:bignumber-card
-                title: Swirl Lamp
-                entity: sensor.swirl_lamp_light_hours_round
-                scale: 30px
-                from: bottom
-                min: 0
-                max: 24
-                severity:
-                  - value: 12
-                    style: 'var(--label-badge-green)'
-                  - value: 18
-                    style: 'var(--label-badge-yellow)'
-                  - value: 24
-                    style: 'var(--label-badge-red)'
-          - type: horizontal-stack
-            cards:
-              - type: custom:bignumber-card
-                title: Craft Room Fan
-                entity: sensor.craft_room_fan_hours_round
-                scale: 30px
-                from: bottom
-                min: 0
-                max: 24
-                severity:
-                  - value: 12
-                    style: 'var(--label-badge-green)'
-                  - value: 18
-                    style: 'var(--label-badge-yellow)'
-                  - value: 24
-                    style: 'var(--label-badge-red)'
-              - type: custom:bignumber-card
-                title: Sewing Light
-                entity: sensor.sewing_light_hours_round
-                scale: 30px
-                from: bottom
-                min: 0
-                max: 24
-                severity:
-                  - value: 12
-                    style: 'var(--label-badge-green)'
-                  - value: 18
-                    style: 'var(--label-badge-yellow)'
-                  - value: 24
-                    style: 'var(--label-badge-red)'
-              - type: custom:bignumber-card
-                title: Office Fan
-                entity: sensor.office_fan_hours_round
-                scale: 30px
-                from: bottom
-                min: 0
-                max: 24
-                severity:
-                  - value: 12
-                    style: 'var(--label-badge-green)'
-                  - value: 18
-                    style: 'var(--label-badge-yellow)'
-                  - value: 24
-                    style: 'var(--label-badge-red)'
-          - type: horizontal-stack
-            cards:
-              - type: custom:bignumber-card
-                title: Front Door Light
-                entity: sensor.front_door_light_hours_round
-                scale: 30px
-                from: bottom
-                min: 0
-                max: 24
-                severity:
-                  - value: 12
-                    style: 'var(--label-badge-green)'
-                  - value: 18
-                    style: 'var(--label-badge-yellow)'
-                  - value: 24
-                    style: 'var(--label-badge-red)'
-              - type: custom:bignumber-card
-                title: Deck Light
-                entity: sensor.deck_light_hours_round
-                scale: 30px
-                from: bottom
-                min: 0
-                max: 24
-                severity:
-                  - value: 12
-                    style: 'var(--label-badge-green)'
-                  - value: 18
-                    style: 'var(--label-badge-yellow)'
-                  - value: 24
-                    style: 'var(--label-badge-red)'
-              - type: custom:bignumber-card
-                title: Guest Bedroom
-                entity: sensor.guest_bedroom_fan_hours_round
-                scale: 30px
-                from: bottom
-                min: 0
-                max: 24
-                severity:
-                  - value: 12
-                    style: 'var(--label-badge-green)'
-                  - value: 18
-                    style: 'var(--label-badge-yellow)'
-                  - value: 24
-                    style: 'var(--label-badge-red)'
-          - type: horizontal-stack
-            cards:
-              - type: custom:bignumber-card
-                title: Misc Light
-                entity: sensor.basement_light_hours_round
-                scale: 30px
-                from: bottom
-                min: 0
-                max: 24
-                severity:
-                  - value: 12
-                    style: 'var(--label-badge-green)'
-                  - value: 18
-                    style: 'var(--label-badge-yellow)'
-                  - value: 24
-                    style: 'var(--label-badge-red)'
-              - type: custom:bignumber-card
-                title: Basement 1
-                entity: sensor.basement_1_light_hours_round
-                scale: 30px
-                from: bottom
-                min: 0
-                max: 24
-                severity:
-                  - value: 12
-                    style: 'var(--label-badge-green)'
-                  - value: 18
-                    style: 'var(--label-badge-yellow)'
-                  - value: 24
-                    style: 'var(--label-badge-red)'
-              - type: custom:bignumber-card
-                title: Basement 2
-                entity: sensor.basement_2_light_hours_round
-                scale: 30px
-                from: bottom
-                min: 0
-                max: 24
-                severity:
-                  - value: 12
-                    style: 'var(--label-badge-green)'
-                  - value: 18
-                    style: 'var(--label-badge-yellow)'
-                  - value: 24
-                    style: 'var(--label-badge-red)'
-          - type: horizontal-stack
-            cards:
-              - type: custom:bignumber-card
-                title: Basement 3
-                entity: sensor.basement_3_light_hours_round
-                scale: 30px
-                from: bottom
-                min: 0
-                max: 24
-                severity:
-                  - value: 12
-                    style: 'var(--label-badge-green)'
-                  - value: 18
-                    style: 'var(--label-badge-yellow)'
-                  - value: 24
-                    style: 'var(--label-badge-red)'
-              - type: custom:bignumber-card
-                title: Basement 4
-                entity: sensor.basement_3_light_hours_round
-                scale: 30px
-                from: bottom
-                min: 0
-                max: 24
-                severity:
-                  - value: 12
-                    style: 'var(--label-badge-green)'
-                  - value: 18
-                    style: 'var(--label-badge-yellow)'
-                  - value: 24
-                    style: 'var(--label-badge-red)'
-              - type: custom:bignumber-card
-                title: Computer
-                entity: sensor.computer_hours_round
-                scale: 30px
-                from: bottom
-                min: 0
-                max: 24
-                severity:
-                  - value: 12
-                    style: 'var(--label-badge-green)'
-                  - value: 18
-                    style: 'var(--label-badge-yellow)'
-                  - value: 24
-                    style: 'var(--label-badge-red)'
-          - type: horizontal-stack
-            cards:
-              - type: custom:bignumber-card
-                title: Market Lights
-                entity: sensor.market_light_hours_round
-                scale: 30px
-                from: bottom
-                min: 0
-                max: 24
-                severity:
-                  - value: 12
-                    style: 'var(--label-badge-green)'
-                  - value: 18
-                    style: 'var(--label-badge-yellow)'
-                  - value: 24
-                    style: 'var(--label-badge-red)'
-              - type: custom:bignumber-card
-                title: Washroom Light
-                entity: sensor.washroom_light_hours_round
-                scale: 30px
-                from: bottom
-                min: 0
-                max: 24
-                severity:
-                  - value: 12
-                    style: 'var(--label-badge-green)'
-                  - value: 18
-                    style: 'var(--label-badge-yellow)'
-                  - value: 24
-                    style: 'var(--label-badge-red)'
+          - type: custom:bignumber-card
+            title: Rock Lamp
+            entity: sensor.rock_lamp_light_hours_round
+            scale: 30px
+            from: bottom
+            min: 0
+            max: 24
+            severity:
+              - value: 12
+                style: 'var(--label-badge-green)'
+              - value: 18
+                style: 'var(--label-badge-yellow)'
+              - value: 24
+                style: 'var(--label-badge-red)'
+          - type: custom:bignumber-card
+            title: Floor Lamp
+            entity: sensor.floor_lamp_light_hours_round
+            scale: 30px
+            from: bottom
+            min: 0
+            max: 24
+            severity:
+              - value: 12
+                style: 'var(--label-badge-green)'
+              - value: 18
+                style: 'var(--label-badge-yellow)'
+              - value: 24
+                style: 'var(--label-badge-red)'
+          - type: custom:bignumber-card
+            title: Chair Lamp
+            entity: sensor.chair_lamp_light_hours_round
+            scale: 30px
+            from: bottom
+            min: 0
+            max: 24
+            severity:
+              - value: 12
+                style: 'var(--label-badge-green)'
+              - value: 18
+                style: 'var(--label-badge-yellow)'
+              - value: 24
+                style: 'var(--label-badge-red)'
+          - type: custom:bignumber-card
+            title: Prep Area Light
+            entity: sensor.prep_area_hours_round
+            scale: 30px
+            from: bottom
+            min: 0
+            max: 24
+            severity:
+              - value: 12
+                style: 'var(--label-badge-green)'
+              - value: 18
+                style: 'var(--label-badge-yellow)'
+              - value: 24
+                style: 'var(--label-badge-red)'
+          - type: custom:bignumber-card
+            title: Oven Light
+            entity: sensor.oven_light_hours_round
+            scale: 30px
+            from: bottom
+            min: 0
+            max: 24
+            severity:
+              - value: 12
+                style: 'var(--label-badge-green)'
+              - value: 18
+                style: 'var(--label-badge-yellow)'
+              - value: 24
+                style: 'var(--label-badge-red)'
+          - type: custom:bignumber-card
+            title: Dining Room
+            entity: sensor.dining_room_light_hours_round
+            scale: 30px
+            from: bottom
+            min: 0
+            max: 24
+            severity:
+              - value: 12
+                style: 'var(--label-badge-green)'
+              - value: 18
+                style: 'var(--label-badge-yellow)'
+              - value: 24
+                style: 'var(--label-badge-red)'
+          - type: custom:bignumber-card
+            title: Bedroom Fan
+            entity: sensor.bedroom_fan_hours_round
+            scale: 30px
+            from: bottom
+            min: 0
+            max: 24
+            severity:
+              - value: 12
+                style: 'var(--label-badge-green)'
+              - value: 18
+                style: 'var(--label-badge-yellow)'
+              - value: 24
+                style: 'var(--label-badge-red)'
+          - type: custom:bignumber-card
+            title: Master Bath
+            entity: sensor.master_bathroom_hours_round
+            scale: 30px
+            from: bottom
+            min: 0
+            max: 24
+            severity:
+              - value: 12
+                style: 'var(--label-badge-green)'
+              - value: 18
+                style: 'var(--label-badge-yellow)'
+              - value: 24
+                style: 'var(--label-badge-red)'
+          - type: custom:bignumber-card
+            title: Swirl Lamp
+            entity: sensor.swirl_lamp_light_hours_round
+            scale: 30px
+            from: bottom
+            min: 0
+            max: 24
+            severity:
+              - value: 12
+                style: 'var(--label-badge-green)'
+              - value: 18
+                style: 'var(--label-badge-yellow)'
+              - value: 24
+                style: 'var(--label-badge-red)'
+          - type: custom:bignumber-card
+            title: Craft Room Fan
+            entity: sensor.craft_room_fan_hours_round
+            scale: 30px
+            from: bottom
+            min: 0
+            max: 24
+            severity:
+              - value: 12
+                style: 'var(--label-badge-green)'
+              - value: 18
+                style: 'var(--label-badge-yellow)'
+              - value: 24
+                style: 'var(--label-badge-red)'
+          - type: custom:bignumber-card
+            title: Sewing Light
+            entity: sensor.sewing_light_hours_round
+            scale: 30px
+            from: bottom
+            min: 0
+            max: 24
+            severity:
+              - value: 12
+                style: 'var(--label-badge-green)'
+              - value: 18
+                style: 'var(--label-badge-yellow)'
+              - value: 24
+                style: 'var(--label-badge-red)'
+          - type: custom:bignumber-card
+            title: Office Fan
+            entity: sensor.office_fan_hours_round
+            scale: 30px
+            from: bottom
+            min: 0
+            max: 24
+            severity:
+              - value: 12
+                style: 'var(--label-badge-green)'
+              - value: 18
+                style: 'var(--label-badge-yellow)'
+              - value: 24
+                style: 'var(--label-badge-red)'
+          - type: custom:bignumber-card
+            title: Front Door Light
+            entity: sensor.front_door_light_hours_round
+            scale: 30px
+            from: bottom
+            min: 0
+            max: 24
+            severity:
+              - value: 12
+                style: 'var(--label-badge-green)'
+              - value: 18
+                style: 'var(--label-badge-yellow)'
+              - value: 24
+                style: 'var(--label-badge-red)'
+          - type: custom:bignumber-card
+            title: Deck Light
+            entity: sensor.deck_light_hours_round
+            scale: 30px
+            from: bottom
+            min: 0
+            max: 24
+            severity:
+              - value: 12
+                style: 'var(--label-badge-green)'
+              - value: 18
+                style: 'var(--label-badge-yellow)'
+              - value: 24
+                style: 'var(--label-badge-red)'
+          - type: custom:bignumber-card
+            title: Guest Bedroom
+            entity: sensor.guest_bedroom_fan_hours_round
+            scale: 30px
+            from: bottom
+            min: 0
+            max: 24
+            severity:
+              - value: 12
+                style: 'var(--label-badge-green)'
+              - value: 18
+                style: 'var(--label-badge-yellow)'
+              - value: 24
+                style: 'var(--label-badge-red)'
+          - type: custom:bignumber-card
+            title: Misc Light
+            entity: sensor.basement_light_hours_round
+            scale: 30px
+            from: bottom
+            min: 0
+            max: 24
+            severity:
+              - value: 12
+                style: 'var(--label-badge-green)'
+              - value: 18
+                style: 'var(--label-badge-yellow)'
+              - value: 24
+                style: 'var(--label-badge-red)'
+          - type: custom:bignumber-card
+            title: Basement 1
+            entity: sensor.basement_1_light_hours_round
+            scale: 30px
+            from: bottom
+            min: 0
+            max: 24
+            severity:
+              - value: 12
+                style: 'var(--label-badge-green)'
+              - value: 18
+                style: 'var(--label-badge-yellow)'
+              - value: 24
+                style: 'var(--label-badge-red)'
+          - type: custom:bignumber-card
+            title: Basement 2
+            entity: sensor.basement_2_light_hours_round
+            scale: 30px
+            from: bottom
+            min: 0
+            max: 24
+            severity:
+              - value: 12
+                style: 'var(--label-badge-green)'
+              - value: 18
+                style: 'var(--label-badge-yellow)'
+              - value: 24
+                style: 'var(--label-badge-red)'
+          - type: custom:bignumber-card
+            title: Basement 3
+            entity: sensor.basement_3_light_hours_round
+            scale: 30px
+            from: bottom
+            min: 0
+            max: 24
+            severity:
+              - value: 12
+                style: 'var(--label-badge-green)'
+              - value: 18
+                style: 'var(--label-badge-yellow)'
+              - value: 24
+                style: 'var(--label-badge-red)'
+          - type: custom:bignumber-card
+            title: Basement 4
+            entity: sensor.basement_3_light_hours_round
+            scale: 30px
+            from: bottom
+            min: 0
+            max: 24
+            severity:
+              - value: 12
+                style: 'var(--label-badge-green)'
+              - value: 18
+                style: 'var(--label-badge-yellow)'
+              - value: 24
+                style: 'var(--label-badge-red)'
+          - type: custom:bignumber-card
+            title: Computer
+            entity: sensor.computer_hours_round
+            scale: 30px
+            from: bottom
+            min: 0
+            max: 24
+            severity:
+              - value: 12
+                style: 'var(--label-badge-green)'
+              - value: 18
+                style: 'var(--label-badge-yellow)'
+              - value: 24
+                style: 'var(--label-badge-red)'
+          - type: custom:bignumber-card
+            title: Market Lights
+            entity: sensor.market_light_hours_round
+            scale: 30px
+            from: bottom
+            min: 0
+            max: 24
+            severity:
+              - value: 12
+                style: 'var(--label-badge-green)'
+              - value: 18
+                style: 'var(--label-badge-yellow)'
+              - value: 24
+                style: 'var(--label-badge-red)'
+          - type: custom:bignumber-card
+            title: Washroom Light
+            entity: sensor.washroom_light_hours_round
+            scale: 30px
+            from: bottom
+            min: 0
+            max: 24
+            severity:
+              - value: 12
+                style: 'var(--label-badge-green)'
+              - value: 18
+                style: 'var(--label-badge-yellow)'
+              - value: 24
+                style: 'var(--label-badge-red)'
+
+  ##################
+  # Custom Tracker #
+  ##################
+      
       - type: custom:tracker-card
         show_installable: false
         trackers:
           - sensor.custom_card_tracker
           - sensor.custom_component_tracker
+          
+###############
+# Automations #
+###############
+          
   - title: Automations
     icon: mdi:recycle
     cards:
-      - type: custom:folding-group-entity-row
-        entity: group.light_on_auto
-        group_config:
-          secondary_info: last-changed
-          type: custom:toggle-lock-entity-row
-      - type: custom:folding-group-entity-row
-        entity: group.light_off_auto
-        group_config:
-          secondary_info: last-changed
-          type: custom:toggle-lock-entity-row
-      - type: custom:folding-group-entity-row
-        entity: group.notify_auto
-        group_config:
-          secondary_info: last-changed
-          type: custom:toggle-lock-entity-row
-      - type: custom:folding-group-entity-row
-        entity: group.pc_auto
-        group_config:
-          secondary_info: last-changed
-          type: custom:toggle-lock-entity-row
-      - type: custom:folding-group-entity-row
-        entity: group.location_auto
-        group_config:
-          secondary_info: last-changed
-          type: custom:toggle-lock-entity-row
-      - type: custom:folding-group-entity-row
-        entity: group.theme_auto
-        group_config:
-          secondary_info: last-changed
-          type: custom:toggle-lock-entity-row
-      - type: custom:folding-group-entity-row
-        entity: group.mastersw_auto
-        group_config:
-          secondary_info: last-changed
-          type: custom:toggle-lock-entity-row
-      - type: custom:folding-group-entity-row
-        entity: group.other_auto
-        group_config:
-          secondary_info: last-changed
-          type: custom:toggle-lock-entity-row
+      - type: custom:fold-entity-row
+        head: group.light_on_auto
+#        group_config:
+#          type: custom:toggle-lock-entity-row
+      - type: custom:fold-entity-row
+        head: group.light_off_auto
+      - type: custom:fold-entity-row
+        head: group.notify_auto
+      - type: custom:fold-entity-row
+        head: group.pc_auto
+      - type: custom:fold-entity-row
+        head: group.location_auto
+      - type: custom:fold-entity-row
+        head: group.theme_auto
+      - type: custom:fold-entity-row
+        head: group.mastersw_auto
+      - type: custom:fold-entity-row
+        head: group.other_auto

@@ -233,7 +233,7 @@
     condition: and
     conditions:
     - condition: time
-      after: 06:30:00
+      after: '06:30:00'
     - condition: time
       before: '22:00:00'
     - condition: state
@@ -245,8 +245,6 @@
     - condition: state
       entity_id: light.floor_lamp
       state: 'off'
-    - condition: or
-      conditions:
   action:
     service: light.turn_on
     entity_id: light.floor_lamp
@@ -618,7 +616,7 @@
     condition: and
     conditions:
     - condition: time
-      after: 06:30:00
+      after: '06:30:00'
     - condition: time
       before: '22:00:00'
     - condition: state
@@ -890,7 +888,7 @@
   condition:
     condition: state
     entity_id: input_boolean.door
-    state: 'on'
+    state: 'off'
   action:
     - service: notify.pushbullet
       data:
@@ -1004,8 +1002,10 @@
     - sat
     - sun
   action:
-    service: script.turn_on
-    entity_id: script.cpu_off
+    - service: script.turn_on
+      entity_id: script.cpu_off
+    - service: media_player.turn_off
+      entity_id: media_player.office_stereo
     
 - id: turn_off_pc_night_weekday
   alias: Turn off PC night weekday
@@ -1021,8 +1021,10 @@
     - thu
     - fri
   action:
-    service: script.turn_on
-    entity_id: script.cpu_off
+    - service: script.turn_on
+      entity_id: script.cpu_off
+    - service: media_player.turn_off
+      entity_id: media_player.office_stereo
     
 - id: turn_off_pc_not_home
   alias: Turn off PC not home

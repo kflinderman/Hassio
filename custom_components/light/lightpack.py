@@ -10,11 +10,7 @@ import homeassistant.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 
-<<<<<<< HEAD
 DOMAIN = 'lightpack'
-=======
-DOMAIN = 'light.lightpack'
->>>>>>> ced044a9f93d1748ef36fe741bec5f86f7fc59cc
 ATTR_NAME = 'profile'
 
 # Validation of the user's configuration
@@ -64,7 +60,6 @@ class Lightpack(Light):
     def is_on(self):
         """Return true if light is on."""
         try:
-<<<<<<< HEAD
             telnet = telnetlib.Telnet(self._host, self._port)
             if (self._api_key != None):
                 telnet.write(("apikey:" + self._api_key + "\n").encode('ascii'))
@@ -74,21 +69,6 @@ class Lightpack(Light):
             telnet.close()
         except IOError as error:
             _LOGGER.error('Command "%s" failed with exception: %s', command, repr(error))
-=======
-            telnet = telnetlib.Telnet((self._host, self._port),300)
-            telnet.write(("\n").encode('ascii'))
-            telnet.write(("getstatus\n").encode('ascii'))
-            if (telnet.read_until(b"status:on\n", timeout=0.3)[60:-2] == b"status:on"):
-                self._state = True
-            else:
-                self._state = False
-            telnet.close()
-#		except socket.timeout:
-#			self._state = False
-        except:
-            self._state = False
-            
->>>>>>> ced044a9f93d1748ef36fe741bec5f86f7fc59cc
         return self._state
 
     def turn_on(self, **kwargs):
@@ -101,18 +81,18 @@ class Lightpack(Light):
 
     def set_lightpack(self, enabled, profile = None):
         try:
-<<<<<<< HEAD
             telnet = telnetlib.Telnet(self._host, self._port)
             if (self._api_key != None):
                 telnet.write(("apikey:" + self._api_key + "\n").encode('ascii'))
                 telnet.read_until(b"\n", timeout=0.2)
-=======
-            telnet = telnetlib.Telnet((self._host, self._port),300)
->>>>>>> ced044a9f93d1748ef36fe741bec5f86f7fc59cc
             telnet.write(("lock\n").encode('ascii'))
             telnet.read_until(b"\n", timeout=0.2)
             if (enabled == True):
                 telnet.write(("setstatus:on\n").encode('ascii'))
+                if (profile != None):
+                    telnet.read_until(b"\n", timeout=0.2)
+                    telnet.write(("setprofile:" + profile + "\n").encode('ascii'))
+                    _LOGGER.error('lightpack profile set to : ' + profile)
             else:
                 telnet.write(("setstatus:off\n").encode('ascii'))
             telnet.read_until(b"\n", timeout=0.2)
@@ -120,11 +100,6 @@ class Lightpack(Light):
             telnet.read_until(b"\n", timeout=0.2)
             telnet.close()
             self._state = enabled
-<<<<<<< HEAD
-=======
-#		except socket.timeout:
-#			return None
->>>>>>> ced044a9f93d1748ef36fe741bec5f86f7fc59cc
         except IOError as error:
             _LOGGER.error('Command "%s" failed with exception: %s', command, repr(error))
             self._state = False

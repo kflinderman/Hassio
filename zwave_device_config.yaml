@@ -1,9 +1,0 @@
-zwave._:
-  ignored: false
-  polling_intensity: 0
-light.ge_14294_inwall_smart_dimmer_level:
-  ignored: false
-  polling_intensity: 1
-zwave.ge_14294_inwall_smart_dimmer:
-  ignored: false
-  polling_intensity: 1
