@@ -51,6 +51,11 @@
   
 - platform: template
   sensors:
+  
+    blank:
+      friendly_name: "Blank"
+      value_template: "{{ state }}"
+  
     kitchensensorbatt:
       friendly_name: "Kitchen Sensor Battery"
       unit_of_measurement: '%'
@@ -82,6 +87,10 @@
         {% endif %}
       
   ##### Rounding Sensors #####
+      
+    load_1m_round:
+      friendly_name: "Load (1m) Round"
+      value_template: "{{ states.sensor.sensor.load_1m.state | round(3) }}"
       
     rock_lamp_light_hours_round:
       friendly_name: "Rock Lamp Light Hours Round"
