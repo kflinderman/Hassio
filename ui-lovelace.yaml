@@ -70,36 +70,50 @@ views:
                   top: 50%
                   left: 50%
                   width: 100%
-              - type: image
-                image: /local/room_pic/black_bar.jpg
-                filter: alpha(opacity=10)
-                tap_action: none
+              - type: state-label
+                entity: sensor.blank
+                prefix: "Front Door"
+                tap_action: nothing
                 style:
-                  top: 92%
-                  left: 50%
+                  left: 0
+                  bottom: 0
+                  font-size: 16px
+                  line-height: 32px
+                  color: white
+                  background-color: rgba(0, 0, 0, 0.5)
                   width: 100%
+                  transform: initial
+                  padding: 0 8px
               - type: state-icon
                 entity: binary_sensor.skybell_front_door_button
                 style:
                   top: 91.3%
-                  left: 5%
+                  left: 40%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: state-icon
                 entity: binary_sensor.skybell_front_door_motion
                 style:
                   top: 91.3%
-                  left: 15%
+                  left: 50%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: state-icon
                 tap_action: toggle
                 entity: switch.skybell_front_door_motion_sensor
                 style:
                   top: 91.3%
                   left: 75%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: state-icon
                 tap_action: toggle
                 entity: switch.skybell_front_door_do_not_disturb
                 style:
                   top: 91.3%
                   left: 85%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: custom:long-press
                 child:
                   type: state-icon
@@ -108,6 +122,8 @@ views:
                 style:
                   top: 91.3%
                   left: 95%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
 
   ##############
   # Back Porch #
@@ -123,19 +139,27 @@ views:
                   top: 50%
                   left: 50%
                   width: 100%
-              - type: image
-                image: /local/room_pic/black_bar.jpg
-                filter: opacity(0)
-                tap_action: none
+              - type: state-label
+                entity: sensor.blank
+                prefix: "Backyard"
+                tap_action: nothing
                 style:
-                  top: 92%
-                  left: 50%
+                  left: 0
+                  bottom: 0
+                  font-size: 16px
+                  line-height: 32px
+                  color: white
+                  background-color: rgba(0, 0, 0, 0.5)
                   width: 100%
+                  transform: initial
+                  padding: 0 8px
               - type: state-icon
                 entity: sensor.backyard_camera_motion_detected
                 style:
                   top: 91.3%
-                  left: 5%
+                  left: 50%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: custom:long-press
                 child:
                   type: state-icon
@@ -144,6 +168,8 @@ views:
                 style:
                   top: 91.3%
                   left: 85%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: custom:long-press
                 child:
                   type: state-icon
@@ -152,6 +178,8 @@ views:
                 style:
                   top: 91.3%
                   left: 95%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
 
  ###########
  # Weather #
@@ -232,7 +260,7 @@ views:
               - entity: input_boolean.visitor
                 type: custom:toggle-lock-entity-row
               - entity: calendar.visitors
-              
+ 
 ###############
 # First Floor #
 ###############
@@ -257,49 +285,89 @@ views:
                   top: 50%
                   left: 50%
                   width: 100%
-              - type: image
-                image: /local/room_pic/black_bar.jpg
-                filter: opacity(0.1)
-                tap_action: none
+              - type: state-label
+                entity: sensor.blank
+                prefix: "Living Room"
+                tap_action: nothing
                 style:
-                  top: 92%
-                  left: 50%
+                  left: 0
+                  bottom: 0
+                  font-size: 16px
+                  line-height: 32px
+                  color: white
+                  background-color: rgba(0, 0, 0, 0.5)
                   width: 100%
+                  transform: initial
+                  padding: 0 8px
               - type: state-icon
                 entity: binary_sensor.living_room_bay_occupancy
                 style:
-                  top: 91.3%
-                  left: 5%
+                  top: 0
+                  right: 0
+                  transform: scale(0.8)
+                  color: rgba(255,255,255,1)
+                  line-height: 32px
+                  margin: 3px 5px 0 0
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: state-icon
                 entity: sensor.webcam_light_level
                 style:
-                  top: 88%
-                  left: 17%
+                  top: 0
+                  right: 0
+                  transform: scale(0.8)
+                  color: rgba(255,255,255,1)
+                  line-height: 32px
+                  margin: 35px 5px 0 0
               - type: state-label
                 entity: sensor.webcam_light_level
                 style:
-                  top: 96%
-                  left: 17%
-                  color: white
+                  top: 0
+                  right: 0
+                  pointer-events: none
+                  transform: initial
+                  font-size: 12px
+                  font-weight: bold
+                  color: rgba(255,255,255,1)
+                  text-shadow: rgba(0, 0, 0, 0.8) 0px 0px 2px
+                  line-height: 32px
+                  margin: 30px 35px
               - type: state-icon
                 entity: sensor.living_room_bee_temperature
                 style:
-                  top: 88%
-                  left: 29%
+                  top: 0
+                  right: 0
+                  transform: scale(0.8)
+                  color: rgba(255,255,255,1)
+                  line-height: 32px
+                  margin: 65px 5px 0 0
               - type: state-label
                 entity: sensor.living_room_bee_temperature
                 style:
-                  top: 96%
-                  left: 29%
-                  color: white
+                  top: 0
+                  right: 0
+                  pointer-events: none
+                  transform: initial
+                  font-size: 12px
+                  font-weight: bold
+                  color: rgba(255,255,255,1)
+                  text-shadow: rgba(0, 0, 0, 0.8) 0px 0px 2px
+                  line-height: 32px
+                  margin: 60px 35px
               - type: custom:long-press
                 child:
                   type: state-icon
                   entity: group.livingroom
                   tap_action: toggle
                 style:
-                  top: 91.3%
-                  left: 39%
+                  top: 0
+                  left: 0
+                  transform: scale(0.8)
+                  color: rgba(255,255,255,1)
+                  line-height: 32px
+                  margin: 3px 5px 0 0
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: custom:long-press
                 child:
                   type: state-icon
@@ -308,6 +376,8 @@ views:
                 style:
                   top: 91.3%
                   left: 65%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: custom:long-press
                 child:
                   type: state-icon
@@ -316,6 +386,8 @@ views:
                 style:
                   top: 91.3%
                   left: 75%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: custom:long-press
                 child:
                   type: state-icon
@@ -324,6 +396,8 @@ views:
                 style:
                   top: 91.3%
                   left: 85%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: custom:long-press
                 child:
                   type: state-icon
@@ -332,6 +406,8 @@ views:
                 style:
                   top: 91.3%
                   left: 95%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
           - type: media-control
             entity: media_player.lg_tv_remote
           - type: media-control
@@ -359,46 +435,86 @@ views:
               top: 50%
               left: 50%
               width: 100%
-          - type: image
-            image: /local/room_pic/black_bar.jpg
-            filter: alpha(opacity=10)
-            tap_action: none
+          - type: state-label
+            entity: sensor.blank
+            prefix: "Kitchen"
+            tap_action: nothing
             style:
-              top: 92%
-              left: 50%
+              left: 0
+              bottom: 0
+              font-size: 16px
+              line-height: 32px
+              color: white
+              background-color: rgba(0, 0, 0, 0.5)
               width: 100%
+              transform: initial
+              padding: 0 8px
           - type: state-icon
             entity: binary_sensor.kitchen_occupancy
             style:
-              top: 91.3%
-              left: 5%
+              top: 0
+              right: 0
+              transform: scale(0.8)
+              color: rgba(255,255,255,1)
+              line-height: 32px
+              margin: 3px 5px 0 0
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
           - type: state-icon
             entity: sensor.kitchen_luminance
             style:
-              top: 88%
-              left: 17%
+              top: 0
+              right: 0
+              transform: scale(0.8)
+              color: rgba(255,255,255,1)
+              line-height: 32px
+              margin: 35px 5px 0 0
           - type: state-label
             entity: sensor.kitchen_luminance
             style:
-              top: 96%
-              left: 17%
-              color: white
+              top: 0
+              right: 0
+              pointer-events: none
+              transform: initial
+              font-size: 12px
+              font-weight: bold
+              color: rgba(255,255,255,1)
+              text-shadow: rgba(0, 0, 0, 0.8) 0px 0px 2px
+              line-height: 32px
+              margin: 30px 35px
           - type: state-icon
             entity: sensor.kitchen_temperature
             style:
-              top: 87%
-              left: 29%
+              top: 0
+              right: 0
+              transform: scale(0.8)
+              color: rgba(255,255,255,1)
+              line-height: 32px
+              margin: 65px 5px 0 0
           - type: state-label
             entity: sensor.kitchen_temperature
             style:
-              top: 96%
-              left: 29%
-              color: white
+              top: 0
+              right: 0
+              pointer-events: none
+              transform: initial
+              font-size: 12px
+              font-weight: bold
+              color: rgba(255,255,255,1)
+              text-shadow: rgba(0, 0, 0, 0.8) 0px 0px 2px
+              line-height: 32px
+              margin: 60px 35px
           - type: state-icon
             entity: group.kitchen
             style:
-              top: 91.3%
-              left: 39%
+              top: 0
+              left: 0
+              transform: scale(0.8)
+              color: rgba(255,255,255,1)
+              line-height: 32px
+              margin: 3px 5px 0 0
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
           - type: custom:long-press
             child:
               type: state-icon
@@ -407,6 +523,8 @@ views:
             style:
               top: 91.3%
               left: 85%
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
           - type: custom:long-press
             child:
               type: state-icon
@@ -415,6 +533,8 @@ views:
             style:
               top: 91.3%
               left: 95%
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
       
   ###############
   # Dining Room #
@@ -433,14 +553,31 @@ views:
               top: 50%
               left: 50%
               width: 100%
-          - type: image
-            image: /local/room_pic/black_bar.jpg
-            filter: opacity(0.1)
-            tap_action: none
+          - type: state-label
+            entity: sensor.blank
+            prefix: "Dining Room"
+            tap_action: nothing
             style:
-              top: 92%
-              left: 50%
+              left: 0
+              bottom: 0
+              font-size: 16px
+              line-height: 32px
+              color: white
+              background-color: rgba(0, 0, 0, 0.5)
               width: 100%
+              transform: initial
+              padding: 0 8px
+          - type: state-icon
+            entity: group.dining_room
+            style:
+              top: 0
+              left: 0
+              transform: scale(0.8)
+              color: rgba(255,255,255,1)
+              line-height: 32px
+              margin: 3px 5px 0 0
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
           - type: custom:long-press
             child:
               type: state-icon
@@ -449,6 +586,8 @@ views:
             style:
               top: 91.3%
               left: 95%
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
               
 ################
 # Second Floor #
@@ -477,46 +616,86 @@ views:
                   top: 50%
                   left: 50%
                   width: 100%
-              - type: image
-                image: /local/room_pic/black_bar.jpg
-                filter: opacity(0.1)
-                tap_action: none
+              - type: state-label
+                entity: sensor.blank
+                prefix: "Bedroom"
+                tap_action: nothing
                 style:
-                  top: 92%
-                  left: 50%
+                  left: 0
+                  bottom: 0
+                  font-size: 16px
+                  line-height: 32px
+                  color: white
+                  background-color: rgba(0, 0, 0, 0.5)
                   width: 100%
+                  transform: initial
+                  padding: 0 8px
               - type: state-icon
                 entity: binary_sensor.bedroom_occupancy
                 style:
-                  top: 91.3%
-                  left: 5%
+                  top: 0
+                  right: 0
+                  transform: scale(0.8)
+                  color: rgba(255,255,255,1)
+                  line-height: 32px
+                  margin: 3px 5px 0 0
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: state-icon
                 entity: sensor.bedroom_multisensor_luminance
                 style:
-                  top: 88%
-                  left: 17%
+                  top: 0
+                  right: 0
+                  transform: scale(0.8)
+                  color: rgba(255,255,255,1)
+                  line-height: 32px
+                  margin: 35px 5px 0 0
               - type: state-label
                 entity: sensor.bedroom_multisensor_luminance
                 style:
-                  top: 96%
-                  left: 17%
-                  color: white
+                  top: 0
+                  right: 0
+                  pointer-events: none
+                  transform: initial
+                  font-size: 12px
+                  font-weight: bold
+                  color: rgba(255,255,255,1)
+                  text-shadow: rgba(0, 0, 0, 0.8) 0px 0px 2px
+                  line-height: 32px
+                  margin: 30px 35px
               - type: state-icon
                 entity: sensor.bedroom_bee_temperature
                 style:
-                  top: 88%
-                  left: 29%
+                  top: 0
+                  right: 0
+                  transform: scale(0.8)
+                  color: rgba(255,255,255,1)
+                  line-height: 32px
+                  margin: 65px 5px 0 0
               - type: state-label
                 entity: sensor.bedroom_bee_temperature
                 style:
-                  top: 96%
-                  left: 29%
-                  color: white
+                  top: 0
+                  right: 0
+                  pointer-events: none
+                  transform: initial
+                  font-size: 12px
+                  font-weight: bold
+                  color: rgba(255,255,255,1)
+                  text-shadow: rgba(0, 0, 0, 0.8) 0px 0px 2px
+                  line-height: 32px
+                  margin: 60px 35px
               - type: state-icon
                 entity: group.bedroom
                 style:
-                  top: 91.3%
-                  left: 39%
+                  top: 0
+                  left: 0
+                  transform: scale(0.8)
+                  color: rgba(255,255,255,1)
+                  line-height: 32px
+                  margin: 3px 5px 0 0
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: custom:long-press
                 child:
                   type: state-icon
@@ -525,6 +704,8 @@ views:
                 style:
                   top: 91.3%
                   left: 75%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: custom:long-press
                 child:
                   type: state-icon
@@ -533,6 +714,8 @@ views:
                 style:
                   top: 91.3%
                   left: 85%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: custom:long-press
                 child:
                   type: state-icon
@@ -541,6 +724,8 @@ views:
                 style:
                   top: 91.3%
                   left: 95%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
           - type: "custom:mini-media-player"
             artwork_border: true
             scroll_info: true
@@ -564,24 +749,42 @@ views:
               top: 50%
               left: 50%
               width: 100%
-          - type: image
-            image: /local/room_pic/black_bar.jpg
-            filter: opacity(0.1)
-            tap_action: none
+          - type: state-label
+            entity: sensor.blank
+            prefix: "Craft Room"
+            tap_action: nothing
             style:
-              top: 92%
-              left: 50%
+              left: 0
+              bottom: 0
+              font-size: 16px
+              line-height: 32px
+              color: white
+              background-color: rgba(0, 0, 0, 0.5)
               width: 100%
+              transform: initial
+              padding: 0 8px
           - type: state-icon
             entity: binary_sensor.craft_room_occupancy
             style:
-              top: 91.3%
-              left: 5%
+              top: 0
+              right: 0
+              transform: scale(0.8)
+              color: rgba(255,255,255,1)
+              line-height: 32px
+              margin: 3px 5px 0 0
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
           - type: state-icon
             entity: group.craft
             style:
-              top: 91.3%
-              left: 15%
+              top: 0
+              left: 0
+              transform: scale(0.8)
+              color: rgba(255,255,255,1)
+              line-height: 32px
+              margin: 3px 5px 0 0
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
           - type: custom:long-press
             child:
               type: state-icon
@@ -590,6 +793,8 @@ views:
             style:
               top: 91.3%
               left: 85%
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
           - type: custom:long-press
             child:
               type: state-icon
@@ -598,6 +803,8 @@ views:
             style:
               top: 91.3%
               left: 95%
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
               
   ##########
   # Office #
@@ -618,24 +825,42 @@ views:
                   top: 50%
                   left: 50%
                   width: 100%
-              - type: image
-                image: /local/room_pic/black_bar.jpg
-                filter: opacity(0.1)
-                tap_action: none
+              - type: state-label
+                entity: sensor.blank
+                prefix: "Office"
+                tap_action: nothing
                 style:
-                  top: 92%
-                  left: 50%
+                  left: 0
+                  bottom: 0
+                  font-size: 16px
+                  line-height: 32px
+                  color: white
+                  background-color: rgba(0, 0, 0, 0.5)
                   width: 100%
+                  transform: initial
+                  padding: 0 8px
               - type: state-icon
                 entity: binary_sensor.office_bay_occupancy
                 style:
-                  top: 91.3%
-                  left: 5%
+                  top: 0
+                  right: 0
+                  transform: scale(0.8)
+                  color: rgba(255,255,255,1)
+                  line-height: 32px
+                  margin: 3px 5px 0 0
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: state-icon
                 entity: group.office
                 style:
-                  top: 91.3%
-                  left: 15%
+                  top: 0
+                  left: 0
+                  transform: scale(0.8)
+                  color: rgba(255,255,255,1)
+                  line-height: 32px
+                  margin: 3px 5px 0 0
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: custom:long-press
                 child:
                   type: state-icon
@@ -644,6 +869,8 @@ views:
                 style:
                   top: 91.3%
                   left: 75%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: custom:long-press
                 child:
                   type: state-icon
@@ -652,6 +879,8 @@ views:
                 style:
                   top: 91.3%
                   left: 85%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: custom:long-press
                 child:
                   type: state-icon
@@ -660,6 +889,8 @@ views:
                 style:
                   top: 91.3%
                   left: 95%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
           - type: media-control
             entity: media_player.office_stereo
           - type: "custom:mini-media-player"
@@ -693,22 +924,35 @@ views:
               top: 50%
               left: 50%
               width: 100%
-          - type: image
-            image: /local/room_pic/black_bar.jpg
-            filter: opacity(0.1)
-            tap_action: none
+          - type: state-label
+            entity: sensor.blank
+            prefix: "Guest Room"
+            tap_action: nothing
             style:
-              top: 92%
-              left: 50%
+              left: 0
+              bottom: 0
+              font-size: 16px
+              line-height: 32px
+              color: white
+              background-color: rgba(0, 0, 0, 0.5)
               width: 100%
+              transform: initial
+              padding: 0 8px
           - type: custom:long-press
             child:
               type: state-icon
               tap_action: toggle
               entity: switch.guestbed
             style:
-              top: 91.3%
-              left: 95%
+              bottom: 0
+              right: 0
+              transform: initial
+              color: white
+              line-height: 32px
+              padding: 8px
+              margin: 0 8px 0 0
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
               
   ############
   # Basement #
@@ -729,46 +973,86 @@ views:
                   top: 50%
                   left: 50%
                   width: 100%
-              - type: image
-                image: /local/room_pic/black_bar.jpg
-                filter: opacity(0.1)
-                tap_action: none
+              - type: state-label
+                entity: sensor.blank
+                prefix: "Basement"
+                tap_action: nothing
                 style:
-                  top: 92%
-                  left: 50%
+                  left: 0
+                  bottom: 0
+                  font-size: 16px
+                  line-height: 32px
+                  color: white
+                  background-color: rgba(0, 0, 0, 0.5)
                   width: 100%
+                  transform: initial
+                  padding: 0 8px
               - type: state-icon
                 entity: binary_sensor.basement_occupancy
                 style:
-                  top: 91.3%
-                  left: 5%
+                  top: 0
+                  right: 0
+                  transform: scale(0.8)
+                  color: rgba(255,255,255,1)
+                  line-height: 32px
+                  margin: 3px 5px 0 0
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: state-icon
                 entity: sensor.basement_multisensor_luminance
                 style:
-                  top: 88%
-                  left: 17%
+                  top: 0
+                  right: 0
+                  transform: scale(0.8)
+                  color: rgba(255,255,255,1)
+                  line-height: 32px
+                  margin: 35px 5px 0 0
               - type: state-label
                 entity: sensor.basement_multisensor_luminance
                 style:
-                  top: 96%
-                  left: 17%
-                  color: white
+                  top: 0
+                  right: 0
+                  pointer-events: none
+                  transform: initial
+                  font-size: 12px
+                  font-weight: bold
+                  color: rgba(255,255,255,1)
+                  text-shadow: rgba(0, 0, 0, 0.8) 0px 0px 2px
+                  line-height: 32px
+                  margin: 30px 35px
               - type: state-icon
                 entity: sensor.basement_bee_temperature
                 style:
-                  top: 88%
-                  left: 29%
+                  top: 0
+                  right: 0
+                  transform: scale(0.8)
+                  color: rgba(255,255,255,1)
+                  line-height: 32px
+                  margin: 65px 5px 0 0
               - type: state-label
                 entity: sensor.basement_bee_temperature
                 style:
-                  top: 96%
-                  left: 29%
-                  color: white
+                  top: 0
+                  right: 0
+                  pointer-events: none
+                  transform: initial
+                  font-size: 12px
+                  font-weight: bold
+                  color: rgba(255,255,255,1)
+                  text-shadow: rgba(0, 0, 0, 0.8) 0px 0px 2px
+                  line-height: 32px
+                  margin: 60px 35px
               - type: state-icon
                 entity: group.basement
                 style:
-                  top: 91.3%
-                  left: 39%
+                  top: 0
+                  left: 0
+                  transform: scale(0.8)
+                  color: rgba(255,255,255,1)
+                  line-height: 32px
+                  margin: 3px 5px 0 0
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: custom:long-press
                 child:
                   type: state-icon
@@ -777,6 +1061,8 @@ views:
                 style:
                   top: 91.3%
                   left: 75%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: custom:long-press
                 child:
                   type: state-icon
@@ -785,6 +1071,8 @@ views:
                 style:
                   top: 91.3%
                   left: 85%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: custom:long-press
                 child:
                   type: state-icon
@@ -793,6 +1081,8 @@ views:
                 style:
                   top: 91.3%
                   left: 95%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
           - type: "custom:mini-media-player"
             artwork_border: true
             scroll_info: true
@@ -814,6 +1104,19 @@ views:
       - type: picture-elements
         image: /local/websecurity.jpeg
         elements:
+          - type: state-label
+            entity: sensor.blank
+            tap_action: nothing
+            style:
+              left: 0
+              bottom: 0
+              font-size: 16px
+              line-height: 32px
+              color: white
+              background-color: rgba(0, 0, 0, 0.5)
+              width: 100%
+              transform: initial
+              padding: 25px 8px
           - type: state-label
             entity: !secret kpwn
             prefix: "Kenny: "
@@ -915,14 +1218,19 @@ views:
       - type: picture-elements
         image: /local/internet.jpg
         elements:
-          - type: image
-            image: /local/room_pic/black_bar.jpg
-            filter: opacity(0.1)
-            tap_action: none
+          - type: state-label
+            entity: sensor.blank
+            tap_action: nothing
             style:
-              top: 92%
-              left: 50%
+              left: 0
+              bottom: 0
+              font-size: 16px
+              line-height: 32px
+              color: white
+              background-color: rgba(0, 0, 0, 0.5)
               width: 100%
+              transform: initial
+              padding: 18px 8px
           - type: state-icon
             entity: sensor.ssl_certificate_expiry
             style:
@@ -975,6 +1283,19 @@ views:
       - type: picture-elements
         image: /local/Welcome-Mat.jpg
         elements:
+          - type: state-label
+            entity: sensor.blank
+            tap_action: nothing
+            style:
+              left: 0
+              top: 0
+              font-size: 16px
+              line-height: 32px
+              color: white
+              background-color: rgba(0, 0, 0, 0.5)
+              width: 100%
+              transform: initial
+              padding: 10px 8px
           - type: state-label
             entity: sensor.meredith
             prefix: "Meredith: "
