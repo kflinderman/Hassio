@@ -11,7 +11,7 @@ resources:
     type: js
   - url: /local/custom-lovelace/tracker-card.js?v=0.1.5
     type: js
-  - url: /local/custom-lovelace/fold-entity-row.js?v=6cf802
+  - url: /local/custom-lovelace/fold-entity-row.js?v=9fbaab
     type: js
   - url: /local/custom-lovelace/long-press.js?v=252428
     type: js
@@ -938,6 +938,17 @@ views:
               width: 100%
               transform: initial
               padding: 0 8px
+          - type: state-icon
+            entity: group.guest
+            style:
+              top: 0
+              left: 0
+              transform: scale(0.8)
+              color: rgba(255,255,255,1)
+              line-height: 32px
+              margin: 3px 5px 0 0
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
           - type: custom:long-press
             child:
               type: state-icon
@@ -1144,8 +1155,10 @@ views:
             style:
               top: 17%
               left: 17%
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
           - type: state-label
-            entity: sensor.load_1m
+            entity: sensor.load_1m_round
             prefix: "Load: "
             style:
               top: 25%
@@ -1156,6 +1169,8 @@ views:
             style:
               top: 36%
               left: 17%
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
           - type: state-label
             entity: sensor.processor_use
             prefix: "Processor: "
@@ -1168,6 +1183,8 @@ views:
             style:
               top: 54%
               left: 17%
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
           - type: state-label
             entity: sensor.memory_use_percent
             prefix: "Memory: "
@@ -1180,6 +1197,8 @@ views:
             style:
               top: 72%
               left: 17%
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
           - type: state-label
             entity: sensor.swap_use_percent
             prefix: "Swap: "
@@ -1192,6 +1211,8 @@ views:
             style:
               top: 36%
               left: 83%
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
           - type: state-label
             entity: sensor.since_last_boot_round
             style:
@@ -1203,6 +1224,8 @@ views:
             style:
               top: 54%
               left: 83%
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
           - type: state-label
             entity: sensor.uptime
             prefix: "Uptime: "
@@ -1236,6 +1259,8 @@ views:
             style:
               top: 88%
               left: 20%
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
           - type: state-label
             entity: sensor.ssl_certificate_expiry
             style:
@@ -1247,6 +1272,8 @@ views:
             style:
               top: 88%
               left: 40%
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
           - type: state-label
             entity: sensor.speedtest_ping
             style:
@@ -1258,6 +1285,8 @@ views:
             style:
               top: 88%
               left: 60%
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
           - type: state-label
             entity: sensor.speedtest_upload
             style:
@@ -1269,6 +1298,8 @@ views:
             style:
               top: 88%
               left: 80%
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
           - type: state-label
             entity: sensor.speedtest_download
             style:
@@ -1295,13 +1326,13 @@ views:
               background-color: rgba(0, 0, 0, 0.5)
               width: 100%
               transform: initial
-              padding: 10px 8px
+              padding: 15px 8px
           - type: state-label
             entity: sensor.meredith
             prefix: "Meredith: "
             suffix: "rs"
             style:
-              top: 6%
+              top: 10%
               left: 33%
               color: white
           - type: state-label
@@ -1309,7 +1340,7 @@ views:
             prefix: "Kenny: "
             suffix: "rs"
             style:
-              top: 6%
+              top: 10%
               left: 66%
               color: white
               
@@ -1322,45 +1353,90 @@ views:
           - type: picture-elements
             image: /local/light-bulbs.jpg
             elements:
+              - type: state-label
+                entity: sensor.blank
+                tap_action: nothing
+                style:
+                  left: 0
+                  top: 0
+                  font-size: 16px
+                  line-height: 32px
+                  color: white
+                  background-color: rgba(0, 0, 0, 0.5)
+                  width: 100%
+                  transform: initial
+                  padding: 10px 8px
               - type: state-icon
                 entity: sensor.watthour
                 style:
                   top: 10%
                   left: 10%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: state-label
                 entity: sensor.watthour
                 style:
-                  top: 6%
+                  top: 10%
                   left: 50%
                   color: white
           - type: picture-elements
             image: /local/desktop.png
             elements:
+              - type: state-label
+                entity: sensor.blank
+                tap_action: nothing
+                style:
+                  left: 0
+                  top: 0
+                  font-size: 16px
+                  line-height: 32px
+                  color: white
+                  background-color: rgba(0, 0, 0, 0.5)
+                  width: 100%
+                  transform: initial
+                  padding: 10px 8px
               - type: state-icon
                 entity: sensor.cpuwhr
                 style:
                   top: 10%
                   left: 10%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: state-label
                 entity: sensor.cpuwhr
                 style:
-                  top: 6%
+                  top: 10%
                   left: 50%
-                  color: black
+                  color: white
           - type: picture-elements
             image: /local/calendar.jpg
             elements:
+              - type: state-label
+                entity: sensor.blank
+                tap_action: nothing
+                style:
+                  left: 0
+                  top: 0
+                  font-size: 16px
+                  line-height: 32px
+                  color: white
+                  background-color: rgba(0, 0, 0, 0.5)
+                  width: 100%
+                  transform: initial
+                  padding: 10px 8px
               - type: state-icon
                 entity: sensor.totalwhr
                 style:
                   top: 10%
                   left: 10%
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: state-label
                 entity: sensor.totalwhr
                 style:
-                  top: 6%
+                  top: 10%
                   left: 50%
-                  color: black
+                  color: white
                   
   ##########################
   # Individual Power Usage #

@@ -67,6 +67,8 @@ light.swirl_lamp:
   icon: mdi:lamp
 light.basement_ceiling_lights:
   icon: mdi:ceiling-light
+sensor.since_last_boot:
+  icon: mdi:history
   
   ##### Switches #####
   

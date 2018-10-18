@@ -90,7 +90,7 @@
       
     load_1m_round:
       friendly_name: "Load (1m) Round"
-      value_template: "{{ states.sensor.sensor.load_1m.state | round(3) }}"
+      value_template: "{{ states.sensor.load_1m.state | round(3) }}"
       
     rock_lamp_light_hours_round:
       friendly_name: "Rock Lamp Light Hours Round"
