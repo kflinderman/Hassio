@@ -13,7 +13,7 @@ resources:
     type: js
   - url: /local/custom-lovelace/fold-entity-row.js?v=9fbaab
     type: js
-  - url: /local/custom-lovelace/long-press.js?v=252428
+  - url: /local/custom-lovelace/long-press.js?v=ca07e2
     type: js
   - url: /local/custom-lovelace/swipe-card/swipe-card.js?v=1.0.3
     type: js
@@ -319,6 +319,8 @@ views:
                   color: rgba(255,255,255,1)
                   line-height: 32px
                   margin: 35px 5px 0 0
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: state-label
                 entity: sensor.webcam_light_level
                 style:
@@ -341,6 +343,8 @@ views:
                   color: rgba(255,255,255,1)
                   line-height: 32px
                   margin: 65px 5px 0 0
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: state-label
                 entity: sensor.living_room_bee_temperature
                 style:
@@ -469,6 +473,8 @@ views:
               color: rgba(255,255,255,1)
               line-height: 32px
               margin: 35px 5px 0 0
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
           - type: state-label
             entity: sensor.kitchen_luminance
             style:
@@ -491,6 +497,8 @@ views:
               color: rgba(255,255,255,1)
               line-height: 32px
               margin: 65px 5px 0 0
+              # Change color of state-icon off
+              --paper-item-icon-color: rgb(255,255,255)
           - type: state-label
             entity: sensor.kitchen_temperature
             style:
@@ -650,6 +658,8 @@ views:
                   color: rgba(255,255,255,1)
                   line-height: 32px
                   margin: 35px 5px 0 0
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: state-label
                 entity: sensor.bedroom_multisensor_luminance
                 style:
@@ -672,6 +682,8 @@ views:
                   color: rgba(255,255,255,1)
                   line-height: 32px
                   margin: 65px 5px 0 0
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: state-label
                 entity: sensor.bedroom_bee_temperature
                 style:
@@ -1018,6 +1030,8 @@ views:
                   color: rgba(255,255,255,1)
                   line-height: 32px
                   margin: 35px 5px 0 0
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: state-label
                 entity: sensor.basement_multisensor_luminance
                 style:
@@ -1040,6 +1054,8 @@ views:
                   color: rgba(255,255,255,1)
                   line-height: 32px
                   margin: 65px 5px 0 0
+                  # Change color of state-icon off
+                  --paper-item-icon-color: rgb(255,255,255)
               - type: state-label
                 entity: sensor.basement_bee_temperature
                 style:

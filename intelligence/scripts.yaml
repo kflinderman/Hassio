@@ -386,6 +386,8 @@ basement_check:
       entity_id: light.basement_ceiling_lights
     - delay:
         minutes: 2
+    - service: script.turn_on
+      entity_id: script.basement_loop
     - condition: state
       entity_id: light.basement_ceiling_lights
       state: 'on'

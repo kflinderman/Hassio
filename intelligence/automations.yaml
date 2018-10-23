@@ -881,10 +881,10 @@
   trigger:
     - platform: state
       entity_id: binary_sensor.skybell_front_door_button
-      to: 'detected'
+      to: 'on'
     - platform: state
       entity_id: binary_sensor.skybell_front_door_motion
-      to: 'detected'
+      to: 'on'
   condition:
     condition: state
     entity_id: input_boolean.door
