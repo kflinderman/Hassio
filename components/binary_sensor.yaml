@@ -23,7 +23,19 @@
           {%- else -%}
           {{ is_state('device_tracker.mere_iphone', 'home') }}
           {%- endif -%}
-          
+  - platform: template
+    sensors:
+      trash_day:
+        friendly_name: Trash Day
+        value_template: >-
+          {{ states.calendar.trash_pickup.attributes.message == 'Household garbage' or states.calendar.trash_pickup.attributes.message == 'Recycling blue week and household garbage' or states.calendar.trash_pickup.attributes.message == 'Household garbage, yard waste, and bulky item' or states.calendar.trash_pickup.attributes.message == 'Recycling blue week, household garbage, yard waste, and bulky item' }}
+  - platform: template
+    sensors:
+      recycling_day:
+        friendly_name: Recycling Day
+        value_template: >-
+          {{ states.calendar.trash_pickup.attributes.message == 'Recycling blue week and household garbage'  or states.calendar.trash_pickup.attributes.message == 'Recycling blue week, household garbage, yard waste, and bulky item' }}
+      
 ##### Occupancy Threshold Sensors #####
           
   - platform: threshold
@@ -97,7 +109,7 @@
         platform: state
         to_state: 'on'
       - entity_id: 'switch.desktoppc'
-        prob_given_true: 0.5
+        prob_given_true: 0.4
         prob_given_false: 0.0
         platform: state
         to_state: 'on'

@@ -21,23 +21,24 @@ http:
 recorder:
   purge_interval: 2
   purge_keep_days: 7
-  db_url: !secret db_secret
+#  db_url: !secret db_secret
+
+system_health:
 
 logger: 
   default: error
   logs:
-    homeassistant.components.device_tracker: critical
-    homeassistant.components.media_player: critical
-    homeassistant.components.calendar.visitor: critical
-    homeassistant.components.calendar.vacation: critical
-    homeassistant.components.sensor.cert_expiry: critical
-    homeassistant.components.sensor.statistics: critical
-    homeassistant.components.light.lightpack: critical
-    homeassistant.components.binary_sensor: critical
-    homeassistant.setup: critical
-    homeassistant.core: critical
-    homeassistant.entity_component: critical
-    custom_components.light.lightpack: debug
+    components.calendar.visitor: critical
+    components.calendar.vacation: critical
+    components.sensor.cert_expiry: critical
+    custom_components.light.lightpack: critical
+    components. binary_sensor.skybell_front_door_button: critical
+    components. binary_sensor.skybell_front_door_motion: critical
+    components.websocket_api.http.connection: critical
+    components.hue: critical
+    components.light.hue: critical
+    helpers.entity_component: critical
+    helpers.entity: critical
     
 history: !include structure/history.yaml
 
@@ -77,10 +78,21 @@ custom_updater:
     - cards
   card_urls:
     - https://raw.githubusercontent.com/bramkragten/custom-ui/master/updater.json
+    - https://raw.githubusercontent.com/kalkih/mini-media-player/master/tracker.json
+    - https://raw.githubusercontent.com/maykar/custom-lovelace/master/tracker.json
       
 frontend: !include structure/theme.yaml
 
+lovelace:
+  mode: yaml
+
 python_script:
+
+mqtt:
+  broker: !secret mqtt_ip
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  client_id: home-assistant
 
 zwave:
   usb_path: /dev/ttyACM0
@@ -111,6 +123,7 @@ device_tracker:
     host: !secret router_ip
     username: !secret wifi_username
     password: !secret wifi_password
+    port: 5000
 
 switch: !include components/switch.yaml
 
@@ -143,7 +156,6 @@ amcrest:
     name: "Backyard Camera"
     sensors:
       - motion_detector
-      - sdcard
     switches:
       - motion_detection
       - motion_recording
@@ -178,7 +190,9 @@ android_ip_webcam:
 ffmpeg:
       
 weather:
-  - platform: yweather
+  - platform: darksky
+    api_key: !secret dark_api
+    mode: 'daily'
 
 camera:
   - platform: skybell

@@ -45,6 +45,8 @@
       hidden: false
     input_boolean.im_home:
       hidden: false
+    input_boolean.sexy_time:
+      hidden: false
       
     ##### Groups #####
     

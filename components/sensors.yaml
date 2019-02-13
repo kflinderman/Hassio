@@ -4,7 +4,7 @@
     - type: swap_use_percent
     - type: load_1m
     - type: processor_use
-    - type: since_last_boot
+    - type: last_boot
 - platform: speedtest
   minute:
     - 0
@@ -12,6 +12,9 @@
     - ping
     - download
     - upload
+- platform: duke_energy
+  username: !secret duke_usr
+  password: !secret duke_pswd
 - platform: wunderground
   api_key: !secret wunderground_api
   monitored_conditions:
@@ -55,7 +58,25 @@
     blank:
       friendly_name: "Blank"
       value_template: "{{ state }}"
-  
+
+    kennyhibp:
+      friendly_name: "Kenny Breaches"
+      value_template: !secret kpwnsensor
+      
+    merehibp:
+      friendly_name: "Meredith Breaches"
+      value_template: !secret mpwnsensor
+      
+    target_temp_high:
+      friendly_name: "Target Temp High"
+      unit_of_measurement: '°F'
+      value_template: "{{ states.climate.main_floor.attributes.target_temp_high }}"
+      
+    target_temp_low:
+      friendly_name: "Target Temp Low"
+      unit_of_measurement: '°F'
+      value_template: "{{ states.climate.main_floor.attributes.target_temp_low }}"
+      
     kitchensensorbatt:
       friendly_name: "Kitchen Sensor Battery"
       unit_of_measurement: '%'
@@ -68,8 +89,17 @@
 
     since_last_boot_round:
       friendly_name: "Since Last Boot"
-      value_template: "{{ states.sensor.since_last_boot.state | truncate(16, killwords=True, end='') }}"
+      value_template: "{{ states.sensor.last_boot.state | truncate(16, killwords=True, end='') }}"
 
+    pickup_day:
+      friendly_name: "Pickup Day"
+      value_template: >-
+        {% if is_state('binary_sensor.trash_day', 'on') %}
+            {{ as_timestamp(states.calendar.trash_pickup.attributes.start_time) | timestamp_custom('%a') }}
+        {% else %}
+            Thu
+        {% endif %}
+      
     numhome:
       value_template: >-
         {% if is_state('device_tracker.kenny_pixelxl', 'home') %}

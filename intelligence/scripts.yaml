@@ -144,6 +144,22 @@ vacation_temp:
         target_temp_high: 200
         target_temp_low: 60
         
+wakeup_temp:
+  sequence:
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.main_floor
+        target_temp_high: 77
+        target_temp_low: 72
+                
+party_temp:
+  sequence:
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.main_floor
+        target_temp_high: 71
+        target_temp_low: 66
+        
 climate_reset:
   sequence:
     - service: climate.set_hold_mode
@@ -210,7 +226,7 @@ dinner_time:
       entity_id: light.dining_lights_level
       data:
         brightness: 75
-        
+      
 game_on:
   alias: "Game On"
   sequence:
@@ -254,8 +270,8 @@ sunset_switch:
         minutes: 30
     - service: switch.turn_on
       entity_id: switch.kitchensw
-    - service: switch.turn_on
-      entity_id: switch.outlet
+    - service: homeassistant.turn_on
+      entity_id: group.holiday
     - service: light.turn_on
       entity_id: light.dining_lights_level
     - condition: state
@@ -399,7 +415,7 @@ basement_loop:
     - condition: state
       entity_id: light.basement_ceiling_lights
       state: 'off'
-    - service: input_boolean.turn_off
+    - service: input_boolean.turn_on
       entity_id: input_boolean.basement_light_off_loop
       
 ############################

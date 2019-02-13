@@ -6,6 +6,9 @@
   visitor:
     name: Visitor Mode
     icon: mdi:account-multiple
+  party:
+    name: Party Mode
+    icon: mdi:cake-variant
   window:
     name: Windows
     icon: mdi:window-closed
@@ -58,3 +61,9 @@
     icon: mdi:door-closed
   door:
     name: Door Activity
+  sexy_time:
+    name: Sexy Time
+  cpu_lightpack:
+    name: CPU Lightpack
+  holiday:
+    name: Holiday Group Dummy

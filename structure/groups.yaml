@@ -121,7 +121,7 @@ guest:
 basement:
   name: Basement Lights
   entities:
-#   - switch.outlet
+   - switch.outlet
    - light.basement_ceiling_lights
    - switch.laundryroom
     
@@ -180,6 +180,12 @@ secondfloor:
     - switch.officefan
     - light.lightpack
     
+holiday:
+  name: Holiday Lights
+  entities:
+#    - switch.outlet
+    - input_boolean.holiday
+    
 ###############
 # Automations #
 ###############
@@ -212,6 +218,7 @@ light_off_auto:
   name: Light Off Automations
   entities:
     - automation.turn_off_all_lights_at_night
+    - automation.turn_off_all_lights_at_night_party
     - automation.off_lights_kenny_leave
     - automation.off_lights_mere_leave
     - automation.mere_leave_gym_day
@@ -243,6 +250,7 @@ notify_auto:
     - automation.kenny_new_breach
     - automation.weather_alert
     - automation.ssl_certification_alert
+    - automation.trash_alert
     
 pc_auto:
   name: PC Automations
@@ -253,6 +261,8 @@ pc_auto:
     - automation.turn_off_pc_not_home
     - automation.turn_on_pc_home
     - automation.pc_after_dark
+    - automation.lightpack_cpu_on
+    - automation.lightpack_cpu_go
     
 location_auto:
   name: Location Automations
@@ -290,8 +300,12 @@ other_auto:
   entities:
     - automation.watch_tv
     - automation.tv_off
+    - automation.office_stereo_off
     - automation.visitor_on
     - automation.visitor_off
+    - automation.temperature_party
+    - automation.party_on
+    - automation.party_off
     - automation.close_windows
     - automation.open_windows
     - automation.close_windows_auto
@@ -299,6 +313,7 @@ other_auto:
     - automation.update_watt_hour
     - automation.basement_off_check
     - automation.allow_motion
+    - automation.allow_motion_bedroom
     - automation.basement_stop_motion
     - automation.bedroom_stop_motion
     - automation.kitchen_stop_motion

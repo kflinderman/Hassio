@@ -39,8 +39,10 @@
         - thu
         - fri
   action:
-    service: scene.turn_on
-    entity_id: scene.wakeup_kenny
+    - service: scene.turn_on
+      entity_id: scene.wakeup_kenny
+    - service: script.turn_on
+      entity_id: script.wakeup_temp
     
 - id: kenny_awake
   alias: Kenny Awake
@@ -128,8 +130,8 @@
   action:
   - service: homeassistant.turn_on
     entity_id: group.outside
-  - service: switch.turn_on
-    entity_id: switch.outlet
+  - service: homeassistant.turn_on
+    entity_id: group.holiday
     
 - id: turn_on_outside_light_at_sunrise
   alias: Turn on outside light at sunrise
@@ -140,8 +142,8 @@
   action:
   - service: homeassistant.turn_on
     entity_id: group.outside
-  - service: switch.turn_on
-    entity_id: switch.outlet
+  - service: homeassistant.turn_on
+    entity_id: group.holiday
     
 - id: fade_in_lights_for_sunset
   alias: Fade in lights for sunset
@@ -279,9 +281,12 @@
 - id: bedroom_lights_on
   alias: Bedroom Lights ON
   trigger:
-    platform: numeric_state
-    entity_id: sensor.bedroom_multisensor_burglar
-    above: 4
+    - platform: numeric_state
+      entity_id: sensor.bedroom_multisensor_burglar
+      above: 4
+    - platform: state
+      entity_id: input_boolean.sexy_time
+      to: 'off'
   condition:
     condition: and
     conditions:
@@ -291,6 +296,9 @@
     - condition: state
       entity_id: input_boolean.bedroom
       state: 'on'
+    - condition: state
+      entity_id: input_boolean.sexy_time
+      state: 'off'
     - condition: or
       conditions:
         - condition: state
@@ -299,6 +307,9 @@
         - condition: state
           entity_id: input_boolean.im_home
           state: 'on'
+        - condition: state
+          entity_id: input_boolean.sexy_time
+          state: 'off'
   action:
     - service: light.turn_on
       entity_id: light.swirl_lamp
@@ -453,13 +464,42 @@
   trigger:
     platform: time
     at: 02:30:00
+  condition:
+    condition: state
+    entity_id: input_boolean.party
+    state: 'off'
   action:
     - service: homeassistant.turn_off
       entity_id: group.all_lights
     - service: homeassistant.turn_off
       entity_id: group.outside
-    - service: switch.turn_off
-      entity_id: switch.outlet
+    - service: homeassistant.turn_off
+      entity_id: group.holiday
+      
+- id: turn_off_all_lights_at_night_party
+  alias: Turn off all lights at night party
+  trigger:
+    platform: state
+    entity_id: input_boolean.party
+    to: 'off'
+  condition:
+    condition: or
+    conditions:
+    - condition: time
+      after: 02:30:00
+    - condition: sun
+      before: sunrise
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.all_firstfloor
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.all_secondfloor
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.all_basement
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.all_outside
+    - service: homeassistant.turn_off
+      entity_id: group.holiday
     
 - id: off_lights_kenny_leave
   alias: Off lights Kenny Leave
@@ -526,8 +566,8 @@
   action:
   - service: homeassistant.turn_off
     entity_id: group.outside
-  - service: switch.turn_off
-    entity_id: switch.outlet
+  - service: homeassistant.turn_off
+    entity_id: group.holiday
     
 - id: vacation_bedtime
   alias: Vacation Bedtime
@@ -598,13 +638,16 @@
       state: 'off'
     - condition: time
       after: '23:30:00'
+    - condition: state
+      entity_id: input_boolean.party
+      state: 'off'
   action:
     - service: homeassistant.turn_off
       entity_id: group.dining_room
     - service: homeassistant.turn_off
       entity_id: group.outside
-    - service: switch.turn_off
-      entity_id: switch.outlet
+    - service: homeassistant.turn_off
+      entity_id: group.holiday
       
 - id: turn_off_lights_day_dark
   alias: Turn off Lights Day Dark
@@ -649,6 +692,9 @@
       state: 'on'
     - condition: time
       after: '8:00:00'
+    - condition: state
+      entity_id: input_boolean.party
+      state: 'off'
   action:
     service: script.turn_on
     entity_id: script.basement_off
@@ -656,9 +702,12 @@
 - id: bedroom_lights_off
   alias: Bedroom Lights OFF
   trigger:
-    platform: numeric_state
-    entity_id: sensor.bedroom_multisensor_burglar
-    below: 4
+    - platform: numeric_state
+      entity_id: sensor.bedroom_multisensor_burglar
+      below: 4
+    - platform: state
+      entity_id: input_boolean.sexy_time
+      to: 'on'
   condition:
     condition: and
     conditions:
@@ -691,6 +740,9 @@
       state: 'on'
     - condition: time
       after: '8:00:00'
+    - condition: state
+      entity_id: input_boolean.party
+      state: 'off'
   action:
     service: script.turn_on
     entity_id: script.kitchen_off
@@ -774,9 +826,12 @@
       for:
         minutes: 15
   condition:
-    condition: state
-    entity_id: group.livingroom
-    state: 'on'
+    - condition: state
+      entity_id: group.livingroom
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.party
+      state: 'off'
   action:
     - service: script.turn_on
       entity_id: script.livingroom_off
@@ -829,6 +884,7 @@
     condition: numeric_state
     entity_id: sensor.numhome
     below: 2
+    above: 0
   action:
     - service: homeassistant.turn_off
       entity_id: group.dining_room
@@ -844,35 +900,35 @@
       entity_id: light.basement_1
       to: 'off'
       for:
-        minutes: 5
+        minutes: 2
     - platform: state
       entity_id: light.basement_2
       to: 'off'
       for:
-        minutes: 5
+        minutes: 2
     - platform: state
       entity_id: light.basement_3
       to: 'off'
       for:
-        minutes: 5
+        minutes: 2
     - platform: state
       entity_id: light.basement_4
       to: 'off'
       for:
-        minutes: 5
+        minutes: 2
   condition:
     - condition: state
       entity_id: light.basement_ceiling_lights
       state: 'on'
     - condition: state
       entity_id: input_boolean.basement_light_off_loop
-      state: 'off'
+      state: 'on'
   action:
-    - service: input_boolean.turn_on
+    - service: input_boolean.turn_off
       entity_id: input_boolean.basement_light_off_loop
     - service: script.turn_on
       entity_id: script.basement_check
-
+      
 #############################
 #2 Notification Automations #
 #############################
@@ -893,7 +949,7 @@
     - service: notify.pushbullet
       data:
         title: Door Activity
-        message: There is activity at the front door...
+        message: "There is activity at the front door..."
     - service: script.turn_on
       entity_id: script.door
       
@@ -907,7 +963,7 @@
     service: notify.pushbullet
     data:
       title: Web Camera Low Battery
-      message: The living room web camera has very low battery.
+      message: "The living room web camera has very low battery."
       
 - id: kitchen_sensor_battery
   alias: Kitchen Sensor Battery
@@ -919,7 +975,7 @@
     service: notify.pushbullet
     data:
       title: Kitchen Sensor Low Battery
-      message: The kitchen sensor has very low battery.
+      message: "The kitchen sensor has very low battery."
   
 - id: kenny_new_breach
   alias: Kenny New Breach
@@ -929,8 +985,8 @@
     platform: state
   action:
   - data:
-      message: Kenny has been breached according to HaveIBeenPwnd.  You should check
-        it out
+      message: "Kenny has been breached according to HaveIBeenPwnd.  You should check
+        it out"
       title: New Breach
     service: notify.pushbullet
     
@@ -943,8 +999,8 @@
     platform: state
   action:
   - data:
-      message: Meredith has been breached according to HaveIBeenPwnd.  You should
-        check it out
+      message: "Meredith has been breached according to HaveIBeenPwnd.  You should
+        check it out"
       title: New Breach
     service: notify.pushbullet
     
@@ -973,8 +1029,20 @@
     service: notify.pushbullet
     data:
       title: SSL Certification Alert
-      message: Check to make sure your SSL certificate doesn't expire soon.
-
+      message: "Check to make sure your SSL certificate doesn't expire soon."
+    
+- id: trash_alert
+  alias: Trash Alert
+  trigger:
+    platform: state
+    entity_id: sensor.pickup_day
+    from: 'Thu'
+  action:
+    service: notify.pushbullet
+    data:
+      title: Trash Alert
+      message: "Trash pickup has been moved to {{ as_timestamp(states.calendar.trash_pickup.attributes.start_time) | timestamp_custom('%A') }}"
+      
 ###################
 #3 PC Automations #
 ###################
@@ -1065,7 +1133,47 @@
   action:
     service: script.turn_on
     entity_id: script.after_dark
+    
+- id: lightpack_cpu_on
+  alias: Lightpack CPU On
+  trigger:
+  - platform: state
+    entity_id: switch.desktoppc
+    to: 'on'
+  action:
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.cpu_lightpack
+  - delay:
+      seconds: 10
+  - service: light.turn_on
+    entity_id: light.lightpack
+  - delay:
+      seconds: 10
+  - service: light.turn_off
+    entity_id: light.lightpack
 
+- id: lightpack_cpu_go
+  alias: Lightpack CPU Go
+  trigger:
+  - platform: state
+    entity_id:  media_player.desktop_media
+    to: 'paused'
+  condition:
+  - condition: state
+    entity_id: input_boolean.cpu_lightpack
+    state: 'on'
+  action:
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.cpu_lightpack
+  - delay:
+      seconds: 1
+  - service: light.turn_on
+    entity_id: light.lightpack
+  - delay:
+      seconds: 1
+  - service: light.turn_off
+    entity_id: light.lightpack
+      
 #########################
 #4 Location Automations #
 #########################
@@ -1106,7 +1214,7 @@
 - id: temperature_vacation
   alias: Temperature Vacation
   trigger:
-  - platform: time
+  - platform: time_pattern
     minutes: 0
     seconds: 5
   condition:
@@ -1376,6 +1484,23 @@
     service: media_player.turn_off
     entity_id: media_player.lg_tv_remote
     
+- id: office_stereo_off
+  alias: Office Stereo Off
+  trigger:
+    platform: state
+    entity_id: light.lightpack
+    to: 'off'
+  condition:
+    condition: or
+    conditions:
+    - condition: time
+      after: '23:00:00'
+    - condition: time
+      before: '04:00:00'
+  action:
+    service: media_player.turn_off
+    entity_id: media_player.office_stereo
+    
 - id: visitor_on
   alias: Visitor ON
   trigger:
@@ -1407,6 +1532,46 @@
     data:
       title: Visitors Left
       message: Change Ecobee Sleep to remove downstairs
+      
+- id: temperature_party
+  alias: Temperature Party
+  trigger:
+  - platform: time_pattern
+    minutes: 0
+    seconds: 5
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.party
+      state: 'on'
+  action:
+  - service: script.turn_on
+    entity_id: script.party_temp
+      
+- id: party_on
+  alias: Party ON
+  trigger:
+    platform: state
+    entity_id: calendar.party
+    from: 'off'
+    to: 'on'
+  action:
+  - service: input_boolean.turn_on
+    data:
+      entity_id: input_boolean.party
+      
+- id: party_off
+  alias: Party OFF
+  trigger:
+    platform: state
+    entity_id: calendar.party
+    from: 'on'
+    to: 'off'
+  action:
+  - service: input_boolean.turn_off
+    data:
+      entity_id: input_boolean.party
       
 - id: close_windows
   alias: Close Windows
@@ -1458,7 +1623,7 @@
 - id: keep_windows_open
   alias: Keep Windows Open
   trigger:
-  - platform: time
+  - platform: time_pattern
     minutes: 0
     seconds: 5
   condition:
@@ -1477,10 +1642,43 @@
   - service: script.turn_on
     entity_id: script.windows_open
     
+- id: allow_motion_bedroom
+  alias: Allow Motion Bedroom
+  trigger:
+  - platform: time_pattern
+    minutes: '/5'
+    seconds: '00'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.bedroom
+        state: 'off'
+      - condition: time
+        before: '21:00:00'
+      - condition: or
+        conditions:
+        - condition: time
+          after: '8:00:00'
+          weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+        - condition: time
+          after: '10:00:00'
+          weekday:
+          - sat
+          - sun
+  action:
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.bedroom
+    
 - id: allow_motion
   alias: Allow Motion
   trigger:
-  - platform: time
+  - platform: time_pattern
     minutes: '/5'
     seconds: '00'
   condition:
@@ -1496,9 +1694,6 @@
           entity_id: input_boolean.basement
           state: 'off'
         - condition: state
-          entity_id: input_boolean.bedroom
-          state: 'off'
-        - condition: state
           entity_id: input_boolean.livingroom
           state: 'off'
         - condition: state
@@ -1507,8 +1702,6 @@
   action:
   - service: input_boolean.turn_on
     entity_id: input_boolean.basement
-  - service: input_boolean.turn_on
-    entity_id: input_boolean.bedroom
   - service: input_boolean.turn_on
     entity_id: input_boolean.livingroom
   - service: input_boolean.turn_on
@@ -1614,7 +1807,7 @@
 - id: update_wh
   alias: Update Watt Hour
   trigger:
-    platform: time
+    platform: time_pattern
     minutes: '/15'
     seconds: '00'
   action:
@@ -1669,3 +1862,19 @@
     data:
       object_id: bedroom
       entities: light.swirl_lamp, switch.bedfan, switch.masterbath
+      
+- id: sexy_time_over
+  alias: Sexy Time Over
+  trigger:
+  - entity_id: light.rock_lamp
+    platform: state
+    to: 'on'
+    for: 
+      hours: 1
+  condition:
+    - condition: state
+      entity_id: input_boolean.sexy_time
+      state: 'on'
+  action:
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.sexy_time

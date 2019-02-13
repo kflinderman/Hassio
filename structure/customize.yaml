@@ -46,7 +46,16 @@ weather.yweather:
 #################
 # Icon Changing #
 #################
-
+  
+  ##### Sensors #####
+  
+binary_sensor.trash_day:
+  icon: mdi:delete
+binary_sensor.recycling_day:
+  icon: mdi:delete-restore
+sensor.pickup_day:
+  icon: mdi:truck
+  
   ##### Lights #####
 
 light.front_outside:
@@ -110,10 +119,12 @@ sensor.kitchen_luminance:
   ##### Switches #####
   
 switch.outlet:
-  friendly_name: Spooky Lights
-  icon: mdi:ghost
-#  friendly_name: Basement Floor Light
-#  icon: mdi:floor-lamp
+#  friendly_name: Spooky Lights
+#  icon: mdi:ghost
+#  friendly_name: Christmas Lights
+#  icon: mdi:pine-tree
+  friendly_name: Basement Floor Light
+  icon: mdi:floor-lamp
 switch.airhockey:
   friendly_name: Air Hockey Table
   icon: mdi:trophy
