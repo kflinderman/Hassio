@@ -29,7 +29,7 @@
     - condition: and
       conditions:
       - condition: state
-        entity_id: device_tracker.kenny_pixelxl
+        entity_id: person.kenny
         state: home
       - condition: time
         weekday:
@@ -53,7 +53,7 @@
     condition: and
     conditions:
     - condition: state
-      entity_id: device_tracker.kenny_pixelxl
+      entity_id: person.kenny
       state: home
     - condition: time
       weekday:
@@ -82,7 +82,7 @@
     - condition: and
       conditions:
       - condition: state
-        entity_id: device_tracker.mere_iphone
+        entity_id: person.meredith
         state: home
       - condition: time
         weekday:
@@ -107,7 +107,7 @@
     - condition: and
       conditions:
       - condition: state
-        entity_id: device_tracker.mere_iphone
+        entity_id: person.meredith
         state: home
       - condition: time
         weekday:
@@ -505,11 +505,11 @@
   alias: Off lights Kenny Leave
   trigger:
     platform: state
-    entity_id: device_tracker.kenny_pixelxl
+    entity_id: person.kenny
     from: home
   condition:
   - condition: state
-    entity_id: device_tracker.mere_iphone
+    entity_id: person.meredith
     state: not_home
   action:
     service: script.turn_on
@@ -519,11 +519,11 @@
   alias: Off lights Mere Leave
   trigger:
     platform: state
-    entity_id: device_tracker.mere_iphone
+    entity_id: person.meredith
     from: home
   condition:
   - condition: state
-    entity_id: device_tracker.kenny_pixelxl
+    entity_id: person.kenny
     state: not_home
   action:
     service: script.turn_on
@@ -533,7 +533,7 @@
   alias: Mere Leave Gym Day
   trigger:
     platform: state
-    entity_id: device_tracker.mere_iphone
+    entity_id: person.meredith
     from: home
   condition:
     condition: or
@@ -1053,7 +1053,7 @@
     at: 07:00:00
   condition:
   - condition: state
-    entity_id: device_tracker.kenny_pixelxl
+    entity_id: person.kenny
     state: home
   action:
     service: switch.turn_on
@@ -1098,7 +1098,7 @@
   alias: Turn off PC not home
   trigger:
   - platform: state
-    entity_id: device_tracker.kenny_pixelxl
+    entity_id: person.kenny
     from: home
   action:
     service: script.turn_on
@@ -1108,7 +1108,7 @@
   alias: Turn on PC home
   trigger:
   - platform: state
-    entity_id: device_tracker.kenny_pixelxl
+    entity_id: person.kenny
     to: home
   condition:
     condition: and

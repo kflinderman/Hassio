@@ -116,7 +116,7 @@ timed_cpu_off:
     - delay:
         minutes: 5
     - condition: state
-      entity_id: device_tracker.kenny_pixelxl
+      entity_id: person.kenny
       state: not_home
     - service: script.turn_on
       entity_id: script.cpu_off

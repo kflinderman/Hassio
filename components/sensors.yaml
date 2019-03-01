@@ -5,16 +5,6 @@
     - type: load_1m
     - type: processor_use
     - type: last_boot
-- platform: speedtest
-  minute:
-    - 0
-  monitored_conditions:
-    - ping
-    - download
-    - upload
-- platform: duke_energy
-  username: !secret duke_usr
-  password: !secret duke_pswd
 - platform: wunderground
   api_key: !secret wunderground_api
   monitored_conditions:
@@ -102,14 +92,14 @@
       
     numhome:
       value_template: >-
-        {% if is_state('device_tracker.kenny_pixelxl', 'home') %}
-            {% if is_state('device_tracker.mere_iphone', 'home') %}
+        {% if is_state('person.kenny', 'home') %}
+            {% if is_state('person.meredith', 'home') %}
                 2
             {% else %}
                 1
             {% endif %}
         {% else %}
-            {% if is_state('device_tracker.mere_iphone', 'home') %}
+            {% if is_state('person.meredith', 'home') %}
                 1
             {% else %}
                 0
@@ -218,14 +208,14 @@
   
 - platform: history_stats
   name: Meredith
-  entity_id: device_tracker.mere_iphone
+  entity_id: person.meredith
   state: 'home'
   end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
   duration:
     days: 7
 - platform: history_stats
   name: Kenny
-  entity_id: device_tracker.kenny_pixelxl
+  entity_id: person.kenny
   state: 'home'
   end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
   duration:

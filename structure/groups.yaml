@@ -6,8 +6,10 @@ default_view:
   view: yes
   icon: mdi:home
   entities:
-    - device_tracker.kenny_pixelxl
-    - device_tracker.mere_iphone
+    - person.kenny
+    - person.meredith
+#    - device_tracker.kenny_pixelxl
+#    - device_tracker.mere_iphone
     - persistent_notification.invalid_config
     - configurator.alexa_media_player
     - configurator.alexa_media_player_2
@@ -156,8 +158,10 @@ Switch Lights:
 residents:
   name: Residents
   entities:
-    - device_tracker.kenny_pixelxl
-    - device_tracker.mere_iphone
+    - person.kenny
+    - person.meredith
+#    - device_tracker.kenny_pixelxl
+#    - device_tracker.mere_iphone
 
 firstfloor:
   name: First Floor Lights

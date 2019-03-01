@@ -7,21 +7,21 @@
       craft_room_occupancy:
         friendly_name: Craft Room Occupancy
         value_template: >-
-          {%- if is_state('device_tracker.mere_iphone', 'home') -%}
+          {%- if is_state('person.meredith', 'home') -%}
           {%- if is_state('switch.craftfan', 'on') -%}
-          {%- if is_state('device_tracker.kenny_pixelxl', 'not_home') -%}
+          {%- if is_state('person.kenny', 'not_home') -%}
           {{ is_state('binary_sensor.basement_occupancy', 'off')
              and is_state('binary_sensor.bedroom_occupancy', 'off')
              and is_state('binary_sensor.kitchen_occupancy', 'off')
              and is_state('binary_sensor.living_room_bay_occupancy', 'off') }}
           {%- else -%}
-          {{ is_state('device_tracker.mere_iphone', 'home') }}
+          {{ is_state('person.meredith', 'home') }}
           {%- endif -%}
           {%- else -%}
-          {{ is_state('device_tracker.mere_iphone', 'not_home') }}
+          {{ is_state('person.meredith', 'not_home') }}
           {%- endif -%}
           {%- else -%}
-          {{ is_state('device_tracker.mere_iphone', 'home') }}
+          {{ is_state('person.meredith', 'home') }}
           {%- endif -%}
   - platform: template
     sensors:

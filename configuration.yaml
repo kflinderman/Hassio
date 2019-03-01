@@ -25,6 +25,8 @@ recorder:
 
 system_health:
 
+person:
+
 logger: 
   default: error
   logs:
@@ -72,6 +74,7 @@ logbook:
       - device_tracker.pc
 
 custom_updater:
+# mode: storage
   show_installable: false
   track:
     - components
@@ -84,7 +87,7 @@ custom_updater:
 frontend: !include structure/theme.yaml
 
 lovelace:
-  mode: yaml
+#  mode: yaml
 
 python_script:
 
@@ -92,7 +95,7 @@ mqtt:
   broker: !secret mqtt_ip
   username: !secret mqtt_username
   password: !secret mqtt_password
-  client_id: home-assistant
+  client_id: hassio-mqtt-client
 
 zwave:
   usb_path: /dev/ttyACM0
@@ -119,11 +122,20 @@ config:
 discovery:
 
 device_tracker:
+  - platform: bluetooth_tracker
+    request_rssi: true
   - platform: netgear
     host: !secret router_ip
     username: !secret wifi_username
     password: !secret wifi_password
     port: 5000
+    devices:
+      - !secret kcell_mac
+      - !secret mcell_mac
+      - !secret kworkcell_mac
+      - !secret mlap_mac
+      - !secret nswitch_mac
+      - !secret ktab_mac
 
 switch: !include components/switch.yaml
 
@@ -144,7 +156,15 @@ hue:
     - host: !secret hue_ip
       allow_unreachable: true
       allow_hue_groups: true
-
+      
+speedtestdotnet:
+  scan_interval:
+    hours: 1
+  monitored_conditions:
+    - ping
+    - download
+    - upload
+    
 skybell:
     username: !secret kemail
     password: !secret skybell_secret
@@ -161,6 +181,13 @@ amcrest:
       - motion_recording
     resolution: low
     stream_source: rtsp
+    port: !secret amcrest_port
+    
+amcrest_custom:
+  - host: !secret backyard_IP
+    username: !secret backyard_user
+    password: !secret backyard_pswd
+    name: "Backyard Camera2"
     port: !secret amcrest_port
       
 android_ip_webcam:

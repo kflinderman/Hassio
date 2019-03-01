@@ -9,8 +9,13 @@
       ##### Device Trackers #####
       
         - device_tracker.kennyworkphone
+        - device_tracker.kennyworkphone_bt
         - device_tracker.mere_iphone
+        - device_tracker.mere_iphone_bt
         - device_tracker.kenny_pixelxl
+        - device_tracker.kenny_pixelxl_bt
+        - person.kenny
+        - person.meredith
         
       ##### Sensors #####
       

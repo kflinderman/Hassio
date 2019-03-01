@@ -1,17 +1,17 @@
 resources:
-  - url: /local/custom-lovelace/mini-media-player-bundle.js?ver=1.0.0
+  - url: /customcards/custom-lovelace/mini-media-player-bundle.js
     type: module
-  - url: /local/custom-lovelace/toggle-lock-entity-row.js
+  - url: /customcards/custom-lovelace/toggle-lock-entity-row.js
     type: js
-  - url: /local/custom-lovelace/tracker-card.js?v=0.3.0
-    type: js
-  - url: /local/custom-lovelace/fold-entity-row.js?v=6d11d3
-    type: js
-  - url: /local/custom-lovelace/swipe-card/swipe-card.js?v=2.0.0
+  - url: /customcards/custom-lovelace/tracker-card.js
     type: module
-  - url: /local/custom-lovelace/compact-custom-header/compact-custom-header.js?v=1.0.0b1
+  - url: /customcards/custom-lovelace/fold-entity-row.js
+    type: js
+  - url: /customcards/custom-lovelace/swipe-card/swipe-card.js
     type: module
-  - url: /local/custom-lovelace/card-tools.js?v=297fcc
+  - url: /customcards/custom-lovelace/compact-custom-header/compact-custom-header.js
+    type: module
+  - url: /customcards/custom-lovelace/card-tools.js
     type: js
 
 title: Home
@@ -571,7 +571,7 @@ views:
                   top: 91.3%
                   left: 95%
                   --paper-item-icon-color: rgb(255,255,255)
-          - type: custom:compact-custom-header
+      - type: custom:compact-custom-header
   - id: 2
     title: Second Floor
     icon: mdi:numeric-2-box
@@ -882,7 +882,7 @@ views:
               when_paused: true
             artwork: cover
             entity: media_player.desktop_media
-          - type: custom:compact-custom-header
+      - type: custom:compact-custom-header
   - id: 3
     title: Basement
     icon: mdi:arrow-down-bold-box
@@ -1091,7 +1091,7 @@ views:
               when_paused: true
             artwork: cover
             entity: media_player.basement_dot
-          - type: custom:compact-custom-header
+      - type: custom:compact-custom-header
   - id: 4
     title: Statistics
     icon: mdi:chart-bar
@@ -1952,13 +1952,7 @@ views:
               # - value: 24
                 # style: var(--label-badge-red)
 
-      - id: 42240e3f84554b4e8b93f6c637703226
-        type: custom:tracker-card
-        show_installable: false
-        trackers:
-          - sensor.custom_card_tracker
-          - sensor.custom_component_tracker
-      - type: custom:compact-custom-header
+      - type: custom:tracker-card
   - id: 5
     title: Automations
     icon: mdi:recycle
