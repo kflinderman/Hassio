@@ -21,7 +21,7 @@ http:
 recorder:
   purge_interval: 2
   purge_keep_days: 7
-#  db_url: !secret db_secret
+  #db_url: !secret db_secret
 
 system_health:
 
@@ -83,6 +83,9 @@ custom_updater:
     - https://raw.githubusercontent.com/bramkragten/custom-ui/master/updater.json
     - https://raw.githubusercontent.com/kalkih/mini-media-player/master/tracker.json
     - https://raw.githubusercontent.com/maykar/custom-lovelace/master/tracker.json
+  component_urls:
+    - https://raw.githubusercontent.com/pnbruckner/homeassistant-config/master/custom_components.json
+    - https://raw.githubusercontent.com/keatontaylor/custom_components/master/custom_components.json
       
 frontend: !include structure/theme.yaml
 
@@ -91,11 +94,11 @@ lovelace:
 
 python_script:
 
-mqtt:
-  broker: !secret mqtt_ip
-  username: !secret mqtt_username
-  password: !secret mqtt_password
-  client_id: hassio-mqtt-client
+# mqtt:
+  # broker: !secret mqtt_ip
+  # username: !secret mqtt_username
+  # password: !secret mqtt_password
+  # client_id: hassio-mqtt-client
 
 zwave:
   usb_path: /dev/ttyACM0
@@ -151,6 +154,16 @@ media_player: !include components/media_player.yaml
 
 light: !include components/lights.yaml
 
+tplink:
+
+
+alexa_media:
+  accounts:
+    - email: !secret kemail
+      password: !secret amz_secret
+      url: amazon.com
+      scan_interval: 30
+
 hue:
   bridges:
     - host: !secret hue_ip
@@ -179,16 +192,14 @@ amcrest:
     switches:
       - motion_detection
       - motion_recording
-    resolution: low
-    stream_source: rtsp
     port: !secret amcrest_port
     
-amcrest_custom:
-  - host: !secret backyard_IP
-    username: !secret backyard_user
-    password: !secret backyard_pswd
-    name: "Backyard Camera2"
-    port: !secret amcrest_port
+# amcrest_custom:
+  # - host: !secret backyard_IP
+    # username: !secret backyard_user
+    # password: !secret backyard_pswd
+    # name: "Backyard Camera2"
+    # port: !secret amcrest_port
       
 android_ip_webcam:
   - host: !secret webcam_ip

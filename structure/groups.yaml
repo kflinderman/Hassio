@@ -249,12 +249,14 @@ notify_auto:
   entities:
     - automation.door_activity
     - automation.camera_battery
+    - automation.alli_battery
     - automation.kitchen_sensor_battery
     - automation.mere_new_breach
     - automation.kenny_new_breach
     - automation.weather_alert
     - automation.ssl_certification_alert
     - automation.trash_alert
+    - automation.alli_meds
     
 pc_auto:
   name: PC Automations
@@ -326,3 +328,4 @@ other_auto:
     - automation.delay_automations_on_restart
     - automation.bedroom_fan_on
     - automation.bedroom_fan_off
+    - automation.dog_meds_flag

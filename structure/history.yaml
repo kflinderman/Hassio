@@ -26,7 +26,7 @@
         - sensor.cpu_use
         - sensor.ram_use
         - sensor.swap_use
-        - sensor.pws_feelslike_f
+        # - sensor.pws_feelslike_f
         - sensor.webcam_light_level
         - sensor.webcam_battery_level
         - sensor.living_room_motion
@@ -44,8 +44,17 @@
         - sensor.kitchensensorbatt
         - sensor.living_room_motion_stats_mean
         - sensor.office_motion_stats_mean
-        - sensor.pws_precip_today_in
-        - sensor.pws_relative_humidity
+        # - sensor.pws_precip_today_in
+        # - sensor.pws_relative_humidity
+        - sensor.alli_battery
+        - sensor.alli_button
+        - sensor.alli_location
+        - sensor.office_alli_battery
+        - sensor.office_alli_beacon
+        - sensor.office_alli_signal
+        - sensor.living_room_alli_battery
+        - sensor.living_room_alli_beacon
+        - sensor.living_room_alli_signal
         
       ##### Switches #####
         

@@ -14,7 +14,7 @@ from homeassistant.components.light import (
 from homeassistant.const import (CONF_HOST, CONF_PORT, CONF_NAME)
 import homeassistant.helpers.config_validation as cv
 
-REQUIREMENTS = ['py-lightpack==2.1.0']
+REQUIREMENTS = ['py-lightpack==2.2.0']
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -214,6 +214,10 @@ class Lightpack(Light):
             self._available = True
             return True
         except lightpack.CannotConnectError as e:
-            _LOGGER.error("%s:connect(); result: %s", self._name, repr(e))
-            _LOGGER.error("Unexpected error:", sys.exc_info()[0])
-            return False
+            self._update.connect()
+            self._control.connect()
+            self._available = False
+            return True
+        #_LOGGER.error("%s:connect(); result: %s", self._name, repr(e))
+        #_LOGGER.error("Unexpected error:", sys.exc_info()[0])
+        #return False

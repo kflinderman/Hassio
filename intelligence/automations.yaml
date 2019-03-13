@@ -506,7 +506,9 @@
   trigger:
     platform: state
     entity_id: person.kenny
-    from: home
+    to: not_home
+    for:
+      minutes: 5
   condition:
   - condition: state
     entity_id: person.meredith
@@ -520,7 +522,9 @@
   trigger:
     platform: state
     entity_id: person.meredith
-    from: home
+    to: not_home
+    for:
+      minutes: 5
   condition:
   - condition: state
     entity_id: person.kenny
@@ -965,6 +969,18 @@
       title: Web Camera Low Battery
       message: "The living room web camera has very low battery."
       
+- id: alli_battery
+  alias: Alli Battery
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.alli_battery
+    below: 2.85
+  action:
+    service: notify.pushbullet
+    data:
+      title: Alli's Collar Low Battery
+      message: "Alli's collar has very low battery."
+      
 - id: kitchen_sensor_battery
   alias: Kitchen Sensor Battery
   trigger:
@@ -1004,20 +1020,20 @@
       title: New Breach
     service: notify.pushbullet
     
-- id: weather_alert
-  alias: Weather Alert
-  trigger:
-    platform: state
-    entity_id: sensor.pws_alerts
-  condition:
-  - condition: numeric_state
-    entity_id: sensor.pws_alerts
-    above: 0
-  action:
-    service: notify.pushbullet
-    data:
-      title: Weather Alert
-      message: "{{ states.sensor.pws_alerts.attributes.Message }}"
+# - id: weather_alert
+  # alias: Weather Alert
+  # trigger:
+    # platform: state
+    # entity_id: sensor.pws_alerts
+  # condition:
+  # - condition: numeric_state
+    # entity_id: sensor.pws_alerts
+    # above: 0
+  # action:
+    # service: notify.pushbullet
+    # data:
+      # title: Weather Alert
+      # message: "{{ states.sensor.pws_alerts.attributes.Message }}"
       
 - id: cert_alert
   alias: SSL Certification Alert
@@ -1030,6 +1046,20 @@
     data:
       title: SSL Certification Alert
       message: "Check to make sure your SSL certificate doesn't expire soon."
+    
+- id: alli_meds
+  alias: Alli Meds
+  trigger:
+    platform: time
+    at: '18:00:00'
+  condition:
+    - condition: template
+      value_template: "{{ now().day == 1 }}"
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.dog_med
+    - service: script.turn_on
+      entity_id: script.medication
     
 - id: trash_alert
   alias: Trash Alert
@@ -1600,11 +1630,17 @@
 - id: close_windows_auto
   alias: Close Windows Auto
   trigger:
+  # - platform: template
+    # data_template: {{ states.weather.dark_sky.attributes.temperature > 80 }}
+  # - platform: template
+    # data_template: {{ states.weather.dark_sky.attributes.temperature < 65 }}
   - platform: numeric_state
-    entity_id: sensor.pws_temp_f
+    entity_id: weather.dark_sky
+    value_template: '{{ state.attributes.temperature }}'
     above: 80
   - platform: numeric_state
-    entity_id: sensor.pws_temp_f
+    entity_id: weather.dark_sky
+    value_template: '{{ state.attributes.temperature }}'
     below: 65
   condition:
   - condition: state
@@ -1629,11 +1665,17 @@
   condition:
     condition: and
     conditions:
+    # - condition: template
+      # value_template: {{ states.weather.dark_sky.attributes.temperature < 80 }}
+    # - condition: template
+      # value_template: {{ states.weather.dark_sky.attributes.temperature > 65 }}
     - condition: numeric_state
-      entity_id: sensor.pws_temp_f
+      entity_id: weather.dark_sky
+      value_template: '{{ state.attributes.temperature }}'
       below: 80
     - condition: numeric_state
-      entity_id: sensor.pws_temp_f
+      entity_id: weather.dark_sky
+      value_template: '{{ state.attributes.temperature }}'
       above: 65
     - condition: state
       entity_id: input_boolean.window
@@ -1842,8 +1884,11 @@
 - id: bedroom_fan_on
   alias: Bedroom Fan On
   trigger:
+    # - platform: template
+      # data_template: {{ states.weather.dark_sky.attributes.temperature > 70 }}
     - platform: numeric_state
-      entity_id: sensor.pws_feelslike_f
+      entity_id: weather.dark_sky
+      value_template: '{{ state.attributes.temperature }}'
       above: 70
   action:
     service: group.set
@@ -1854,8 +1899,11 @@
 - id: bedroom_fan_off
   alias: Bedroom Fan Off
   trigger:
+    # - platform: template
+      # data_template: {{ states.weather.dark_sky.attributes.temperature < 65 }}
     - platform: numeric_state
-      entity_id: sensor.pws_feelslike_f
+      entity_id: weather.dark_sky
+      value_template: '{{ state.attributes.temperature }}'
       below: 65
   action:
     service: group.set
@@ -1878,3 +1926,14 @@
   action:
   - service: input_boolean.turn_off
     entity_id: input_boolean.sexy_time
+    
+- id: dog_meds_flag
+  alias: Dog Meds Flag
+  trigger:
+    - entity_id: sensor.alli_button
+      platform: numeric_state
+      above: 0
+      below: 2
+  action:
+    service: input_boolean.turn_on
+    entity_id: input_boolean.dog_med

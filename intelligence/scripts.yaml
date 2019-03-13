@@ -418,6 +418,20 @@ basement_loop:
     - service: input_boolean.turn_on
       entity_id: input_boolean.basement_light_off_loop
       
+medications:
+  sequence:
+    - service: notify.pushbullet
+      data:
+        title: Alli Needs Her Meds
+        message: "Make sure to give Alli her meds for the month!"
+    - delay:
+        days: 1
+    - condition: state
+      entity_id: input_boolean.dog_med
+      state: 'off'
+    - service: script.turn_on
+      entity_id: script.medications
+      
 ############################
 #5 Random Vacation Scripts #
 ############################

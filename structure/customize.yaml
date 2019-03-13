@@ -4,18 +4,18 @@
   
   ##### Sensors #####
   
-sensor.pws_precip_1d_in:
-  friendly_name: Potential Rain
-sensor.pws_precip_1d:
-  friendly_name: Chance of Rain
-sensor.pws_weather:
-  friendly_name: Weather
-sensor.pws_temp_f:
-  friendly_name: Current Temperature
-sensor.pws_temp_high_1d_f:
-  friendly_name: Today's High
-sensor.pws_temp_low_1d_f:
-  friendly_name: Today's Low
+# sensor.pws_precip_1d_in:
+  # friendly_name: Potential Rain
+# sensor.pws_precip_1d:
+  # friendly_name: Chance of Rain
+# sensor.pws_weather:
+  # friendly_name: Weather
+# sensor.pws_temp_f:
+  # friendly_name: Current Temperature
+# sensor.pws_temp_high_1d_f:
+  # friendly_name: Today's High
+# sensor.pws_temp_low_1d_f:
+  # friendly_name: Today's Low
 sensor.bedroom_bee_temperature:
   friendly_name: Bedroom Temperature
 sensor.basement_bee_temperature:
@@ -55,6 +55,12 @@ binary_sensor.recycling_day:
   icon: mdi:delete-restore
 sensor.pickup_day:
   icon: mdi:truck
+sensor.since_last_boot:
+  icon: mdi:history
+sensor.alli_button:
+  icon: mdi:radiobox-marked
+sensor.alli_location:
+  icon: mdi:map-marker
   
   ##### Lights #####
 
@@ -76,8 +82,8 @@ light.swirl_lamp:
   icon: mdi:lamp
 light.basement_ceiling_lights:
   icon: mdi:ceiling-light
-sensor.since_last_boot:
-  icon: mdi:history
+light.lightpack:
+  icon: mdi:television-guide
   
   ##### Switches #####
   
@@ -94,9 +100,9 @@ switch.laundryroom:
   
   ##### Sensors #####
   
-sensor.pws_precip_today_in:
-  friendly_name: Rain Today
-  icon: mdi:weather-rainy
+# sensor.pws_precip_today_in:
+  # friendly_name: Rain Today
+  # icon: mdi:weather-rainy
 sensor.speedtest_upload:
   friendly_name: Upload Speed
   icon: mdi:arrow-up-bold-circle-outline
@@ -171,3 +177,6 @@ sensor.webcam_motion:
 sensor.webcam_light_level:
   friendly_name: Living Room Light
   unit_of_measurement: lux
+sensor.alli_battery:
+  icon: mdi:battery
+  unit_of_measurement: V
