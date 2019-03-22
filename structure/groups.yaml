@@ -8,8 +8,6 @@ default_view:
   entities:
     - person.kenny
     - person.meredith
-#    - device_tracker.kenny_pixelxl
-#    - device_tracker.mere_iphone
     - persistent_notification.invalid_config
     - configurator.alexa_media_player
     - configurator.alexa_media_player_2
@@ -160,8 +158,6 @@ residents:
   entities:
     - person.kenny
     - person.meredith
-#    - device_tracker.kenny_pixelxl
-#    - device_tracker.mere_iphone
 
 firstfloor:
   name: First Floor Lights
@@ -253,7 +249,6 @@ notify_auto:
     - automation.kitchen_sensor_battery
     - automation.mere_new_breach
     - automation.kenny_new_breach
-    - automation.weather_alert
     - automation.ssl_certification_alert
     - automation.trash_alert
     - automation.alli_meds

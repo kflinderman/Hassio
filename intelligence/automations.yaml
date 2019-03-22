@@ -510,9 +510,14 @@
     for:
       minutes: 5
   condition:
-  - condition: state
-    entity_id: person.meredith
-    state: not_home
+    condition: or
+    conditions:
+    - condition: state
+      entity_id: person.meredith
+      state: not_home
+    - condition: state
+      entity_id: person.meredith
+      state: Work
   action:
     service: script.turn_on
     entity_id: script.away_mode
@@ -526,9 +531,14 @@
     for:
       minutes: 5
   condition:
-  - condition: state
-    entity_id: person.kenny
-    state: not_home
+    condition: or
+    conditions:
+    - condition: state
+      entity_id: person.kenny
+      state: not_home
+    - condition: state
+      entity_id: person.kenny
+      state: Work
   action:
     service: script.turn_on
     entity_id: script.away_mode
@@ -996,7 +1006,7 @@
 - id: kenny_new_breach
   alias: Kenny New Breach
   trigger:
-  - from: '1'
+  - from: '2'
     entity_id: !secret kpwn
     platform: state
   action:
@@ -1019,21 +1029,6 @@
         check it out"
       title: New Breach
     service: notify.pushbullet
-    
-# - id: weather_alert
-  # alias: Weather Alert
-  # trigger:
-    # platform: state
-    # entity_id: sensor.pws_alerts
-  # condition:
-  # - condition: numeric_state
-    # entity_id: sensor.pws_alerts
-    # above: 0
-  # action:
-    # service: notify.pushbullet
-    # data:
-      # title: Weather Alert
-      # message: "{{ states.sensor.pws_alerts.attributes.Message }}"
       
 - id: cert_alert
   alias: SSL Certification Alert
@@ -1630,10 +1625,6 @@
 - id: close_windows_auto
   alias: Close Windows Auto
   trigger:
-  # - platform: template
-    # data_template: {{ states.weather.dark_sky.attributes.temperature > 80 }}
-  # - platform: template
-    # data_template: {{ states.weather.dark_sky.attributes.temperature < 65 }}
   - platform: numeric_state
     entity_id: weather.dark_sky
     value_template: '{{ state.attributes.temperature }}'
@@ -1665,10 +1656,6 @@
   condition:
     condition: and
     conditions:
-    # - condition: template
-      # value_template: {{ states.weather.dark_sky.attributes.temperature < 80 }}
-    # - condition: template
-      # value_template: {{ states.weather.dark_sky.attributes.temperature > 65 }}
     - condition: numeric_state
       entity_id: weather.dark_sky
       value_template: '{{ state.attributes.temperature }}'
@@ -1884,8 +1871,6 @@
 - id: bedroom_fan_on
   alias: Bedroom Fan On
   trigger:
-    # - platform: template
-      # data_template: {{ states.weather.dark_sky.attributes.temperature > 70 }}
     - platform: numeric_state
       entity_id: weather.dark_sky
       value_template: '{{ state.attributes.temperature }}'
@@ -1899,8 +1884,6 @@
 - id: bedroom_fan_off
   alias: Bedroom Fan Off
   trigger:
-    # - platform: template
-      # data_template: {{ states.weather.dark_sky.attributes.temperature < 65 }}
     - platform: numeric_state
       entity_id: weather.dark_sky
       value_template: '{{ state.attributes.temperature }}'

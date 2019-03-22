@@ -4,18 +4,6 @@
   
   ##### Sensors #####
   
-# sensor.pws_precip_1d_in:
-  # friendly_name: Potential Rain
-# sensor.pws_precip_1d:
-  # friendly_name: Chance of Rain
-# sensor.pws_weather:
-  # friendly_name: Weather
-# sensor.pws_temp_f:
-  # friendly_name: Current Temperature
-# sensor.pws_temp_high_1d_f:
-  # friendly_name: Today's High
-# sensor.pws_temp_low_1d_f:
-  # friendly_name: Today's Low
 sensor.bedroom_bee_temperature:
   friendly_name: Bedroom Temperature
 sensor.basement_bee_temperature:
@@ -42,6 +30,8 @@ media_player.lg_tv_remote:
   friendly_name: Living Room TV
 weather.yweather:
   friendly_name: Weather
+group.all_scripts:
+  friendly_name: All Scripts
   
 #################
 # Icon Changing #
@@ -61,6 +51,8 @@ sensor.alli_button:
   icon: mdi:radiobox-marked
 sensor.alli_location:
   icon: mdi:map-marker
+sensor.kenny_pixelxl_batt:
+  icon: mdi:battery
   
   ##### Lights #####
 
@@ -100,9 +92,6 @@ switch.laundryroom:
   
   ##### Sensors #####
   
-# sensor.pws_precip_today_in:
-  # friendly_name: Rain Today
-  # icon: mdi:weather-rainy
 sensor.speedtest_upload:
   friendly_name: Upload Speed
   icon: mdi:arrow-up-bold-circle-outline

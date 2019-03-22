@@ -94,15 +94,20 @@ away_mode:
 
 cpu_off:
   sequence:
-    - service: light.turn_off
-      data:
-        entity_id: light.lightpack
+    - service: script.turn_on
+      entity_id: script.lightpack_off
     - delay:
         minutes: 1
     - service: hassio.addon_stdin
       data:
         addon: core_rpc_shutdown
         input: Desktop-Shutdown
+      
+lightpack_off:
+  sequence:
+    - service: light.turn_off
+      data:
+        entity_id: light.lightpack
       
 after_dark:
   sequence:
