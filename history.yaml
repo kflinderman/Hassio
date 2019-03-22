@@ -1,0 +1,82 @@
+  include:
+  
+      domains:
+        - light
+        - media_player
+        - binary_sensor
+      entities:
+      
+      ##### Device Trackers #####
+      
+        - device_tracker.kennyworkphone
+        - device_tracker.kennyworkphone_bt
+        - device_tracker.mere_iphone
+        - device_tracker.mere_iphone_bt
+        - device_tracker.kenny_pixelxl
+        - device_tracker.kenny_pixelxl_bt
+        - person.kenny
+        - person.meredith
+        
+      ##### Sensors #####
+      
+        - sensor.speedtest_download
+        - sensor.speedtest_upload
+        - sensor.speedtest_ping
+        - sensor.average_load_15m
+        - sensor.cpu_use
+        - sensor.ram_use
+        - sensor.swap_use
+        - sensor.webcam_light_level
+        - sensor.webcam_battery_level
+        - sensor.living_room_motion
+        - sensor.office_motion
+        - sensor.officebay
+        - sensor.basement_multisensor_luminance
+        - sensor.basement_multisensor_relative_humidity
+        - sensor.basement_multisensor_temperature
+        - sensor.bedroom_multisensor_luminance
+        - sensor.bedroom_multisensor_relative_humidity
+        - sensor.bedroom_multisensor_temperature
+        - sensor.kitchen_luminance
+        - sensor.kitchen_relative_humidity
+        - sensor.kitchen_temperature
+        - sensor.kitchensensorbatt
+        - sensor.living_room_motion_stats_mean
+        - sensor.office_motion_stats_mean
+        - sensor.alli_battery
+        - sensor.alli_button
+        - sensor.alli_location
+        - sensor.office_alli_battery
+        - sensor.office_alli_beacon
+        - sensor.office_alli_signal
+        - sensor.living_room_alli_battery
+        - sensor.living_room_alli_beacon
+        - sensor.living_room_alli_signal
+        - sensor.kenny_pixelxl_batt
+        
+      ##### Switches #####
+        
+        - switch.outlet
+        - switch.bedfan
+        - switch.officefan
+        - switch.craftfan
+        - switch.masterbath
+        - switch.kitchensw
+        - switch.guestbed
+        
+      ##### Input Booleans #####
+        
+        - input_boolean.vacation
+        - input_boolean.visitor
+        
+      ##### Other #####
+        
+        - group.residents
+        - climate.main_floor
+        
+  exclude:
+      entities:
+        - binary_sensor.bedroom_multisensor_sensor
+        - binary_sensor.basement_multisensor_sensor
+        - media_player.kenneths_alexa_apps
+        - media_player.merediths_alexa_apps

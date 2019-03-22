@@ -1,0 +1,455 @@
+- platform: mqtt
+  name: "Office Alli Signal"
+  state_topic: "ble/cd648cdff2ab/office/rssi"
+  unit_of_measurement: 'dBm'
+  expire_after: 35
+- platform: mqtt
+  name: "Office Alli Battery"
+  state_topic: "ble/cd648cdff2ab/office/volt"
+  unit_of_measurement: 'V'
+- platform: mqtt
+  name: "Office Alli Beacon"
+  state_topic: "ble/cd648cdff2ab/office/BEA"
+  expire_after: 35
+- platform: mqtt
+  name: "Living Room Alli Signal"
+  state_topic: "ble/cd648cdff2ab/livingroom/rssi"
+  unit_of_measurement: 'dBm'
+  expire_after: 35
+- platform: mqtt
+  name: "Living Room Alli Battery"
+  state_topic: "ble/cd648cdff2ab/livingroom/volt"
+  unit_of_measurement: 'V'
+- platform: mqtt
+  name: "Living Room Alli Beacon"
+  state_topic: "ble/cd648cdff2ab/livingroom/BEA"
+  expire_after: 35
+- platform: systemmonitor
+  resources:
+    - type: memory_use_percent
+    - type: swap_use_percent
+    - type: load_1m
+    - type: processor_use
+    - type: last_boot
+- platform: haveibeenpwned
+  email:
+    - !secret kemail
+    - !secret memail
+- platform: uptime
+- platform: amcrest
+- platform: filter
+  name: "Living Room Motion"
+  entity_id: sensor.webcam_motion
+  filters:
+    filter: lowpass
+    time_constant: 5
+    precision: 0
+- platform: random
+  name: Vacation Randomizer
+  minimum: 0
+  maximum: 10
+- platform: cert_expiry
+  host: !secret url2_secret
+  port: 8123
+  
+  ##### Template Sensors #####
+  
+- platform: template
+  sensors:
+  
+    blank:
+      friendly_name: "Blank"
+      value_template: "{{ state }}"
+
+    kennyhibp:
+      friendly_name: "Kenny Breaches"
+      value_template: !secret kpwnsensor
+      
+    merehibp:
+      friendly_name: "Meredith Breaches"
+      value_template: !secret mpwnsensor
+      
+    kenny_pixelxl_batt:
+      friendly_name: "Pixel XL Battery"
+      unit_of_measurement: 'V'
+      value_template: "{{ states.device_tracker.kenny_pixelxl_gps.attributes.battery }}"
+      
+    target_temp_high:
+      friendly_name: "Target Temp High"
+      unit_of_measurement: '°F'
+      value_template: "{{ states.climate.main_floor.attributes.target_temp_high }}"
+      
+    target_temp_low:
+      friendly_name: "Target Temp Low"
+      unit_of_measurement: '°F'
+      value_template: "{{ states.climate.main_floor.attributes.target_temp_low }}"
+      
+    kitchensensorbatt:
+      friendly_name: "Kitchen Sensor Battery"
+      unit_of_measurement: '%'
+      value_template: "{{ states.zwave.kitchen_multisensor.attributes.battery_level }}"
+        
+    officebay:
+      friendly_name: "Office Bay Value"
+      unit_of_measurement: 'probability'
+      value_template: "{{ states.binary_sensor.office_bay_occupancy.attributes.probability }}"
+
+    since_last_boot_round:
+      friendly_name: "Since Last Boot"
+      value_template: "{{ states.sensor.last_boot.state | truncate(16, killwords=True, end='') }}"
+
+    pickup_day:
+      friendly_name: "Pickup Day"
+      value_template: >-
+        {% if is_state('binary_sensor.trash_day', 'on') %}
+            {{ as_timestamp(states.calendar.trash_pickup.attributes.start_time) | timestamp_custom('%a') }}
+        {% else %}
+            Thu
+        {% endif %}
+      
+    numhome:
+      value_template: >-
+        {% if is_state('person.kenny', 'home') %}
+            {% if is_state('person.meredith', 'home') %}
+                2
+            {% else %}
+                1
+            {% endif %}
+        {% else %}
+            {% if is_state('person.meredith', 'home') %}
+                1
+            {% else %}
+                0
+            {% endif %}
+        {% endif %}
+        
+    alli_location:
+      friendly_name: "Alli Location"
+      value_template: >-
+        {% if states('sensor.office_alli_signal')|int != 0 %}
+            {% if states('sensor.living_room_alli_signal')|int != 0 %}
+                {% if states('sensor.office_alli_signal')|int > states('sensor.living_room_alli_signal')|int %}
+                    Office
+                {% else %}
+                    Living Room
+                {% endif %}
+            {% else %}
+                Office
+            {% endif %}
+        {% elif states('sensor.living_room_alli_signal')|int != 0 %}
+            {% if states('sensor.office_alli_signal')|int != 0 %}
+                {% if states('sensor.office_alli_signal')|int < states('sensor.living_room_alli_signal')|int %}
+                    Living Room
+                {% else %}
+                    Office
+                {% endif %}
+            {% else %}
+                Living Room
+            {% endif %}
+        {% else %}
+            Nowhere
+        {% endif %}
+        
+    alli_button:
+      friendly_name: "Alli Button"
+      value_template: >-
+        {% if is_state('sensor.office_alli_beacon', 'unknown') and is_state('sensor.living_room_alli_beacon', 'unknown')%}
+            0
+        {% elif is_state('sensor.office_alli_beacon', '0') or is_state('sensor.living_room_alli_beacon', '0')%}
+            1
+        {% elif is_state('sensor.office_alli_beacon', '1') or is_state('sensor.living_room_alli_beacon', '1')%}
+            2
+        {% endif %}
+      
+    alli_battery:
+      friendly_name: "Alli Battery"
+      value_template: >-
+        {% if (states('sensor.office_alli_battery')|float < states('sensor.living_room_alli_battery')|float and states('sensor.office_alli_battery')|float != 0) or states('sensor.living_room_alli_battery')|float == 0 %}
+          {{ states('sensor.office_alli_battery')|float }}
+        {% else %}
+            {{ states('sensor.living_room_alli_battery')|float }}
+        {% endif %}
+        
+    last_alexa:
+      entity_id:
+        - media_player.basement_dot
+        - media_player.bedroom_dot
+        - media_player.living_room_dot
+      value_template: >
+        {{ states.media_player | selectattr('attributes.last_called','eq',True) | map(attribute='entity_id') | first }}
+      
+  ##### Rounding Sensors #####
+      
+    load_1m_round:
+      friendly_name: "Load (1m) Round"
+      value_template: "{{ states.sensor.load_1m.state | round(3) }}"
+      
+    rock_lamp_light_hours_round:
+      friendly_name: "Rock Lamp Light Hours Round"
+      value_template: "{{ states.sensor.rock_lamp_light_hours.state | round(1) }}"
+
+    floor_lamp_light_hours_round:
+      friendly_name: "Floor Lamp Light Hours Round"
+      value_template: "{{ states.sensor.floor_lamp_light_hours.state | round(1) }}"
+
+    chair_lamp_light_hours_round:
+      friendly_name: "Chair Lamp Light Hours Round"
+      value_template: "{{ states.sensor.chair_lamp_light_hours.state | round(1) }}"
+
+    swirl_lamp_light_hours_round:
+      friendly_name: "Swirl Lamp Light Hours Round"
+      value_template: "{{ states.sensor.swirl_lamp_light_hours.state | round(1) }}"
+
+    oven_light_hours_round:
+      friendly_name: "Oven Light Hours Round"
+      value_template: "{{ states.sensor.oven_light_hours.state | round(1) }}"
+
+    front_door_light_hours_round:
+      friendly_name: "Front Door Light Hours Round"
+      value_template: "{{ states.sensor.front_door_light_hours.state | round(1) }}"
+
+    dining_room_light_hours_round:
+      friendly_name: "Dining Room Light Hours Round"
+      value_template: "{{ states.sensor.dining_room_light_hours.state | round(1) }}"
+
+    basement_light_hours_round:
+      friendly_name: "Basement Light Hours Round"
+      value_template: "{{ states.sensor.basement_light_hours.state | round(1) }}"
+
+    basement_1_light_hours_round:
+      friendly_name: "Basement 1 Light Hours Round"
+      value_template: "{{ states.sensor.basement_1_light_hours.state | round(1) }}"
+
+    basement_2_light_hours_round:
+      friendly_name: "Basement 2 Light Hours Round"
+      value_template: "{{ states.sensor.basement_1_light_hours.state | round(1) }}"
+
+    basement_3_light_hours_round:
+      friendly_name: "Basement 3 Light Hours Round"
+      value_template: "{{ states.sensor.basement_1_light_hours.state | round(1) }}"
+
+    basement_4_light_hours_round:
+      friendly_name: "Basement 4 Light Hours Round"
+      value_template: "{{ states.sensor.basement_1_light_hours.state | round(1) }}"
+
+    bedroom_fan_hours_round:
+      friendly_name: "Bedroom Fan Hours Round"
+      value_template: "{{ states.sensor.bedroom_fan_hours.state | round(1) }}"
+
+    craft_room_fan_hours_round:
+      friendly_name: "Craft Room Fan Hours Round"
+      value_template: "{{ states.sensor.craft_room_fan_hours.state | round(1) }}"
+
+    master_bathroom_hours_round:
+      friendly_name: "Master Bathroom Hours Round"
+      value_template: "{{ states.sensor.master_bathroom_hours.state | round(1) }}"
+
+    office_fan_hours_round:
+      friendly_name: "Office Fan Hours Round"
+      value_template: "{{ states.sensor.office_fan_hours.state | round(1) }}"
+
+    prep_area_hours_round:
+      friendly_name: "Prep Area Hours Round"
+      value_template: "{{ states.sensor.prep_area_hours.state | round(1) }}"
+
+    guest_bedroom_fan_hours_round:
+      friendly_name: "Guest Bedroom Fan Hours Round"
+      value_template: "{{ states.sensor.guest_bedroom_fan_hours.state | round(1) }}"
+
+    sewing_light_hours_round:
+      friendly_name: "Sewing Light Hours Round"
+      value_template: "{{ states.sensor.sewing_light_hours.state | round(1) }}"
+
+    deck_light_hours_round:
+      friendly_name: "Deck Light Hours Round"
+      value_template: "{{ states.sensor.deck_light_hours.state | round(1) }}"
+
+    computer_hours_round:
+      friendly_name: "Computer Hours Round"
+      value_template: "{{ states.sensor.computer_hours.state | round(1) }}"
+
+    market_light_hours_round:
+      friendly_name: "Market Light Hours Round"
+      value_template: "{{ states.sensor.market_light_hours.state | round(1) }}"
+
+    washroom_light_hours_round:
+      friendly_name: "Washroom Light Hours Round"
+      value_template: "{{ states.sensor.washroom_light_hours.state | round(1) }}"
+  
+  ##### History Stats #####
+  
+- platform: history_stats
+  name: Meredith
+  entity_id: person.meredith
+  state: 'home'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 7
+- platform: history_stats
+  name: Kenny
+  entity_id: person.kenny
+  state: 'home'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 7
+- platform: history_stats
+  name: Basement 1 Light Hours
+  entity_id: light.basement_1
+  state: 'on'
+  end: '{{ (now().replace(hour=0).replace(minute=0).replace(second=0))|round(1) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Basement 2 Light Hours
+  entity_id: light.basement_2
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Basement 3 Light Hours
+  entity_id: light.basement_3
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Basement 4 Light Hours
+  entity_id: light.basement_4
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Rock Lamp Light Hours
+  entity_id: light.rock_lamp
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Swirl Lamp Light Hours
+  entity_id: light.swirl_lamp
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Sewing Light Hours
+  entity_id: light.sewing_light
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Deck Light Hours
+  entity_id: light.deck_light
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Floor Lamp Light Hours
+  entity_id: light.floor_lamp
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Chair Lamp Light Hours
+  entity_id: light.chair_lamp
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Front Door Light Hours
+  entity_id: light.front_outside
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Oven Light Hours
+  entity_id: light.oven
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Basement Light Hours
+  entity_id: switch.outlet
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Bedroom Fan Hours
+  entity_id: switch.bedfan
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Craft Room Fan Hours
+  entity_id: switch.craftfan
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Office Fan Hours
+  entity_id: switch.officefan
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Guest Bedroom Fan Hours
+  entity_id: switch.guestbed
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Prep Area Hours
+  entity_id: switch.kitchensw
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Master Bathroom Hours
+  entity_id: switch.masterbath
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Computer Hours
+  entity_id: switch.desktoppc
+  state: 'on'
+  end: '{{ (now().replace(hour=0).replace(minute=0).replace(second=0))|round(1) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Dining Room Light Hours
+  entity_id: light.dining_lights_level
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Market Light Hours
+  entity_id: switch.deck_ceiling_outlet_switch
+  state: 'on'
+  end: '{{ (now().replace(hour=0).replace(minute=0).replace(second=0))|round(1) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Washroom Light Hours
+  entity_id: switch.laundryroom
+  state: 'on'
+  end: '{{ (now().replace(hour=0).replace(minute=0).replace(second=0))|round(1) }}'
+  duration:
+    days: 1

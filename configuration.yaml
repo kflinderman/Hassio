@@ -34,6 +34,7 @@ logger:
     components.calendar.vacation: critical
     components.sensor.cert_expiry: critical
     custom_components.light.lightpack: critical
+    custom_components.amcrest.camera: critical
     components. binary_sensor.skybell_front_door_button: critical
     components. binary_sensor.skybell_front_door_motion: critical
     components.websocket_api.http.connection: critical
@@ -68,13 +69,12 @@ logbook:
   include:
     entities:
       - device_tracker.kenny_pixelc
-      - device_tracker.kenny_pixelxl
-      - device_tracker.mere_iphone
+      - person.kenny
+      - person.meredith
       - device_tracker.mere_lap
       - device_tracker.pc
 
 custom_updater:
-# mode: storage
   show_installable: false
   track:
     - components
@@ -90,15 +90,8 @@ custom_updater:
 frontend: !include structure/theme.yaml
 
 lovelace:
-#  mode: yaml
 
 python_script:
-
-# mqtt:
-  # broker: !secret mqtt_ip
-  # username: !secret mqtt_username
-  # password: !secret mqtt_password
-  # client_id: hassio-mqtt-client
 
 zwave:
   usb_path: /dev/ttyACM0
@@ -193,13 +186,6 @@ amcrest:
       - motion_detection
       - motion_recording
     port: !secret amcrest_port
-    
-# amcrest_custom:
-  # - host: !secret backyard_IP
-    # username: !secret backyard_user
-    # password: !secret backyard_pswd
-    # name: "Backyard Camera2"
-    # port: !secret amcrest_port
       
 android_ip_webcam:
   - host: !secret webcam_ip

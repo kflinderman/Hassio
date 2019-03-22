@@ -1,0 +1,171 @@
+###################
+# Friendly Naming #
+###################
+  
+  ##### Sensors #####
+  
+sensor.bedroom_bee_temperature:
+  friendly_name: Bedroom Temperature
+sensor.basement_bee_temperature:
+  friendly_name: Basement Temperature
+sensor.living_room_bee_temperature:
+  friendly_name: Living Room Temperature
+sensor.basement_multisensor_burglar:
+  friendly_name: Basement Motion
+sensor.bedroom_multisensor_burglar:
+  friendly_name: Bedroom Motion
+sensor.kitchen_burglar:
+  friendly_name: Kitchen Motion
+!secret kpwn:
+  friendly_name: Kenny Breaches
+!secret mpwn:
+  friendly_name: Meredith Breaches
+  
+  ##### Other #####
+  
+media_player.yamaha_receiver:
+  emulated_hue_name: stereo
+  friendly_name: Stereo
+media_player.lg_tv_remote:
+  friendly_name: Living Room TV
+weather.yweather:
+  friendly_name: Weather
+group.all_scripts:
+  friendly_name: All Scripts
+  
+#################
+# Icon Changing #
+#################
+  
+  ##### Sensors #####
+  
+binary_sensor.trash_day:
+  icon: mdi:delete
+binary_sensor.recycling_day:
+  icon: mdi:delete-restore
+sensor.pickup_day:
+  icon: mdi:truck
+sensor.since_last_boot:
+  icon: mdi:history
+sensor.alli_button:
+  icon: mdi:radiobox-marked
+sensor.alli_location:
+  icon: mdi:map-marker
+sensor.kenny_pixelxl_batt:
+  icon: mdi:battery
+  
+  ##### Lights #####
+
+light.front_outside:
+  icon: mdi:spotlight-beam
+light.deck_light:
+  icon: mdi:spotlight-beam
+light.floor_lamp:
+  icon: mdi:floor-lamp
+light.rock_lamp:
+  icon: mdi:lamp
+light.chair_lamp:
+  icon: mdi:desk-lamp
+light.sewing_light:
+  icon: mdi:lamp
+light.oven:
+  icon: mdi:stove
+light.swirl_lamp:
+  icon: mdi:lamp
+light.basement_ceiling_lights:
+  icon: mdi:ceiling-light
+light.lightpack:
+  icon: mdi:television-guide
+  
+  ##### Switches #####
+  
+switch.skybell_front_door_do_not_disturb:
+  icon: mdi:bell-sleep
+switch.skybell_front_door_motion_sensor:
+  icon: mdi:run-fast
+switch.laundryroom:
+  icon: mdi:washing-machine
+  
+########
+# Both #
+########
+  
+  ##### Sensors #####
+  
+sensor.speedtest_upload:
+  friendly_name: Upload Speed
+  icon: mdi:arrow-up-bold-circle-outline
+sensor.speedtest_download:
+  friendly_name: Download Speed
+  icon: mdi:arrow-down-bold-circle-outline
+sensor.speedtest_ping:
+  friendly_name: Ping
+  icon: mdi:signal-variant
+sensor.basement_multisensor_luminance:
+  friendly_name: Basement Light
+  icon: mdi:flashlight
+sensor.bedroom_multisensor_luminance:
+  friendly_name: Bedroom Light
+  icon: mdi:flashlight
+sensor.kitchen_luminance:
+  friendly_name: Kitchen Light
+  icon: mdi:flashlight
+  
+  ##### Switches #####
+  
+switch.outlet:
+#  friendly_name: Spooky Lights
+#  icon: mdi:ghost
+#  friendly_name: Christmas Lights
+#  icon: mdi:pine-tree
+  friendly_name: Basement Floor Light
+  icon: mdi:floor-lamp
+switch.airhockey:
+  friendly_name: Air Hockey Table
+  icon: mdi:trophy
+switch.bedfan:
+  friendly_name: Bedroom Fan
+  icon: mdi:ceiling-light
+switch.officefan:
+  friendly_name: Office Fan
+  icon: mdi:ceiling-light
+switch.craftfan:
+  friendly_name: Craft Room Fan
+  icon: mdi:ceiling-light
+switch.masterbath:
+  friendly_name: Master Bathroom Lights
+  icon: mdi:water
+switch.kitchensw:
+  friendly_name: Prep Area
+  icon: mdi:ceiling-light
+switch.guestbed:
+  friendly_name: Guest Room Fan
+  icon: mdi:ceiling-light
+switch.desktopPC:
+  friendly_name: Computer
+  icon: mdi:laptop
+switch.deck_ceiling_outlet_switch:
+  friendly_name: Market Lights
+  icon: mdi:lightbulb
+  
+  ##### Other #####
+  
+light.dining_lights_level:
+  friendly_name: Dining Room Lights
+  icon: mdi:ceiling-light
+  
+#######################
+# Unit of Measurement #
+#######################
+  
+  ##### Sensors #####
+  
+sensor.webcam_motion:
+  friendly_name: Living Room Motion Raw
+  unit_of_measurement: motion
+sensor.webcam_light_level:
+  friendly_name: Living Room Light
+  unit_of_measurement: lux
+sensor.alli_battery:
+  icon: mdi:battery
+  unit_of_measurement: V

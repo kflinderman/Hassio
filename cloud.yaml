@@ -1,0 +1,89 @@
+alexa:
+  filter:
+    include_domains:
+      - switch
+      - group
+      - input_boolean
+      - media_player
+      - script
+    include_entities:
+      - light.dining_lights_level
+      - light.lightpack
+    exclude_entities:
+    
+    ##### Groups #####
+    
+      - group.bedroom_constant
+      - group.light_on_auto
+      - group.light_off_auto
+      - group.notify_auto
+      - group.pc_auto
+      - group.location_auto
+      - group.other_auto
+      - group.all_automations
+      - group.hue_lights
+      - group.switch_lights
+      - group.all_devices
+      - group.all_scripts
+      - group.automations
+      - group.defualt_view
+      - group.residents
+      - group.basement_left
+      - group.basement_right
+      - group.default_view
+      
+    ##### Scripts #####
+      
+      - script.away_mode
+      - script.cable_watch_off
+      - script.netflix_watch_off
+      - script.pandora_listen_off
+      - script.ps3_off
+      - script.radio_listen_off
+      - script.steam_off
+      - script.switch_off
+      - script.vinyl_off
+      - script.wiiu_off
+      - script.timed_cpu_off
+      - script.reset_switch
+      - script.masterbath_off
+      - script.ecobee_reset
+      - script.cpu_off
+      - script.home_mode
+      - script.climate_reset
+      - script.keep_ambi_working_on
+      - script.keep_ambi_working_off
+      - script.home_mode_check1
+      - script.home_mode_check2
+      - script.rand_vac1
+      - script.rand_vac2
+      - script.rand_vac3
+      - script.rand_vac4
+      - script.rand_vac5
+      - script.rand_vac6
+      - script.rand_vac7
+      - script.rand_vac8
+      - script.rand_vac9
+      - script.rand_vac10
+      - script.vac_craft
+      - script.vac_office
+      - script.vac_bed
+      - script.vac_living
+      - script.vacation_temp
+      - script.first_floor_break
+      - script.second_floor_break
+      - script.basement_off
+      - script.bedroom_off
+      - script.basement_floor_break
+      
+    ##### Switches #####
+      
+      - switch.webcam_night_vision
+      - switch.webcam_exposure_lock
+      - switch.webcam_focus
+      - switch.webcam_frontfacing_camera
+      - switch.webcam_gps_active
+      - switch.webcam_overlay
+      - switch.webcam_torch
+      - switch.webcam_video_recording
+      - switch.webcam_white_balance_lock

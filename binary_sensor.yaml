@@ -1,0 +1,115 @@
+  - platform: skybell
+    monitored_conditions:
+      - button
+      - motion
+  - platform: template
+    sensors:
+      craft_room_occupancy:
+        friendly_name: Craft Room Occupancy
+        value_template: >-
+          {%- if is_state('person.meredith', 'home') -%}
+          {%- if is_state('switch.craftfan', 'on') -%}
+          {%- if is_state('person.kenny', 'not_home') -%}
+          {{ is_state('binary_sensor.basement_occupancy', 'off')
+             and is_state('binary_sensor.bedroom_occupancy', 'off')
+             and is_state('binary_sensor.kitchen_occupancy', 'off')
+             and is_state('binary_sensor.living_room_bay_occupancy', 'off') }}
+          {%- else -%}
+          {{ is_state('person.meredith', 'home') }}
+          {%- endif -%}
+          {%- else -%}
+          {{ is_state('person.meredith', 'not_home') }}
+          {%- endif -%}
+          {%- else -%}
+          {{ is_state('person.meredith', 'home') }}
+          {%- endif -%}
+  - platform: template
+    sensors:
+      trash_day:
+        friendly_name: Trash Day
+        value_template: >-
+          {{ states.calendar.trash_pickup.attributes.message == 'Household garbage' or states.calendar.trash_pickup.attributes.message == 'Recycling blue week and household garbage' or states.calendar.trash_pickup.attributes.message == 'Household garbage, yard waste, and bulky item' or states.calendar.trash_pickup.attributes.message == 'Recycling blue week, household garbage, yard waste, and bulky item' }}
+  - platform: template
+    sensors:
+      recycling_day:
+        friendly_name: Recycling Day
+        value_template: >-
+          {{ states.calendar.trash_pickup.attributes.message == 'Recycling blue week and household garbage'  or states.calendar.trash_pickup.attributes.message == 'Recycling blue week, household garbage, yard waste, and bulky item' }}
+      
+##### Occupancy Threshold Sensors #####
+          
+  - platform: threshold
+    name: Bedroom Occupancy
+    entity_id: sensor.bedroom_multisensor_burglar
+    upper: 4
+  - platform: threshold
+    name: Basement Occupancy
+    entity_id: sensor.basement_multisensor_burglar
+    upper: 4
+  - platform: threshold
+    name: Kitchen Occupancy
+    entity_id: sensor.kitchen_burglar
+    upper: 4
+    
+##### Bayesian Sensors #####
+    
+  - platform: bayesian
+    name: Living Room Bay Occupancy
+    prior: 0.5
+    probability_threshold: 0.9
+    observations:
+      - entity_id: 'media_player.stereo'
+        prob_given_true: 0.7
+        prob_given_false: 0.3
+        platform: state
+        to_state: 'on'
+      - entity_id: 'media_player.lg_tv_remote'
+        prob_given_true: 0.6
+        prob_given_false: 0.2
+        platform: state
+        to_state: 'playing'
+      - entity_id: 'sensor.webcam_motion'
+        prob_given_true: 0.8
+        prob_given_false: 0
+        platform: numeric_state
+        above: 9
+      - entity_id: 'binary_sensor.living_room_bee_occupancy'
+        prob_given_true: 0.8
+        prob_given_false: 0
+        platform: state
+        to_state: on
+  - platform: bayesian
+    name: Office Bay Occupancy
+    prior: 0.1
+    probability_threshold: 0.9
+    observations:
+      - entity_id: 'media_player.office_stereo'
+        prob_given_true: 0.7
+        prob_given_false: 0.3
+        platform: state
+        to_state: 'on'
+      - entity_id: 'light.lightpack'
+        prob_given_true: 0.6
+        prob_given_false: 0.3
+        platform: state
+        to_state: 'on'
+      - entity_id: 'media_player.desktop_media'
+        prob_given_true: 0.6
+        prob_given_false: 0.1
+        platform: state
+        to_state: 'paused'
+      - entity_id: 'media_player.desktop_media'
+        prob_given_true: 0.9
+        prob_given_false: 0.2
+        platform: state
+        to_state: 'playing'
+      - entity_id: 'switch.officefan'
+        prob_given_true: 0.5
+        prob_given_false: 0.2
+        platform: state
+        to_state: 'on'
+      - entity_id: 'switch.desktoppc'
+        prob_given_true: 0.4
+        prob_given_false: 0.0
+        platform: state
+        to_state: 'on'
