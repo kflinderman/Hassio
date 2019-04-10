@@ -69,6 +69,15 @@
         - input_boolean.vacation
         - input_boolean.visitor
         
+        - input_boolean.alli_bed
+        - input_boolean.alli_office
+        - input_boolean.alli_craft
+        - input_boolean.alli_living
+        - input_boolean.alli_kitchen
+        - input_boolean.alli_dining
+        - input_boolean.alli_guest
+        - input_boolean.alli_basement
+        
       ##### Other #####
         
         - group.residents

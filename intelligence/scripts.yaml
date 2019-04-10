@@ -409,19 +409,14 @@ basement_check:
         minutes: 2
     - service: script.turn_on
       entity_id: script.basement_loop
-    - condition: state
-      entity_id: light.basement_ceiling_lights
-      state: 'on'
-    - service: script.turn_on
-      entity_id: script.basement_check
       
 basement_loop:
   sequence:
     - condition: state
       entity_id: light.basement_ceiling_lights
-      state: 'off'
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.basement_light_off_loop
+      state: 'on'
+    - service: script.turn_on
+      entity_id: script.basement_check
       
 medications:
   sequence:
@@ -429,13 +424,39 @@ medications:
       data:
         title: Alli Needs Her Meds
         message: "Make sure to give Alli her meds for the month!"
+    - service: script.turn_on
+      data:
+        entity_id: script.medications_loop
+        
+medications_loop:
+  sequence:
     - delay:
         days: 1
     - condition: state
       entity_id: input_boolean.dog_med
       state: 'off'
     - service: script.turn_on
-      entity_id: script.medications
+      data:
+        entity_id: script.medications
+      
+alli_location_spreadsheet:
+  sequence:
+    - condition: state
+      entity_id: group.alli_locate
+      state: 'on'
+    - service: ifttt.trigger
+      data_template: {"event":"Alli_Location", "value1":"{{ states.sensor.alli_spreadsheet.state }}", "value2":"{{ states.sensor.alli_location.state }}", "value3":"{{ states.sensor.basement_alli_signal.state }}, {{ states.sensor.bedroom_alli_signal.state }}, {{ states.sensor.living_room_alli_signal.state }}, {{ states.sensor.office_alli_signal.state }}"}
+    - service: script.turn_on
+      data:
+        entity_id: script.alli_location_spreadsheet_loop
+    
+alli_location_spreadsheet_loop:
+  sequence:
+    - delay:
+        seconds: 30
+    - service: script.turn_on
+      data:
+        entity_id: script.alli_location_spreadsheet
       
 ############################
 #5 Random Vacation Scripts #

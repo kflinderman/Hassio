@@ -19,7 +19,7 @@
   alias: Kenny Wake Up
   trigger:
     platform: time
-    at: 06:45:00
+    at: '06:45:00'
   condition:
     condition: or
     conditions:
@@ -48,7 +48,7 @@
   alias: Kenny Awake
   trigger:
     platform: time
-    at: 07:20:00
+    at: '07:20:00'
   condition:
     condition: and
     conditions:
@@ -72,7 +72,7 @@
   alias: Mere Wake Up
   trigger:
     platform: time
-    at: 06:30:00
+    at: '06:30:00'
   condition:
     condition: or
     conditions:
@@ -97,7 +97,7 @@
   alias: Mere Wake Up Gym Day
   trigger:
     platform: time
-    at: 05:30:00
+    at: '05:30:00'
   condition:
     condition: or
     conditions:
@@ -463,7 +463,7 @@
   alias: Turn off all lights at night
   trigger:
     platform: time
-    at: 02:30:00
+    at: '02:30:00'
   condition:
     condition: state
     entity_id: input_boolean.party
@@ -1054,7 +1054,7 @@
     - service: input_boolean.turn_off
       entity_id: input_boolean.dog_med
     - service: script.turn_on
-      entity_id: script.medication
+      entity_id: script.medications
     
 - id: trash_alert
   alias: Trash Alert
@@ -1075,7 +1075,7 @@
   alias: Turn on PC morning
   trigger:
   - platform: time
-    at: 07:00:00
+    at: '7:00:00'
   condition:
   - condition: state
     entity_id: person.kenny
@@ -1088,7 +1088,7 @@
   alias: Turn off PC night weekend
   trigger:
   - platform: time
-    at: 03:30:00
+    at: '03:30:00'
   condition:
   - condition: time
     weekday:
@@ -1104,7 +1104,7 @@
   alias: Turn off PC night weekday
   trigger:
   - platform: time
-    at: 01:30:00
+    at: '01:30:00'
   condition:
   - condition: time
     weekday:
@@ -1850,6 +1850,16 @@
   action:
     service: ifttt.trigger
     data_template: {"event":"WattHour_Month", "value1":"{{ states.sensor.watthour.state }}", "value2":"{{ states.sensor.cpuwhr.state }}", "value3":"{{ states.sensor.auxwhr.state }}"}#, "value4":"{{ states.sensor.totalwhr.state }}", "value5":"20"}
+    
+- id: update_alli
+  alias: Update Alli
+  trigger:
+    platform: state
+    entity_id: group.alli_locate
+    to: 'on'
+  action:
+    service: script.turn_on
+    entity_id: script.alli_location_spreadsheet
     
 - id: delay_automations_on_restart
   alias: Delay automations on restart

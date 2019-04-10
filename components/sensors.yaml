@@ -24,6 +24,32 @@
   name: "Living Room Alli Beacon"
   state_topic: "ble/cd648cdff2ab/livingroom/BEA"
   expire_after: 35
+- platform: mqtt
+  name: "Bedroom Alli Signal"
+  state_topic: "ble/cd648cdff2ab/bedroom/rssi"
+  unit_of_measurement: 'dBm'
+  expire_after: 35
+- platform: mqtt
+  name: "Bedroom Alli Battery"
+  state_topic: "ble/cd648cdff2ab/bedroom/volt"
+  unit_of_measurement: 'V'
+- platform: mqtt
+  name: "Bedroom Alli Beacon"
+  state_topic: "ble/cd648cdff2ab/bedroom/BEA"
+  expire_after: 35
+- platform: mqtt
+  name: "Basement Alli Signal"
+  state_topic: "ble/cd648cdff2ab/basement/rssi"
+  unit_of_measurement: 'dBm'
+  expire_after: 35
+- platform: mqtt
+  name: "Basement Alli Battery"
+  state_topic: "ble/cd648cdff2ab/basement/volt"
+  unit_of_measurement: 'V'
+- platform: mqtt
+  name: "Basement Alli Beacon"
+  state_topic: "ble/cd648cdff2ab/basement/BEA"
+  expire_after: 35
 - platform: systemmonitor
   resources:
     - type: memory_use_percent
@@ -126,26 +152,14 @@
     alli_location:
       friendly_name: "Alli Location"
       value_template: >-
-        {% if states('sensor.office_alli_signal')|int != 0 %}
-            {% if states('sensor.living_room_alli_signal')|int != 0 %}
-                {% if states('sensor.office_alli_signal')|int > states('sensor.living_room_alli_signal')|int %}
-                    Office
-                {% else %}
-                    Living Room
-                {% endif %}
-            {% else %}
-                Office
-            {% endif %}
-        {% elif states('sensor.living_room_alli_signal')|int != 0 %}
-            {% if states('sensor.office_alli_signal')|int != 0 %}
-                {% if states('sensor.office_alli_signal')|int < states('sensor.living_room_alli_signal')|int %}
-                    Living Room
-                {% else %}
-                    Office
-                {% endif %}
-            {% else %}
-                Living Room
-            {% endif %}
+        {% if states('sensor.office_alli_signal')|int != 0 and (states('sensor.office_alli_signal')|int > states('sensor.living_room_alli_signal')|int or states('sensor.living_room_alli_signal')|int == 0) and (states('sensor.office_alli_signal')|int > states('sensor.bedroom_alli_signal')|int or states('sensor.bedroom_alli_signal')|int == 0) and (states('sensor.office_alli_signal')|int > states('sensor.basement_alli_signal')|int or states('sensor.basement_alli_signal')|int == 0) %}
+            Office
+        {% elif states('sensor.living_room_alli_signal')|int != 0 and (states('sensor.living_room_alli_signal')|int > states('sensor.office_alli_signal')|int or states('sensor.office_alli_signal')|int == 0) and (states('sensor.living_room_alli_signal')|int > states('sensor.bedroom_alli_signal')|int or states('sensor.bedroom_alli_signal')|int == 0) and (states('sensor.living_room_alli_signal')|int > states('sensor.basement_alli_signal')|int or states('sensor.basement_alli_signal')|int == 0) %}
+            Living Room
+        {% elif states('sensor.bedroom_alli_signal')|int != 0 and (states('sensor.bedroom_alli_signal')|int > states('sensor.office_alli_signal')|int or states('sensor.office_alli_signal')|int == 0) and (states('sensor.bedroom_alli_signal')|int > states('sensor.living_room_alli_signal')|int or states('sensor.living_room_alli_signal')|int == 0) and (states('sensor.bedroom_alli_signal')|int > states('sensor.basement_alli_signal')|int or states('sensor.basement_alli_signal')|int == 0) %}
+            Bedoom
+        {% elif states('sensor.basement_alli_signal')|int != 0 and (states('sensor.basement_alli_signal')|int > states('sensor.office_alli_signal')|int or states('sensor.office_alli_signal')|int == 0) and (states('sensor.basement_alli_signal')|int > states('sensor.living_room_alli_signal')|int or states('sensor.living_room_alli_signal')|int == 0) and (states('sensor.basement_alli_signal')|int > states('sensor.bedroom_alli_signal')|int or states('sensor.bedroom_alli_signal')|int == 0) %}
+            Basement
         {% else %}
             Nowhere
         {% endif %}
@@ -153,21 +167,47 @@
     alli_button:
       friendly_name: "Alli Button"
       value_template: >-
-        {% if is_state('sensor.office_alli_beacon', 'unknown') and is_state('sensor.living_room_alli_beacon', 'unknown')%}
+        {% if is_state('sensor.office_alli_beacon', 'unknown') and is_state('sensor.living_room_alli_beacon', 'unknown') and is_state('sensor.bedroom_alli_beacon', 'unknown') and is_state('sensor.basement_alli_beacon', 'unknown') %}
             0
-        {% elif is_state('sensor.office_alli_beacon', '0') or is_state('sensor.living_room_alli_beacon', '0')%}
+        {% elif is_state('sensor.office_alli_beacon', '0') or is_state('sensor.living_room_alli_beacon', '0') or is_state('sensor.bedroom_alli_beacon', '0') or is_state('sensor.basement_alli_beacon', '0') %}
             1
-        {% elif is_state('sensor.office_alli_beacon', '1') or is_state('sensor.living_room_alli_beacon', '1')%}
+        {% elif is_state('sensor.office_alli_beacon', '1') or is_state('sensor.living_room_alli_beacon', '1') or is_state('sensor.bedroom_alli_beacon', '1') or is_state('sensor.basement_alli_beacon', '1') %}
             2
         {% endif %}
       
     alli_battery:
       friendly_name: "Alli Battery"
       value_template: >-
-        {% if (states('sensor.office_alli_battery')|float < states('sensor.living_room_alli_battery')|float and states('sensor.office_alli_battery')|float != 0) or states('sensor.living_room_alli_battery')|float == 0 %}
-          {{ states('sensor.office_alli_battery')|float }}
-        {% else %}
+        {% if states('sensor.office_alli_battery')|float != 0 and (states('sensor.office_alli_battery')|float <= states('sensor.living_room_alli_battery')|float or states('sensor.living_room_alli_battery')|float == 0) and (states('sensor.office_alli_battery')|float <= states('sensor.bedroom_alli_battery')|float or states('sensor.bedroom_alli_battery')|float == 0) and (states('sensor.office_alli_battery')|float <= states('sensor.basement_alli_battery')|float or states('sensor.basement_alli_battery')|float == 0) %}
+            {{ states('sensor.office_alli_battery')|float }}
+        {% elif states('sensor.living_room_alli_battery')|float != 0 and (states('sensor.living_room_alli_battery')|float <= states('sensor.office_alli_battery')|float or states('sensor.office_alli_battery')|float == 0) and (states('sensor.living_room_alli_battery')|float <= states('sensor.bedroom_alli_battery')|float or states('sensor.bedroom_alli_battery')|float == 0) and (states('sensor.living_room_alli_battery')|float <= states('sensor.basement_alli_battery')|float or states('sensor.basement_alli_battery')|float == 0) %}
             {{ states('sensor.living_room_alli_battery')|float }}
+        {% elif states('sensor.bedroom_alli_battery')|float != 0 and (states('sensor.bedroom_alli_battery')|float <= states('sensor.office_alli_battery')|float or states('sensor.office_alli_battery')|float == 0) and (states('sensor.bedroom_alli_battery')|float <= states('sensor.living_room_alli_battery')|float or states('sensor.living_room_alli_battery')|float == 0) and (states('sensor.bedroom_alli_battery')|float <= states('sensor.basement_alli_battery')|float or states('sensor.basement_alli_battery')|float == 0) %}
+            {{ states('sensor.bedroom_alli_battery')|float }}
+        {% elif states('sensor.basement_alli_battery')|float != 0 and (states('sensor.basement_alli_battery')|float <= states('sensor.office_alli_battery')|float or states('sensor.office_alli_battery')|float == 0) and (states('sensor.basement_alli_battery')|float <= states('sensor.living_room_alli_battery')|float or states('sensor.living_room_alli_battery')|float == 0) and (states('sensor.basement_alli_battery')|float <= states('sensor.bedroom_alli_battery')|float or states('sensor.bedroom_alli_battery')|float == 0) %}
+            {{ states('sensor.basement_alli_battery')|float }}
+        {% endif %}
+        
+    alli_spreadsheet:
+      value_template: >-
+        {% if is_state('input_boolean.alli_bed', 'on') %}
+          Bedroom
+        {% elif is_state('input_boolean.alli_craft', 'on') %}
+          Craft Room
+        {% elif is_state('input_boolean.alli_office', 'on') %}
+          Office
+        {% elif is_state('input_boolean.alli_kitchen', 'on') %}
+          Kitchen
+        {% elif is_state('input_boolean.alli_living', 'on') %}
+          Living Room
+        {% elif is_state('input_boolean.alli_dining', 'on') %}
+          Dining Room
+        {% elif is_state('input_boolean.alli_guest', 'on') %}
+          Guest Room
+        {% elif is_state('input_boolean.alli_basement', 'on') %}
+          Basement
+        {% else %}
+          None
         {% endif %}
         
     last_alexa:

@@ -149,7 +149,6 @@ light: !include components/lights.yaml
 
 tplink:
 
-
 alexa_media:
   accounts:
     - email: !secret kemail
@@ -170,6 +169,8 @@ speedtestdotnet:
     - ping
     - download
     - upload
+    
+stream:
     
 skybell:
     username: !secret kemail

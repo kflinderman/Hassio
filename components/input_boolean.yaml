@@ -54,6 +54,33 @@
     
   ##### Other #####
   
+  alli_bed:
+    name: Alli Bedroom
+    icon: mdi:dog
+  alli_office:
+    name: Alli Office
+    icon: mdi:dog
+  alli_craft:
+    name: Alli Craft Room
+    icon: mdi:dog
+  alli_living:
+    name: Alli Living Room
+    icon: mdi:dog
+  alli_kitchen:
+    name: Alli Kitchen
+    icon: mdi:dog
+  alli_dining:
+    name: Alli Dining Room
+    icon: mdi:dog
+  alli_guest:
+    name: Alli Guest Room
+    icon: mdi:dog
+  alli_basement:
+    name: Alli Basement
+    icon: mdi:dog
+  
+  ##### Other #####
+  
   basement_light_off_loop:
     name: Basement Light Off Loop
   im_home:

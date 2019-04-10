@@ -190,6 +190,18 @@ holiday:
 # Automations #
 ###############
 
+alli_locate:
+  name: Alli Locations
+  entities:
+    - input_boolean.alli_bed
+    - input_boolean.alli_craft
+    - input_boolean.alli_office
+    - input_boolean.alli_kitchen
+    - input_boolean.alli_living
+    - input_boolean.alli_dining
+    - input_boolean.alli_guest
+    - input_boolean.alli_basement
+
 light_on_auto:
   name: Light On Automations
   entities:

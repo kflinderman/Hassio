@@ -24,12 +24,14 @@ views:
                 image: /local/kenny_home.jpg
                 name: Kenny
                 state_image:
+                  Work: /local/kenny_away.jpg
                   not_home: /local/kenny_away.jpg
                 type: picture-entity
               - entity: person.meredith
                 image: /local/mere_away.jpg
                 name: Meredith
                 state_image:
+                  Work: /local/mere_away.jpg
                   home: /local/mere_home.jpg
                 type: picture-entity
             type: horizontal-stack
@@ -43,6 +45,8 @@ views:
                   - entity: sensor.alli_location
                     image: /local/alli.jpg
                     state_image:
+                      Basement: /local/alli.jpg
+                      Bedroom: /local/alli.jpg
                       Living Room: /local/alli.jpg
                       Nowhere: /local/alli_gone.jpg
                       Office: /local/alli.jpg
@@ -311,15 +315,19 @@ views:
         tts:
           platform: alexa
         type: 'custom:mini-media-player'
-      - exceptions:
+      - chevrons: false
+        exceptions:
           - conditions:
-              user: Kenny
+              user: kenny
             config:
+              hide_tabs: '6'
               menu: show
-        hide_tabs: '5,6'
-        main_config: false
+              options: show
+        header: true
+        hide_tabs: '4,5'
+        main_config: true
         menu: hide
-        options: show
+        options: hide
         type: 'custom:compact-custom-header'
         voice: hide
     icon: 'mdi:home'
@@ -1170,6 +1178,8 @@ views:
     id: 3
     title: Basement
   - cards:
+      - head: group.alli_locate
+        type: 'custom:fold-entity-row'
       - elements:
           - entity: sensor.blank
             style:
@@ -1473,6 +1483,7 @@ views:
             type: picture-elements
         id: 5e3b7cda32e644cabaa77a7f1d126372
         type: horizontal-stack
+      - type: 'custom:tracker-card'
       - card_width: 60%
         cards:
           - entity: sensor.rock_lamp_light_hours_round
@@ -1714,7 +1725,6 @@ views:
           spaceBetween: 8
         start_card: 2
         type: 'custom:swipe-card'
-      - type: 'custom:tracker-card'
       - options: true
         type: 'custom:compact-custom-header'
     icon: 'mdi:chart-bar'
