@@ -100,6 +100,11 @@
       unit_of_measurement: 'V'
       value_template: "{{ states.device_tracker.kenny_pixelxl_gps.attributes.battery }}"
       
+    outside_temp:
+      friendly_name: "Outside Temperature"
+      unit_of_measurement: '°F'
+      value_template: "{{ states.weather.dark_sky.attributes.temperature }}"
+      
     target_temp_high:
       friendly_name: "Target Temp High"
       unit_of_measurement: '°F'

@@ -30,18 +30,21 @@ person:
 logger: 
   default: error
   logs:
-    components.calendar.visitor: critical
-    components.calendar.vacation: critical
-    components.sensor.cert_expiry: critical
-    custom_components.light.lightpack: critical
-    custom_components.amcrest.camera: critical
-    components. binary_sensor.skybell_front_door_button: critical
-    components. binary_sensor.skybell_front_door_motion: critical
-    components.websocket_api.http.connection: critical
-    components.hue: critical
-    components.light.hue: critical
-    helpers.entity_component: critical
-    helpers.entity: critical
+    homeassistant.components.calendar.visitor: critical
+    homeassistant.components.calendar.vacation: critical
+    homeassistant.components.sensor.cert_expiry: critical
+    homeassistant.components.tplink: debug
+    homeassistant.custom_components.light.lightpack: critical
+    homeassistant.custom_components.amcrest: debug
+    homeassistant.components.binary_sensor.skybell_front_door_button: critical
+    homeassistant.components.binary_sensor.skybell_front_door_motion: critical
+    homeassistant.components.websocket_api.http.connection: critical
+    homeassistant.components.hue: critical
+    homeassistant.components.light.hue: critical
+    homeassistant.components.device_tracker.netgear: critical
+    homeassistant.helpers.entity_component: critical
+    homeassistant.helpers.entity: critical
+    homeassistant.loader: critical
     
 history: !include structure/history.yaml
 
@@ -86,7 +89,9 @@ custom_updater:
   component_urls:
     - https://raw.githubusercontent.com/pnbruckner/homeassistant-config/master/custom_components.json
     - https://raw.githubusercontent.com/keatontaylor/custom_components/master/custom_components.json
-      
+
+breaking_changes:
+    
 frontend: !include structure/theme.yaml
 
 lovelace:
@@ -181,11 +186,11 @@ amcrest:
     username: !secret backyard_user
     password: !secret backyard_pswd
     name: "Backyard Camera"
-    sensors:
-      - motion_detector
-    switches:
-      - motion_detection
-      - motion_recording
+    binary_sensors:
+      - motion_detected
+    # switches:
+      # - motion_detection
+      # - motion_recording
     port: !secret amcrest_port
       
 android_ip_webcam:
@@ -237,6 +242,8 @@ notify:
   - platform: pushbullet
     api_key: !secret push_key
     name: pushbullet
+  - platform: alexa_media
+    name: alexa_media
 
 panel_iframe:
   configurator:

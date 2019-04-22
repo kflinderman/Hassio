@@ -116,6 +116,8 @@ views:
                 image: /local/alli.jpg
                 type: picture-elements
             type: horizontal-stack
+          - head: group.alli_locate
+            type: 'custom:fold-entity-row'
         id: 09ef49e989f142258d287c90cb5a90db
         type: vertical-stack
       - cards:
@@ -205,7 +207,7 @@ views:
                 tap_action:
                   action: none
                 type: state-label
-              - entity: sensor.backyard_camera_motion_detected
+              - entity: binary_sensor.backyard_camera_motion_detected
                 style:
                   '--paper-item-icon-color': 'rgb(255,255,255)'
                   left: 50%
@@ -1178,8 +1180,6 @@ views:
     id: 3
     title: Basement
   - cards:
-      - head: group.alli_locate
-        type: 'custom:fold-entity-row'
       - elements:
           - entity: sensor.blank
             style:
@@ -1290,6 +1290,16 @@ views:
               left: 83%
               top: 62%
             type: state-label
+          - entity: binary_sensor.potential_breaking_changes
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              color: 'rgba(255,255,255,1)'
+              line-height: 32px
+              margin: 3px 5px 0 0
+              right: 0
+              top: 0
+              transform: scale(0.8)
+            type: state-icon
         id: 4bf0a101e67c4edb9c851938fa1c94e3
         image: /local/raspberry.jpg
         type: picture-elements
@@ -1483,7 +1493,6 @@ views:
             type: picture-elements
         id: 5e3b7cda32e644cabaa77a7f1d126372
         type: horizontal-stack
-      - type: 'custom:tracker-card'
       - card_width: 60%
         cards:
           - entity: sensor.rock_lamp_light_hours_round
@@ -1725,6 +1734,7 @@ views:
           spaceBetween: 8
         start_card: 2
         type: 'custom:swipe-card'
+      - type: 'custom:tracker-card'
       - options: true
         type: 'custom:compact-custom-header'
     icon: 'mdi:chart-bar'

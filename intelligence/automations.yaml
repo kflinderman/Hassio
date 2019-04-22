@@ -985,6 +985,8 @@
     platform: numeric_state
     entity_id: sensor.alli_battery
     below: 2.85
+    for:
+      minutes: 10
   action:
     service: notify.pushbullet
     data:
@@ -1626,12 +1628,10 @@
   alias: Close Windows Auto
   trigger:
   - platform: numeric_state
-    entity_id: weather.dark_sky
-    value_template: '{{ state.attributes.temperature }}'
+    entity_id: sensor.outside_temp
     above: 80
   - platform: numeric_state
-    entity_id: weather.dark_sky
-    value_template: '{{ state.attributes.temperature }}'
+    entity_id: sensor.outside_temp
     below: 65
   condition:
   - condition: state
@@ -1657,12 +1657,10 @@
     condition: and
     conditions:
     - condition: numeric_state
-      entity_id: weather.dark_sky
-      value_template: '{{ state.attributes.temperature }}'
+      entity_id: sensor.outside_temp
       below: 80
     - condition: numeric_state
-      entity_id: weather.dark_sky
-      value_template: '{{ state.attributes.temperature }}'
+      entity_id: sensor.outside_temp
       above: 65
     - condition: state
       entity_id: input_boolean.window
@@ -1882,8 +1880,7 @@
   alias: Bedroom Fan On
   trigger:
     - platform: numeric_state
-      entity_id: weather.dark_sky
-      value_template: '{{ state.attributes.temperature }}'
+      entity_id: sensor.outside_temp
       above: 70
   action:
     service: group.set
@@ -1895,8 +1892,7 @@
   alias: Bedroom Fan Off
   trigger:
     - platform: numeric_state
-      entity_id: weather.dark_sky
-      value_template: '{{ state.attributes.temperature }}'
+      entity_id: sensor.outside_temp
       below: 65
   action:
     service: group.set
