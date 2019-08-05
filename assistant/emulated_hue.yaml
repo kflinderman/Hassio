@@ -124,3 +124,15 @@
       hidden: false
     script.radio_listen_on:
       hidden: false
+    script.vacuum_the_house:
+      hidden: false
+    script.tv_area_vacuum:
+      hidden: false
+    script.back_living_room_vacuum:
+      hidden: false
+    script.dining_room_vacuum:
+      hidden: false
+    script.kitchen_vacuum:
+      hidden: false
+    script.hallway_vacuum:
+      hidden: false

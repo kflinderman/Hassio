@@ -1,13 +1,13 @@
 homeassistant:
   #Location information
-  latitude: !secret lat_secret
-  longitude: !secret lon_secret
-  time_zone: America/New_York
-  elevation: 130
-  unit_system: imperial
+  # latitude: !secret lat_secret
+  # longitude: !secret lon_secret
+  # time_zone: America/New_York
+  # elevation: 130
+  # unit_system: imperial
   
   # Customization
-  name: Home
+  # name: Home
   customize: !include structure/customize.yaml
   customize_domain: {}
   customize_glob: {}
@@ -21,7 +21,7 @@ http:
 recorder:
   purge_interval: 2
   purge_keep_days: 7
-  #db_url: !secret db_secret
+  db_url: !secret db_secret
 
 system_health:
 
@@ -33,9 +33,11 @@ logger:
     homeassistant.components.calendar.visitor: critical
     homeassistant.components.calendar.vacation: critical
     homeassistant.components.sensor.cert_expiry: critical
-    homeassistant.components.tplink: debug
+    homeassistant.components.haveibeenpwned: critical
+    homeassistant.custom_components.weatheralerts: critical
+    #homeassistant.components.tplink: debug
+    #homeassistant.components.stream: debug
     homeassistant.custom_components.light.lightpack: critical
-    homeassistant.custom_components.amcrest: debug
     homeassistant.components.binary_sensor.skybell_front_door_button: critical
     homeassistant.components.binary_sensor.skybell_front_door_motion: critical
     homeassistant.components.websocket_api.http.connection: critical
@@ -77,20 +79,27 @@ logbook:
       - device_tracker.mere_lap
       - device_tracker.pc
 
-custom_updater:
-  show_installable: false
-  track:
-    - components
-    - cards
-  card_urls:
-    - https://raw.githubusercontent.com/bramkragten/custom-ui/master/updater.json
-    - https://raw.githubusercontent.com/kalkih/mini-media-player/master/tracker.json
-    - https://raw.githubusercontent.com/maykar/custom-lovelace/master/tracker.json
-  component_urls:
-    - https://raw.githubusercontent.com/pnbruckner/homeassistant-config/master/custom_components.json
-    - https://raw.githubusercontent.com/keatontaylor/custom_components/master/custom_components.json
+# custom_updater:
+  # show_installable: false
+  # track:
+    # - components
+    # - cards
+  # card_urls:
+    # - https://raw.githubusercontent.com/bramkragten/custom-ui/master/updater.json
+    # - https://raw.githubusercontent.com/kalkih/mini-media-player/master/tracker.json
+    # - https://raw.githubusercontent.com/maykar/custom-lovelace/master/tracker.json
+  # component_urls:
+    # - https://raw.githubusercontent.com/pnbruckner/homeassistant-config/master/custom_components.json
+    # - https://raw.githubusercontent.com/keatontaylor/custom_components/master/custom_components.json
+
+hacs:
+  token: b9ca1784d56f4542f28990c793877d9a344b998d
+  appdaemon: true
+  python_script: true
+  theme: true
 
 breaking_changes:
+  scan_interval: 1800
     
 frontend: !include structure/theme.yaml
 
@@ -122,6 +131,10 @@ config:
 
 discovery:
 
+ssdp:
+
+zeroconf:
+
 device_tracker:
   - platform: bluetooth_tracker
     request_rssi: true
@@ -143,6 +156,24 @@ switch: !include components/switch.yaml
 binary_sensor: !include components/binary_sensor.yaml
 
 input_boolean: !include components/input_boolean.yaml
+
+input_number:
+  vacuum_repeats:
+    name: Repeats
+    initial: 1
+    min: 1
+    max: 3
+    step: 1
+    
+input_select:
+  fanmode:
+    name: Fan Mode
+    icon: mdi:fan
+    options:
+      - "Quiet"
+      - "Balanced"
+      - "Turbo"
+      - "Max"
 
 sensor: !include components/sensors.yaml
 
@@ -188,34 +219,40 @@ amcrest:
     name: "Backyard Camera"
     binary_sensors:
       - motion_detected
-    # switches:
-      # - motion_detection
-      # - motion_recording
     port: !secret amcrest_port
+    scan_interval: 20
+  - host: !secret livingroom_IP
+    username: !secret livingroom_user
+    password: !secret livingroom_pswd
+    name: "Living Room Camera"
+    binary_sensors:
+      - motion_detected
+    port: !secret amcrest2_port
+    scan_interval: 20
       
-android_ip_webcam:
-  - host: !secret webcam_ip
-    name: Webcam
-    username: !secret camname_secret
-    password: !secret campass_secret
-    sensors:
-      - audio_connections
-      - battery_level
-      - battery_temp
-      - battery_voltage
-      - light
-      - motion
-      - pressure
-    switches:
-      - exposure_lock
-      - ffc
-      - focus
-      - gps_active
-      - night_vision
-      - overlay
-      - torch
-      - whitebalance_lock
-      - video_recording
+# android_ip_webcam:
+  # - host: !secret webcam_ip
+    # name: Webcam
+    # username: !secret camname_secret
+    # password: !secret campass_secret
+    # sensors:
+      # - audio_connections
+      # - battery_level
+      # - battery_temp
+      # - battery_voltage
+      # - light
+      # - motion
+      # - pressure
+    # switches:
+      # - exposure_lock
+      # - ffc
+      # - focus
+      # - gps_active
+      # - night_vision
+      # - overlay
+      # - torch
+      # - whitebalance_lock
+      # - video_recording
 
 ffmpeg:
       
@@ -226,7 +263,16 @@ weather:
 
 camera:
   - platform: skybell
-  - platform: amcrest
+    monitored_conditions:
+    - avatar
+    - activity
+    activity_name: "Last Activity"
+#  - platform: amcrest
+
+vacuum:
+  - platform: xiaomi_miio
+    host: !secret croc_vac_IP
+    token: !secret croc_vac_secret
       
 ifttt:
   key: !secret ifttt_key
@@ -244,16 +290,13 @@ notify:
     name: pushbullet
   - platform: alexa_media
     name: alexa_media
+  - platform: group
+    name: residents
+    services:
+      - service: pushbullet
+      - service: ios_merediths_iphone
 
 panel_iframe:
-  configurator:
-    title: Files
-    icon: mdi:wrench
-    url: !secret url_secret
-  terminal:
-    title: Terminal
-    icon: mdi:console
-    url: !secret url3_secret
   grafana:
     title: Grafana
     icon: mdi:chart-timeline

@@ -4,6 +4,7 @@
         - light
         - media_player
         - binary_sensor
+        - switch
       entities:
       
       ##### Device Trackers #####
@@ -12,8 +13,10 @@
         - device_tracker.kennyworkphone_bt
         - device_tracker.mere_iphone
         - device_tracker.mere_iphone_bt
+        - device_tracker.merediths_iphone
         - device_tracker.kenny_pixelxl
         - device_tracker.kenny_pixelxl_bt
+        - device_tracker.kenny_pixelxl_gps_2
         - person.kenny
         - person.meredith
         
@@ -26,11 +29,13 @@
         - sensor.cpu_use
         - sensor.ram_use
         - sensor.swap_use
-        - sensor.webcam_light_level
-        - sensor.webcam_battery_level
+        - sensor.living_room_light_level
         - sensor.living_room_motion
+        - sensor.office_light_level
         - sensor.office_motion
         - sensor.officebay
+        - sensor.main_floor_humidity
+        - sensor.main_floor_temperature
         - sensor.basement_multisensor_luminance
         - sensor.basement_multisensor_relative_humidity
         - sensor.basement_multisensor_temperature
@@ -53,22 +58,33 @@
         - sensor.living_room_alli_beacon
         - sensor.living_room_alli_signal
         - sensor.kenny_pixelxl_batt
+        - sensor.merediths_iphone_battery_level
+        - sensor.last_alexa
+        - sensor.outside_temp
+        - sensor.vacuum_area
+        - sensor.vacuum_battery
+        - sensor.vacuum_fan
+        - sensor.vacuum_status
         
       ##### Switches #####
         
-        - switch.outlet
-        - switch.bedfan
-        - switch.officefan
-        - switch.craftfan
-        - switch.masterbath
-        - switch.kitchensw
-        - switch.guestbed
+        # - switch.outlet
+        # - switch.bedfan
+        # - switch.officefan
+        # - switch.craftfan
+        # - switch.masterbath
+        # - switch.kitchensw
+        # - switch.guestbed
+        # - switch.airhockey
+        # - switch.deck_ceiling_outlet_switch
+        # - switch.desktoppc
+        # - switch.laundryroom
         
       ##### Input Booleans #####
         
         - input_boolean.vacation
         - input_boolean.visitor
-        
+        - input_boolean.party
         - input_boolean.alli_bed
         - input_boolean.alli_office
         - input_boolean.alli_craft
@@ -77,11 +93,14 @@
         - input_boolean.alli_dining
         - input_boolean.alli_guest
         - input_boolean.alli_basement
+        - input_boolean.im_home
+        - input_boolean.window
         
       ##### Other #####
         
         - group.residents
         - climate.main_floor
+        - vacuum.xiaomi_vacuum_cleaner
         
   exclude:
       entities:

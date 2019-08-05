@@ -7,8 +7,9 @@
 # #3 PC Automations              #
 # #4 Location Automations        #
 # #5 Theme Automations           #
-# #6 Master Switches Automations #
-# #7 Other Automations           #
+# #6 Vacuum Automations          #
+# #7 Master Switches Automations #
+# #8 Other Automations           #
 ##################################
 
 
@@ -126,7 +127,7 @@
   trigger:
     platform: sun
     event: sunset
-    offset: +00:30:00
+    # offset: +00:30:00
   action:
   - service: homeassistant.turn_on
     entity_id: group.outside
@@ -229,8 +230,8 @@
   alias: Turn on Lights Day Dark
   trigger:
   - platform: numeric_state
-    entity_id: sensor.webcam_light_level
-    below: 6
+    entity_id: sensor.living_room_light_level
+    below: 8
   condition:
     condition: and
     conditions:
@@ -439,11 +440,14 @@
     - condition: time
       after: '5:30:00'
     - condition: numeric_state
-      entity_id: sensor.webcam_light_level
-      below: 12
+      entity_id: sensor.living_room_light_level
+      below: 15
     - condition: state
       entity_id: input_boolean.livingroom
       state: 'on'
+    - condition: state
+      entity_id: group.livingroom
+      state: 'off'
     - condition: or
       conditions:
         - condition: state
@@ -504,11 +508,16 @@
 - id: off_lights_kenny_leave
   alias: Off lights Kenny Leave
   trigger:
-    platform: state
-    entity_id: person.kenny
-    to: not_home
-    for:
-      minutes: 5
+    - platform: state
+      entity_id: person.kenny
+      to: not_home
+      for:
+        minutes: 5
+    - platform: state
+      entity_id: person.kenny
+      to: Work
+      for:
+        minutes: 5
   condition:
     condition: or
     conditions:
@@ -525,11 +534,16 @@
 - id: off_lights_mere_leave
   alias: Off lights Mere Leave
   trigger:
-    platform: state
-    entity_id: person.meredith
-    to: not_home
-    for:
-      minutes: 5
+    - platform: state
+      entity_id: person.meredith
+      to: not_home
+      for:
+        minutes: 5
+    - platform: state
+      entity_id: person.meredith
+      to: Work
+      for:
+        minutes: 5
   condition:
     condition: or
     conditions:
@@ -667,8 +681,8 @@
   alias: Turn off Lights Day Dark
   trigger:
   - platform: numeric_state
-    entity_id: sensor.webcam_light_level
-    above: 18
+    entity_id: sensor.living_room_light_level
+    above: 12
   condition:
     condition: and
     conditions:
@@ -831,6 +845,16 @@
     - service: homeassistant.turn_off
       entity_id: group.outside
       
+- id: living_room_stop_on
+  alias: Living Room Stop One
+  trigger:
+    - platform: state
+      entity_id: group.livingroom
+      to: 'off'
+  action:
+    - service: script.turn_on
+      entity_id: script.livingroom_stop_on
+      
 - id: living_room_lights_off
   alias: Living Room Lights Off
   trigger:
@@ -838,13 +862,16 @@
       entity_id: binary_sensor.living_room_bay_occupancy
       to: 'off'
       for:
-        minutes: 15
+        minutes: 10
   condition:
     - condition: state
       entity_id: group.livingroom
       state: 'on'
     - condition: state
       entity_id: input_boolean.party
+      state: 'off'
+    - condition: state
+      entity_id: media_player.lg_tv_remote
       state: 'off'
   action:
     - service: script.turn_on
@@ -960,24 +987,24 @@
     entity_id: input_boolean.door
     state: 'off'
   action:
-    - service: notify.pushbullet
+    - service: notify.residents
       data:
         title: Door Activity
         message: "There is activity at the front door..."
     - service: script.turn_on
       entity_id: script.door
       
-- id: camera_battery
-  alias: Camera Battery
+- id: weather_alert
+  alias: Weather Alert
   trigger:
-    platform: numeric_state
-    entity_id: sensor.webcam_battery_level
-    below: 20
+    platform: state
+    entity_id: binary_sensor.weather_alert
+    to: 'on'
   action:
     service: notify.pushbullet
     data:
-      title: Web Camera Low Battery
-      message: "The living room web camera has very low battery."
+      title: Weather Alert - {{ states('sensor.weatheralerts') }}
+      message: "{{ states('sensor.weatheralerts') }}."
       
 - id: alli_battery
   alias: Alli Battery
@@ -1030,7 +1057,7 @@
       message: "Meredith has been breached according to HaveIBeenPwnd.  You should
         check it out"
       title: New Breach
-    service: notify.pushbullet
+    service: notify.residents
       
 - id: cert_alert
   alias: SSL Certification Alert
@@ -1065,10 +1092,95 @@
     entity_id: sensor.pickup_day
     from: 'Thu'
   action:
+    - service: notify.residents
+      data:
+        title: Trash Alert
+        message: "Trash pickup has been moved to {{ as_timestamp(state_attr('calendar.trash_pickup', 'start_time')) | timestamp_custom('%A') }}"
+     
+- id: main_brush_replace
+  alias: Main Brush Replace
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.vacuum_main_brush
+    below: 2
+  action:
     service: notify.pushbullet
     data:
-      title: Trash Alert
-      message: "Trash pickup has been moved to {{ as_timestamp(states.calendar.trash_pickup.attributes.start_time) | timestamp_custom('%A') }}"
+      title: Robot Vacuum Maintenance
+      message: "The main brush on the vacuum needs replacing."
+      
+- id: side_brush_replace
+  alias: Side Brush Replace
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.vacuum_side_brush
+    below: 2
+  action:
+    service: notify.pushbullet
+    data:
+      title: Robot Vacuum Maintenance
+      message: "The side brush on the vacuum needs replacing."
+      
+- id: filter_replace
+  alias: Filter Replace
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.vacuum_filter
+    below: 2
+  action:
+    service: notify.pushbullet
+    data:
+      title: Robot Vacuum Maintenance
+      message: "The filter on the vacuum needs replacing."
+      
+- id: vacuum_sensor_cleaning
+  alias: Vacuum Sensor Cleaning
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.vacuum_sensor
+    below: 2
+  action:
+    service: notify.pushbullet
+    data:
+      title: Robot Vacuum Maintenance
+      message: "The sensors on the vacuum needs cleaning."
+      
+- id: vacuum_error
+  alias: Vacuum Error
+  trigger:
+    platform: state
+    entity_id: vacuum.xiaomi_vacuum_cleaner
+    to: 'error'
+  condition:
+  - condition: state
+    entity_id: input_boolean.vacuum_stop_notify
+    state: 'off'
+  action:
+    service: notify.pushbullet
+    data:
+      title: Robot Vacuum Error
+      message: "The vacuum is stuck or is experiencing troubles. {{ state_attr('vacuum.xaiomi_vacuum_cleaner', 'error') }}."
+      
+- id: vacuum_finish
+  alias: Vacuum Finish
+  trigger:
+    platform: state
+    entity_id: vacuum.xiaomi_vacuum_cleaner
+    to: 'docked'
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.vacuum_stop_notify
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.vacuum_daily
+      state: 'off'
+  action:
+    service: notify.pushbullet
+    data:
+      title: Robot Vacuum Finished
+      message: "The vacuum finished cleaning for today!"
       
 ###################
 #3 PC Automations #
@@ -1401,8 +1513,110 @@
     data:
       name: red_day
 
+#######################
+#6 Vacuum Automations #
+#######################
+- id: complete_vacuum
+  alias: Complete Vacuum
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.vacuum_area
+      above: 40
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.vacuum_daily
+      
+- id: daily_vacuum
+  alias: Daily Vacuum
+  trigger:
+    - platform: sun
+      event: sunrise
+  action:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.vacuum_daily
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.vacuum_cancel
+
+- id: run_daily_vacuum
+  alias: Run Daily Vacuum
+  trigger:
+    - platform: time
+      at: '9:30:00'
+  condition:
+    - condition: state
+      entity_id: group.residents
+      state: not_home
+  action:
+    - service: script.turn_on
+      entity_id: script.run_vacuum
+
+- id: charged_daily_vacuum
+  alias: Charged Daily Vacuum
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.vacuum_battery
+      above: 70
+  condition:
+    - condition: state
+      entity_id: group.residents
+      state: not_home
+  action:
+    - service: script.turn_on
+      entity_id: script.run_vacuum
+
+- id: set_fan_mode
+  alias: Set Fan Mode
+  trigger:
+    - platform: state
+      entity_id: input_select.fanmode
+  action:
+    - service: vacuum.set_fan_speed
+      data_template:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        fan_speed: "{{ states('input_select.fanmode') }}"
+          
+- id: update_input_select_fan_mode
+  alias: Update Input Select Fan Mode
+  trigger:
+    - platform: homeassistant
+      event: start
+    - platform: state
+      entity_id: sensor.vacuum_fan
+  condition:
+    condition: template
+    value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed') != states('input_select.fanmode') }}"
+  action:
+    - service: input_select.select_option
+      entity_id: input_select.fanmode
+      data_template:
+        option: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed') }}"
+        
+- id: vacuum_upstairs_reminder
+  alias: Vacuum Upstairs Reminder
+  trigger:
+    - platform: state
+      entity_id: input_boolean.vacuum_upstairs
+      to: 'off'
+      for:
+        days: 4
+  action:
+    - service: script.turn_on
+      entity_id: script.vacuum_upstairs_reminder
+      
+- id: vacuum_basement_reminder
+  alias: Vacuum Basement Reminder
+  trigger:
+    - platform: state
+      entity_id: input_boolean.vacuum_basement
+      to: 'off'
+      for:
+        days: 14
+  action:
+    - service: script.turn_on
+      entity_id: script.vacuum_basement_reminder
+
 ################################
-#6 Master Switches Automations #
+#7 Master Switches Automations #
 ################################
 - id: turn_ib_first_floor
   alias: Turn IB First Floor
@@ -1485,7 +1699,7 @@
       entity_id: input_boolean.all_outside
 
 ######################
-#7 Other Automations #
+#8 Other Automations #
 ######################
 - id: watch_tv
   alias: Watch TV
@@ -1847,7 +2061,7 @@
     at: '12:00:00'
   action:
     service: ifttt.trigger
-    data_template: {"event":"WattHour_Month", "value1":"{{ states.sensor.watthour.state }}", "value2":"{{ states.sensor.cpuwhr.state }}", "value3":"{{ states.sensor.auxwhr.state }}"}#, "value4":"{{ states.sensor.totalwhr.state }}", "value5":"20"}
+    data_template: {"event":"WattHour_Month", "value1":"{{ states('sensor.watthour') }}", "value2":"{{ states('sensor.cpuwhr') }}", "value3":"{{ states('sensor.auxwhr') }}"}#, "value4":"{{ states('sensor.totalwhr') }}", "value5":"20"}
     
 - id: update_alli
   alias: Update Alli
@@ -1875,11 +2089,19 @@
       data:
         entity_id:
           - group.all_automations
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.basement_light_off_loop
           
 - id: bedroom_fan_on
   alias: Bedroom Fan On
   trigger:
+    - platform: homeassistant
+      event: start
     - platform: numeric_state
+      entity_id: sensor.outside_temp
+      above: 70
+  condition:
+    - condition: numeric_state
       entity_id: sensor.outside_temp
       above: 70
   action:

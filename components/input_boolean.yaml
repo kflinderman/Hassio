@@ -52,7 +52,7 @@
   all_break:
     name: Break for All
     
-  ##### Other #####
+  ##### Alli #####
   
   alli_bed:
     name: Alli Bedroom
@@ -79,6 +79,37 @@
     name: Alli Basement
     icon: mdi:dog
   
+  ##### Vacuum #####
+  
+  vacuum_zone_living1:
+    name: TV Area
+    icon: mdi:television
+  vacuum_zone_living2:
+    name: Back Living Room
+    icon: mdi:seat
+  vacuum_zone_dining:
+    name: Dining Room
+    icon: mdi:silverware
+  vacuum_zone_kitchen:
+    name: Kitchen
+    icon: mdi:microwave
+  vacuum_zone_hall:
+    name: Hallway
+    icon: mdi:door-closed
+  vacuum_daily:
+    name: Daily Vacuum
+    icon: mdi:robot-vacuum
+  vacuum_cancel:
+    name: Cancel Daily Vacuum
+    icon: mdi:robot-vacuum
+  vacuum_stop_notify:
+    name: Stop Notifications
+    icon: mdi:bell-sleep
+  vacuum_basement:
+    name: Basement Vacuum
+  vacuum_upstairs:
+    name: Upstairs Vacuum
+    
   ##### Other #####
   
   basement_light_off_loop:

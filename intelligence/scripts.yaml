@@ -5,9 +5,10 @@
 # #1 PC Scripts              #
 # #2 Temperature Scripts     #
 # #3 Manual Call Scripts     #
-# #4 Other Scripts           #
-# #5 Random Vacation Scripts #
-# #6 Stereo Scripts          #
+# #4 Vacuum Scripts          #
+# #5 Other Scripts           #
+# #6 Random Vacation Scripts #
+# #7 Stereo Scripts          #
 ##############################
 
 #####################
@@ -16,6 +17,12 @@
 
 home_mode:
   sequence:
+    - service: vacuum.set_fan_speed
+      data_template:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        fan_speed: "Quiet"
+    - service: vacuum.return_to_base
+      entity_id: vacuum.xiaomi_vacuum_cleaner
     - condition: state
       entity_id: input_boolean.window
       state: 'off'
@@ -31,10 +38,10 @@ home_mode:
     - condition: time
       after: '9:00:00'
       before: '16:30:00'
-    - service: climate.set_hold_mode
+    - service: climate.set_preset_mode
       data:
         entity_id: climate.main_floor
-        hold_mode: 'home'
+        preset_mode: 'home'
         
 home_mode_check1:
   sequence:
@@ -50,10 +57,10 @@ home_mode_check1:
     - condition: time
       after: '16:30:00'
       before: '9:00:00'
-    - service: climate.set_hold_mode
+    - service: climate.set_preset_mode
       data:
         entity_id: climate.main_floor
-        hold_mode: None
+        preset_mode: None
         
 home_mode_check2:
   sequence:
@@ -61,13 +68,17 @@ home_mode_check2:
       weekday:
           - sat
           - sun
-    - service: climate.set_hold_mode
+    - service: climate.set_preset_mode
       data:
         entity_id: climate.main_floor
-        hold_mode: None
+        preset_mode: None
         
 away_mode:
   sequence:
+    - service: vacuum.set_fan_speed
+      data_template:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        fan_speed: "Max"
     - service: input_boolean.turn_off
       data:
         entity_id: input_boolean.all_firstfloor
@@ -80,13 +91,15 @@ away_mode:
     - service: input_boolean.turn_off
       data:
         entity_id: input_boolean.all_outside
+    - service: script.turn_on
+      entity_id: script.run_vacuum
     - condition: state
       entity_id: input_boolean.window
       state: 'off'
-    - service: climate.set_hold_mode
+    - service: climate.set_preset_mode
       data:
         entity_id: climate.main_floor
-        hold_mode: 'away'
+        preset_mode: 'away'
 
 ###############
 #1 PC Scripts #
@@ -167,19 +180,19 @@ party_temp:
         
 climate_reset:
   sequence:
-    - service: climate.set_hold_mode
+    - service: climate.set_preset_mode
       data:
         entity_id: climate.main_floor
-        hold_mode: None
+        preset_mode: None
         
 ecobee_reset:
   sequence:
     - delay:
         seconds: 30
-    - service: climate.set_hold_mode
+    - service: climate.set_preset_mode
       data:
         entity_id: climate.main_floor
-        hold_mode: None
+        preset_mode: None
 
 ########################
 #3 Manual Call Scripts #
@@ -266,8 +279,226 @@ game_on:
     - service: scene.turn_on
       entity_id: scene.fun_basement_2
         
+###################
+#4 Vacuum Scripts #
+###################
+run_vacuum:
+  sequence:
+    - condition: state
+      entity_id: input_boolean.vacuum_daily
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.vacuum_cancel
+      state: 'off'
+    - condition: state
+      entity_id: binary_sensor.vacuum_dnd
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.vacation
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.visitor
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.party
+      state: 'off'
+    - condition: numeric_state
+      entity_id: sensor.vacuum_battery
+      above: 45
+    - service: vacuum.start
+      entity_id: vacuum.xiaomi_vacuum_cleaner
+
+vacuumed_upstairs:
+  alias: "Upstairs Vacuumed"
+  sequence:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.vacuum_upstairs
+    - delay:
+        seconds: 2
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.vacuum_upstairs
+      
+vacuum_upstairs_reminder:
+  sequence:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.vacuum_upstairs
+    - service: script.turn_on
+      entity_id: script.vacuum_upstairs_notification
+      
+vacuum_upstairs_notification:
+  sequence:
+    - condition: state
+      entity_id: input_boolean.vacuum_upstairs
+      state: 'on'
+    - service: notify.residents
+      data:
+        title: Vacuum Upstairs
+        message: "It's been a while since you vacuumed upstairs. Might want to use the robot vacuum upstairs!"
+    - service: script.turn_on
+      entity_id: script.vacuum_upstairs_notification_loop
+
+vacuum_upstairs_notification_loop:
+  sequence:
+    - delay:
+        days: 2
+    - service: script.turn_on
+      entity_id: script.vacuum_upstairs_notification
+      
+vacuumed_basement:
+  alias: "Basement Vacuumed"
+  sequence:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.vacuum_basement
+    - delay:
+        seconds: 2
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.vacuum_basement
+      
+vacuum_basement_reminder:
+  sequence:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.vacuum_basement
+    - service: script.turn_on
+      entity_id: script.vacuum_basement_notification
+      
+vacuum_basement_notification:
+  sequence:
+    - condition: state
+      entity_id: input_boolean.vacuum_basement
+      state: 'on'
+    - service: notify.residents
+      data:
+        title: Vacuum Basement
+        message: "It's been a while since you vacuumed the basement. Might want to use the robot vacuum down there!"
+    - service: script.turn_on
+      entity_id: script.vacuum_basement_notification_loop
+
+vacuum_upstairs_basement_loop:
+  sequence:
+    - delay:
+        days: 2
+    - service: script.turn_on
+      entity_id: script.vacuum_basement_notification
+
+vacuum_the_house:
+  alias: "Vacuum the House"
+  sequence:
+    - service: vacuum.start
+      entity_id: vacuum.xiaomi_vacuum_cleaner
+      
+tv_area_vacuum:
+  alias: "TV Area Vacuum"
+  sequence:
+    - service: vacuum.xiaomi_clean_zone
+      data_template:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        repeats: '{{ states.input_number.vacuum_repeats.state|int }}'
+        zone:
+          - !secret vac_living1
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.vacuum_repeats
+        value: 1
+        
+back_living_room_vacuum:
+  alias: "Back Living Room Vacuum"
+  sequence:
+    - service: vacuum.xiaomi_clean_zone
+      data_template:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        repeats: '{{ states.input_number.vacuum_repeats.state|int }}'
+        zone:
+          - !secret vac_living2
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.vacuum_repeats
+        value: 1
+        
+dining_room_vacuum:
+  alias: "Dining Room Vacuum"
+  sequence:
+    - service: vacuum.xiaomi_clean_zone
+      data_template:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        repeats: '{{ states.input_number.vacuum_repeats.state|int }}'
+        zone: 
+          - !secret vac_dining
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.vacuum_repeats
+        value: 1
+        
+kitchen_vacuum:
+  alias: "Kitchen Vacuum"
+  sequence:
+    - service: vacuum.xiaomi_clean_zone
+      data_template:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        repeats: '{{ states.input_number.vacuum_repeats.state|int }}'
+        zone:
+          - !secret vac_kitchen
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.vacuum_repeats
+        value: 1
+        
+hallway_vacuum:
+  alias: "Hallway Vacuum"
+  sequence:
+    - service: vacuum.xiaomi_clean_zone
+      data_template:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        repeats: '{{ states.input_number.vacuum_repeats.state|int }}'
+        zone: 
+          - !secret vac_hallway
+    - service: input_number.set_value
+      data:
+        entity_id: input_number.vacuum_repeats
+        value: 1
+        
+# zone_cleanup:
+  # alias: "Zone Cleanup"
+  # sequence:
+    # - condition: state
+      # entity_id: group.zone_cleanup
+      # state: 'off'
+    # - service: vacuum.xiaomi_clean_zone
+      # data_template:
+        # entity_id: vacuum.xiaomi_vacuum_cleaner
+        # repeats: '{{ states.input_number.vacuum_repeats.state|int }}'
+        # zone: >- 
+          # [
+          # {%- if is_state('input_boolean.vacuum_zone_living1', 'on') -%}
+          # [25194,24571,28344,28471]
+          # {%- if is_state('input_boolean.vacuum_zone_living2', 'on') or is_state('input_boolean.vacuum_zone_dining', 'on') or is_state('input_boolean.vacuum_zone_kitchen', 'on') or is_state('input_boolean.vacuum_zone_hall', 'on') -%}
+          # , 
+          # {%- endif -%}
+          # {%- endif -%}
+          # {%- if is_state('input_boolean.vacuum_zone_living2', 'on') -%}
+          # [28318,24549,31568,28449]
+          # {%- if is_state('input_boolean.vacuum_zone_dining', 'on') or is_state('input_boolean.vacuum_zone_kitchen', 'on') or is_state('input_boolean.vacuum_zone_hall', 'on') -%}
+          # , 
+          # {%- endif -%} 
+          # {%- endif -%}
+          # {%- if is_state('input_boolean.vacuum_zone_dining', 'on') -%}
+          # [28018,20920,31568,24620]
+          # {%- if  is_state('input_boolean.vacuum_zone_kitchen', 'on') or is_state('input_boolean.vacuum_zone_hall', 'on') -%}
+          # , 
+          # {%- endif -%} 
+          # {%- endif -%}
+          # {%- if is_state('input_boolean.vacuum_zone_kitchen', 'on') -%}
+          # [24183,21054,28033,24604]
+          # {%- if is_state('input_boolean.vacuum_zone_hall', 'on') -%}
+          # , 
+          # {%- endif -%} 
+          # {%- endif -%}
+          # {%- if is_state('input_boolean.vacuum_zone_hall', 'on') -%}
+          # [23445,24586,25145,28486]
+          # {%- endif -%}
+          # ]
+
 ##################
-#4 Other Scripts #
+#5 Other Scripts #
 ##################
 sunset_switch:
   sequence:
@@ -388,10 +619,25 @@ basement_off:
     - service: input_boolean.turn_off
       entity_id: input_boolean.basement_motion
 
+livingroom_stop_on:
+  sequence:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.livingroom
+    - delay:
+        seconds: 30
+    - condition: time
+      before: '21:00:00'
+    - condition: time
+      after: '8:00:00'
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.livingroom
+
 livingroom_off:
   sequence:
     - service: input_boolean.turn_on
       entity_id: input_boolean.livingroom_motion
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.livingroom
     - delay:
         seconds: 2
     - service: light.turn_off
@@ -400,6 +646,10 @@ livingroom_off:
         seconds: 2
     - service: input_boolean.turn_off
       entity_id: input_boolean.livingroom_motion
+    - delay:
+        seconds: 10
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.livingroom
       
 basement_check:
   sequence:
@@ -412,15 +662,19 @@ basement_check:
       
 basement_loop:
   sequence:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.basement_light_off_loop
     - condition: state
       entity_id: light.basement_ceiling_lights
       state: 'on'
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.basement_light_off_loop
     - service: script.turn_on
       entity_id: script.basement_check
       
 medications:
   sequence:
-    - service: notify.pushbullet
+    - service: notify.residents
       data:
         title: Alli Needs Her Meds
         message: "Make sure to give Alli her meds for the month!"
@@ -445,7 +699,7 @@ alli_location_spreadsheet:
       entity_id: group.alli_locate
       state: 'on'
     - service: ifttt.trigger
-      data_template: {"event":"Alli_Location", "value1":"{{ states.sensor.alli_spreadsheet.state }}", "value2":"{{ states.sensor.alli_location.state }}", "value3":"{{ states.sensor.basement_alli_signal.state }}, {{ states.sensor.bedroom_alli_signal.state }}, {{ states.sensor.living_room_alli_signal.state }}, {{ states.sensor.office_alli_signal.state }}"}
+      data_template: {"event":"Alli_Location", "value1":"{{ states('sensor.alli_spreadsheet') }}", "value2":"{{ states('sensor.alli_location') }}", "value3":"{{ states('sensor.basement_alli_signal') }}, {{ states('sensor.bedroom_alli_signal') }}, {{ states('sensor.living_room_alli_signal') }}, {{ states('sensor.office_alli_signal') }}"}
     - service: script.turn_on
       data:
         entity_id: script.alli_location_spreadsheet_loop
@@ -459,7 +713,7 @@ alli_location_spreadsheet_loop:
         entity_id: script.alli_location_spreadsheet
       
 ############################
-#5 Random Vacation Scripts #
+#6 Random Vacation Scripts #
 ############################
 
 rand_vac1:
@@ -661,7 +915,7 @@ vac_craft:
       entity_id: group.craft
         
 ###################
-#6 Stereo Scripts #
+#7 Stereo Scripts #
 ###################
 
 vinyl_on:

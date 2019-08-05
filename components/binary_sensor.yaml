@@ -4,37 +4,82 @@
       - motion
   - platform: template
     sensors:
+      vacuum_dnd:
+        friendly_name: "Vacuum DND"
+        entity_id:
+          - sensor.time
+          - vacuum.xiaomi_vacuum_cleaner
+        value_template: >-
+          {{ is_state_attr('vacuum.xiaomi_vacuum_cleaner', 'do_not_disturb', 'on')
+              and (state_attr('vacuum.xiaomi_vacuum_cleaner', 'do_not_disturb_start').split(':')[0]|float <= now().hour 
+              or state_attr('vacuum.xiaomi_vacuum_cleaner', 'do_not_disturb_end').split(':')[0]|float > now().hour) }}
+
+      # vacuum_dnd_on:
+        # value_template: >-
+          # {{ states.vacuum.xiaomi_vacuum_cleaner.attributes.do_not_disturb == 'on'}}
+
+      # vacuum_dnd_time:
+        # entity_id:
+          # - sensor.vacuum_dnd_start
+          # - sensor.vacuum_dnd_end
+          # - sensor.time
+        # value_template: >-
+          # {{ float(states('sensor.vacuum_dnd_start')) <= now().hour or float(states('sensor.vacuum_dnd_end')) > now().hour }}
+
+      # vacuum_dnd:
+        # friendly_name: "Vacuum DND"
+        # entity_id:
+          # - sensor.vacuum_dnd_on
+          # - sensor.vacuum_dnd_time
+        # value_template: >-
+          # {%- if is_state('binary_sensor.vacuum_dnd_on', 'on') -%}
+          # {%- if is_state('binary_sensor.vacuum_dnd_time', 'on') -%}
+            # True
+          # {%- else -%}
+            # False
+          # {%- endif -%}
+          # {%- else -%}
+            # False
+          # {%- endif -%}
+          
       craft_room_occupancy:
         friendly_name: Craft Room Occupancy
         value_template: >-
           {%- if is_state('person.meredith', 'home') -%}
-          {%- if is_state('switch.craftfan', 'on') -%}
-          {%- if is_state('person.kenny', 'not_home') -%}
-          {{ is_state('binary_sensor.basement_occupancy', 'off')
-             and is_state('binary_sensor.bedroom_occupancy', 'off')
-             and is_state('binary_sensor.kitchen_occupancy', 'off')
-             and is_state('binary_sensor.living_room_bay_occupancy', 'off') }}
+            {%- if is_state('switch.craftfan', 'on') -%}
+              {%- if is_state('person.kenny', 'not_home') -%}
+                {{ is_state('binary_sensor.basement_occupancy', 'off')
+                   and is_state('binary_sensor.bedroom_occupancy', 'off')
+                   and is_state('binary_sensor.kitchen_occupancy', 'off')
+                   and is_state('binary_sensor.living_room_bay_occupancy', 'off') }}
+              {%- else -%}
+                {{ is_state('person.meredith', 'home') }}
+              {%- endif -%}
+            {%- else -%}
+              {{ is_state('person.meredith', 'not_home') }}
+            {%- endif -%}
           {%- else -%}
-          {{ is_state('person.meredith', 'home') }}
+            {{ is_state('person.meredith', 'home') }}
           {%- endif -%}
-          {%- else -%}
-          {{ is_state('person.meredith', 'not_home') }}
-          {%- endif -%}
-          {%- else -%}
-          {{ is_state('person.meredith', 'home') }}
-          {%- endif -%}
-  - platform: template
-    sensors:
+          
       trash_day:
         friendly_name: Trash Day
         value_template: >-
-          {{ states.calendar.trash_pickup.attributes.message == 'Household garbage' or states.calendar.trash_pickup.attributes.message == 'Recycling blue week and household garbage' or states.calendar.trash_pickup.attributes.message == 'Household garbage, yard waste, and bulky item' or states.calendar.trash_pickup.attributes.message == 'Recycling blue week, household garbage, yard waste, and bulky item' }}
-  - platform: template
-    sensors:
+          {{ is_state_attr('calendar.trash_pickup', 'message', 'Household garbage') 
+              or is_state_attr('calendar.trash_pickup', 'message', 'Recycling blue week and household garbage') 
+              or is_state_attr('calendar.trash_pickup', 'message', 'Household garbage, yard waste, and bulky item') 
+              or is_state_attr('calendar.trash_pickup', 'message', 'Recycling blue week, household garbage, yard waste, and bulky item') }}
+
       recycling_day:
         friendly_name: Recycling Day
         value_template: >-
-          {{ states.calendar.trash_pickup.attributes.message == 'Recycling blue week and household garbage'  or states.calendar.trash_pickup.attributes.message == 'Recycling blue week, household garbage, yard waste, and bulky item' }}
+          {{ is_state_attr('calendar.trash_pickup', 'message', 'Recycling blue week and household garbage')
+              or is_state_attr('calendar.trash_pickup', 'message', 'Recycling blue week, household garbage, yard waste, and bulky item') }}
+      
+      weather_alert:
+        friendly_name: Weather Alert
+        value_template: >-
+          {{ is_state('sensor.weatheralerts', 'unknown') }}
       
 ##### Occupancy Threshold Sensors #####
           
@@ -50,6 +95,12 @@
     name: Kitchen Occupancy
     entity_id: sensor.kitchen_burglar
     upper: 4
+    
+    
+  - platform: threshold
+    name: Potential Breaking Changes
+    entity_id: sensor.potential_breaking_changes
+    upper: 1
     
 ##### Bayesian Sensors #####
     
@@ -68,11 +119,11 @@
         prob_given_false: 0.2
         platform: state
         to_state: 'playing'
-      - entity_id: 'sensor.webcam_motion'
+      - entity_id: 'binary_sensor.living_room_camera_motion_detected'
         prob_given_true: 0.8
         prob_given_false: 0
-        platform: numeric_state
-        above: 9
+        platform: state
+        to_state: 'on'
       - entity_id: 'binary_sensor.living_room_bee_occupancy'
         prob_given_true: 0.8
         prob_given_false: 0

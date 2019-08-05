@@ -9,3 +9,28 @@
     monitored_conditions:
       - do_not_disturb
       - motion_sensor
+      
+  # - platform: tplink
+    # host: !secret outlet_ip
+    # name: outlet
+  # - platform: tplink
+    # host: !secret airhockey_ip
+    # name: airhockey
+  # - platform: tplink
+    # host: !secret bedfan_ip
+    # name: bedfan
+  # - platform: tplink
+    # host: !secret officefan_ip
+    # name: officefan
+  # - platform: tplink
+    # host: !secret craftfan_ip
+    # name: craftfan
+  # - platform: tplink
+    # host: !secret masterbath_ip
+    # name: masterbath
+  # - platform: tplink
+    # host: !secret kitchen_ip
+    # name: kitchensw
+  # - platform: tplink
+    # host: !secret guestbed_ip
+    # name: guestbed

@@ -53,6 +53,25 @@ sensor.alli_location:
   icon: mdi:map-marker
 sensor.kenny_pixelxl_batt:
   icon: mdi:battery
+binary_sensor.vacuum_dnd:
+  icon: mdi:do-not-disturb
+sensor.vacuum_fan:
+  icon: mdi:fan
+sensor.vacuum_filter:
+  icon: mdi:air-filter
+sensor.vacuum_main_brush:
+  icon: mdi:broom
+sensor.vacuum_side_brush:
+  icon: mdi:brush
+sensor.vacuum_status:
+  icon: mdi:robot-vacuum
+sensor.vacuum_sensor:
+  icon: mdi:led-on
+sensor.vacuum_time:
+  icon: mdi:av-timer
+sensor.vacuum_area:
+  icon: mdi:vector-square
+
   
   ##### Lights #####
 
@@ -85,6 +104,12 @@ switch.skybell_front_door_motion_sensor:
   icon: mdi:run-fast
 switch.laundryroom:
   icon: mdi:washing-machine
+  
+  ##### Other #####
+script.vacuumed_basement:
+  icon: mdi:arrow-down-bold-box
+script.vacuumed_upstairs:
+  icon: mdi:numeric-2-box
   
 ########
 # Both #
