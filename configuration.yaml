@@ -93,7 +93,7 @@ logbook:
     # - https://raw.githubusercontent.com/keatontaylor/custom_components/master/custom_components.json
 
 hacs:
-  token: b9ca1784d56f4542f28990c793877d9a344b998d
+  token: !secret hacs_token
   appdaemon: true
   python_script: true
   theme: true
