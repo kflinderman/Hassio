@@ -35,6 +35,7 @@ Basement Floor:
   entities:
     - group.guest
     - group.basement
+    - group.sun_room
     
 ##############################
 #           GROUPS           #
@@ -124,6 +125,12 @@ basement:
    - switch.outlet
    - light.basement_ceiling_lights
    - switch.laundryroom
+   
+sun_room:
+  name: Sun Room
+  entities:
+  - light.tripod_lamp
+  - switch.sun_room_market_lights
     
 ################
 # Other Groups #
@@ -186,23 +193,6 @@ holiday:
 #    - switch.outlet
     - input_boolean.holiday
     
-zone_cleanup:
-  name: Zone Cleanup
-  icon: mdi:map-marker
-  entities:
-    - input_number.vacuum_repeats
-    #- input_boolean.vacuum_zone_living1
-    - script.tv_area_vacuum
-    #- input_boolean.vacuum_zone_living2
-    - script.back_living_room_vacuum
-    #- input_boolean.vacuum_zone_dining
-    - script.dining_room_vacuum
-    #- input_boolean.vacuum_zone_kitchen
-    - script.kitchen_vacuum
-    #- input_boolean.vacuum_zone_hall
-    - script.hallway_vacuum
-    #- script.zone_cleanup
-    
 ###############
 # Automations #
 ###############
@@ -218,6 +208,7 @@ alli_locate:
     - input_boolean.alli_dining
     - input_boolean.alli_guest
     - input_boolean.alli_basement
+    - input_boolean.alli_sun_room
 
 light_on_auto:
   name: Light On Automations
@@ -227,6 +218,7 @@ light_on_auto:
     - automation.mere_wake_up
     - automation.mere_wake_up_gym_day
     - automation.turn_on_outside_light_at_sunset
+    - automation.turn_on_sun_room_lights_at_sunset
     - automation.turn_on_outside_light_at_sunrise
     - automation.fade_in_lights_for_sunset
     - automation.turn_on_lights_after_sunset
@@ -236,6 +228,7 @@ light_on_auto:
     - automation.bedroom_lights_on
     - automation.kitchen_lights_on
     - automation.turn_on_sewing
+    - automation.turn_on_sun_room
     - automation.kenny_bed
     - automation.turn_on_all_first_floor
     - automation.turn_on_all_second_floor
@@ -263,6 +256,7 @@ light_off_auto:
     - automation.living_room_stop_on
     - automation.living_room_lights_off
     - automation.turn_off_sewing
+    - automation.turn_off_sun_room
     - automation.turn_off_all_first_floor
     - automation.turn_off_all_second_floor
     - automation.turn_off_all_basement_floor
@@ -277,8 +271,9 @@ notify_auto:
     - automation.weather_alert
     - automation.alli_battery
     - automation.kitchen_sensor_battery
-    - automation.mere_new_breach
-    - automation.kenny_new_breach
+    - automation.hacs_updates
+    # - automation.mere_new_breach
+    # - automation.kenny_new_breach
     - automation.ssl_certification_alert
     - automation.trash_alert
     - automation.alli_meds
@@ -372,3 +367,4 @@ other_auto:
     - automation.bedroom_fan_on
     - automation.bedroom_fan_off
     - automation.dog_meds_flag
+    - automation.daily_snapshot_clean_up

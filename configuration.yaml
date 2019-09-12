@@ -33,7 +33,7 @@ logger:
     homeassistant.components.calendar.visitor: critical
     homeassistant.components.calendar.vacation: critical
     homeassistant.components.sensor.cert_expiry: critical
-    homeassistant.components.haveibeenpwned: critical
+    #homeassistant.components.haveibeenpwned: critical
     homeassistant.custom_components.weatheralerts: critical
     #homeassistant.components.tplink: debug
     #homeassistant.components.stream: debug
@@ -48,7 +48,7 @@ logger:
     homeassistant.helpers.entity: critical
     homeassistant.loader: critical
     
-history: !include structure/history.yaml
+#history: !include structure/history.yaml
 
 influxdb:
   host: a0d7b954-influxdb
@@ -103,6 +103,16 @@ breaking_changes:
     
 frontend: !include structure/theme.yaml
 
+favicon:
+  title: My Home
+  favicon: /local/favicons/favicon.ico
+  apple: /local/favicons/apple-touch-icon.png
+  16: /local/favicons/favicon-16x16.png
+  32: /local/favicons/favicon-32x32.png
+  150: /local/favicons/mstile-150x150.png
+  192: /local/favicons/android-chrome-192x192.png
+  512: /local/favicons/android-chrome-512x512.png
+
 lovelace:
 
 python_script:
@@ -128,6 +138,10 @@ zone: !include structure/zone.yaml
 group: !include structure/groups.yaml
 
 config:
+
+config_check:
+
+updater:
 
 discovery:
 
@@ -156,14 +170,6 @@ switch: !include components/switch.yaml
 binary_sensor: !include components/binary_sensor.yaml
 
 input_boolean: !include components/input_boolean.yaml
-
-input_number:
-  vacuum_repeats:
-    name: Repeats
-    initial: 1
-    min: 1
-    max: 3
-    step: 1
     
 input_select:
   fanmode:
@@ -177,6 +183,8 @@ input_select:
 
 sensor: !include components/sensors.yaml
 
+plant: !include components/plant.yaml
+
 sun:
 
 media_player: !include components/media_player.yaml
@@ -184,6 +192,19 @@ media_player: !include components/media_player.yaml
 light: !include components/lights.yaml
 
 tplink:
+  discovery: false
+  switch:
+    - host: !secret outlet_ip
+    - host: !secret airhockey_ip
+    - host: !secret bedfan_ip
+    - host: !secret officefan_ip
+    - host: !secret craftfan_ip
+    - host: !secret masterbath_ip
+    - host: !secret kitchen_ip
+    - host: !secret guestbed_ip
+    - host: !secret sunroom_ip
+
+momentary:
 
 alexa_media:
   accounts:
@@ -295,6 +316,11 @@ notify:
     services:
       - service: pushbullet
       - service: ios_merediths_iphone
+
+clean_up_snapshots_service:
+  host: !secret url7_secret
+  token: !secret snapshot_cleanup
+  number_of_snapshots_to_keep: 10
 
 panel_iframe:
   grafana:

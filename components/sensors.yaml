@@ -62,6 +62,29 @@
   expire_after: 25
 - platform: weatheralerts
   sameid: '037063' #037063
+# - platform: miflora
+  # mac: !secret flora_mac
+  # name: "Money Plant"
+- platform: mqtt
+  name: "Money Plant Battery"
+  state_topic: "flora/C4:7C:8D:6A:E5:ED/battery"
+  unit_of_measurement: 'V'
+- platform: mqtt
+  name: "Money Plant Temperature"
+  state_topic: "flora/C4:7C:8D:6A:E5:ED/temperature"
+  unit_of_measurement: '°C'
+- platform: mqtt
+  name: "Money Plant Moisture"
+  state_topic: "flora/C4:7C:8D:6A:E5:ED/moisture"
+  unit_of_measurement: '%'
+- platform: mqtt
+  name: "Money Plant Light Intensity"
+  state_topic: "flora/C4:7C:8D:6A:E5:ED/light"
+  unit_of_measurement: 'lux'
+- platform: mqtt
+  name: "Money Plant Conductivity"
+  state_topic: "flora/C4:7C:8D:6A:E5:ED/conductivity"
+  unit_of_measurement: 'μS/cm'
 - platform: systemmonitor
   resources:
     - type: memory_use_percent
@@ -69,10 +92,12 @@
     - type: load_1m
     - type: processor_use
     - type: last_boot
-- platform: haveibeenpwned
-  email:
-    - !secret kemail
-    - !secret memail
+# - platform: haveibeenpwned
+  # email:
+    # - !secret kemail
+    # - !secret memail
+- platform: authenticated
+  enable_notification: false
 - platform: uptime
 - platform: time_date
   display_options:
@@ -82,13 +107,6 @@
 - platform: skybell
   monitored_conditions:
     - chime_level
-- platform: filter
-  name: "Living Room Motion"
-  entity_id: sensor.webcam_motion
-  filters:
-    filter: lowpass
-    time_constant: 5
-    precision: 0
 - platform: random
   name: Vacation Randomizer
   minimum: 0
@@ -96,6 +114,14 @@
 - platform: cert_expiry
   host: !secret url2_secret
   port: 8123
+- platform: average
+  name: 'Sun Room Temperature'
+  entities:
+   - sensor.money_plant_temperature_round
+- platform: average
+  name: 'Sun Room Light'
+  entities:
+   - sensor.money_plant_light_intensity
   
   ##### Template Sensors #####
   
@@ -106,28 +132,24 @@
       friendly_name: "Blank"
       value_template: "{{ state }}"
 
-    kennyhibp:
-      friendly_name: "Kenny Breaches"
-      value_template: !secret kpwnsensor
+    # kennyhibp:
+      # friendly_name: "Kenny Breaches"
+      # value_template: !secret kpwnsensor
       
-    merehibp:
-      friendly_name: "Meredith Breaches"
-      value_template: !secret mpwnsensor
+    # merehibp:
+      # friendly_name: "Meredith Breaches"
+      # value_template: !secret mpwnsensor
       
     kenny_pixelxl_batt:
       friendly_name: "Pixel XL Battery"
       unit_of_measurement: 'V'
       device_class: battery
-      value_template: "{{ state_attr('device_tracker.kenny_pixelxl_gps', 'battery') }}"
+      value_template: "{{ state_attr('device_tracker.kenny_pixelxl_gps_2', 'battery') }}"
       
     outside_temp:
       friendly_name: "Outside Temperature"
       unit_of_measurement: '°F'
       value_template: "{{ state_attr('weather.dark_sky', 'temperature') }}"
-      
-    tomorrow:
-      friendly_name: "Tomrrow"
-      value_template: "Tomorrow     "
       
     tomorrow_high:
       friendly_name: "Tomrrow High"
@@ -365,6 +387,8 @@
           Guest Room
         {% elif is_state('input_boolean.alli_basement', 'on') %}
           Basement
+        {% elif is_state('input_boolean.alli_sun_room', 'on') %}
+          Sun Room
         {% else %}
           None
         {% endif %}
@@ -374,9 +398,10 @@
         - media_player.basement_dot
         - media_player.bedroom_dot
         - media_player.living_room_dot
+        - media_player.sun_room_dot
       value_template: >
         {{ states.media_player | selectattr('attributes.last_called','eq',True) | map(attribute='entity_id') | first }}
-      
+  
   ##### Rounding Sensors #####
       
     load_1m_round:
@@ -474,6 +499,10 @@
     washroom_light_hours_round:
       friendly_name: "Washroom Light Hours Round"
       value_template: "{{ states('sensor.washroom_light_hours') | round(1) }}"
+      
+    money_plant_temperature_round:
+      friendly_name: "Money Plant Temperature Round"
+      value_template: "{{ states('sensor.money_plant_temperature') | round(1) }}"
   
   ##### History Stats #####
   

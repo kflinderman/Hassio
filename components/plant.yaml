@@ -1,0 +1,7 @@
+money_plant:
+  sensors:
+    moisture: sensor.money_plant_moisture
+    battery: sensor.money_plant_battery
+    temperature: sensor.money_plant_temperature_round
+    conductivity: sensor.money_plant_conductivity
+    brightness: sensor.money_plant_light_intensity

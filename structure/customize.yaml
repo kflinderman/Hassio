@@ -16,10 +16,10 @@ sensor.bedroom_multisensor_burglar:
   friendly_name: Bedroom Motion
 sensor.kitchen_burglar:
   friendly_name: Kitchen Motion
-!secret kpwn:
-  friendly_name: Kenny Breaches
-!secret mpwn:
-  friendly_name: Meredith Breaches
+# !secret kpwn:
+  # friendly_name: Kenny Breaches
+# !secret mpwn:
+  # friendly_name: Meredith Breaches
   
   ##### Other #####
   
@@ -32,6 +32,8 @@ weather.yweather:
   friendly_name: Weather
 group.all_scripts:
   friendly_name: All Scripts
+plant.money_plant:
+  friendly_name: Money Plant
   
 #################
 # Icon Changing #
@@ -71,7 +73,18 @@ sensor.vacuum_time:
   icon: mdi:av-timer
 sensor.vacuum_area:
   icon: mdi:vector-square
-
+sensor.money_plant_moisture:
+  icon: mdi:water
+sensor.money_plant_battery:
+  icon: mdi:battery
+sensor.money_plant_conductivity:
+  icon: mdi:emoticon-poop
+sensor.money_plant_light_intensity:
+  icon: mdi:white-balance-sunny
+sensor.sun_room_temperature:
+  icon: mdi:thermometer
+sensor.sun_room_light:
+  icon: mdi:flashlight
   
   ##### Lights #####
 
@@ -95,6 +108,8 @@ light.basement_ceiling_lights:
   icon: mdi:ceiling-light
 light.lightpack:
   icon: mdi:television-guide
+light.tripod_lamp:
+  icon: mdi:floor-lamp
   
   ##### Switches #####
   
@@ -104,6 +119,8 @@ switch.skybell_front_door_motion_sensor:
   icon: mdi:run-fast
 switch.laundryroom:
   icon: mdi:washing-machine
+switch.sun_room_market_lights:
+  icon: mdi:lightbulb
   
   ##### Other #####
 script.vacuumed_basement:
@@ -194,3 +211,6 @@ sensor.webcam_light_level:
 sensor.alli_battery:
   icon: mdi:battery
   unit_of_measurement: V
+sensor.money_plant_temperature_round:
+  icon: mdi:thermometer
+  unit_of_measurement: '°F'

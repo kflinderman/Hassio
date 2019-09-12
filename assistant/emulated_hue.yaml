@@ -12,28 +12,30 @@
       
     ##### Switches #####
     
-    switch.airhockey:
-      hidden: false
-    switch.bedfan:
-      hidden: false
-    switch.craftfan:
-      hidden: false
+ #   switch.airhockey:
+ #     hidden: false
+ #   switch.bedfan:
+ #     hidden: false
+ #   switch.craftfan:
+ #     hidden: false
     switch.desktoppc:
       hidden: false
-    switch.guestbed:
-      hidden: false
-    switch.kitchensw:
-      hidden: false
-    switch.masterbath:
-      hidden: false
-    switch.officefan:
-      hidden: false
-    switch.outlet:
-      hidden: false
+ #   switch.guestbed:
+ #     hidden: false
+ #   switch.kitchensw:
+ #     hidden: false
+ #   switch.masterbath:
+ #     hidden: false
+ #   switch.officefan:
+ #     hidden: false
+ #   switch.outlet:
+ #     hidden: false
     switch.deck_ceiling_outlet_switch:
       hidden: false
     switch.laundryroom:
       hidden: false
+ #   switch.sun_room_market_lights:
+ #     hidden: false
       
     ##### Input Booleans #####
     
@@ -65,6 +67,8 @@
     group.kitchen:
       hidden: false
     group.secondfloor:
+      hidden: false
+    group.sun_room:
       hidden: false
     group.guest:
       hidden: false
@@ -99,6 +103,8 @@
     script.steam_on:
       hidden: false
     script.wiiu_on:
+      hidden: false
+    script.bluetooth_on:
       hidden: false
     script.netflix_watch_on:
       hidden: false

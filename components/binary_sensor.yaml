@@ -79,7 +79,7 @@
       weather_alert:
         friendly_name: Weather Alert
         value_template: >-
-          {{ is_state('sensor.weatheralerts', 'unknown') }}
+          {{ not is_state('sensor.weatheralerts', 'unknown') }}
       
 ##### Occupancy Threshold Sensors #####
           
@@ -95,7 +95,6 @@
     name: Kitchen Occupancy
     entity_id: sensor.kitchen_burglar
     upper: 4
-    
     
   - platform: threshold
     name: Potential Breaking Changes

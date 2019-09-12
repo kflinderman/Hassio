@@ -134,6 +134,20 @@
   - service: homeassistant.turn_on
     entity_id: group.holiday
     
+- id: turn_on_sun_room_lights_at_sunset
+  alias: Turn on Sun Room lights at sunset
+  trigger:
+    platform: sun
+    event: sunset
+    # offset: +00:30:00
+  condition:
+    condition: state
+    entity_id: media_player.sun_room_dot
+    state: 'playing'
+  action:
+  - service: homeassistant.turn_on
+    entity_id: group.sun_room
+    
 - id: turn_on_outside_light_at_sunrise
   alias: Turn on outside light at sunrise
   trigger:
@@ -352,6 +366,16 @@
   action:
     service: light.turn_on
     entity_id: light.sewing_light
+    
+- id: turn_on_sun_room
+  alias: Turn on Sun Room
+  trigger:
+    platform: state
+    entity_id: light.tripod_lamp
+    to: 'on'
+  action:
+    service: switch.turn_on
+    entity_id: switch.sun_room_market_lights
     
 - id: kenny_bed
   alias: Kenny Bed
@@ -785,6 +809,16 @@
     service: light.turn_off
     entity_id: light.sewing_light
     
+- id: turn_off_sun_room
+  alias: Turn off Sun Room
+  trigger:
+    platform: state
+    entity_id: light.tripod_lamp
+    to: 'off'
+  action:
+    service: switch.turn_off
+    entity_id: switch.sun_room_market_lights
+    
 - id: turn_off_all_first_floor
   alias: Turn Off All First Floor
   trigger:
@@ -998,13 +1032,18 @@
   alias: Weather Alert
   trigger:
     platform: state
+    entity_id: sensor.weatheralerts
+  condition:
+    condition: state
     entity_id: binary_sensor.weather_alert
-    to: 'on'
+    state: 'on'
   action:
-    service: notify.pushbullet
-    data:
-      title: Weather Alert - {{ states('sensor.weatheralerts') }}
-      message: "{{ states('sensor.weatheralerts') }}."
+    - service: switch.turn_on
+      entity_id: switch.momentary_weather_alert_notification
+    - service: notify.pushbullet
+      data:
+        title: "{{ state_attr('sensor.weatheralerts', 'title') }}"
+        message: "{{ state_attr('sensor.weatheralerts', 'link') }}"
       
 - id: alli_battery
   alias: Alli Battery
@@ -1032,32 +1071,56 @@
       title: Kitchen Sensor Low Battery
       message: "The kitchen sensor has very low battery."
   
-- id: kenny_new_breach
-  alias: Kenny New Breach
+- id: money_thirsty
+  alias: Money Thirsty
   trigger:
-  - from: '2'
-    entity_id: !secret kpwn
-    platform: state
+    platform: numeric_state
+    entity_id: sensor.money_plant_moisture
+    below: 15
   action:
-  - data:
-      message: "Kenny has been breached according to HaveIBeenPwnd.  You should check
-        it out"
-      title: New Breach
-    service: notify.pushbullet
-    
-- id: mere_new_breach
-  alias: Mere New Breach
-  condition: []
-  trigger:
-  - from: '0'
-    entity_id: !secret mpwn
-    platform: state
-  action:
-  - data:
-      message: "Meredith has been breached according to HaveIBeenPwnd.  You should
-        check it out"
-      title: New Breach
     service: notify.residents
+    data:
+      title: Thirsty Plant
+      message: "The Money Plant is a little dry and would like some water!"
+      
+- id: hacs_updates
+  alias: HACS Updates
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.hacs
+    above: 0
+  action:
+    service: notify.pushbullet
+    data:
+      title: HACS Updates
+      message: "There are some HACS updates ready to be installed."
+  
+# - id: kenny_new_breach
+  # alias: Kenny New Breach
+  # trigger:
+  # - from: '2'
+    # entity_id: !secret kpwn
+    # platform: state
+  # action:
+  # - data:
+      # message: "Kenny has been breached according to HaveIBeenPwnd.  You should check
+        # it out"
+      # title: New Breach
+    # service: notify.pushbullet
+    
+# - id: mere_new_breach
+  # alias: Mere New Breach
+  # condition: []
+  # trigger:
+  # - from: '0'
+    # entity_id: !secret mpwn
+    # platform: state
+  # action:
+  # - data:
+      # message: "Meredith has been breached according to HaveIBeenPwnd.  You should
+        # check it out"
+      # title: New Breach
+    # service: notify.residents
       
 - id: cert_alert
   alias: SSL Certification Alert
@@ -2148,3 +2211,11 @@
   action:
     service: input_boolean.turn_on
     entity_id: input_boolean.dog_med
+    
+- id: daily_snapshot_clean_up
+  alias: Daily snapshot clean up
+  trigger: 
+    platform: time
+    at: '03:00:00'
+  action:
+    - service: clean_up_snapshots_service.clean_up

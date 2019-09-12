@@ -13,5 +13,5 @@
  - name: Work
    latitude: !secret m_work_lat
    longitude: !secret m_work_lon
-   radius: 75
+   radius: 100
    icon: mdi:briefcase

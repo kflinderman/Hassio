@@ -41,7 +41,7 @@ home_mode:
     - service: climate.set_preset_mode
       data:
         entity_id: climate.main_floor
-        preset_mode: 'home'
+        preset_mode: 'Home'
         
 home_mode_check1:
   sequence:
@@ -57,10 +57,10 @@ home_mode_check1:
     - condition: time
       after: '16:30:00'
       before: '9:00:00'
-    - service: climate.set_preset_mode
-      data:
-        entity_id: climate.main_floor
-        preset_mode: None
+    - service: climate.ecobee_resume_program
+      #data:
+      entity_id: climate.main_floor
+        #preset_mode: None
         
 home_mode_check2:
   sequence:
@@ -68,10 +68,10 @@ home_mode_check2:
       weekday:
           - sat
           - sun
-    - service: climate.set_preset_mode
-      data:
-        entity_id: climate.main_floor
-        preset_mode: None
+    - service: climate.ecobee_resume_program
+      #data:
+      entity_id: climate.main_floor
+        #preset_mode: None
         
 away_mode:
   sequence:
@@ -99,7 +99,7 @@ away_mode:
     - service: climate.set_preset_mode
       data:
         entity_id: climate.main_floor
-        preset_mode: 'away'
+        preset_mode: 'Away'
 
 ###############
 #1 PC Scripts #
@@ -145,54 +145,70 @@ timed_cpu_off:
         
 windows_open:
   sequence:
-    - service: climate.set_temperature
+    - service: climate.set_preset_mode
       data:
         entity_id: climate.main_floor
-        target_temp_high: 85
-        target_temp_low: 60
+        preset_mode: 'Open'
+    # - service: climate.set_temperature
+      # data:
+        # entity_id: climate.main_floor
+        # target_temp_high: 85
+        # target_temp_low: 60
     - service: input_boolean.turn_on
       data:
         entity_id: input_boolean.window
         
 vacation_temp:
   sequence:
-    - service: climate.set_temperature
+    - service: climate.set_preset_mode
       data:
         entity_id: climate.main_floor
-        target_temp_high: 200
-        target_temp_low: 60
+        preset_mode: 'Vac'
+    # - service: climate.set_temperature
+      # data:
+        # entity_id: climate.main_floor
+        # target_temp_high: 200
+        # target_temp_low: 60
         
 wakeup_temp:
-  sequence:
-    - service: climate.set_temperature
-      data:
-        entity_id: climate.main_floor
-        target_temp_high: 77
-        target_temp_low: 72
-                
-party_temp:
-  sequence:
-    - service: climate.set_temperature
-      data:
-        entity_id: climate.main_floor
-        target_temp_high: 71
-        target_temp_low: 66
-        
-climate_reset:
   sequence:
     - service: climate.set_preset_mode
       data:
         entity_id: climate.main_floor
-        preset_mode: None
+        preset_mode: 'Wake'
+    # - service: climate.set_temperature
+      # data:
+        # entity_id: climate.main_floor
+        # target_temp_high: 77
+        # target_temp_low: 72
+                
+party_temp:
+  sequence:
+    - service: climate.set_preset_mode
+      data:
+        entity_id: climate.main_floor
+        preset_mode: 'Party'
+    # - service: climate.set_temperature
+      # data:
+        # entity_id: climate.main_floor
+        # target_temp_high: 71
+        # target_temp_low: 66
+        
+climate_reset:
+  sequence:
+    - service: climate.ecobee_resume_program
+      #data:
+      entity_id: climate.main_floor
+        #preset_mode: None
         
 ecobee_reset:
   sequence:
     - delay:
         seconds: 30
-    - service: climate.set_preset_mode
-      data:
-        entity_id: climate.main_floor
-        preset_mode: None
+    - service: climate.ecobee_resume_program
+      #data:
+      entity_id: climate.main_floor
+        #preset_mode: None
 
 ########################
 #3 Manual Call Scripts #
@@ -392,13 +408,9 @@ tv_area_vacuum:
     - service: vacuum.xiaomi_clean_zone
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-        repeats: '{{ states.input_number.vacuum_repeats.state|int }}'
+        repeats: 1
         zone:
           - !secret vac_living1
-    - service: input_number.set_value
-      data:
-        entity_id: input_number.vacuum_repeats
-        value: 1
         
 back_living_room_vacuum:
   alias: "Back Living Room Vacuum"
@@ -406,13 +418,9 @@ back_living_room_vacuum:
     - service: vacuum.xiaomi_clean_zone
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-        repeats: '{{ states.input_number.vacuum_repeats.state|int }}'
+        repeats: 1
         zone:
           - !secret vac_living2
-    - service: input_number.set_value
-      data:
-        entity_id: input_number.vacuum_repeats
-        value: 1
         
 dining_room_vacuum:
   alias: "Dining Room Vacuum"
@@ -420,13 +428,9 @@ dining_room_vacuum:
     - service: vacuum.xiaomi_clean_zone
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-        repeats: '{{ states.input_number.vacuum_repeats.state|int }}'
+        repeats: 1
         zone: 
           - !secret vac_dining
-    - service: input_number.set_value
-      data:
-        entity_id: input_number.vacuum_repeats
-        value: 1
         
 kitchen_vacuum:
   alias: "Kitchen Vacuum"
@@ -434,13 +438,9 @@ kitchen_vacuum:
     - service: vacuum.xiaomi_clean_zone
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-        repeats: '{{ states.input_number.vacuum_repeats.state|int }}'
+        repeats: 1
         zone:
           - !secret vac_kitchen
-    - service: input_number.set_value
-      data:
-        entity_id: input_number.vacuum_repeats
-        value: 1
         
 hallway_vacuum:
   alias: "Hallway Vacuum"
@@ -448,13 +448,9 @@ hallway_vacuum:
     - service: vacuum.xiaomi_clean_zone
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-        repeats: '{{ states.input_number.vacuum_repeats.state|int }}'
+        repeats: 1
         zone: 
           - !secret vac_hallway
-    - service: input_number.set_value
-      data:
-        entity_id: input_number.vacuum_repeats
-        value: 1
         
 # zone_cleanup:
   # alias: "Zone Cleanup"
@@ -560,6 +556,10 @@ basement_floor_break:
       entity_id: input_boolean.all_basement
     - service: input_boolean.turn_off
       entity_id: input_boolean.all_break
+      
+check_config:
+  sequence: []
+  alias: Check Configuration
       
 outside_break:
   sequence:
@@ -1271,3 +1271,42 @@ switch_off:
       data:
         entity_id: media_player.stereo
         source: HDMI3
+        
+bluetooth_on:
+  alias: "The Stereo Bluetooth"
+  sequence:
+    - service: script.turn_on
+      data:
+        entity_id: script.bluetooth_off
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: media_player.stereo
+          state: 'on'
+        - condition: state
+          entity_id: media_player.stereo
+          state: 'playing'
+        - condition: state
+          entity_id: media_player.stereo
+          state: 'idle'
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.stereo
+        source: Bluetooth
+        
+bluetooth_off:
+  sequence:
+    - delay:
+        seconds: 1
+    - condition: state
+      entity_id: media_player.stereo
+      state: 'off'
+    - service: media_player.turn_on
+      data:
+        entity_id: media_player.stereo
+    - delay:
+        seconds: 5
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.stereo
+        source: Bluetooth

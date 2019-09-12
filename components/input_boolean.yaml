@@ -78,6 +78,9 @@
   alli_basement:
     name: Alli Basement
     icon: mdi:dog
+  alli_sun_room:
+    name: Alli Sun Room
+    icon: mdi:dog
   
   ##### Vacuum #####
   
