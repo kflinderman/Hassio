@@ -240,11 +240,14 @@ resources:
   - type: module
     url: /community_plugin/simple-thermostat/simple-thermostat.js
   - type: module
-    url: /community_plugin/simple-weather-card/simple-weather-card.js
+    url: /community_plugin/simple-weather-card/simple-weather-card-bundle.js
   - type: module
     url: /community_plugin/decluttering-card/decluttering-card.js
   - type: js
     url: /community_plugin/love-lock-card/love-lock-card.js
+  - type: module
+    url: >-
+      /community_plugin/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js
 title: Home
 views:
   - badges: []
@@ -480,11 +483,11 @@ views:
               heat: 'mdi:fire'
               'off': 'mdi:cancel'
             modes:
-              auto:
-                include: true
-              cool:
+              Away:
                 include: true
               heat:
+                include: true
+              home:
                 include: true
               'off':
                 include: true
@@ -496,23 +499,41 @@ views:
                 name: Mode
             step_size: 1
             type: 'custom:simple-thermostat'
+          - backdrop: true
+            entity: weather.dark_sky
+            name: ' '
+            type: 'custom:simple-weather-card'
           - cards:
-              - cards:
-                  - backdrop: true
-                    entity: weather.dark_sky
-                    name: ' '
-                    type: 'custom:simple-weather-card'
-                  - backdrop: true
-                    custom:
-                      - temp: sensor.tomorrow
-                      - state: sensor.tomorrow_condition
-                      - high: sensor.tomorrow_high
-                      - low: sensor.tomorrow_low
-                      - precipitation: sensor.tomorrow_rain
-                    entity: weather.dark_sky
-                    name: ' '
-                    type: 'custom:simple-weather-card'
-                type: vertical-stack
+              - elements:
+                  - entity: switch.momentary_weather_alert_notification
+                    image: /local/No_alert.png
+                    state_image:
+                      'off': /local/No_alert.png
+                      'on': /local/Weather_alert.png
+                    style:
+                      left: 50%
+                      top: 50%
+                      width: 100%
+                    tap_action:
+                      action: none
+                    type: image
+                  - entity: sensor.weatheralerts
+                    prefix: 'Weather Alert: '
+                    style:
+                      action: more-info
+                      background-color: 'rgba(0, 0, 0, 0.5)'
+                      bottom: 0
+                      color: white
+                      font-size: 16px
+                      left: 0
+                      line-height: 32px
+                      padding: 0 8px
+                      tap_action: null
+                      transform: initial
+                      width: 100%
+                    type: state-label
+                image: /local/No_alert.png
+                type: picture-elements
               - entity: input_boolean.window
                 state_image:
                   'off': /local/window_closed.png
@@ -1241,10 +1262,41 @@ views:
             type: horizontal-stack
           - entities:
               - input_select.fanmode
-              - head: group.zone_cleanup
-                type: 'custom:fold-entity-row'
             type: entities
         type: vertical-stack
+      - cards:
+          - base_position:
+              x: 946
+              'y': 839
+            entity: vacuum.xiaomi_vacuum_cleaner
+            map_image: /local/Xiaomi_Map_Edit.png
+            reference_point:
+              x: 1101
+              'y': 705
+            type: 'custom:xiaomi-vacuum-map-card'
+            zones:
+              - - - 19772
+                  - 26614
+                  - 23272
+                  - 30114
+              - - - 23236
+                  - 26608
+                  - 27086
+                  - 30058
+              - - - 26082
+                  - 22825
+                  - 27582
+                  - 26525
+              - - - 23370
+                  - 22816
+                  - 26070
+                  - 26566
+              - - - 20309
+                  - 22811
+                  - 23309
+                  - 26611
+        popup: timeout
+        type: 'custom:love-lock-card'
     icon: 'mdi:numeric-1-box'
     id: 1
     title: First Floor
@@ -1727,7 +1779,7 @@ views:
         type: vertical-stack
       - cards:
           - elements:
-              - entity: group.basement
+              - entity: group.sun_room
                 image: /local/room_pic/Sun_off.jpg
                 state_image:
                   'on': /local/room_pic/Sun_all.jpg
@@ -1753,8 +1805,86 @@ views:
                 tap_action:
                   action: none
                 type: state-label
+              - entity: sensor.sun_room_light
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  line-height: 32px
+                  margin: 35px 5px 0 0
+                  right: 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: sensor.sun_room_light
+                style:
+                  color: 'rgba(255,255,255,1)'
+                  font-size: 12px
+                  font-weight: bold
+                  line-height: 32px
+                  margin: 30px 35px
+                  pointer-events: none
+                  right: 0
+                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                  top: 0
+                  transform: initial
+                type: state-label
+              - entity: sensor.sun_room_temperature
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  line-height: 32px
+                  margin: 65px 5px 0 0
+                  right: 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: sensor.sun_room_temperature
+                style:
+                  color: 'rgba(255,255,255,1)'
+                  font-size: 12px
+                  font-weight: bold
+                  line-height: 32px
+                  margin: 60px 35px
+                  pointer-events: none
+                  right: 0
+                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                  top: 0
+                  transform: initial
+                type: state-label
+              - entity: group.sun_room
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  left: 0
+                  line-height: 32px
+                  margin: 3px 5px 0 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: switch.sun_room_market_lights
+                hold_action:
+                  action: more-info
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 85%
+                  top: 91.3%
+                tap_action:
+                  action: toggle
+                type: state-icon
+              - entity: light.tripod_lamp
+                hold_action:
+                  action: more-info
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 95%
+                  top: 91.3%
+                tap_action:
+                  action: toggle
+                type: state-icon
             image: /local/room_pic/Sun_off.jpg
             type: picture-elements
+          - entity: plant.money_plant
+            type: plant-status
           - template: alexa_template
             type: 'custom:decluttering-card'
             variables:
@@ -1764,38 +1894,6 @@ views:
     id: 3
     title: Basement
   - cards:
-      - elements:
-          - entity: sensor.blank
-            style:
-              background-color: 'rgba(0, 0, 0, 0.5)'
-              bottom: 0
-              color: white
-              font-size: 16px
-              left: 0
-              line-height: 32px
-              padding: 25px 8px
-              transform: initial
-              width: 100%
-            tap_action:
-              action: none
-            type: state-label
-          - entity: sensor.kennyhibp
-            prefix: 'Kenny: '
-            style:
-              color: white
-              left: 50%
-              top: 80%
-            type: state-label
-          - entity: sensor.merehibp
-            prefix: 'Meredith: '
-            style:
-              color: white
-              left: 50%
-              top: 90%
-            type: state-label
-        id: b21cf45953f14d6b8ddef1e1424f1457
-        image: /local/websecurity.jpeg
-        type: picture-elements
       - elements:
           - entity: sensor.load_1m
             style:
@@ -2318,6 +2416,12 @@ views:
           spaceBetween: 8
         start_card: 2
         type: 'custom:swipe-card'
+      - entities:
+          - script.check_config
+          - sensor.config_result
+        show_header_toggle: false
+        title: Check Configuration
+        type: entities
     icon: 'mdi:chart-bar'
     id: 4
     title: Statistics
