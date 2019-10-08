@@ -1,13 +1,4 @@
 homeassistant:
-  #Location information
-  # latitude: !secret lat_secret
-  # longitude: !secret lon_secret
-  # time_zone: America/New_York
-  # elevation: 130
-  # unit_system: imperial
-  
-  # Customization
-  # name: Home
   customize: !include structure/customize.yaml
   customize_domain: {}
   customize_glob: {}
@@ -30,25 +21,23 @@ person:
 logger: 
   default: error
   logs:
-    homeassistant.components.calendar.visitor: critical
-    homeassistant.components.calendar.vacation: critical
-    homeassistant.components.sensor.cert_expiry: critical
-    #homeassistant.components.haveibeenpwned: critical
-    homeassistant.custom_components.weatheralerts: critical
-    #homeassistant.components.tplink: debug
-    #homeassistant.components.stream: debug
-    homeassistant.custom_components.light.lightpack: critical
-    homeassistant.components.binary_sensor.skybell_front_door_button: critical
-    homeassistant.components.binary_sensor.skybell_front_door_motion: critical
+    homeassistant.components.visitor.calendar: critical
+    homeassistant.components.vacation.calendar: critical
+    homeassistant.components.cert_expiry.sensor: critical
+    custom_components.weatheralerts.sensor: critical
+    # custom_components.thingy52.sensor: debug
+    custom_components.lightpack.light: critical
+    homeassistant.components.skybell_front_door_button.binary_sensor: critical
+    homeassistant.components.skybell_front_door_motion.binary_sensor: critical
     homeassistant.components.websocket_api.http.connection: critical
     homeassistant.components.hue: critical
-    homeassistant.components.light.hue: critical
-    homeassistant.components.device_tracker.netgear: critical
+    homeassistant.components.hue.light: critical
+    homeassistant.components.netgear.device_tracker: critical
     homeassistant.helpers.entity_component: critical
     homeassistant.helpers.entity: critical
     homeassistant.loader: critical
     
-#history: !include structure/history.yaml
+history: !include structure/history.yaml
 
 influxdb:
   host: a0d7b954-influxdb
@@ -79,39 +68,21 @@ logbook:
       - device_tracker.mere_lap
       - device_tracker.pc
 
-# custom_updater:
-  # show_installable: false
-  # track:
-    # - components
-    # - cards
-  # card_urls:
-    # - https://raw.githubusercontent.com/bramkragten/custom-ui/master/updater.json
-    # - https://raw.githubusercontent.com/kalkih/mini-media-player/master/tracker.json
-    # - https://raw.githubusercontent.com/maykar/custom-lovelace/master/tracker.json
-  # component_urls:
-    # - https://raw.githubusercontent.com/pnbruckner/homeassistant-config/master/custom_components.json
-    # - https://raw.githubusercontent.com/keatontaylor/custom_components/master/custom_components.json
-
 hacs:
   token: !secret hacs_token
+  sidepanel_title: Custom
+  sidepanel_icon: "mdi:home-plus"
   appdaemon: true
   python_script: true
   theme: true
+  # options: true
+  # country: US
+  # experimental: true
 
 breaking_changes:
   scan_interval: 1800
     
 frontend: !include structure/theme.yaml
-
-favicon:
-  title: My Home
-  favicon: /local/favicons/favicon.ico
-  apple: /local/favicons/apple-touch-icon.png
-  16: /local/favicons/favicon-16x16.png
-  32: /local/favicons/favicon-32x32.png
-  150: /local/favicons/mstile-150x150.png
-  192: /local/favicons/android-chrome-192x192.png
-  512: /local/favicons/android-chrome-512x512.png
 
 lovelace:
 
@@ -156,7 +127,7 @@ device_tracker:
     host: !secret router_ip
     username: !secret wifi_username
     password: !secret wifi_password
-    port: 5000
+    port: 80
     devices:
       - !secret kcell_mac
       - !secret mcell_mac
@@ -192,17 +163,17 @@ media_player: !include components/media_player.yaml
 light: !include components/lights.yaml
 
 tplink:
-  discovery: false
-  switch:
-    - host: !secret outlet_ip
-    - host: !secret airhockey_ip
-    - host: !secret bedfan_ip
-    - host: !secret officefan_ip
-    - host: !secret craftfan_ip
-    - host: !secret masterbath_ip
-    - host: !secret kitchen_ip
-    - host: !secret guestbed_ip
-    - host: !secret sunroom_ip
+  # discovery: false
+  # switch:
+    # - host: !secret outlet_ip
+    # - host: !secret airhockey_ip
+    # - host: !secret bedfan_ip
+    # - host: !secret officefan_ip
+    # - host: !secret craftfan_ip
+    # - host: !secret masterbath_ip
+    # - host: !secret kitchen_ip
+    # - host: !secret guestbed_ip
+    # - host: !secret sunroom_ip
 
 momentary:
 
@@ -250,30 +221,6 @@ amcrest:
       - motion_detected
     port: !secret amcrest2_port
     scan_interval: 20
-      
-# android_ip_webcam:
-  # - host: !secret webcam_ip
-    # name: Webcam
-    # username: !secret camname_secret
-    # password: !secret campass_secret
-    # sensors:
-      # - audio_connections
-      # - battery_level
-      # - battery_temp
-      # - battery_voltage
-      # - light
-      # - motion
-      # - pressure
-    # switches:
-      # - exposure_lock
-      # - ffc
-      # - focus
-      # - gps_active
-      # - night_vision
-      # - overlay
-      # - torch
-      # - whitebalance_lock
-      # - video_recording
 
 ffmpeg:
       
@@ -288,12 +235,11 @@ camera:
     - avatar
     - activity
     activity_name: "Last Activity"
-#  - platform: amcrest
 
 vacuum:
   - platform: xiaomi_miio
-    host: !secret croc_vac_IP
-    token: !secret croc_vac_secret
+    host: !secret cop_vac_IP
+    token: !secret cop_vac_secret
       
 ifttt:
   key: !secret ifttt_key

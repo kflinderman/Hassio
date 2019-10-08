@@ -98,7 +98,7 @@
   alias: Mere Wake Up Gym Day
   trigger:
     platform: time
-    at: '05:30:00'
+    at: '05:00:00'
   condition:
     condition: or
     conditions:
@@ -896,7 +896,7 @@
       entity_id: binary_sensor.living_room_bay_occupancy
       to: 'off'
       for:
-        minutes: 10
+        minutes: 15
   condition:
     - condition: state
       entity_id: group.livingroom
@@ -1214,6 +1214,8 @@
     platform: state
     entity_id: vacuum.xiaomi_vacuum_cleaner
     to: 'error'
+    for:
+      seconds: 10
   condition:
   - condition: state
     entity_id: input_boolean.vacuum_stop_notify
@@ -1222,7 +1224,7 @@
     service: notify.pushbullet
     data:
       title: Robot Vacuum Error
-      message: "The vacuum is stuck or is experiencing troubles. {{ state_attr('vacuum.xaiomi_vacuum_cleaner', 'error') }}."
+      message: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'error') }}"
       
 - id: vacuum_finish
   alias: Vacuum Finish
@@ -2029,7 +2031,7 @@
       - condition: or
         conditions:
         - condition: time
-          after: '21:00:00'
+          after: '20:30:00'
         - condition: time
           before: '8:00:00'
   action:

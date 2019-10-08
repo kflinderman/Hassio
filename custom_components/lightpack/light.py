@@ -12,9 +12,11 @@ from homeassistant.components.light import (
     SUPPORT_EFFECT, SUPPORT_BRIGHTNESS,
     Light, PLATFORM_SCHEMA)
 from homeassistant.const import (CONF_HOST, CONF_PORT, CONF_NAME)
-import homeassistant.helpers.config_validation as cv
+from homeassistant.helpers import config_validation as cv
 
 REQUIREMENTS = ['py-lightpack==2.2.0']
+
+VERSION = '0.0.1'
 
 _LOGGER = logging.getLogger(__name__)
 

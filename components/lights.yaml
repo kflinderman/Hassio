@@ -1,6 +1,6 @@
-  - platform: lightpack
-    host: !secret pc_ip
-    port: 3636
+  # - platform: lightpack
+    # host: !secret pc_ip
+    # port: 3636
 #    api_key: !secret lightpack_secret
   - platform: skybell
   - platform: group

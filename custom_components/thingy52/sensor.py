@@ -14,7 +14,6 @@ import voluptuous as vol
 from homeassistant.const import (
     TEMP_CELSIUS, 
     CONF_MAC, 
-    # CONF_SCAN_INTERVAL, 
     CONF_SENSORS, 
     ATTR_FRIENDLY_NAME
 )
@@ -130,17 +129,6 @@ class NotificationDelegate(btle.DefaultDelegate):
             i -= 2**8
         return i 
 
-def re_connect(thingy, mac):
-        """ Reconnects with a Thingy52 Device """
-        while True:
-            try:
-                _LOGGER.error("#[THINGYSENSOR]: Trying to reconnect to Thingy (%s)", friendly_name)
-                thingy = thingy52.Thingy52(mac_address)
-                break
-            except Exception as e:
-                _LOGGER.error("#[THINGYSENSOR]: Unable to connect to Thingy (%s): %s", friendly_name, str(e))
-                time.sleep(RETRY_INTERVAL_SEC)
-
 def setup_platform(hass, config, add_devices, discovery_info=None):
     """ Set up the Thingy 52 temperature sensor"""
     global e_battery_handle
@@ -214,11 +202,6 @@ class Thingy52Sensor(Entity):
 
 
     @property
-    def should_poll(self):
-        """Return the polling state."""
-        return True
-
-    @property
     def name(self):
         """Return the name of the sensor."""
         return ("{} {}".format(self._friendly_name, self._sensor_name))
@@ -246,14 +229,6 @@ class Thingy52Sensor(Entity):
         """Fetch new state data for the sensor.
         This is the only method that should fetch new data for Home Assistant.
         """
-        _LOGGER.debug("#Status: [%s]", self._thingy.getState())
-        if self._thingy.getState() == DISCONNECTED:
-            try:
-                _LOGGER.error("#[THINGYSENSOR]: Trying to reconnect to Thingy (%s)", self._friendly_name)
-                self._thingy = thingy52.Thingy52(self._mac)
-            except Exception as e:
-                _LOGGER.error("#[THINGYSENSOR]: Unable to reconnect to Thingy (%s): %s", self._friendly_name, str(e))
-            
         self._thingy.waitForNotifications(timeout=5)
         _LOGGER.debug("#[%s]: method update, state is %s", self._name, self._state)
         

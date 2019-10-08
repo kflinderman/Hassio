@@ -3,18 +3,20 @@ cch:
     - conditions:
         user: kenny
       config:
-        default_tab: []
+        hide_config: false
         hide_tabs: '7'
+        hide_unused: false
         menu: show
         notifications: show
         options: show
         show_tabs: []
         voice: hide
-  hide_tabs: '5,6'
+  hide_config: true
+  hide_tabs: '4,5'
+  hide_unused: true
   menu: hide
   options: hide
   swipe: true
-  swipe_amount: '25'
   swipe_animate: swipe
   voice: hide
 decluttering_templates:
@@ -235,7 +237,7 @@ resources:
     url: /community_plugin/swipe-card/swipe-card.js
   - type: module
     url: /community_plugin/compact-custom-header/compact-custom-header.js
-  - type: js
+  - type: module
     url: /community_plugin/lovelace-card-tools/card-tools.js
   - type: module
     url: /community_plugin/simple-thermostat/simple-thermostat.js
@@ -277,7 +279,7 @@ views:
                 type: picture-entity
               - elements:
                   - entity: sensor.alli_location
-                    image: /local/alli.jpg
+                    image: /local/alli_gone.jpg
                     state_image:
                       Basement: /local/alli.jpg
                       Bedroom: /local/alli.jpg
@@ -1265,14 +1267,27 @@ views:
             type: entities
         type: vertical-stack
       - cards:
-          - base_position:
-              x: 946
-              'y': 839
+          - calibration_points:
+              - map:
+                  x: 946
+                  'y': 839
+                vacuum:
+                  x: 25500
+                  'y': 25500
+              - map:
+                  x: 1101
+                  'y': 705
+                vacuum:
+                  x: 26500
+                  'y': 26500
+              - map:
+                  x: 946
+                  'y': 705
+                vacuum:
+                  x: 25500
+                  'y': 26500
             entity: vacuum.xiaomi_vacuum_cleaner
             map_image: /local/Xiaomi_Map_Edit.png
-            reference_point:
-              x: 1101
-              'y': 705
             type: 'custom:xiaomi-vacuum-map-card'
             zones:
               - - - 19772
@@ -1805,7 +1820,7 @@ views:
                 tap_action:
                   action: none
                 type: state-label
-              - entity: sensor.sun_room_light
+              - entity: sensor.money_plant_light_intensity
                 style:
                   '--paper-item-icon-color': 'rgb(255,255,255)'
                   color: 'rgba(255,255,255,1)'
@@ -1815,7 +1830,7 @@ views:
                   top: 0
                   transform: scale(0.8)
                 type: state-icon
-              - entity: sensor.sun_room_light
+              - entity: sensor.money_plant_light_intensity
                 style:
                   color: 'rgba(255,255,255,1)'
                   font-size: 12px
@@ -1828,7 +1843,7 @@ views:
                   top: 0
                   transform: initial
                 type: state-label
-              - entity: sensor.sun_room_temperature
+              - entity: sensor.money_plant_temperature
                 style:
                   '--paper-item-icon-color': 'rgb(255,255,255)'
                   color: 'rgba(255,255,255,1)'
@@ -1838,7 +1853,7 @@ views:
                   top: 0
                   transform: scale(0.8)
                 type: state-icon
-              - entity: sensor.sun_room_temperature
+              - entity: sensor.money_plant_temperature
                 style:
                   color: 'rgba(255,255,255,1)'
                   font-size: 12px
@@ -2422,6 +2437,95 @@ views:
         show_header_toggle: false
         title: Check Configuration
         type: entities
+      - elements:
+          - entity: sensor.blank
+            style:
+              background-color: 'rgba(0, 0, 0, 0.5)'
+              bottom: 0
+              color: white
+              font-size: 16px
+              left: 0
+              line-height: 32px
+              padding: 35px 8px
+              transform: initial
+              width: 100%
+            tap_action:
+              action: none
+            type: state-label
+          - entity: sensor.thingy_battery_level
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 12%
+              top: 88%
+            type: state-icon
+          - entity: sensor.thingy_battery_level
+            style:
+              color: white
+              left: 12%
+              top: 96%
+            type: state-label
+          - entity: sensor.thingy_carbon_dioxide
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 27%
+              top: 88%
+            type: state-icon
+          - entity: sensor.thingy_carbon_dioxide
+            style:
+              color: white
+              left: 27%
+              top: 96%
+            type: state-label
+          - entity: sensor.thingy_humidity
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 42%
+              top: 88%
+            type: state-icon
+          - entity: sensor.thingy_humidity
+            style:
+              color: white
+              left: 42%
+              top: 96%
+            type: state-label
+          - entity: sensor.thingy_atmospheric_pressure
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 57%
+              top: 88%
+            type: state-icon
+          - entity: sensor.thingy_atmospheric_pressure
+            style:
+              color: white
+              left: 57%
+              top: 96%
+            type: state-label
+          - entity: sensor.thingy_temperature
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 72%
+              top: 88%
+            type: state-icon
+          - entity: sensor.thingy_temperature
+            style:
+              color: white
+              left: 72%
+              top: 96%
+            type: state-label
+          - entity: sensor.thingy_air_quality
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 87%
+              top: 88%
+            type: state-icon
+          - entity: sensor.thingy_air_quality
+            style:
+              color: white
+              left: 87%
+              top: 96%
+            type: state-label
+        image: /local/nRF6936_SPL.jpg
+        type: picture-elements
     icon: 'mdi:chart-bar'
     id: 4
     title: Statistics

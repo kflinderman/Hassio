@@ -1,5 +1,5 @@
   host_ip: !secret pi_ip
-  listen_port: 8300
+  listen_port: 80 #8300
   expose_by_default: false
   entities:
   
@@ -12,30 +12,12 @@
       
     ##### Switches #####
     
- #   switch.airhockey:
- #     hidden: false
- #   switch.bedfan:
- #     hidden: false
- #   switch.craftfan:
- #     hidden: false
     switch.desktoppc:
       hidden: false
- #   switch.guestbed:
- #     hidden: false
- #   switch.kitchensw:
- #     hidden: false
- #   switch.masterbath:
- #     hidden: false
- #   switch.officefan:
- #     hidden: false
- #   switch.outlet:
- #     hidden: false
     switch.deck_ceiling_outlet_switch:
       hidden: false
     switch.laundryroom:
       hidden: false
- #   switch.sun_room_market_lights:
- #     hidden: false
       
     ##### Input Booleans #####
     
@@ -76,13 +58,7 @@
       hidden: false
     group.livingroom:
       hidden: false
-    group.games:
-      hidden: false
     group.dining_room:
-      hidden: false
-    group.second_floor:
-      hidden: false
-    group.first_floor:
       hidden: false
       
     ##### Media Players #####
@@ -92,8 +68,6 @@
     media_player.stereo:
       hidden: false
     media_player.lg_tv_remote:
-      hidden: false
-    media_player.desktop_media:
       hidden: false
 
     ##### Scripts #####
