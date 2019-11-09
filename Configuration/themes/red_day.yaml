@@ -1,0 +1,3 @@
+red_day:
+  primary-color: "#73000A"
+  paper-item-icon-color: "var(--primary-color)"

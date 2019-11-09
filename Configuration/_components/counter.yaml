@@ -1,0 +1,23 @@
+robo_error:
+  initial: 3
+  step: 1
+  restore: true
+  minimum: 0
+  maximum: 3
+robo_empty:
+  initial: 0
+  step: 1
+  restore: true
+  minimum: 0
+  name: Runs Since Empty Bin
+  icon: mdi:trash-can
+basement_vacuum:
+  initial: 0
+  step: 1
+  restore: true
+  minimum: 0
+upstairs_vacuum:
+  initial: 0
+  step: 1
+  restore: true
+  minimum: 0

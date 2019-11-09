@@ -1,0 +1,284 @@
+homeassistant:
+  customize: !include _structure/customize.yaml
+  customize_domain: {}
+  customize_glob: {}
+  
+http:
+   # api_password: !secret ha_password
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
+  base_url: !secret url4_secret
+  
+recorder:
+  purge_interval: 2
+  purge_keep_days: 7
+  db_url: !secret db_secret
+
+system_health:
+
+person:
+
+logger: 
+  default: error
+  logs:
+    homeassistant.components.visitor.calendar: critical
+    homeassistant.components.vacation.calendar: critical
+    homeassistant.components.cert_expiry.sensor: critical
+    custom_components.weatheralerts.sensor: critical
+    # custom_components.thingy52.sensor: debug
+    custom_components.lightpack.light: critical
+    homeassistant.components.skybell_front_door_button.binary_sensor: critical
+    homeassistant.components.skybell_front_door_motion.binary_sensor: critical
+    homeassistant.components.websocket_api.http.connection: critical
+    homeassistant.components.hue: critical
+    homeassistant.components.hue.light: critical
+    homeassistant.components.emulated_hue: critical
+    # homeassistant.components.netgear.device_tracker: critical
+    homeassistant.helpers.entity_component: critical
+    homeassistant.helpers.entity: critical
+    homeassistant.loader: critical
+    
+history: !include _structure/history.yaml
+
+influxdb:
+  host: a0d7b954-influxdb
+  port: 8086
+  database: homeassistant
+  username: homeassistant
+  password: !secret influxdb_secret
+  max_retries: 3
+  default_measurement: state
+
+logbook:
+  exclude:
+    domains:
+      - group
+      - sensor
+      - device_tracker
+      - android_ip_webcam
+    entities:
+      - switch.webcam_video_recording
+      - automation.update_watt_hour
+      - automation.keep_windows_open
+      - automation.temperature_vacation
+  include:
+    entities:
+      - device_tracker.kenny_pixelc
+      - person.kenny
+      - person.meredith
+      - device_tracker.mere_lap
+      - device_tracker.pc
+
+hacs:
+  token: !secret hacs_token
+  sidepanel_title: Custom
+  sidepanel_icon: "mdi:home-plus"
+  appdaemon: true
+  python_script: true
+  theme: true
+  options:
+    country: US
+    #experimental: true
+
+breaking_changes:
+  scan_interval: 1800
+    
+frontend:
+  themes: !include_dir_merge_named themes
+
+lovelace:
+
+python_script:
+
+zwave:
+  usb_path: /dev/ttyACM0
+  device_config:
+    light.dining_lights_level:
+      refresh_value: true
+
+emulated_hue: !include assistant/emulated_hue.yaml
+
+#cloud: !include assistant/cloud.yaml
+      
+automation: !include _intelligence/automations.yaml
+
+scene: !include _intelligence/scene.yaml
+
+script: !include _intelligence/scripts.yaml
+
+zone: !include _structure/zone.yaml
+
+group: !include _structure/groups.yaml
+
+config:
+
+config_check:
+
+updater:
+
+discovery:
+
+ssdp:
+
+zeroconf:
+
+device_tracker:
+  - platform: bluetooth_le_tracker
+    track_new_devices: false
+  - platform: bluetooth_tracker
+    request_rssi: true
+  - platform: netgear
+    host: !secret router_ip
+    username: !secret wifi_username
+    password: !secret wifi_password
+    port: 5000
+    # devices:
+      # - !secret kcell_mac
+      # - !secret mcell_mac
+      # - !secret kworkcell_mac
+      # - !secret mlap_mac
+      # - !secret nswitch_mac
+      # - !secret ktab_mac
+    # accesspoints:
+      # - !secret kcell_mac
+      # - !secret mcell_mac
+
+switch: !include _components/switch.yaml
+
+binary_sensor: !include _components/binary_sensor.yaml
+
+input_boolean: !include _components/input_boolean.yaml
+    
+input_select:
+  fanmode:
+    name: Fan Mode
+    icon: mdi:fan
+    options:
+      - "Quiet"
+      - "Balanced"
+      - "Turbo"
+      - "Max"
+
+counter: !include _components/counter.yaml
+
+sensor: !include _components/sensors.yaml
+
+plant: !include _components/plant.yaml
+
+sun:
+
+media_player: !include _components/media_player.yaml
+
+light: !include _components/lights.yaml
+
+tplink:
+  # discovery: false
+  # switch:
+    # - host: !secret outlet_ip
+    # - host: !secret airhockey_ip
+    # - host: !secret bedfan_ip
+    # - host: !secret officefan_ip
+    # - host: !secret craftfan_ip
+    # - host: !secret masterbath_ip
+    # - host: !secret kitchen_ip
+    # - host: !secret guestbed_ip
+    # - host: !secret sunroom_ip
+
+momentary:
+
+alexa_media:
+  accounts:
+    - email: !secret kemail
+      password: !secret amz_secret
+      url: amazon.com
+      scan_interval: 30
+
+hue:
+  bridges:
+    - host: !secret hue_ip
+      allow_unreachable: true
+      allow_hue_groups: true
+      
+speedtestdotnet:
+  scan_interval:
+    hours: 1
+  monitored_conditions:
+    - ping
+    - download
+    - upload
+    
+stream:
+    
+skybell:
+    username: !secret kemail
+    password: !secret skybell_secret
+      
+amcrest:
+  - host: !secret backyard_IP
+    username: !secret backyard_user
+    password: !secret backyard_pswd
+    name: "Backyard Camera"
+    binary_sensors:
+      - motion_detected
+    port: !secret amcrest_port
+    scan_interval: 20
+  - host: !secret livingroom_IP
+    username: !secret livingroom_user
+    password: !secret livingroom_pswd
+    name: "Living Room Camera"
+    binary_sensors:
+      - motion_detected
+    port: !secret amcrest2_port
+    scan_interval: 20
+
+ffmpeg:
+      
+weather:
+  - platform: darksky
+    api_key: !secret dark_api
+    mode: 'daily'
+
+camera:
+  - platform: skybell
+    monitored_conditions:
+    - avatar
+    - activity
+    activity_name: "Last Activity"
+
+vacuum:
+  - platform: xiaomi_miio
+    host: !secret cop_vac_IP
+    token: !secret cop_vac_secret
+      
+ifttt:
+  key: !secret ifttt_key
+
+google:
+  client_id: !secret gcal_ID
+  client_secret: !secret gcal_secret
+ 
+ecobee:
+  api_key: !secret ecobee_key
+ 
+notify:
+  - platform: pushbullet
+    api_key: !secret push_key
+    name: pushbullet
+  - platform: alexa_media
+    name: alexa_media
+  - platform: group
+    name: residents
+    services:
+      - service: pushbullet
+      - service: ios_iphone_meredith
+
+clean_up_snapshots_service:
+  host: !secret url7_secret
+  token: !secret snapshot_cleanup
+  number_of_snapshots_to_keep: 10
+
+panel_iframe:
+  grafana:
+    title: Grafana
+    icon: mdi:chart-timeline
+    url: !secret url6_secret

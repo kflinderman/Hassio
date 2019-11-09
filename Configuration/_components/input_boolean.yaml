@@ -1,0 +1,134 @@
+  ##### Calendar Sensors #####
+
+  vacation:
+    name: Vacation Mode
+    icon: mdi:airplane-takeoff
+  visitor:
+    name: Visitor Mode
+    icon: mdi:account-multiple
+  party:
+    name: Party Mode
+    icon: mdi:cake-variant
+  window:
+    name: Windows
+    icon: mdi:window-closed
+    
+  ##### Occupancy Sensors #####
+    
+  bedroom:
+    name: Bedroom Occupancy
+  basement:
+    name: Basement Occupancy
+  kitchen:
+    name: Kitchen Occupancy
+  livingroom:
+    name: Living Room Occupancy
+    
+  ##### Motion Sensors #####
+    
+  bedroom_motion:
+    name: Bedroom Motion
+  basement_motion:
+    name: Basement Motion
+  kitchen_motion:
+    name: Kitchen Motion
+  livingroom_motion:
+    name: Living Room Motion
+    
+  ##### Master Switches #####
+    
+  all_firstfloor:
+    name: All First Floor
+    icon: mdi:numeric-1-box
+  all_secondfloor:
+    name: All Second Floor
+    icon: mdi:numeric-2-box
+  all_basement:
+    name: All Basement
+    icon: mdi:arrow-down-bold-box
+  all_outside:
+    name: All Outside
+    icon: mdi:pine-tree-box
+  all_break:
+    name: Break for All
+    
+  ##### Alli #####
+  
+  alli_bed:
+    name: Alli Bedroom
+    icon: mdi:dog
+  alli_office:
+    name: Alli Office
+    icon: mdi:dog
+  alli_craft:
+    name: Alli Craft Room
+    icon: mdi:dog
+  alli_living:
+    name: Alli Living Room
+    icon: mdi:dog
+  alli_kitchen:
+    name: Alli Kitchen
+    icon: mdi:dog
+  alli_dining:
+    name: Alli Dining Room
+    icon: mdi:dog
+  alli_guest:
+    name: Alli Guest Room
+    icon: mdi:dog
+  alli_basement:
+    name: Alli Basement
+    icon: mdi:dog
+  alli_sun_room:
+    name: Alli Sun Room
+    icon: mdi:dog
+  
+  ##### Vacuum #####
+  
+  vacuum_zone_living1:
+    name: TV Area
+    icon: mdi:television
+  vacuum_zone_living2:
+    name: Back Living Room
+    icon: mdi:seat
+  vacuum_zone_dining:
+    name: Dining Room
+    icon: mdi:silverware
+  vacuum_zone_kitchen:
+    name: Kitchen
+    icon: mdi:microwave
+  vacuum_zone_hall:
+    name: Hallway
+    icon: mdi:door-closed
+  vacuum_daily:
+    name: Daily Vacuum
+    icon: mdi:robot-vacuum
+  vacuum_cancel:
+    name: Cancel Daily Vacuum
+    icon: mdi:robot-vacuum
+  vacuum_stop_notify:
+    name: Stop Notifications
+    icon: mdi:bell-sleep
+  vacuum_basement:
+    name: Basement Vacuum
+    icon: mdi:arrow-down-bold-box
+  vacuum_upstairs:
+    name: Upstairs Vacuum
+    icon: mdi:numeric-2-box
+    
+  ##### Other #####
+  
+  basement_light_off_loop:
+    name: Basement Light Off Loop
+  im_home:
+    name: Home
+    icon: mdi:door-closed
+  door:
+    name: Door Activity
+  sexy_time:
+    name: Sexy Time
+  cpu_lightpack:
+    name: CPU Lightpack
+  holiday:
+    name: Holiday Group Dummy
+  dog_med:
+    name: Dog Medications

@@ -1,0 +1,2646 @@
+cch:
+  exceptions:
+    - conditions:
+        user: kenny
+      config:
+        hide_config: false
+        hide_tabs: '7'
+        hide_unused: false
+        menu: show
+        notifications: show
+        options: show
+        show_tabs: []
+        voice: hide
+  hide_config: true
+  hide_tabs: '4,5'
+  hide_unused: true
+  menu: hide
+  options: hide
+  swipe: true
+  swipe_animate: swipe
+  voice: hide
+decluttering_templates:
+  alexa_template:
+    card:
+      artwork: cover
+      entity: '[[alexa]]'
+      hide:
+        mute: true
+        power: true
+      idle_view:
+        when_paused: true
+      info: scroll
+      tts:
+        platform: alexa
+      type: 'custom:mini-media-player'
+  room_template:
+    card:
+      elements:
+        - entity: '[[group]]'
+          image: '[[off_pic]]'
+          state_image:
+            'on': '[[on_pic]]'
+          style:
+            left: 50%
+            top: 50%
+            width: 100%
+          tap_action:
+            action: toggle
+          type: image
+        - entity: sensor.blank
+          prefix: '[[room_name]]'
+          style:
+            background-color: 'rgba(0, 0, 0, 0.5)'
+            bottom: 0
+            color: white
+            font-size: 16px
+            left: 0
+            line-height: 32px
+            padding: 0 8px
+            transform: initial
+            width: 100%
+          tap_action:
+            action: none
+          type: state-label
+        - entity: '[[occupancy]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            color: 'rgba(255,255,255,1)'
+            line-height: 32px
+            margin: 3px 5px 0 0
+            right: 0
+            top: 0
+            transform: scale(0.8)
+          type: state-icon
+        - entity: '[[brightness]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            color: 'rgba(255,255,255,1)'
+            line-height: 32px
+            margin: 35px 5px 0 0
+            right: 0
+            top: 0
+            transform: scale(0.8)
+          type: state-icon
+        - entity: '[[brightness]]'
+          style:
+            color: 'rgba(255,255,255,1)'
+            font-size: 12px
+            font-weight: bold
+            line-height: 32px
+            margin: 30px 35px
+            pointer-events: none
+            right: 0
+            text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+            top: 0
+            transform: initial
+          type: state-label
+        - entity: '[[temperature]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            color: 'rgba(255,255,255,1)'
+            line-height: 32px
+            margin: 65px 5px 0 0
+            right: 0
+            top: 0
+            transform: scale(0.8)
+          type: state-icon
+        - entity: '[[temperature]]'
+          style:
+            color: 'rgba(255,255,255,1)'
+            font-size: 12px
+            font-weight: bold
+            line-height: 32px
+            margin: 60px 35px
+            pointer-events: none
+            right: 0
+            text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+            top: 0
+            transform: initial
+          type: state-label
+        - entity: '[[group]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            color: 'rgba(255,255,255,1)'
+            left: 0
+            line-height: 32px
+            margin: 3px 5px 0 0
+            top: 0
+            transform: scale(0.8)
+          type: state-icon
+        - entity: '[[element1]]'
+          hold_action:
+            action: more-info
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            left: 65%
+            top: 91.3%
+          tap_action:
+            action: toggle
+          type: state-icon
+        - entity: '[[element2]]'
+          hold_action:
+            action: more-info
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            left: 75%
+            top: 91.3%
+          tap_action:
+            action: toggle
+          type: state-icon
+        - entity: '[[element3]]'
+          hold_action:
+            action: more-info
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            left: 85%
+            top: 91.3%
+          tap_action:
+            action: toggle
+          type: state-icon
+        - entity: '[[element4]]'
+          hold_action:
+            action: more-info
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            left: 95%
+            top: 91.3%
+          tap_action:
+            action: toggle
+          type: state-icon
+      image: '[[off_pic]]'
+      type: picture-elements
+  simple_room_template:
+    card:
+      elements:
+        - entity: '[[group]]'
+          image: '[[off_pic]]'
+          state_image:
+            'on': '[[on_pic]]'
+          style:
+            left: 50%
+            top: 50%
+            width: 100%
+          tap_action:
+            action: toggle
+          type: image
+        - entity: sensor.blank
+          prefix: '[[room_name]]'
+          style:
+            background-color: 'rgba(0, 0, 0, 0.5)'
+            bottom: 0
+            color: white
+            font-size: 16px
+            left: 0
+            line-height: 32px
+            padding: 0 8px
+            transform: initial
+            width: 100%
+          tap_action:
+            action: none
+          type: state-label
+        - entity: '[[group]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            color: 'rgba(255,255,255,1)'
+            left: 0
+            line-height: 32px
+            margin: 3px 5px 0 0
+            top: 0
+            transform: scale(0.8)
+          type: state-icon
+        - entity: '[[element]]'
+          hold_action:
+            action: more-info
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            left: 95%
+            top: 91.3%
+          tap_action:
+            action: toggle
+          type: state-icon
+      image: '[[off_pic]]'
+      type: picture-elements
+resources:
+  - type: module
+    url: /community_plugin/radial-menu/radial-menu.js
+  - type: module
+    url: /community_plugin/mini-media-player/mini-media-player.js
+  - type: js
+    url: >-
+      /community_plugin/lovelace-toggle-lock-entity-row/toggle-lock-entity-row.js
+  - type: js
+    url: /community_plugin/lovelace-fold-entity-row/fold-entity-row.js
+  - type: module
+    url: /community_plugin/lovelace-card-mod/card-mod.js
+  - type: module
+    url: /community_plugin/swipe-card/swipe-card.js
+  - type: module
+    url: /community_plugin/compact-custom-header/compact-custom-header.js
+  - type: module
+    url: /community_plugin/lovelace-card-tools/card-tools.js
+  - type: module
+    url: /community_plugin/simple-thermostat/simple-thermostat.js
+  - type: module
+    url: /community_plugin/simple-weather-card/simple-weather-card-bundle.js
+  - type: module
+    url: /community_plugin/decluttering-card/decluttering-card.js
+  - type: js
+    url: /community_plugin/love-lock-card/love-lock-card.js
+  - type: module
+    url: >-
+      /community_plugin/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js
+title: Home
+views:
+  - badges: []
+    cards:
+      - cards:
+          - cards:
+              - entity: person.kenny
+                image: /local/kenny_home.jpg
+                name: Kenny
+                state_image:
+                  Work: /local/kenny_away.jpg
+                  not_home: /local/kenny_away.jpg
+                type: picture-entity
+              - entity: person.meredith
+                image: /local/mere_away.jpg
+                name: Meredith
+                state_image:
+                  Work: /local/mere_away.jpg
+                  home: /local/mere_home.jpg
+                type: picture-entity
+            type: horizontal-stack
+          - cards:
+              - entity: input_boolean.im_home
+                image: /local/imhome3.jpg
+                tap_action:
+                  action: toggle
+                type: picture-entity
+              - elements:
+                  - entity: sensor.alli_location
+                    image: /local/alli_gone.jpg
+                    state_image:
+                      Basement: /local/alli.jpg
+                      Bedroom: /local/alli.jpg
+                      Living Room: /local/alli.jpg
+                      Nowhere: /local/alli_gone.jpg
+                      Office: /local/alli.jpg
+                    style:
+                      left: 50%
+                      top: 50%
+                      width: 100%
+                    type: image
+                  - entity: sensor.alli_location
+                    style:
+                      background-color: 'rgba(0, 0, 0, 0.5)'
+                      bottom: 0
+                      color: white
+                      font-size: 16px
+                      left: 0
+                      line-height: 32px
+                      padding: 0 8px
+                      transform: initial
+                      width: 100%
+                    type: state-label
+                  - entity: sensor.alli_button
+                    style:
+                      '--paper-item-icon-color': 'rgb(255,255,255)'
+                      color: 'rgba(255,255,255,1)'
+                      line-height: 32px
+                      margin: 3px 5px 0 0
+                      right: 0
+                      top: 0
+                      transform: scale(0.8)
+                    type: state-icon
+                  - entity: sensor.alli_button
+                    style:
+                      color: 'rgba(255,255,255,1)'
+                      font-size: 12px
+                      font-weight: bold
+                      line-height: 32px
+                      margin: 1px 35px
+                      pointer-events: none
+                      right: 0
+                      text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                      top: 0
+                      transform: initial
+                    type: state-label
+                  - entity: sensor.alli_battery
+                    style:
+                      '--paper-item-icon-color': 'rgb(255,255,255)'
+                      color: 'rgba(255,255,255,1)'
+                      line-height: 32px
+                      margin: 35px 5px 0 0
+                      right: 0
+                      top: 0
+                      transform: scale(0.8)
+                    type: state-icon
+                  - entity: sensor.alli_battery
+                    style:
+                      color: 'rgba(255,255,255,1)'
+                      font-size: 12px
+                      font-weight: bold
+                      line-height: 32px
+                      margin: 33px 35px
+                      pointer-events: none
+                      right: 0
+                      text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                      top: 0
+                      transform: initial
+                    type: state-label
+                image: /local/alli.jpg
+                type: picture-elements
+            type: horizontal-stack
+          - cards:
+              - head: group.alli_locate
+                type: 'custom:fold-entity-row'
+            popup: timeout
+            type: 'custom:love-lock-card'
+        id: 09ef49e989f142258d287c90cb5a90db
+        type: vertical-stack
+      - cards:
+          - elements:
+              - camera_image: camera.front_door
+                entity: camera.front_door_last_activity
+                style:
+                  left: 50%
+                  top: 50%
+                  width: 100%
+                type: image
+              - entity: sensor.blank
+                prefix: Front Door
+                style:
+                  background-color: 'rgba(0, 0, 0, 0.5)'
+                  bottom: 0
+                  color: white
+                  font-size: 16px
+                  left: 0
+                  line-height: 32px
+                  padding: 0 8px
+                  transform: initial
+                  width: 100%
+                tap_action:
+                  action: none
+                type: state-label
+              - entity: binary_sensor.skybell_front_door_button
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 40%
+                  top: 91.3%
+                type: state-icon
+              - entity: binary_sensor.skybell_front_door_motion
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 50%
+                  top: 91.3%
+                type: state-icon
+              - entity: switch.skybell_front_door_motion_sensor
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 75%
+                  top: 91.3%
+                tap_action:
+                  action: toggle
+                type: state-icon
+              - entity: switch.skybell_front_door_do_not_disturb
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 85%
+                  top: 91.3%
+                tap_action:
+                  action: toggle
+                type: state-icon
+              - entity: light.front_outside
+                hold_action:
+                  action: more-info
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 95%
+                  top: 91.3%
+                tap_action:
+                  action: toggle
+                type: state-icon
+            image: /local/room_pic/camera_error.jpg
+            type: picture-elements
+          - elements:
+              - camera_image: camera.backyard_camera
+                entity: camera.backyard_camera
+                style:
+                  left: 50%
+                  top: 50%
+                  width: 100%
+                type: image
+              - entity: sensor.blank
+                prefix: Backyard
+                style:
+                  background-color: 'rgba(0, 0, 0, 0.5)'
+                  bottom: 0
+                  color: white
+                  font-size: 16px
+                  left: 0
+                  line-height: 32px
+                  padding: 0 8px
+                  transform: initial
+                  width: 100%
+                tap_action:
+                  action: none
+                type: state-label
+              - entity: binary_sensor.backyard_camera_motion_detected
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 50%
+                  top: 91.3%
+                type: state-icon
+              - entity: light.deck_light
+                hold_action:
+                  action: more-info
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 85%
+                  top: 91.3%
+                tap_action:
+                  action: toggle
+                type: state-icon
+              - entity: switch.deck_ceiling_outlet_switch
+                hold_action:
+                  action: more-info
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 95%
+                  top: 91.3%
+                tap_action:
+                  action: toggle
+                type: state-icon
+            image: /local/room_pic/camera_error.jpg
+            type: picture-elements
+        id: ff7c17af634b47d18e03d186c4c0ef0d
+        type: vertical-stack
+      - cards:
+          - control:
+              hvac:
+                auto:
+                  name: false
+                cool:
+                  name: false
+                heat:
+                  name: false
+                'off':
+                  name: false
+              preset:
+                Open: false
+                Party: false
+                Vac: false
+                Wake: false
+            decimals: 0
+            entity: climate.main_floor
+            icon:
+              auto: 'mdi:autorenew'
+              cool: 'mdi:snowflake'
+              heat: 'mdi:fire'
+              'off': 'mdi:cancel'
+            sensors:
+              - attribute: current_humidity
+                name: Humidity
+                unit: '%'
+            step_size: 1
+            style: |
+              ha-card {
+                --st-spacing: 3px
+              }
+            type: 'custom:simple-thermostat'
+          - backdrop: true
+            entity: weather.dark_sky
+            name: ' '
+            type: 'custom:simple-weather-card'
+          - cards:
+              - elements:
+                  - entity: switch.momentary_weather_alert_notification
+                    image: /local/No_alert.png
+                    state_image:
+                      'off': /local/No_alert.png
+                      'on': /local/Weather_alert.png
+                    style:
+                      left: 50%
+                      top: 50%
+                      width: 100%
+                    tap_action:
+                      action: none
+                    type: image
+                  - entity: sensor.weatheralerts
+                    prefix: 'Weather Alert: '
+                    style:
+                      action: more-info
+                      background-color: 'rgba(0, 0, 0, 0.5)'
+                      bottom: 0
+                      color: white
+                      font-size: 16px
+                      left: 0
+                      line-height: 32px
+                      padding: 0 8px
+                      tap_action: null
+                      transform: initial
+                      width: 100%
+                    type: state-label
+                image: /local/No_alert.png
+                type: picture-elements
+              - entity: input_boolean.window
+                state_image:
+                  'off': /local/window_closed.png
+                  'on': /local/window_open.png
+                tap_action:
+                  action: toggle
+                type: picture-entity
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - entities:
+              - input_boolean.all_firstfloor
+              - input_boolean.all_secondfloor
+              - input_boolean.all_basement
+              - input_boolean.all_outside
+            title: Master Switches
+            type: entities
+        popup: timeout
+        type: 'custom:love-lock-card'
+      - entities:
+          - binary_sensor.trash_day
+          - binary_sensor.recycling_day
+          - sensor.pickup_day
+        type: glance
+      - card_width: 70%
+        cards:
+          - entities:
+              - entity: input_boolean.visitor
+                type: 'custom:toggle-lock-entity-row'
+              - entity: calendar.visitors
+            show_header_toggle: false
+            title: Visitor
+            type: entities
+          - entities:
+              - entity: input_boolean.vacation
+                type: 'custom:toggle-lock-entity-row'
+                users:
+                  - kenny
+                  - meredith
+              - entity: calendar.vacations
+            show_header_toggle: false
+            title: Vacation
+            type: entities
+          - entities:
+              - entity: input_boolean.party
+                type: 'custom:toggle-lock-entity-row'
+              - entity: calendar.party
+            show_header_toggle: false
+            title: Party
+            type: entities
+        parameters:
+          centeredSlides: true
+          grabCursor: true
+          pagination:
+            type: bullets
+          slidesPerView: auto
+          spaceBetween: 8
+        start_card: 2
+        type: 'custom:swipe-card'
+      - template: alexa_template
+        type: 'custom:decluttering-card'
+        variables:
+          - alexa: media_player.everywhere
+    icon: 'mdi:home'
+    id: 0
+    panel: false
+    title: Default
+  - cards:
+      - cards:
+          - elements:
+              - camera_image: camera.living_room_camera
+                entity: camera.living_room_camera
+                style:
+                  left: 50%
+                  top: 50%
+                  width: 100%
+                type: image
+              - entity: sensor.blank
+                prefix: Living Room
+                style:
+                  background-color: 'rgba(0, 0, 0, 0.5)'
+                  bottom: 0
+                  color: white
+                  font-size: 16px
+                  left: 0
+                  line-height: 32px
+                  padding: 0 8px
+                  transform: initial
+                  width: 100%
+                tap_action:
+                  action: none
+                type: state-label
+              - entity: binary_sensor.living_room_bay_occupancy
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  line-height: 32px
+                  margin: 3px 5px 0 0
+                  right: 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: sensor.living_room_light_level
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  line-height: 32px
+                  margin: 35px 5px 0 0
+                  right: 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: sensor.living_room_light_level
+                style:
+                  color: 'rgba(255,255,255,1)'
+                  font-size: 12px
+                  font-weight: bold
+                  line-height: 32px
+                  margin: 30px 35px
+                  pointer-events: none
+                  right: 0
+                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                  top: 0
+                  transform: initial
+                type: state-label
+              - entity: sensor.living_room_bee_temperature
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  line-height: 32px
+                  margin: 65px 5px 0 0
+                  right: 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: sensor.living_room_bee_temperature
+                style:
+                  color: 'rgba(255,255,255,1)'
+                  font-size: 12px
+                  font-weight: bold
+                  line-height: 32px
+                  margin: 60px 35px
+                  pointer-events: none
+                  right: 0
+                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                  top: 0
+                  transform: initial
+                type: state-label
+              - entity: group.livingroom
+                hold_action:
+                  action: more-info
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  left: 0
+                  line-height: 32px
+                  margin: 3px 5px 0 0
+                  top: 0
+                  transform: scale(0.8)
+                tap_action:
+                  action: toggle
+                type: state-icon
+              - icon: 'mdi:numeric-1-circle'
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  left: 30%
+                  top: 91.3%
+                tap_action:
+                  action: call-service
+                  service: amcrest.goto_preset
+                  service_data:
+                    entity_id: camera.living_room_camera
+                    preset: '1'
+                type: icon
+              - icon: 'mdi:numeric-2-circle'
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  left: 38%
+                  top: 91.3%
+                tap_action:
+                  action: call-service
+                  service: amcrest.goto_preset
+                  service_data:
+                    entity_id: camera.living_room_camera
+                    preset: '2'
+                type: icon
+              - icon: 'mdi:numeric-3-circle'
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  left: 46%
+                  top: 91.3%
+                tap_action:
+                  action: call-service
+                  service: amcrest.goto_preset
+                  service_data:
+                    entity_id: camera.living_room_camera
+                    preset: '3'
+                type: icon
+              - icon: 'mdi:numeric-4-circle'
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  left: 54%
+                  top: 91.3%
+                tap_action:
+                  action: call-service
+                  service: amcrest.goto_preset
+                  service_data:
+                    entity_id: camera.living_room_camera
+                    preset: '4'
+                type: icon
+              - entity: light.floor_lamp
+                hold_action:
+                  action: more-info
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 75%
+                  top: 91.3%
+                tap_action:
+                  action: toggle
+                type: state-icon
+              - entity: light.rock_lamp
+                hold_action:
+                  action: more-info
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 85%
+                  top: 91.3%
+                tap_action:
+                  action: toggle
+                type: state-icon
+              - entity: light.chair_lamp
+                hold_action:
+                  action: more-info
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 95%
+                  top: 91.3%
+                tap_action:
+                  action: toggle
+                type: state-icon
+            image: /local/room_pic/camera_error.jpg
+            type: picture-elements
+          - artwork: full-cover
+            entity: media_player.lg_tv_remote
+            hide:
+              controls: true
+              info: true
+              mute: true
+              volume: true
+            power_color: true
+            type: 'custom:mini-media-player'
+          - entity: media_player.stereo
+            hide:
+              controls: true
+            source: full
+            type: 'custom:mini-media-player'
+            volume_stateless: true
+          - template: alexa_template
+            type: 'custom:decluttering-card'
+            variables:
+              - alexa: media_player.living_room_dot
+        id: 8e704b9e69794c9c8f8b425a032a0b6e
+        type: vertical-stack
+      - elements:
+          - entity: group.kitchen
+            image: /local/room_pic/Kitchen_off.jpg
+            state_image:
+              'on': /local/room_pic/Kitchen_all.jpg
+            style:
+              left: 50%
+              top: 50%
+              width: 100%
+            tap_action:
+              action: toggle
+            type: image
+          - entity: sensor.blank
+            prefix: Kitchen
+            style:
+              background-color: 'rgba(0, 0, 0, 0.5)'
+              bottom: 0
+              color: white
+              font-size: 16px
+              left: 0
+              line-height: 32px
+              padding: 0 8px
+              transform: initial
+              width: 100%
+            tap_action:
+              action: none
+            type: state-label
+          - entity: binary_sensor.kitchen_occupancy
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              color: 'rgba(255,255,255,1)'
+              line-height: 32px
+              margin: 3px 5px 0 0
+              right: 0
+              top: 0
+              transform: scale(0.8)
+            type: state-icon
+          - entity: sensor.kitchen_luminance
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              color: 'rgba(255,255,255,1)'
+              line-height: 32px
+              margin: 35px 5px 0 0
+              right: 0
+              top: 0
+              transform: scale(0.8)
+            type: state-icon
+          - entity: sensor.kitchen_luminance
+            style:
+              color: 'rgba(255,255,255,1)'
+              font-size: 12px
+              font-weight: bold
+              line-height: 32px
+              margin: 30px 35px
+              pointer-events: none
+              right: 0
+              text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+              top: 0
+              transform: initial
+            type: state-label
+          - entity: sensor.kitchen_temperature
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              color: 'rgba(255,255,255,1)'
+              line-height: 32px
+              margin: 65px 5px 0 0
+              right: 0
+              top: 0
+              transform: scale(0.8)
+            type: state-icon
+          - entity: sensor.kitchen_temperature
+            style:
+              color: 'rgba(255,255,255,1)'
+              font-size: 12px
+              font-weight: bold
+              line-height: 32px
+              margin: 60px 35px
+              pointer-events: none
+              right: 0
+              text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+              top: 0
+              transform: initial
+            type: state-label
+          - entity: group.kitchen
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              color: 'rgba(255,255,255,1)'
+              left: 0
+              line-height: 32px
+              margin: 3px 5px 0 0
+              top: 0
+              transform: scale(0.8)
+            type: state-icon
+          - entity: light.oven_light
+            hold_action: 'action:more-info'
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 85%
+              top: 91.3%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: switch.kitchensw
+            hold_action:
+              action: more-info
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 95%
+              top: 91.3%
+            tap_action:
+              action: toggle
+            type: state-icon
+        id: c9aa0cdb47694b4d96fc441aaab10989
+        image: /local/room_pic/Kitchen_off.jpg
+        type: picture-elements
+      - template: simple_room_template
+        type: 'custom:decluttering-card'
+        variables:
+          - group: group.dining_room
+          - off_pic: /local/room_pic/Dining_off.jpg
+          - on_pic: /local/room_pic/Dining_all.jpg
+          - room_name: Dining Room
+          - element: light.dining_lights_level
+      - cards:
+          - elements:
+              - entity: vacuum.xiaomi_vacuum_cleaner
+                image: /local/room_pic/Vacuum_error.jpg
+                state_image:
+                  cleaning: /local/room_pic/Vacuum_out.jpg
+                  docked: /local/room_pic/Vacuum_home.jpg
+                  idle: /local/room_pic/Vacuum_out.jpg
+                  paused: /local/room_pic/Vacuum_out.jpg
+                  returning: /local/room_pic/Vacuum_out.jpg
+                style:
+                  left: 50%
+                  top: 50%
+                  width: 100%
+                tap_action:
+                  action: more-info
+                type: image
+              - entity: sensor.blank
+                prefix: Vacuum
+                style:
+                  background-color: 'rgba(0, 0, 0, 0.5)'
+                  bottom: 0
+                  color: white
+                  font-size: 16px
+                  left: 0
+                  line-height: 32px
+                  padding: 0 8px
+                  transform: initial
+                  width: 100%
+                tap_action:
+                  action: none
+                type: state-label
+              - entity: sensor.vacuum_battery
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  line-height: 32px
+                  margin: 33px 5px 0 0
+                  right: 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: sensor.vacuum_battery
+                style:
+                  color: 'rgba(255,255,255,1)'
+                  font-size: 12px
+                  font-weight: bold
+                  line-height: 32px
+                  margin: 31px 30px
+                  pointer-events: none
+                  right: 0
+                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                  top: 0
+                  transform: initial
+                type: state-label
+              - entity: sensor.vacuum_time
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  line-height: 32px
+                  margin: 63px 5px 0 0
+                  right: 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: sensor.vacuum_time
+                style:
+                  color: 'rgba(255,255,255,1)'
+                  font-size: 12px
+                  font-weight: bold
+                  line-height: 32px
+                  margin: 61px 30px
+                  pointer-events: none
+                  right: 0
+                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                  top: 0
+                  transform: initial
+                type: state-label
+              - entity: sensor.vacuum_area
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  line-height: 32px
+                  margin: 93px 5px 0 0
+                  right: 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: sensor.vacuum_area
+                style:
+                  color: 'rgba(255,255,255,1)'
+                  font-size: 12px
+                  font-weight: bold
+                  line-height: 32px
+                  margin: 91px 30px
+                  pointer-events: none
+                  right: 0
+                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                  top: 0
+                  transform: initial
+                type: state-label
+              - entity: counter.robo_empty
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  line-height: 32px
+                  margin: 123px 5px 0 0
+                  right: 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: counter.robo_empty
+                style:
+                  color: 'rgba(255,255,255,1)'
+                  font-size: 12px
+                  font-weight: bold
+                  line-height: 32px
+                  margin: 121px 30px
+                  pointer-events: none
+                  right: 0
+                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                  top: 0
+                  transform: initial
+                type: state-label
+              - entity: binary_sensor.vacuum_dnd
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  line-height: 32px
+                  margin: 3px 5px 0 0
+                  right: 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: input_boolean.vacuum_daily
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  line-height: 32px
+                  margin: 3px 5px 0 0
+                  right: 5%
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: input_boolean.vacuum_daily
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  border-radius: 6px
+                  color: 'rgba(255,255,255,1)'
+                  line-height: 5px
+                  margin: 3px 5px 0 0
+                  right: 10%
+                  top: 3%
+                  transform: scale(0.8)
+                type: state-label
+              - entity: sensor.vacuum_status
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  background-color: '#000000'
+                  border-radius: 6px
+                  color: 'rgba(255,255,255,1)'
+                  left: 5%
+                  line-height: 5px
+                  margin: 3px 5px 0 0
+                  top: 5%
+                  transform: scale(1.3)
+                type: state-label
+              - entity: sensor.vacuum_filter
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  left: 0
+                  line-height: 32px
+                  margin: 5px 5px 0 0
+                  top: 48%
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: sensor.vacuum_filter
+                style:
+                  color: 'rgba(255,255,255,1)'
+                  font-size: 12px
+                  font-weight: bold
+                  left: 0
+                  line-height: 32px
+                  margin: 5px 35px
+                  pointer-events: none
+                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                  top: 48%
+                  transform: initial
+                type: state-label
+              - entity: sensor.vacuum_main_brush
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  left: 0
+                  line-height: 32px
+                  margin: 5px 5px 0 0
+                  top: 56%
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: sensor.vacuum_main_brush
+                style:
+                  color: 'rgba(255,255,255,1)'
+                  font-size: 12px
+                  font-weight: bold
+                  left: 0
+                  line-height: 32px
+                  margin: 5px 35px
+                  pointer-events: none
+                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                  top: 56%
+                  transform: initial
+                type: state-label
+              - entity: sensor.vacuum_side_brush
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  left: 0
+                  line-height: 32px
+                  margin: 5px 5px 0 0
+                  top: 64%
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: sensor.vacuum_side_brush
+                style:
+                  color: 'rgba(255,255,255,1)'
+                  font-size: 12px
+                  font-weight: bold
+                  left: 0
+                  line-height: 32px
+                  margin: 5px 35px
+                  pointer-events: none
+                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                  top: 64%
+                  transform: initial
+                type: state-label
+              - entity: sensor.vacuum_sensor
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  left: 0
+                  line-height: 32px
+                  margin: 5px 5px 0 0
+                  top: 72%
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: sensor.vacuum_sensor
+                style:
+                  color: 'rgba(255,255,255,1)'
+                  font-size: 12px
+                  font-weight: bold
+                  left: 0
+                  line-height: 32px
+                  margin: 5px 35px
+                  pointer-events: none
+                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                  top: 72%
+                  transform: initial
+                type: state-label
+              - icon: 'mdi:delete-empty'
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  left: 95%
+                  top: 93.3%
+                tap_action:
+                  action: call-service
+                  service: counter.reset
+                  service_data:
+                    entity_id: counter.robo_empty
+                type: icon
+              - icon: 'mdi:bell-ring'
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  left: 85%
+                  top: 93.3%
+                tap_action:
+                  action: call-service
+                  service: vacuum.locate
+                  service_data:
+                    entity_id: vacuum.xiaomi_vacuum_cleaner
+                type: icon
+              - icon: 'mdi:crosshairs'
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  left: 75%
+                  top: 93.3%
+                tap_action:
+                  action: call-service
+                  service: vacuum.clean_spot
+                  service_data:
+                    entity_id: vacuum.xiaomi_vacuum_cleaner
+                type: icon
+              - icon: 'mdi:home'
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  left: 65%
+                  top: 93.3%
+                tap_action:
+                  action: call-service
+                  service: vacuum.return_to_base
+                  service_data:
+                    entity_id: vacuum.xiaomi_vacuum_cleaner
+                type: icon
+              - icon: 'mdi:stop'
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  left: 55%
+                  top: 93.3%
+                tap_action:
+                  action: call-service
+                  service: vacuum.stop
+                  service_data:
+                    entity_id: vacuum.xiaomi_vacuum_cleaner
+                type: icon
+              - icon: 'mdi:pause'
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  left: 45%
+                  top: 93.3%
+                tap_action:
+                  action: call-service
+                  service: vacuum.pause
+                  service_data:
+                    entity_id: vacuum.xiaomi_vacuum_cleaner
+                type: icon
+              - icon: 'mdi:play'
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  left: 35%
+                  top: 93.3%
+                tap_action:
+                  action: call-service
+                  service: vacuum.start
+                  service_data:
+                    entity_id: vacuum.xiaomi_vacuum_cleaner
+                type: icon
+            image: /local/room_pic/Vacuum_error.jpg
+            type: picture-elements
+          - cards:
+              - entity: input_boolean.vacuum_cancel
+                style: |
+                  ha-card {
+                    {% if is_state('input_boolean.vacuum_cancel', 'on') %}
+                      background: #73000A;
+                      color: #FFFFFF;
+                      --iron-icon-fill-color: #FFFFFF
+                    {% endif %}
+                  }
+                type: entity-button
+              - entity: input_boolean.vacuum_stop_notify
+                style: |
+                  ha-card {
+                    {% if is_state('input_boolean.vacuum_stop_notify', 'on') %}
+                      background: #73000A;
+                      color: #FFFFFF;
+                      --iron-icon-fill-color: #FFFFFF
+                    {% endif %}
+                  }
+                type: entity-button
+              - entity: input_boolean.vacuum_basement
+                type: entity-button
+              - entity: input_boolean.vacuum_upstairs
+                type: entity-button
+            type: horizontal-stack
+          - entities:
+              - input_select.fanmode
+            type: entities
+        type: vertical-stack
+      - calibration_points:
+          - map:
+              x: 946
+              'y': 839
+            vacuum:
+              x: 25500
+              'y': 25500
+          - map:
+              x: 1101
+              'y': 705
+            vacuum:
+              x: 26500
+              'y': 26500
+          - map:
+              x: 946
+              'y': 705
+            vacuum:
+              x: 25500
+              'y': 26500
+        entity: vacuum.xiaomi_vacuum_cleaner
+        map_image: /local/Xiaomi_Map_Edit.png
+        type: 'custom:xiaomi-vacuum-map-card'
+        zones:
+          - - - 19772
+              - 26614
+              - 23272
+              - 30114
+          - - - 23236
+              - 26608
+              - 27086
+              - 30058
+          - - - 26082
+              - 22825
+              - 27582
+              - 26525
+          - - - 23370
+              - 22816
+              - 26070
+              - 26566
+          - - - 20309
+              - 22811
+              - 23309
+              - 26611
+    icon: 'mdi:numeric-1-box'
+    id: 1
+    title: First Floor
+  - cards:
+      - cards:
+          - elements:
+              - entity: group.bedroom
+                image: /local/room_pic/Bedroom_off.jpg
+                state_image:
+                  'on': /local/room_pic/Bedroom_all.jpg
+                style:
+                  left: 50%
+                  top: 50%
+                  width: 100%
+                tap_action:
+                  action: toggle
+                type: image
+              - entity: sensor.blank
+                prefix: Bedroom
+                style:
+                  background-color: 'rgba(0, 0, 0, 0.5)'
+                  bottom: 0
+                  color: white
+                  font-size: 16px
+                  left: 0
+                  line-height: 32px
+                  padding: 0 8px
+                  transform: initial
+                  width: 100%
+                tap_action:
+                  action: none
+                type: state-label
+              - entity: binary_sensor.bedroom_occupancy
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  line-height: 32px
+                  margin: 3px 5px 0 0
+                  right: 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: sensor.bedroom_multisensor_luminance
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  line-height: 32px
+                  margin: 35px 5px 0 0
+                  right: 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: sensor.bedroom_multisensor_luminance
+                style:
+                  color: 'rgba(255,255,255,1)'
+                  font-size: 12px
+                  font-weight: bold
+                  line-height: 32px
+                  margin: 30px 35px
+                  pointer-events: none
+                  right: 0
+                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                  top: 0
+                  transform: initial
+                type: state-label
+              - entity: sensor.bedroom_bee_temperature
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  line-height: 32px
+                  margin: 65px 5px 0 0
+                  right: 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: sensor.bedroom_bee_temperature
+                style:
+                  color: 'rgba(255,255,255,1)'
+                  font-size: 12px
+                  font-weight: bold
+                  line-height: 32px
+                  margin: 60px 35px
+                  pointer-events: none
+                  right: 0
+                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                  top: 0
+                  transform: initial
+                type: state-label
+              - entity: group.bedroom
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  left: 0
+                  line-height: 32px
+                  margin: 3px 5px 0 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: light.swirl_lamp
+                hold_action:
+                  action: more-info
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 75%
+                  top: 91.3%
+                tap_action:
+                  action: toggle
+                type: state-icon
+              - entity: switch.bedfan
+                hold_action:
+                  action: more-info
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 85%
+                  top: 91.3%
+                tap_action:
+                  action: toggle
+                type: state-icon
+              - entity: switch.masterbath
+                hold_action:
+                  action: more-info
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 95%
+                  top: 91.3%
+                tap_action:
+                  action: toggle
+                type: state-icon
+            image: /local/room_pic/Bedroom_off.jpg
+            type: picture-elements
+          - template: alexa_template
+            type: 'custom:decluttering-card'
+            variables:
+              - alexa: media_player.bedroom_dot
+        id: 360ab61ff9b342bc93642ffc5e28315c
+        type: vertical-stack
+      - elements:
+          - entity: group.craft
+            image: /local/room_pic/Craft_off.jpg
+            state_image:
+              'on': /local/room_pic/Craft_all.jpg
+            style:
+              left: 50%
+              top: 50%
+              width: 100%
+            tap_action:
+              action: toggle
+            type: image
+          - entity: sensor.blank
+            prefix: Craft Room
+            style:
+              background-color: 'rgba(0, 0, 0, 0.5)'
+              bottom: 0
+              color: white
+              font-size: 16px
+              left: 0
+              line-height: 32px
+              padding: 0 8px
+              transform: initial
+              width: 100%
+            tap_action:
+              action: none
+            type: state-label
+          - entity: binary_sensor.craft_room_occupancy
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              color: 'rgba(255,255,255,1)'
+              line-height: 32px
+              margin: 3px 5px 0 0
+              right: 0
+              top: 0
+              transform: scale(0.8)
+            type: state-icon
+          - entity: group.craft
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              color: 'rgba(255,255,255,1)'
+              left: 0
+              line-height: 32px
+              margin: 3px 5px 0 0
+              top: 0
+              transform: scale(0.8)
+            type: state-icon
+          - entity: switch.craftfan
+            hold_action:
+              action: more-info
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 85%
+              top: 91.3%
+            tap_action:
+              action: toggle
+            type: state-icon
+          - entity: light.sewing_light
+            hold_action:
+              action: more-info
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 95%
+              top: 91.3%
+            tap_action:
+              action: toggle
+            type: state-icon
+        id: ecad39e4848d4be5a479ca467b2535bd
+        image: /local/room_pic/Craft_off.jpg
+        type: picture-elements
+      - cards:
+          - elements:
+              - entity: group.office
+                image: /local/room_pic/Office_off.jpg
+                state_image:
+                  'on': /local/room_pic/Office_all.jpg
+                style:
+                  left: 50%
+                  top: 50%
+                  width: 100%
+                tap_action:
+                  action: toggle
+                type: image
+              - entity: sensor.blank
+                prefix: Office
+                style:
+                  background-color: 'rgba(0, 0, 0, 0.5)'
+                  bottom: 0
+                  color: white
+                  font-size: 16px
+                  left: 0
+                  line-height: 32px
+                  padding: 0 8px
+                  transform: initial
+                  width: 100%
+                tap_action:
+                  action: none
+                type: state-label
+              - entity: binary_sensor.office_bay_occupancy
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  line-height: 32px
+                  margin: 3px 5px 0 0
+                  right: 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: sensor.office_light_level
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  line-height: 32px
+                  margin: 35px 5px 0 0
+                  right: 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: sensor.office_light_level
+                style:
+                  color: 'rgba(255,255,255,1)'
+                  font-size: 12px
+                  font-weight: bold
+                  line-height: 32px
+                  margin: 30px 35px
+                  pointer-events: none
+                  right: 0
+                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                  top: 0
+                  transform: initial
+                type: state-label
+              - entity: sensor.thingy_temperature
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  line-height: 32px
+                  margin: 65px 5px 0 0
+                  right: 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: sensor.thingy_temperature
+                style:
+                  color: 'rgba(255,255,255,1)'
+                  font-size: 12px
+                  font-weight: bold
+                  line-height: 32px
+                  margin: 60px 35px
+                  pointer-events: none
+                  right: 0
+                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                  top: 0
+                  transform: initial
+                type: state-label
+              - entity: group.office
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  left: 0
+                  line-height: 32px
+                  margin: 3px 5px 0 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: switch.officefan
+                hold_action:
+                  action: more-info
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 75%
+                  top: 91.3%
+                tap_action:
+                  action: toggle
+                type: state-icon
+              - entity: switch.desktoppc
+                hold_action:
+                  action: more-info
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 85%
+                  top: 91.3%
+                tap_action:
+                  action: toggle
+                type: state-icon
+              - entity: light.lightpack
+                hold_action:
+                  action: more-info
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 95%
+                  top: 91.3%
+                tap_action:
+                  action: toggle
+                type: state-icon
+            image: /local/room_pic/Office_off.jpg
+            type: picture-elements
+          - entity: media_player.office_stereo
+            hide:
+              controls: true
+            source: full
+            type: 'custom:mini-media-player'
+            volume_stateless: true
+          - artwork: cover
+            entity: media_player.desktop_media
+            hide:
+              mute: true
+              power: true
+            idle_view:
+              when_paused: true
+            info: scroll
+            type: 'custom:mini-media-player'
+        id: b4340cb3f00f4d9e8decc2d14783e45a
+        type: vertical-stack
+    icon: 'mdi:numeric-2-box'
+    id: 2
+    title: Second Floor
+  - cards:
+      - template: simple_room_template
+        type: 'custom:decluttering-card'
+        variables:
+          - group: group.guest
+          - off_pic: /local/room_pic/Guest_off.jpg
+          - on_pic: /local/room_pic/Guest_on.jpg
+          - room_name: Guest Room
+          - element: switch.guestbed
+      - cards:
+          - elements:
+              - entity: group.basement
+                image: /local/room_pic/Basement_off.jpg
+                state_image:
+                  'on': /local/room_pic/Basement_all.jpg
+                style:
+                  left: 50%
+                  top: 50%
+                  width: 100%
+                tap_action:
+                  action: toggle
+                type: image
+              - entity: sensor.blank
+                prefix: Basement
+                style:
+                  background-color: 'rgba(0, 0, 0, 0.5)'
+                  bottom: 0
+                  color: white
+                  font-size: 16px
+                  left: 0
+                  line-height: 32px
+                  padding: 0 8px
+                  transform: initial
+                  width: 100%
+                tap_action:
+                  action: none
+                type: state-label
+              - entity: binary_sensor.basement_occupancy
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  line-height: 32px
+                  margin: 3px 5px 0 0
+                  right: 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: sensor.basement_multisensor_luminance
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  line-height: 32px
+                  margin: 35px 5px 0 0
+                  right: 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: sensor.basement_multisensor_luminance
+                style:
+                  color: 'rgba(255,255,255,1)'
+                  font-size: 12px
+                  font-weight: bold
+                  line-height: 32px
+                  margin: 30px 35px
+                  pointer-events: none
+                  right: 0
+                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                  top: 0
+                  transform: initial
+                type: state-label
+              - entity: sensor.basement_bee_temperature
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  line-height: 32px
+                  margin: 65px 5px 0 0
+                  right: 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: sensor.basement_bee_temperature
+                style:
+                  color: 'rgba(255,255,255,1)'
+                  font-size: 12px
+                  font-weight: bold
+                  line-height: 32px
+                  margin: 60px 35px
+                  pointer-events: none
+                  right: 0
+                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                  top: 0
+                  transform: initial
+                type: state-label
+              - entity: group.basement
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  left: 0
+                  line-height: 32px
+                  margin: 3px 5px 0 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: switch.outlet
+                hold_action:
+                  action: more-info
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 65%
+                  top: 91.3%
+                tap_action:
+                  action: toggle
+                type: state-icon
+              - entity: light.basement_ceiling_lights
+                hold_action:
+                  action: more-info
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 75%
+                  top: 91.3%
+                tap_action:
+                  action: toggle
+                type: state-icon
+              - entity: switch.laundryroom
+                hold_action:
+                  action: more-info
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 85%
+                  top: 91.3%
+                tap_action:
+                  action: toggle
+                type: state-icon
+              - entity: switch.airhockey
+                hold_action:
+                  action: more-info
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 95%
+                  top: 91.3%
+                tap_action:
+                  action: toggle
+                type: state-icon
+            image: /local/room_pic/Basement_off.jpg
+            type: picture-elements
+          - template: alexa_template
+            type: 'custom:decluttering-card'
+            variables:
+              - alexa: media_player.basement_dot
+        id: d314202ba6894dda8ff9f4d11575a686
+        type: vertical-stack
+      - cards:
+          - elements:
+              - entity: group.sun_room
+                image: /local/room_pic/Sun_off.jpg
+                state_image:
+                  'on': /local/room_pic/Sun_all.jpg
+                style:
+                  left: 50%
+                  top: 50%
+                  width: 100%
+                tap_action:
+                  action: toggle
+                type: image
+              - entity: sensor.blank
+                prefix: Sun Room
+                style:
+                  background-color: 'rgba(0, 0, 0, 0.5)'
+                  bottom: 0
+                  color: white
+                  font-size: 16px
+                  left: 0
+                  line-height: 32px
+                  padding: 0 8px
+                  transform: initial
+                  width: 100%
+                tap_action:
+                  action: none
+                type: state-label
+              - entity: sensor.money_plant_light_intensity
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  line-height: 32px
+                  margin: 35px 5px 0 0
+                  right: 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: sensor.money_plant_light_intensity
+                style:
+                  color: 'rgba(255,255,255,1)'
+                  font-size: 12px
+                  font-weight: bold
+                  line-height: 32px
+                  margin: 30px 35px
+                  pointer-events: none
+                  right: 0
+                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                  top: 0
+                  transform: initial
+                type: state-label
+              - entity: sensor.money_plant_temperature_round
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  line-height: 32px
+                  margin: 65px 5px 0 0
+                  right: 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: sensor.money_plant_temperature_round
+                style:
+                  color: 'rgba(255,255,255,1)'
+                  font-size: 12px
+                  font-weight: bold
+                  line-height: 32px
+                  margin: 60px 35px
+                  pointer-events: none
+                  right: 0
+                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                  top: 0
+                  transform: initial
+                type: state-label
+              - entity: group.sun_room
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  color: 'rgba(255,255,255,1)'
+                  left: 0
+                  line-height: 32px
+                  margin: 3px 5px 0 0
+                  top: 0
+                  transform: scale(0.8)
+                type: state-icon
+              - entity: switch.sun_room_market_lights
+                hold_action:
+                  action: more-info
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 85%
+                  top: 91.3%
+                tap_action:
+                  action: toggle
+                type: state-icon
+              - entity: light.tripod_lamp
+                hold_action:
+                  action: more-info
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 95%
+                  top: 91.3%
+                tap_action:
+                  action: toggle
+                type: state-icon
+            image: /local/room_pic/Sun_off.jpg
+            type: picture-elements
+          - entity: plant.money_plant
+            type: plant-status
+          - template: alexa_template
+            type: 'custom:decluttering-card'
+            variables:
+              - alexa: media_player.sun_room_dot
+        type: vertical-stack
+    icon: 'mdi:arrow-down-bold-box'
+    id: 3
+    title: Basement
+  - cards:
+      - elements:
+          - entity: sensor.load_1m
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 17%
+              top: 17%
+            type: state-icon
+          - entity: sensor.load_1m_round
+            prefix: 'Load: '
+            style:
+              color: white
+              left: 17%
+              top: 25%
+            type: state-label
+          - entity: sensor.processor_use
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 17%
+              top: 36%
+            type: state-icon
+          - entity: sensor.processor_use
+            prefix: 'Processor: '
+            style:
+              color: white
+              left: 17%
+              top: 44%
+            type: state-label
+          - entity: sensor.memory_use_percent
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 17%
+              top: 54%
+            type: state-icon
+          - entity: sensor.memory_use_percent
+            prefix: 'Memory: '
+            style:
+              color: white
+              left: 17%
+              top: 62%
+            type: state-label
+          - entity: sensor.swap_use_percent
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 17%
+              top: 72%
+            type: state-icon
+          - entity: sensor.swap_use_percent
+            prefix: 'Swap: '
+            style:
+              color: white
+              left: 17%
+              top: 80%
+            type: state-label
+          - entity: sensor.since_last_boot_round
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 83%
+              top: 36%
+            type: state-icon
+          - entity: sensor.since_last_boot_round
+            style:
+              color: white
+              left: 83%
+              top: 44%
+            type: state-label
+          - entity: sensor.uptime
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 83%
+              top: 54%
+            type: state-icon
+          - entity: sensor.uptime
+            prefix: 'Uptime: '
+            style:
+              color: white
+              left: 83%
+              top: 62%
+            type: state-label
+          - entity: binary_sensor.potential_breaking_changes
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              color: 'rgba(255,255,255,1)'
+              line-height: 32px
+              margin: 3px 5px 0 0
+              right: 0
+              top: 0
+              transform: scale(0.8)
+            type: state-icon
+        id: 4bf0a101e67c4edb9c851938fa1c94e3
+        image: /local/raspberry.jpg
+        type: picture-elements
+      - elements:
+          - entity: sensor.blank
+            style:
+              background-color: 'rgba(0, 0, 0, 0.5)'
+              bottom: 0
+              color: white
+              font-size: 16px
+              left: 0
+              line-height: 32px
+              padding: 18px 8px
+              transform: initial
+              width: 100%
+            tap_action:
+              action: none
+            type: state-label
+          - entity: sensor.ssl_certificate_expiry
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 20%
+              top: 88%
+            type: state-icon
+          - entity: sensor.ssl_certificate_expiry
+            style:
+              color: white
+              left: 20%
+              top: 96%
+            type: state-label
+          - entity: sensor.speedtest_ping
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 40%
+              top: 88%
+            type: state-icon
+          - entity: sensor.speedtest_ping
+            style:
+              color: white
+              left: 40%
+              top: 96%
+            type: state-label
+          - entity: sensor.speedtest_upload
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 60%
+              top: 88%
+            type: state-icon
+          - entity: sensor.speedtest_upload
+            style:
+              color: white
+              left: 60%
+              top: 96%
+            type: state-label
+          - entity: sensor.speedtest_download
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 80%
+              top: 88%
+            type: state-icon
+          - entity: sensor.speedtest_download
+            style:
+              color: white
+              left: 80%
+              top: 96%
+            type: state-label
+        id: 2d86cd0b73b540b39e4194e155f30109
+        image: /local/internet.jpg
+        type: picture-elements
+      - elements:
+          - entity: sensor.blank
+            style:
+              background-color: 'rgba(0, 0, 0, 0.5)'
+              color: white
+              font-size: 16px
+              left: 0
+              line-height: 32px
+              padding: 15px 8px
+              top: 0
+              transform: initial
+              width: 100%
+            tap_action:
+              action: none
+            type: state-label
+          - entity: sensor.meredith
+            prefix: 'Meredith: '
+            style:
+              color: white
+              left: 33%
+              top: 10%
+            suffix: rs
+            type: state-label
+          - entity: sensor.kenny
+            prefix: 'Kenny: '
+            style:
+              color: white
+              left: 66%
+              top: 10%
+            suffix: rs
+            type: state-label
+        id: 91dc20aa69dd4117a243bbb5eea9b441
+        image: /local/Welcome-Mat.jpg
+        type: picture-elements
+      - cards:
+          - elements:
+              - entity: sensor.blank
+                style:
+                  background-color: 'rgba(0, 0, 0, 0.5)'
+                  color: white
+                  font-size: 16px
+                  left: 0
+                  line-height: 32px
+                  padding: 10px 8px
+                  top: 0
+                  transform: initial
+                  width: 100%
+                tap_action:
+                  action: none
+                type: state-label
+              - entity: sensor.watthour
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 10%
+                  top: 10%
+                type: state-icon
+              - entity: sensor.watthour
+                style:
+                  color: white
+                  left: 50%
+                  top: 10%
+                type: state-label
+            image: /local/light-bulbs.jpg
+            type: picture-elements
+          - elements:
+              - entity: sensor.blank
+                style:
+                  background-color: 'rgba(0, 0, 0, 0.5)'
+                  color: white
+                  font-size: 16px
+                  left: 0
+                  line-height: 32px
+                  padding: 10px 8px
+                  top: 0
+                  transform: initial
+                  width: 100%
+                tap_action:
+                  action: none
+                type: state-label
+              - entity: sensor.cpuwhr
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 10%
+                  top: 10%
+                type: state-icon
+              - entity: sensor.cpuwhr
+                style:
+                  color: white
+                  left: 50%
+                  top: 10%
+                type: state-label
+            image: /local/desktop.png
+            type: picture-elements
+          - elements:
+              - entity: sensor.blank
+                style:
+                  background-color: 'rgba(0, 0, 0, 0.5)'
+                  color: white
+                  font-size: 16px
+                  left: 0
+                  line-height: 32px
+                  padding: 10px 8px
+                  top: 0
+                  transform: initial
+                  width: 100%
+                tap_action:
+                  action: none
+                type: state-label
+              - entity: sensor.totalwhr
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 10%
+                  top: 10%
+                type: state-icon
+              - entity: sensor.totalwhr
+                style:
+                  color: white
+                  left: 50%
+                  top: 10%
+                type: state-label
+            image: /local/calendar.jpg
+            type: picture-elements
+        id: 5e3b7cda32e644cabaa77a7f1d126372
+        type: horizontal-stack
+      - card_width: 60%
+        cards:
+          - entity: sensor.rock_lamp_light_hours_round
+            max: 24
+            min: 0
+            name: Rock Lamp
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.floor_lamp_light_hours_round
+            max: 24
+            min: 0
+            name: Floor Lamp
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.chair_lamp_light_hours_round
+            max: 24
+            min: 0
+            name: Chair Lamp
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.prep_area_hours_round
+            max: 24
+            min: 0
+            name: Prep Area Light
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.oven_light_hours_round
+            max: 24
+            min: 0
+            name: Oven Light
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.tripod_light_hours_round
+            max: 24
+            min: 0
+            name: Tripod Light
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.sun_room_market_hours_round
+            max: 24
+            min: 0
+            name: Sun Room Market Light
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.dining_room_light_hours_round
+            max: 24
+            min: 0
+            name: Dining Room
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.bedroom_fan_hours_round
+            max: 24
+            min: 0
+            name: Bedroom Fan
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.master_bathroom_hours_round
+            max: 24
+            min: 0
+            name: Master Bath
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.swirl_lamp_light_hours_round
+            max: 24
+            min: 0
+            name: Swirl Lamp
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.craft_room_fan_hours_round
+            max: 24
+            min: 0
+            name: Craft Room Fan
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.sewing_light_hours_round
+            max: 24
+            min: 0
+            name: Sewing Light
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.office_fan_hours_round
+            max: 24
+            min: 0
+            name: Office Fan
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.front_door_light_hours_round
+            max: 24
+            min: 0
+            name: Front Door Light
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.deck_light_hours_round
+            max: 24
+            min: 0
+            name: Deck Light
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.guest_bedroom_fan_hours_round
+            max: 24
+            min: 0
+            name: Guest Bedroom
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.basement_light_hours_round
+            max: 24
+            min: 0
+            name: Misc Light
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.basement_1_light_hours_round
+            max: 24
+            min: 0
+            name: Basement 1
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.basement_2_light_hours_round
+            max: 24
+            min: 0
+            name: Basement 2
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.basement_3_light_hours_round
+            max: 24
+            min: 0
+            name: Basement 3
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.basement_4_light_hours_round
+            max: 24
+            min: 0
+            name: Basement 4
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.computer_hours_round
+            max: 24
+            min: 0
+            name: Computer
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.market_light_hours_round
+            max: 24
+            min: 0
+            name: Market Lights
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.washroom_light_hours_round
+            max: 24
+            min: 0
+            name: Washroom Light
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+        parameters:
+          centeredSlides: true
+          grabCursor: true
+          pagination:
+            type: progressbar
+          slidesPerView: auto
+          spaceBetween: 8
+        start_card: 2
+        type: 'custom:swipe-card'
+      - entities:
+          - script.check_config
+          - sensor.config_result
+        show_header_toggle: false
+        title: Check Configuration
+        type: entities
+      - elements:
+          - entity: sensor.blank
+            style:
+              background-color: 'rgba(0, 0, 0, 0.5)'
+              bottom: 0
+              color: white
+              font-size: 16px
+              left: 0
+              line-height: 32px
+              padding: 35px 8px
+              transform: initial
+              width: 100%
+            tap_action:
+              action: none
+            type: state-label
+          - entity: sensor.thingy_battery_level
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 12%
+              top: 88%
+            type: state-icon
+          - entity: sensor.thingy_battery_level
+            style:
+              color: white
+              left: 12%
+              top: 96%
+            type: state-label
+          - entity: sensor.thingy_carbon_dioxide
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 27%
+              top: 88%
+            type: state-icon
+          - entity: sensor.thingy_carbon_dioxide
+            style:
+              color: white
+              left: 27%
+              top: 96%
+            type: state-label
+          - entity: sensor.thingy_humidity
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 42%
+              top: 88%
+            type: state-icon
+          - entity: sensor.thingy_humidity
+            style:
+              color: white
+              left: 42%
+              top: 96%
+            type: state-label
+          - entity: sensor.thingy_atmospheric_pressure
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 57%
+              top: 88%
+            type: state-icon
+          - entity: sensor.thingy_atmospheric_pressure
+            style:
+              color: white
+              left: 57%
+              top: 96%
+            type: state-label
+          - entity: sensor.thingy_temperature
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 72%
+              top: 88%
+            type: state-icon
+          - entity: sensor.thingy_temperature
+            style:
+              color: white
+              left: 72%
+              top: 96%
+            type: state-label
+          - entity: sensor.thingy_air_quality
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 87%
+              top: 88%
+            type: state-icon
+          - entity: sensor.thingy_air_quality
+            style:
+              color: white
+              left: 87%
+              top: 96%
+            type: state-label
+        image: /local/nRF6936_SPL.jpg
+        type: picture-elements
+    icon: 'mdi:chart-bar'
+    id: 4
+    title: Statistics
+  - cards:
+      - head: group.light_on_auto
+        id: c7a5162e2f3e4f8fa065eef3cb8de173
+        type: 'custom:fold-entity-row'
+      - head: group.light_off_auto
+        id: 6e1385e890864ca393511a1380c2e0da
+        type: 'custom:fold-entity-row'
+      - head: group.notify_auto
+        id: c317d9f387454c2180876f3629eece57
+        type: 'custom:fold-entity-row'
+      - head: group.pc_auto
+        id: bbaf0450c806479688ab1a6e95a5e7f6
+        type: 'custom:fold-entity-row'
+      - head: group.location_auto
+        id: 0e11b09ed695498b864744784a03d6fd
+        type: 'custom:fold-entity-row'
+      - head: group.theme_auto
+        id: 06fb0036897d4a3aa6dc2d7cc1ec94bb
+        type: 'custom:fold-entity-row'
+      - head: group.vacuum_auto
+        type: 'custom:fold-entity-row'
+      - head: group.mastersw_auto
+        id: d344f273e8784efa816b8926a8888aff
+        type: 'custom:fold-entity-row'
+      - head: group.other_auto
+        id: afd0420feff241c5ba4e84d9392d8b25
+        type: 'custom:fold-entity-row'
+      - head: group.all_scripts
+        type: 'custom:fold-entity-row'
+    icon: 'mdi:recycle'
+    id: 5
+    title: Automations
