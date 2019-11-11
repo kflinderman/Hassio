@@ -15,7 +15,7 @@ This is my primary [Home Assistant](https://home-assistant.io/) configuration, T
 * [Z-Wave](https://www.home-assistant.io/docs/z-wave/)
 
 ## Integrations, Devices, and Services
-Here is a list of all of the devices and services that I use.  I will link to each integration.  I will also indicated which ones require purchasing an item, I'll do this because I'm always surprised about what is available to make your home smart with what is readily available for free.  I have not included everything here, because some are custom integrations which I will discuss separately.
+Here is a list of all of the devices and services that I use.  I will link to each integration.  I will also indicated which ones require purchasing an item, I'll do this because I'm always surprised about what is available to make your home smart that is readily available for free.  I have not included everything here, because some are custom integrations which I will discuss separately.
 
 ### Cameras
 | Component | Integration | Requires Purchase | Part | Comment |
@@ -102,7 +102,7 @@ Here is a list of all of the devices and services that I use.  I will link to ea
 | [Xiaomi Mi](https://www.mi.com/global) | [Link](https://www.home-assistant.io/integrations/vacuum.xiaomi_miio/) | Yes | [Xiaomi Mi Robot Vacuum](https://www.mi.com/roomrobot) | |
 
 ## Custom Integrations
-These are the remaining items that I have runnin on my system.  Most are pulled from HACS, but there are one or two I have been working on myself.
+These are the remaining items that I have running on my system.  Most are pulled from HACS, but there are one or two I have been working on myself.
 
 * [HACS](https://github.com/hacs/integration)
 * AppDaemon
@@ -116,7 +116,7 @@ These are the remaining items that I have runnin on my system.  Most are pulled 
   * Config Check
   * Favicon Changer
   * Illuminance
-  * Lightpack - Requires Purchase - Currently does not work.  The struggle point is when the lightpack is unavailable.  I would like for it to just function like normal, but just default to off when it cannot detect the pack.  Otherwise HA crashes trying to constantly connect to it, or will not connect to it if it cannot find it on boot.
+  * Lightpack - Requires Purchase - Currently does not work.  
   * Momentary Switch Component
   * Thingy:52 Sensor - Requires Purchase
   * WeatherAlerts
@@ -141,16 +141,6 @@ These are the remaining items that I have runnin on my system.  Most are pulled 
   * Red Night Theme
 
 # To Do List
-
-## Code to Fix
-* Bayesian Prediciton is off.  This need either adjustment or an alternative to actually meet what I want.  Ultimately I'm trying to use this as a presence detection where I don't have motion sensors, and it hasn't been doing a great job of that.
-* Figure out more to do with knowledge of visitors.  Right now it just changes the typical usage of a single light and reminds me to change the Ecobee so they do not get too cold/hot where the guest room is.
-* Fix Lightpack python code.  It just doesn't work the way I want it to.
-* Create a remote control for the vacuum.  The capabilities are there, I just need to write the code.
-* Use the counter integration better.  I only just found out about the counter integration, and it could solve the problem where I have some values that are reset on a HA reset.
-* Fix Alexa.  Emulated Hue has not worked for a while, I think I have to setup a custom skill.
-* Fix Thingy:52 to reconnect if it loses connection or does not connect.
-* MQTT has been inconsistant for the Plant and Dog Sensor.
 
 ## Things to Add
 * Upstairs hallway 3-way light switch - No neutral wire available
