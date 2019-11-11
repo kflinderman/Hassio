@@ -17,16 +17,14 @@ This is my primary [Home Assistant](https://home-assistant.io/) configuration, T
 ## Integrations, Devices, and Services
 Here is a list of all of the devices and services that I use.  I will link to each integration.  I will also indicated which ones require purchasing an item, I'll do this because I'm always surprised about what is available to make your home smart with what is readily available for free.  I have not included everything here, because some are custom integrations which I will discuss separately.
 
-* Cameras
-
+### Cameras
 | Component | Integration | Requires Purchase | Part | Comment |
 |-----------|-------------|-------------------|------|---------|
 | [Amcrest](https://amcrest.com/) | [Link](https://www.home-assistant.io/integrations/amcrest/) | Yes | [Outside One]() | |
 | [Amcrest](https://amcrest.com/) | [Link](https://www.home-assistant.io/integrations/amcrest/) | Yes | [Inside One]() | |
 | [SkyBell](http://www.skybell.com/) | [Link](https://www.home-assistant.io/integrations/skybell/) | Yes | [SkyBell Trim Plus](http://www.skybell.com/product/skybell-video-doorbell-trim-plus/) | |
 
-* Device Trackers
-
+### Device Trackers
 | Component | Integration | Requires Purchase | Part | Comment |
 |-----------|-------------|-------------------|------|---------|
 | [GPSLogger](http://gpslogger.app/) | [Link](https://www.home-assistant.io/integrations/gpslogger/) | No | [GPSLogger App](https://play.google.com/store/apps/details?id=com.mendhak.gpslogger) | |
@@ -34,21 +32,18 @@ Here is a list of all of the devices and services that I use.  I will link to ea
 | Home Assistant IOS | [Link](https://www.home-assistant.io/docs/ecosystem/ios/) | No | [Home Assistant Companion](https://apps.apple.com/us/app/home-assistant-open-source-home-automation/id1099568401) | |
 | [Netgear](https://www.netgear.com/default.aspx) | [Link](https://www.home-assistant.io/integrations/netgear/) | Yes | [Netgear R7000](https://www.netgear.com/home/products/networking/wifi-routers/R7000.aspx) | Currently not functioning correctly.  It does not update status correctly and is often unreliable | 
 
-* HVAC
-
+### HVAC
 | Component | Integration | Requires Purchase | Part | Comment |
 |-----------|-------------|-------------------|------|---------|
 | [Ecobee](https://www.ecobee.com/) | [Link](https://www.home-assistant.io/integrations/ecobee/) | Yes | [Ecobee3](https://www.ecobee.com/ecobee3/) | |
 
-* Lights
-
+### Lights
 | Component | Integration | Requires Purchase | Part | Comment |
 |-----------|-------------|-------------------|------|---------|
 | [Philips Hue](https://www2.meethue.com/en-us) | [Link](https://www.home-assistant.io/integrations/hue/) | Yes | [TBD]() | |
 | [Philips Hue](https://www2.meethue.com/en-us) | [Link](https://www.home-assistant.io/integrations/hue/) | Yes | [TBD]() | |
 
-* Media Players
-
+### Media Players
 | Component | Integration | Requires Purchase | Part | Comment |
 |-----------|-------------|-------------------|------|---------|
 | [Google Play Music Desktop Player](https://www.googleplaymusicdesktopplayer.com/) | [Link](https://www.home-assistant.io/integrations/gpmdp/) | No | | |
@@ -56,28 +51,24 @@ Here is a list of all of the devices and services that I use.  I will link to ea
 | [Yamaha AVR](https://usa.yamaha.com/products/audio_visual/av_receivers_amps/index.html) | [Link](https://www.home-assistant.io/integrations/yamaha/) | Yes | [TBD]() | |
 | [Yamaha AVR](https://usa.yamaha.com/products/audio_visual/av_receivers_amps/index.html) | [Link](https://www.home-assistant.io/integrations/yamaha/) | Yes | [TBD]() | |
 
-* Notifications
-
+### Notifications
 | Component | Integration | Requires Purchase | Part | Comment |
 |-----------|-------------|-------------------|------|---------|
 | Home Assistant IOS | [Link](https://www.home-assistant.io/docs/ecosystem/ios/) | No | [Home Assistant Companion](https://apps.apple.com/us/app/home-assistant-open-source-home-automation/id1099568401) | |
 | [Pushbullet](https://www.pushbullet.com/) | [Link](https://www.home-assistant.io/integrations/pushbullet/) | No | [Pushbullet Apps](https://www.pushbullet.com/apps) | |
 
-* Other
-
+### Other
 | Component | Integration | Requires Purchase | Part | Comment |
 |-----------|-------------|-------------------|------|---------|
 | [IFTTT](https://ifttt.com/) | [Link](https://www.home-assistant.io/integrations/ifttt/) | No | [IFTTT App](https://play.google.com/store/apps/details?id=com.ifttt.ifttt&hl=en_US) | |
 
-* PC Control
-
+### PC Control
 | Component | Integration | Requires Purchase | Part | Comment |
 |-----------|-------------|-------------------|------|---------|
 | RPC Shutdown | [Link](https://www.home-assistant.io/addons/rpc_shutdown/) | No | | |
 | Wake on LAN | [Link](https://www.home-assistant.io/integrations/wake_on_lan/) | No | | |
 
-* Sensors
-
+### Sensors
 | Component | Integration | Requires Purchase | Part | Comment |
 |-----------|-------------|-------------------|------|---------|
 | Bayesian Sensors | [Link](https://www.home-assistant.io/integrations/bayesian/) | No | | |
@@ -95,8 +86,7 @@ Here is a list of all of the devices and services that I use.  I will link to ea
 | System Monitor | [Link](https://www.home-assistant.io/integrations/systemmonitor/) | No | | |
 | Z-Wave | [Link](https://www.home-assistant.io/docs/z-wave/) | Yes | [Aeotec MultiSensor 6](https://aeotec.com/z-wave-sensor/) | |
 
-* Switches
-
+### Switches
 | Component | Integration | Requires Purchase | Part | Comment |
 |-----------|-------------|-------------------|------|---------|
 | [Amazon](https://www.amazon.com/) | None | Yes | [Amazon Smart Plug](https://www.amazon.com/Amazon-Smart-Plug-works-Alexa/dp/B01MZEEFNX) | This is not tied to Home Assistant, but it is connected to the power source for the Raspberry Pi.  This way, if push comes to shove I can remotely power cycle Home Assistant without needing access to it. |
@@ -106,8 +96,7 @@ Here is a list of all of the devices and services that I use.  I will link to ea
 | Z-Wave | [Link](https://www.home-assistant.io/docs/z-wave/) | Yes | [TBD]() | |
 | Z-Wave | [Link](https://www.home-assistant.io/docs/z-wave/) | Yes | [TBD]() | |
 
-* Vacuum
-
+### Vacuum
 | Component | Integration | Requires Purchase | Part | Comment |
 |-----------|-------------|-------------------|------|---------|
 | [Xiaomi Mi](https://www.mi.com/global) | [Link](https://www.home-assistant.io/integrations/vacuum.xiaomi_miio/) | Yes | [Xiaomi Mi Robot Vacuum](https://www.mi.com/roomrobot) | |
