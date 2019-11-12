@@ -40,8 +40,8 @@ Here is a list of all of the devices and services that I use.  I will link to ea
 ### Lights
 | Component | Integration | Requires Purchase | Part | Comment |
 |-----------|-------------|-------------------|------|---------|
-| [Philips Hue](https://www2.meethue.com/en-us) | [Link](https://www.home-assistant.io/integrations/hue/) | Yes | [TBD]() | |
-| [Philips Hue](https://www2.meethue.com/en-us) | [Link](https://www.home-assistant.io/integrations/hue/) | Yes | [TBD]() | |
+| [Philips Hue](https://www2.meethue.com/en-us) | [Link](https://www.home-assistant.io/integrations/hue/) | Yes | [Color](https://www2.meethue.com/en-us/p/hue-white-and-color-ambiance-1-pack-e26/046677548483) | |
+| [Philips Hue](https://www2.meethue.com/en-us) | [Link](https://www.home-assistant.io/integrations/hue/) | Yes | [White](https://www2.meethue.com/en-us/p/hue-white-single-bulb-e26/046677530341) | |
 
 ### Media Players
 | Component | Integration | Requires Purchase | Part | Comment |
