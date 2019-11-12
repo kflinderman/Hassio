@@ -13,34 +13,6 @@
           {{ is_state_attr('vacuum.xiaomi_vacuum_cleaner', 'do_not_disturb', 'on')
               and (state_attr('vacuum.xiaomi_vacuum_cleaner', 'do_not_disturb_start').split(':')[0]|float <= now().hour 
               or state_attr('vacuum.xiaomi_vacuum_cleaner', 'do_not_disturb_end').split(':')[0]|float > now().hour) }}
-
-      # vacuum_dnd_on:
-        # value_template: >-
-          # {{ states.vacuum.xiaomi_vacuum_cleaner.attributes.do_not_disturb == 'on'}}
-
-      # vacuum_dnd_time:
-        # entity_id:
-          # - sensor.vacuum_dnd_start
-          # - sensor.vacuum_dnd_end
-          # - sensor.time
-        # value_template: >-
-          # {{ float(states('sensor.vacuum_dnd_start')) <= now().hour or float(states('sensor.vacuum_dnd_end')) > now().hour }}
-
-      # vacuum_dnd:
-        # friendly_name: "Vacuum DND"
-        # entity_id:
-          # - sensor.vacuum_dnd_on
-          # - sensor.vacuum_dnd_time
-        # value_template: >-
-          # {%- if is_state('binary_sensor.vacuum_dnd_on', 'on') -%}
-          # {%- if is_state('binary_sensor.vacuum_dnd_time', 'on') -%}
-            # True
-          # {%- else -%}
-            # False
-          # {%- endif -%}
-          # {%- else -%}
-            # False
-          # {%- endif -%}
           
       craft_room_occupancy:
         friendly_name: Craft Room Occupancy

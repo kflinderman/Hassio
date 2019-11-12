@@ -16,10 +16,6 @@ sensor.bedroom_multisensor_burglar:
   friendly_name: Bedroom Motion
 sensor.kitchen_burglar:
   friendly_name: Kitchen Motion
-# !secret kpwn:
-  # friendly_name: Kenny Breaches
-# !secret mpwn:
-  # friendly_name: Meredith Breaches
   
   ##### Other #####
   

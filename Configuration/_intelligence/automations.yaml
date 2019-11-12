@@ -1110,33 +1110,6 @@
     data:
       title: HACS Updates
       message: "There are some HACS updates ready to be installed."
-  
-# - id: kenny_new_breach
-  # alias: Kenny New Breach
-  # trigger:
-  # - from: '2'
-    # entity_id: !secret kpwn
-    # platform: state
-  # action:
-  # - data:
-      # message: "Kenny has been breached according to HaveIBeenPwnd.  You should check
-        # it out"
-      # title: New Breach
-    # service: notify.pushbullet
-    
-# - id: mere_new_breach
-  # alias: Mere New Breach
-  # condition: []
-  # trigger:
-  # - from: '0'
-    # entity_id: !secret mpwn
-    # platform: state
-  # action:
-  # - data:
-      # message: "Meredith has been breached according to HaveIBeenPwnd.  You should
-        # check it out"
-      # title: New Breach
-    # service: notify.residents
       
 - id: cert_alert
   alias: SSL Certification Alert

@@ -4,7 +4,6 @@ homeassistant:
   customize_glob: {}
   
 http:
-   # api_password: !secret ha_password
   ssl_certificate: /ssl/fullchain.pem
   ssl_key: /ssl/privkey.pem
   base_url: !secret url4_secret
@@ -25,18 +24,19 @@ logger:
     homeassistant.components.vacation.calendar: critical
     homeassistant.components.cert_expiry.sensor: critical
     custom_components.weatheralerts.sensor: critical
-    # custom_components.thingy52.sensor: debug
     custom_components.lightpack.light: critical
-    homeassistant.components.skybell_front_door_button.binary_sensor: critical
-    homeassistant.components.skybell_front_door_motion.binary_sensor: critical
+    homeassistant.components.skybell.binary_sensor: critical
+    homeassistant.components.skybell.switch: critical
+    homeassistant.components.skybell.sensor: critical
     homeassistant.components.websocket_api.http.connection: critical
     homeassistant.components.hue: critical
     homeassistant.components.hue.light: critical
     homeassistant.components.emulated_hue: critical
-    # homeassistant.components.netgear.device_tracker: critical
-    homeassistant.helpers.entity_component: critical
-    homeassistant.helpers.entity: critical
-    homeassistant.loader: critical
+    homeassistant.components.netgear.device_tracker: critical
+    # homeassistant.helpers.entity_component: critical
+    # homeassistant.helpers.entity: critical
+    # homeassistant.loader: critical
+    # custom_components.thingy52.sensor: debug
     
 history: !include _structure/history.yaml
 
@@ -78,7 +78,6 @@ hacs:
   theme: true
   options:
     country: US
-    #experimental: true
 
 breaking_changes:
   scan_interval: 1800
@@ -124,7 +123,7 @@ zeroconf:
 
 device_tracker:
   - platform: bluetooth_le_tracker
-    track_new_devices: false
+    track_new_devices: true
   - platform: bluetooth_tracker
     request_rssi: true
   - platform: netgear

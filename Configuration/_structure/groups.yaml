@@ -191,7 +191,7 @@ secondfloor:
 holiday:
   name: Holiday Lights
   entities:
-    - switch.outlet
+    # - switch.outlet
     - input_boolean.holiday
     
 ###############
@@ -275,8 +275,6 @@ notify_auto:
     - automation.thingy_sensor_battery
     - automation.money_thirsty
     - automation.hacs_updates
-    # - automation.mere_new_breach
-    # - automation.kenny_new_breach
     - automation.ssl_certification_alert
     - automation.trash_alert
     - automation.alli_meds

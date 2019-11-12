@@ -1,95 +1,3 @@
-- platform: mqtt
-  name: "Office Alli Signal"
-  state_topic: "ble/cd648cdff2ab/office/rssi"
-  unit_of_measurement: 'dBm'
-  expire_after: 175
-- platform: mqtt
-  name: "Office Alli Battery"
-  state_topic: "ble/cd648cdff2ab/office/volt"
-  unit_of_measurement: 'V'
-- platform: mqtt
-  name: "Office Alli Beacon"
-  state_topic: "ble/cd648cdff2ab/office/BEA"
-  expire_after: 175
-- platform: mqtt
-  name: "Living Room Alli Signal"
-  state_topic: "ble/cd648cdff2ab/livingroom/rssi"
-  unit_of_measurement: 'dBm'
-  expire_after: 175
-- platform: mqtt
-  name: "Living Room Alli Battery"
-  state_topic: "ble/cd648cdff2ab/livingroom/volt"
-  unit_of_measurement: 'V'
-- platform: mqtt
-  name: "Living Room Alli Beacon"
-  state_topic: "ble/cd648cdff2ab/livingroom/BEA"
-  expire_after: 175
-- platform: mqtt
-  name: "Bedroom Alli Signal"
-  state_topic: "ble/cd648cdff2ab/bedroom/rssi"
-  unit_of_measurement: 'dBm'
-  expire_after: 175
-- platform: mqtt
-  name: "Bedroom Alli Battery"
-  state_topic: "ble/cd648cdff2ab/bedroom/volt"
-  unit_of_measurement: 'V'
-- platform: mqtt
-  name: "Bedroom Alli Beacon"
-  state_topic: "ble/cd648cdff2ab/bedroom/BEA"
-  expire_after: 175
-- platform: mqtt
-  name: "Basement Alli Signal"
-  state_topic: "ble/cd648cdff2ab/basement/rssi"
-  unit_of_measurement: 'dBm'
-  expire_after: 175
-- platform: mqtt
-  name: "Basement Alli Battery"
-  state_topic: "ble/cd648cdff2ab/basement/volt"
-  unit_of_measurement: 'V'
-- platform: mqtt
-  name: "Basement Alli Beacon"
-  state_topic: "ble/cd648cdff2ab/basement/BEA"
-  expire_after: 175
-- platform: mqtt
-  name: "Office Light Level"
-  state_topic: "ble/officelight/office/light"
-  unit_of_measurement: 'lux'
-  expire_after: 150
-- platform: mqtt
-  name: "Living Room Light Level"
-  state_topic: "ble/livingroomlight/livingroom/light"
-  unit_of_measurement: 'lux'
-  expire_after: 150
-- platform: weatheralerts
-  sameid: '037063' #037063
-# - platform: miflora
-  # mac: !secret flora_mac
-  # name: "Money Plant"
-- platform: mqtt
-  name: "Money Plant Battery"
-  state_topic: "flora/C4:7C:8D:6A:E5:ED/battery"
-  unit_of_measurement: 'V'
-  expire_after: 2000
-- platform: mqtt
-  name: "Money Plant Temperature"
-  state_topic: "flora/C4:7C:8D:6A:E5:ED/temperature"
-  unit_of_measurement: '°C'
-  expire_after: 2000
-- platform: mqtt
-  name: "Money Plant Moisture"
-  state_topic: "flora/C4:7C:8D:6A:E5:ED/moisture"
-  unit_of_measurement: '%'
-  expire_after: 2000
-- platform: mqtt
-  name: "Money Plant Light Intensity"
-  state_topic: "flora/C4:7C:8D:6A:E5:ED/light"
-  unit_of_measurement: 'lux'
-  expire_after: 2000
-- platform: mqtt
-  name: "Money Plant Conductivity"
-  state_topic: "flora/C4:7C:8D:6A:E5:ED/conductivity"
-  unit_of_measurement: 'μS/cm'
-  expire_after: 2000
 - platform: systemmonitor
   resources:
     - type: memory_use_percent
@@ -97,10 +5,6 @@
     - type: load_1m
     - type: processor_use
     - type: last_boot
-# - platform: haveibeenpwned
-  # email:
-    # - !secret kemail
-    # - !secret memail
 - platform: authenticated
   enable_notification: false
 - platform: uptime
@@ -156,14 +60,6 @@
     blank:
       friendly_name: "Blank"
       value_template: "{{ state }}"
-
-    # kennyhibp:
-      # friendly_name: "Kenny Breaches"
-      # value_template: !secret kpwnsensor
-      
-    # merehibp:
-      # friendly_name: "Meredith Breaches"
-      # value_template: !secret mpwnsensor
       
     kenny_pixelxl_batt:
       friendly_name: "Pixel XL Battery"
@@ -528,6 +424,98 @@
     money_plant_temperature_round:
       friendly_name: "Money Plant Temperature Round"
       value_template: "{{ states('sensor.money_plant_temperature') | round(1) }}"
+
+  ##### MQTT Sensors #####
+  
+- platform: mqtt
+  name: "Office Alli Signal"
+  state_topic: "ble/cd648cdff2ab/office/rssi"
+  unit_of_measurement: 'dBm'
+  expire_after: 175
+- platform: mqtt
+  name: "Office Alli Battery"
+  state_topic: "ble/cd648cdff2ab/office/volt"
+  unit_of_measurement: 'V'
+- platform: mqtt
+  name: "Office Alli Beacon"
+  state_topic: "ble/cd648cdff2ab/office/BEA"
+  expire_after: 175
+- platform: mqtt
+  name: "Living Room Alli Signal"
+  state_topic: "ble/cd648cdff2ab/livingroom/rssi"
+  unit_of_measurement: 'dBm'
+  expire_after: 175
+- platform: mqtt
+  name: "Living Room Alli Battery"
+  state_topic: "ble/cd648cdff2ab/livingroom/volt"
+  unit_of_measurement: 'V'
+- platform: mqtt
+  name: "Living Room Alli Beacon"
+  state_topic: "ble/cd648cdff2ab/livingroom/BEA"
+  expire_after: 175
+- platform: mqtt
+  name: "Bedroom Alli Signal"
+  state_topic: "ble/cd648cdff2ab/bedroom/rssi"
+  unit_of_measurement: 'dBm'
+  expire_after: 175
+- platform: mqtt
+  name: "Bedroom Alli Battery"
+  state_topic: "ble/cd648cdff2ab/bedroom/volt"
+  unit_of_measurement: 'V'
+- platform: mqtt
+  name: "Bedroom Alli Beacon"
+  state_topic: "ble/cd648cdff2ab/bedroom/BEA"
+  expire_after: 175
+- platform: mqtt
+  name: "Basement Alli Signal"
+  state_topic: "ble/cd648cdff2ab/basement/rssi"
+  unit_of_measurement: 'dBm'
+  expire_after: 175
+- platform: mqtt
+  name: "Basement Alli Battery"
+  state_topic: "ble/cd648cdff2ab/basement/volt"
+  unit_of_measurement: 'V'
+- platform: mqtt
+  name: "Basement Alli Beacon"
+  state_topic: "ble/cd648cdff2ab/basement/BEA"
+  expire_after: 175
+- platform: mqtt
+  name: "Office Light Level"
+  state_topic: "ble/officelight/office/light"
+  unit_of_measurement: 'lux'
+  expire_after: 150
+- platform: mqtt
+  name: "Living Room Light Level"
+  state_topic: "ble/livingroomlight/livingroom/light"
+  unit_of_measurement: 'lux'
+  expire_after: 150
+- platform: weatheralerts
+  sameid: '037063'
+- platform: mqtt
+  name: "Money Plant Battery"
+  state_topic: "flora/C4:7C:8D:6A:E5:ED/battery"
+  unit_of_measurement: 'V'
+  expire_after: 2000
+- platform: mqtt
+  name: "Money Plant Temperature"
+  state_topic: "flora/C4:7C:8D:6A:E5:ED/temperature"
+  unit_of_measurement: '°C'
+  expire_after: 2000
+- platform: mqtt
+  name: "Money Plant Moisture"
+  state_topic: "flora/C4:7C:8D:6A:E5:ED/moisture"
+  unit_of_measurement: '%'
+  expire_after: 2000
+- platform: mqtt
+  name: "Money Plant Light Intensity"
+  state_topic: "flora/C4:7C:8D:6A:E5:ED/light"
+  unit_of_measurement: 'lux'
+  expire_after: 2000
+- platform: mqtt
+  name: "Money Plant Conductivity"
+  state_topic: "flora/C4:7C:8D:6A:E5:ED/conductivity"
+  unit_of_measurement: 'μS/cm'
+  expire_after: 2000
   
   ##### History Stats #####
   

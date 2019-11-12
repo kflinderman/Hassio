@@ -58,9 +58,7 @@ home_mode_check1:
       after: '16:30:00'
       before: '9:00:00'
     - service: ecobee.resume_program
-      #data:
       entity_id: climate.main_floor
-        #preset_mode: None
         
 home_mode_check2:
   sequence:
@@ -69,9 +67,7 @@ home_mode_check2:
           - sat
           - sun
     - service: ecobee.resume_program
-      #data:
       entity_id: climate.main_floor
-        #preset_mode: None
         
 away_mode:
   sequence:
@@ -149,11 +145,6 @@ windows_open:
       data:
         entity_id: climate.main_floor
         preset_mode: 'Open'
-    # - service: climate.set_temperature
-      # data:
-        # entity_id: climate.main_floor
-        # target_temp_high: 85
-        # target_temp_low: 60
     - service: input_boolean.turn_on
       data:
         entity_id: input_boolean.window
@@ -164,11 +155,6 @@ vacation_temp:
       data:
         entity_id: climate.main_floor
         preset_mode: 'Vac'
-    # - service: climate.set_temperature
-      # data:
-        # entity_id: climate.main_floor
-        # target_temp_high: 200
-        # target_temp_low: 60
         
 wakeup_temp:
   sequence:
@@ -176,11 +162,6 @@ wakeup_temp:
       data:
         entity_id: climate.main_floor
         preset_mode: 'Wake'
-    # - service: climate.set_temperature
-      # data:
-        # entity_id: climate.main_floor
-        # target_temp_high: 77
-        # target_temp_low: 72
                 
 party_temp:
   sequence:
@@ -188,27 +169,18 @@ party_temp:
       data:
         entity_id: climate.main_floor
         preset_mode: 'Party'
-    # - service: climate.set_temperature
-      # data:
-        # entity_id: climate.main_floor
-        # target_temp_high: 71
-        # target_temp_low: 66
         
 climate_reset:
   sequence:
     - service: ecobee.resume_program
-      #data:
       entity_id: climate.main_floor
-        #preset_mode: None
         
 ecobee_reset:
   sequence:
     - delay:
         seconds: 30
     - service: ecobee.resume_program
-      #data:
       entity_id: climate.main_floor
-        #preset_mode: None
 
 ########################
 #3 Manual Call Scripts #
