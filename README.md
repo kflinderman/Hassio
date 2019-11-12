@@ -48,8 +48,8 @@ Here is a list of all of the devices and services that I use.  I will link to ea
 |-----------|-------------|-------------------|------|---------|
 | [Google Play Music Desktop Player](https://www.googleplaymusicdesktopplayer.com/) | [Link](https://www.home-assistant.io/integrations/gpmdp/) | No | | |
 | [LG Netcast](https://www.lg.com/us/tvs) | [Link](https://www.home-assistant.io/integrations/lg_netcast/) | Yes | [TBD]() | Can only power off the TV and display a non refreshing screenshot of the image |
-| [Yamaha AVR](https://usa.yamaha.com/products/audio_visual/av_receivers_amps/index.html) | [Link](https://www.home-assistant.io/integrations/yamaha/) | Yes | [TBD]() | |
-| [Yamaha AVR](https://usa.yamaha.com/products/audio_visual/av_receivers_amps/index.html) | [Link](https://www.home-assistant.io/integrations/yamaha/) | Yes | [TBD]() | |
+| [Yamaha AVR](https://usa.yamaha.com/products/audio_visual/av_receivers_amps/index.html) | [Link](https://www.home-assistant.io/integrations/yamaha/) | Yes | [RX-V671](https://usa.yamaha.com/products/audio_visual/av_receivers_amps/rx-v671/index.html) | |
+| [Yamaha AVR](https://usa.yamaha.com/products/audio_visual/av_receivers_amps/index.html) | [Link](https://www.home-assistant.io/integrations/yamaha/) | Yes | [RX-V683](https://usa.yamaha.com/products/audio_visual/av_receivers_amps/rx-v683_u/index.html) | |
 
 ### Notifications
 | Component | Integration | Requires Purchase | Part | Comment |
@@ -78,7 +78,7 @@ Here is a list of all of the devices and services that I use.  I will link to ea
 | [Google Calendar](https://calendar.google.com/calendar/r) | [Link](https://www.home-assistant.io/integrations/calendar.google/) | No | | |
 | History Stats | [Link](https://www.home-assistant.io/integrations/history_stats/) | No | | |
 | Input Select | [Link](https://www.home-assistant.io/integrations/input_select/) | No | | |
-| MQTT | [Link](https://www.home-assistant.io/docs/mqtt/) | Yes | [TBD]() | |
+| MQTT | [Link](https://www.home-assistant.io/docs/mqtt/) | Yes | [DIY Beacon](https://www.hackster.io/erictsai/lora-tooth-small-ble-sensors-over-wifi-lora-gateways-0aa109#toc-part--9--example--geolocation-beacon--amp--easy-button-14) | |
 | MQTT | [Link](https://www.home-assistant.io/docs/mqtt/) | Yes | [Light Sensor](https://www.newark.com/advanced-photonix/norps-12/ldr-1mohm-250mw-norps-series/dp/07WX4951?CMP=AFC-SF-FC) | It's just a photoresistor connected to an MQTT gateway. |
 | MQTT | [Link](https://www.home-assistant.io/docs/mqtt/) | Yes | [MiFlora Plant Sensor](https://gadget-freakz.com/product/xiaomi-mi-flora-plant-sensor/) | There is an integration for this, but the sensor is too far from my Pi, so in order to extend it's distance I grab the data and send it through MQTT - [Link](https://github.com/sidddy/flora) |
 | Random Number | [Link](https://www.home-assistant.io/integrations/random/) | No | | |
