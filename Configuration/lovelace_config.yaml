@@ -934,381 +934,535 @@ views:
           - on_pic: /local/room_pic/Dining_all.jpg
           - room_name: Dining Room
           - element: light.dining_lights_level
-      - cards:
-          - elements:
-              - entity: vacuum.xiaomi_vacuum_cleaner
-                image: /local/room_pic/Vacuum_error.jpg
-                state_image:
-                  cleaning: /local/room_pic/Vacuum_out.jpg
-                  docked: /local/room_pic/Vacuum_home.jpg
-                  idle: /local/room_pic/Vacuum_out.jpg
-                  paused: /local/room_pic/Vacuum_out.jpg
-                  returning: /local/room_pic/Vacuum_out.jpg
-                style:
-                  left: 50%
-                  top: 50%
-                  width: 100%
-                tap_action:
-                  action: more-info
-                type: image
-              - entity: sensor.blank
-                prefix: Vacuum
-                style:
-                  background-color: 'rgba(0, 0, 0, 0.5)'
-                  bottom: 0
-                  color: white
-                  font-size: 16px
-                  left: 0
-                  line-height: 32px
-                  padding: 0 8px
-                  transform: initial
-                  width: 100%
-                tap_action:
-                  action: none
-                type: state-label
-              - entity: sensor.vacuum_battery
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  line-height: 32px
-                  margin: 33px 5px 0 0
-                  right: 0
-                  top: 0
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: sensor.vacuum_battery
-                style:
-                  color: 'rgba(255,255,255,1)'
-                  font-size: 12px
-                  font-weight: bold
-                  line-height: 32px
-                  margin: 31px 30px
-                  pointer-events: none
-                  right: 0
-                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-                  top: 0
-                  transform: initial
-                type: state-label
-              - entity: sensor.vacuum_time
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  line-height: 32px
-                  margin: 63px 5px 0 0
-                  right: 0
-                  top: 0
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: sensor.vacuum_time
-                style:
-                  color: 'rgba(255,255,255,1)'
-                  font-size: 12px
-                  font-weight: bold
-                  line-height: 32px
-                  margin: 61px 30px
-                  pointer-events: none
-                  right: 0
-                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-                  top: 0
-                  transform: initial
-                type: state-label
-              - entity: sensor.vacuum_area
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  line-height: 32px
-                  margin: 93px 5px 0 0
-                  right: 0
-                  top: 0
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: sensor.vacuum_area
-                style:
-                  color: 'rgba(255,255,255,1)'
-                  font-size: 12px
-                  font-weight: bold
-                  line-height: 32px
-                  margin: 91px 30px
-                  pointer-events: none
-                  right: 0
-                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-                  top: 0
-                  transform: initial
-                type: state-label
-              - entity: counter.robo_empty
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  line-height: 32px
-                  margin: 123px 5px 0 0
-                  right: 0
-                  top: 0
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: counter.robo_empty
-                style:
-                  color: 'rgba(255,255,255,1)'
-                  font-size: 12px
-                  font-weight: bold
-                  line-height: 32px
-                  margin: 121px 30px
-                  pointer-events: none
-                  right: 0
-                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-                  top: 0
-                  transform: initial
-                type: state-label
-              - entity: binary_sensor.vacuum_dnd
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  line-height: 32px
-                  margin: 3px 5px 0 0
-                  right: 0
-                  top: 0
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: input_boolean.vacuum_daily
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  line-height: 32px
-                  margin: 3px 5px 0 0
-                  right: 5%
-                  top: 0
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: input_boolean.vacuum_daily
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  border-radius: 6px
-                  color: 'rgba(255,255,255,1)'
-                  line-height: 5px
-                  margin: 3px 5px 0 0
-                  right: 10%
-                  top: 3%
-                  transform: scale(0.8)
-                type: state-label
-              - entity: sensor.vacuum_status
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  background-color: '#000000'
-                  border-radius: 6px
-                  color: 'rgba(255,255,255,1)'
-                  left: 5%
-                  line-height: 5px
-                  margin: 3px 5px 0 0
-                  top: 5%
-                  transform: scale(1.3)
-                type: state-label
-              - entity: sensor.vacuum_filter
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  left: 0
-                  line-height: 32px
-                  margin: 5px 5px 0 0
-                  top: 48%
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: sensor.vacuum_filter
-                style:
-                  color: 'rgba(255,255,255,1)'
-                  font-size: 12px
-                  font-weight: bold
-                  left: 0
-                  line-height: 32px
-                  margin: 5px 35px
-                  pointer-events: none
-                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-                  top: 48%
-                  transform: initial
-                type: state-label
-              - entity: sensor.vacuum_main_brush
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  left: 0
-                  line-height: 32px
-                  margin: 5px 5px 0 0
-                  top: 56%
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: sensor.vacuum_main_brush
-                style:
-                  color: 'rgba(255,255,255,1)'
-                  font-size: 12px
-                  font-weight: bold
-                  left: 0
-                  line-height: 32px
-                  margin: 5px 35px
-                  pointer-events: none
-                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-                  top: 56%
-                  transform: initial
-                type: state-label
-              - entity: sensor.vacuum_side_brush
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  left: 0
-                  line-height: 32px
-                  margin: 5px 5px 0 0
-                  top: 64%
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: sensor.vacuum_side_brush
-                style:
-                  color: 'rgba(255,255,255,1)'
-                  font-size: 12px
-                  font-weight: bold
-                  left: 0
-                  line-height: 32px
-                  margin: 5px 35px
-                  pointer-events: none
-                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-                  top: 64%
-                  transform: initial
-                type: state-label
-              - entity: sensor.vacuum_sensor
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  left: 0
-                  line-height: 32px
-                  margin: 5px 5px 0 0
-                  top: 72%
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: sensor.vacuum_sensor
-                style:
-                  color: 'rgba(255,255,255,1)'
-                  font-size: 12px
-                  font-weight: bold
-                  left: 0
-                  line-height: 32px
-                  margin: 5px 35px
-                  pointer-events: none
-                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-                  top: 72%
-                  transform: initial
-                type: state-label
-              - icon: 'mdi:delete-empty'
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  left: 95%
-                  top: 93.3%
-                tap_action:
-                  action: call-service
-                  service: counter.reset
-                  service_data:
-                    entity_id: counter.robo_empty
-                type: icon
-              - icon: 'mdi:bell-ring'
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  left: 85%
-                  top: 93.3%
-                tap_action:
-                  action: call-service
-                  service: vacuum.locate
-                  service_data:
-                    entity_id: vacuum.xiaomi_vacuum_cleaner
-                type: icon
-              - icon: 'mdi:crosshairs'
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  left: 75%
-                  top: 93.3%
-                tap_action:
-                  action: call-service
-                  service: vacuum.clean_spot
-                  service_data:
-                    entity_id: vacuum.xiaomi_vacuum_cleaner
-                type: icon
-              - icon: 'mdi:home'
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  left: 65%
-                  top: 93.3%
-                tap_action:
-                  action: call-service
-                  service: vacuum.return_to_base
-                  service_data:
-                    entity_id: vacuum.xiaomi_vacuum_cleaner
-                type: icon
-              - icon: 'mdi:stop'
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  left: 55%
-                  top: 93.3%
-                tap_action:
-                  action: call-service
-                  service: vacuum.stop
-                  service_data:
-                    entity_id: vacuum.xiaomi_vacuum_cleaner
-                type: icon
-              - icon: 'mdi:pause'
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  left: 45%
-                  top: 93.3%
-                tap_action:
-                  action: call-service
-                  service: vacuum.pause
-                  service_data:
-                    entity_id: vacuum.xiaomi_vacuum_cleaner
-                type: icon
-              - icon: 'mdi:play'
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  left: 35%
-                  top: 93.3%
-                tap_action:
-                  action: call-service
-                  service: vacuum.start
-                  service_data:
-                    entity_id: vacuum.xiaomi_vacuum_cleaner
-                type: icon
-            image: /local/room_pic/Vacuum_error.jpg
-            type: picture-elements
+      - card_width: 100%
+        parameters:
+          centeredSlides: true
+          grabCursor: true
+          pagination:
+            type: progressbar
+          slidesPerView: auto
+          spaceBetween: 8
+        start_card: 1
+        type: 'custom:swipe-card'
+        cards:
           - cards:
-              - entity: input_boolean.vacuum_cancel
-                style: |
-                  ha-card {
-                    {% if is_state('input_boolean.vacuum_cancel', 'on') %}
-                      background: #73000A;
-                      color: #FFFFFF;
-                      --iron-icon-fill-color: #FFFFFF
-                    {% endif %}
-                  }
-                type: entity-button
-              - entity: input_boolean.vacuum_stop_notify
-                style: |
-                  ha-card {
-                    {% if is_state('input_boolean.vacuum_stop_notify', 'on') %}
-                      background: #73000A;
-                      color: #FFFFFF;
-                      --iron-icon-fill-color: #FFFFFF
-                    {% endif %}
-                  }
-                type: entity-button
-              - entity: input_boolean.vacuum_basement
-                type: entity-button
-              - entity: input_boolean.vacuum_upstairs
-                type: entity-button
-            type: horizontal-stack
-          - entities:
-              - input_select.fanmode
-            type: entities
-        type: vertical-stack
+              - elements:
+                  - entity: vacuum.xiaomi_vacuum_cleaner
+                    image: /local/room_pic/Vacuum_error.jpg
+                    state_image:
+                      cleaning: /local/room_pic/Vacuum_out.jpg
+                      docked: /local/room_pic/Vacuum_home.jpg
+                      idle: /local/room_pic/Vacuum_out.jpg
+                      paused: /local/room_pic/Vacuum_out.jpg
+                      returning: /local/room_pic/Vacuum_out.jpg
+                    style:
+                      left: 50%
+                      top: 50%
+                      width: 100%
+                    tap_action:
+                      action: more-info
+                    type: image
+                  - entity: sensor.blank
+                    prefix: Vacuum
+                    style:
+                      background-color: 'rgba(0, 0, 0, 0.5)'
+                      bottom: 0
+                      color: white
+                      font-size: 16px
+                      left: 0
+                      line-height: 32px
+                      padding: 0 8px
+                      transform: initial
+                      width: 100%
+                    tap_action:
+                      action: none
+                    type: state-label
+                  - entity: sensor.vacuum_battery
+                    style:
+                      '--paper-item-icon-color': 'rgb(255,255,255)'
+                      color: 'rgba(255,255,255,1)'
+                      line-height: 32px
+                      margin: 33px 5px 0 0
+                      right: 0
+                      top: 0
+                      transform: scale(0.8)
+                    type: state-icon
+                  - entity: sensor.vacuum_battery
+                    style:
+                      color: 'rgba(255,255,255,1)'
+                      font-size: 12px
+                      font-weight: bold
+                      line-height: 32px
+                      margin: 31px 30px
+                      pointer-events: none
+                      right: 0
+                      text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                      top: 0
+                      transform: initial
+                    type: state-label
+                  - entity: sensor.vacuum_time
+                    style:
+                      '--paper-item-icon-color': 'rgb(255,255,255)'
+                      color: 'rgba(255,255,255,1)'
+                      line-height: 32px
+                      margin: 63px 5px 0 0
+                      right: 0
+                      top: 0
+                      transform: scale(0.8)
+                    type: state-icon
+                  - entity: sensor.vacuum_time
+                    style:
+                      color: 'rgba(255,255,255,1)'
+                      font-size: 12px
+                      font-weight: bold
+                      line-height: 32px
+                      margin: 61px 30px
+                      pointer-events: none
+                      right: 0
+                      text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                      top: 0
+                      transform: initial
+                    type: state-label
+                  - entity: sensor.vacuum_area
+                    style:
+                      '--paper-item-icon-color': 'rgb(255,255,255)'
+                      color: 'rgba(255,255,255,1)'
+                      line-height: 32px
+                      margin: 93px 5px 0 0
+                      right: 0
+                      top: 0
+                      transform: scale(0.8)
+                    type: state-icon
+                  - entity: sensor.vacuum_area
+                    style:
+                      color: 'rgba(255,255,255,1)'
+                      font-size: 12px
+                      font-weight: bold
+                      line-height: 32px
+                      margin: 91px 30px
+                      pointer-events: none
+                      right: 0
+                      text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                      top: 0
+                      transform: initial
+                    type: state-label
+                  - entity: counter.robo_empty
+                    style:
+                      '--paper-item-icon-color': 'rgb(255,255,255)'
+                      color: 'rgba(255,255,255,1)'
+                      line-height: 32px
+                      margin: 123px 5px 0 0
+                      right: 0
+                      top: 0
+                      transform: scale(0.8)
+                    type: state-icon
+                  - entity: counter.robo_empty
+                    style:
+                      color: 'rgba(255,255,255,1)'
+                      font-size: 12px
+                      font-weight: bold
+                      line-height: 32px
+                      margin: 121px 30px
+                      pointer-events: none
+                      right: 0
+                      text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                      top: 0
+                      transform: initial
+                    type: state-label
+                  - entity: binary_sensor.vacuum_dnd
+                    style:
+                      '--paper-item-icon-color': 'rgb(255,255,255)'
+                      color: 'rgba(255,255,255,1)'
+                      line-height: 32px
+                      margin: 3px 5px 0 0
+                      right: 0
+                      top: 0
+                      transform: scale(0.8)
+                    type: state-icon
+                  - entity: input_boolean.vacuum_daily
+                    style:
+                      '--paper-item-icon-color': 'rgb(255,255,255)'
+                      color: 'rgba(255,255,255,1)'
+                      line-height: 32px
+                      margin: 3px 5px 0 0
+                      right: 5%
+                      top: 0
+                      transform: scale(0.8)
+                    type: state-icon
+                  - entity: input_boolean.vacuum_daily
+                    style:
+                      '--paper-item-icon-color': 'rgb(255,255,255)'
+                      border-radius: 6px
+                      color: 'rgba(255,255,255,1)'
+                      line-height: 5px
+                      margin: 3px 5px 0 0
+                      right: 10%
+                      top: 3%
+                      transform: scale(0.8)
+                    type: state-label
+                  - entity: sensor.vacuum_status
+                    style:
+                      '--paper-item-icon-color': 'rgb(255,255,255)'
+                      background-color: '#000000'
+                      border-radius: 6px
+                      color: 'rgba(255,255,255,1)'
+                      left: 5%
+                      line-height: 5px
+                      margin: 3px 5px 0 0
+                      top: 5%
+                      transform: scale(1.3)
+                    type: state-label
+                  - entity: sensor.vacuum_filter
+                    style:
+                      '--paper-item-icon-color': 'rgb(255,255,255)'
+                      color: 'rgba(255,255,255,1)'
+                      left: 0
+                      line-height: 32px
+                      margin: 5px 5px 0 0
+                      top: 48%
+                      transform: scale(0.8)
+                    type: state-icon
+                  - entity: sensor.vacuum_filter
+                    style:
+                      color: 'rgba(255,255,255,1)'
+                      font-size: 12px
+                      font-weight: bold
+                      left: 0
+                      line-height: 32px
+                      margin: 5px 35px
+                      pointer-events: none
+                      text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                      top: 48%
+                      transform: initial
+                    type: state-label
+                  - entity: sensor.vacuum_main_brush
+                    style:
+                      '--paper-item-icon-color': 'rgb(255,255,255)'
+                      color: 'rgba(255,255,255,1)'
+                      left: 0
+                      line-height: 32px
+                      margin: 5px 5px 0 0
+                      top: 56%
+                      transform: scale(0.8)
+                    type: state-icon
+                  - entity: sensor.vacuum_main_brush
+                    style:
+                      color: 'rgba(255,255,255,1)'
+                      font-size: 12px
+                      font-weight: bold
+                      left: 0
+                      line-height: 32px
+                      margin: 5px 35px
+                      pointer-events: none
+                      text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                      top: 56%
+                      transform: initial
+                    type: state-label
+                  - entity: sensor.vacuum_side_brush
+                    style:
+                      '--paper-item-icon-color': 'rgb(255,255,255)'
+                      color: 'rgba(255,255,255,1)'
+                      left: 0
+                      line-height: 32px
+                      margin: 5px 5px 0 0
+                      top: 64%
+                      transform: scale(0.8)
+                    type: state-icon
+                  - entity: sensor.vacuum_side_brush
+                    style:
+                      color: 'rgba(255,255,255,1)'
+                      font-size: 12px
+                      font-weight: bold
+                      left: 0
+                      line-height: 32px
+                      margin: 5px 35px
+                      pointer-events: none
+                      text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                      top: 64%
+                      transform: initial
+                    type: state-label
+                  - entity: sensor.vacuum_sensor
+                    style:
+                      '--paper-item-icon-color': 'rgb(255,255,255)'
+                      color: 'rgba(255,255,255,1)'
+                      left: 0
+                      line-height: 32px
+                      margin: 5px 5px 0 0
+                      top: 72%
+                      transform: scale(0.8)
+                    type: state-icon
+                  - entity: sensor.vacuum_sensor
+                    style:
+                      color: 'rgba(255,255,255,1)'
+                      font-size: 12px
+                      font-weight: bold
+                      left: 0
+                      line-height: 32px
+                      margin: 5px 35px
+                      pointer-events: none
+                      text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                      top: 72%
+                      transform: initial
+                    type: state-label
+                  - icon: 'mdi:delete-empty'
+                    style:
+                      '--paper-item-icon-color': 'rgb(255,255,255)'
+                      color: 'rgba(255,255,255,1)'
+                      left: 95%
+                      top: 93.3%
+                    tap_action:
+                      action: call-service
+                      service: counter.reset
+                      service_data:
+                        entity_id: counter.robo_empty
+                    type: icon
+                  - icon: 'mdi:bell-ring'
+                    style:
+                      '--paper-item-icon-color': 'rgb(255,255,255)'
+                      color: 'rgba(255,255,255,1)'
+                      left: 85%
+                      top: 93.3%
+                    tap_action:
+                      action: call-service
+                      service: vacuum.locate
+                      service_data:
+                        entity_id: vacuum.xiaomi_vacuum_cleaner
+                    type: icon
+                  - icon: 'mdi:crosshairs'
+                    style:
+                      '--paper-item-icon-color': 'rgb(255,255,255)'
+                      color: 'rgba(255,255,255,1)'
+                      left: 75%
+                      top: 93.3%
+                    tap_action:
+                      action: call-service
+                      service: vacuum.clean_spot
+                      service_data:
+                        entity_id: vacuum.xiaomi_vacuum_cleaner
+                    type: icon
+                  - icon: 'mdi:home'
+                    style:
+                      '--paper-item-icon-color': 'rgb(255,255,255)'
+                      color: 'rgba(255,255,255,1)'
+                      left: 65%
+                      top: 93.3%
+                    tap_action:
+                      action: call-service
+                      service: vacuum.return_to_base
+                      service_data:
+                        entity_id: vacuum.xiaomi_vacuum_cleaner
+                    type: icon
+                  - icon: 'mdi:stop'
+                    style:
+                      '--paper-item-icon-color': 'rgb(255,255,255)'
+                      color: 'rgba(255,255,255,1)'
+                      left: 55%
+                      top: 93.3%
+                    tap_action:
+                      action: call-service
+                      service: vacuum.stop
+                      service_data:
+                        entity_id: vacuum.xiaomi_vacuum_cleaner
+                    type: icon
+                  - icon: 'mdi:pause'
+                    style:
+                      '--paper-item-icon-color': 'rgb(255,255,255)'
+                      color: 'rgba(255,255,255,1)'
+                      left: 45%
+                      top: 93.3%
+                    tap_action:
+                      action: call-service
+                      service: vacuum.pause
+                      service_data:
+                        entity_id: vacuum.xiaomi_vacuum_cleaner
+                    type: icon
+                  - icon: 'mdi:play'
+                    style:
+                      '--paper-item-icon-color': 'rgb(255,255,255)'
+                      color: 'rgba(255,255,255,1)'
+                      left: 35%
+                      top: 93.3%
+                    tap_action:
+                      action: call-service
+                      service: vacuum.start
+                      service_data:
+                        entity_id: vacuum.xiaomi_vacuum_cleaner
+                    type: icon
+                image: /local/room_pic/Vacuum_error.jpg
+                type: picture-elements
+              - cards:
+                  - entity: input_boolean.vacuum_cancel
+                    style: |
+                      ha-card {
+                        {% if is_state('input_boolean.vacuum_cancel', 'on') %}
+                          background: #73000A;
+                          color: #FFFFFF;
+                          --iron-icon-fill-color: #FFFFFF
+                        {% endif %}
+                      }
+                    type: entity-button
+                  - entity: input_boolean.vacuum_stop_notify
+                    style: |
+                      ha-card {
+                        {% if is_state('input_boolean.vacuum_stop_notify', 'on') %}
+                          background: #73000A;
+                          color: #FFFFFF;
+                          --iron-icon-fill-color: #FFFFFF
+                        {% endif %}
+                      }
+                    type: entity-button
+                  - entity: input_boolean.vacuum_basement
+                    type: entity-button
+                  - entity: input_boolean.vacuum_upstairs
+                    type: entity-button
+                type: horizontal-stack
+              - entities:
+                  - input_select.fanmode
+                type: entities
+            type: vertical-stack
+          - cards:
+              - cards:
+                  - entity: vacuum.xiaomi_vacuum_cleaner
+                    hold_action:
+                      action: none
+                    icon: 'mdi:rotate-left'
+                    show_icon: true
+                    show_name: false
+                    tap_action:
+                      action: call-service
+                      data:
+                        duration: 1500
+                        entity_id: vacuum.xiaomi_vacuum_cleaner
+                        rotation: 90
+                        velocity: 0.2
+                      service: vacuum.xiaomi_remote_control_move
+                    type: entity-button
+                  - entity: vacuum.xiaomi_vacuum_cleaner
+                    hold_action:
+                      action: none
+                    icon: 'mdi:arrow-up'
+                    show_icon: true
+                    show_name: false
+                    tap_action:
+                      action: call-service
+                      data:
+                        duration: 1500
+                        entity_id: vacuum.xiaomi_vacuum_cleaner
+                        rotation: 90
+                        velocity: 0.2
+                      service: vacuum.xiaomi_remote_control_move
+                    type: entity-button
+                  - entity: vacuum.xiaomi_vacuum_cleaner
+                    hold_action:
+                      action: none
+                    icon: 'mdi:rotate-right'
+                    show_icon: true
+                    show_name: false
+                    tap_action:
+                      action: call-service
+                      data:
+                        duration: 1500
+                        entity_id: vacuum.xiaomi_vacuum_cleaner
+                        rotation: 90
+                        velocity: 0.2
+                      service: vacuum.xiaomi_remote_control_move
+                    type: entity-button
+                type: horizontal-stack
+              - cards:
+                  - entity: vacuum.xiaomi_vacuum_cleaner
+                    hold_action:
+                      action: none
+                    icon: 'mdi:arrow-left'
+                    show_icon: true
+                    show_name: false
+                    tap_action:
+                      action: call-service
+                      data:
+                        duration: 1500
+                        entity_id: vacuum.xiaomi_vacuum_cleaner
+                        rotation: 90
+                        velocity: 0.2
+                      service: vacuum.xiaomi_remote_control_move
+                    type: entity-button
+                  - entity: input_boolean.vacuum_remote
+                    show_name: false
+                    style: |
+                      ha-card {
+                        {% if is_state('input_boolean.vacuum_remote', 'on') %}
+                          background: #73000A;
+                          color: #FFFFFF;
+                          --iron-icon-fill-color: #FFFFFF
+                        {% endif %}
+                      }
+                    type: entity-button
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                  - entity: vacuum.xiaomi_vacuum_cleaner
+                    hold_action:
+                      action: none
+                    icon: 'mdi:arrow-right'
+                    show_icon: true
+                    show_name: false
+                    tap_action:
+                      action: call-service
+                      data:
+                        duration: 1500
+                        entity_id: vacuum.xiaomi_vacuum_cleaner
+                        rotation: 90
+                        velocity: 0.2
+                      service: vacuum.xiaomi_remote_control_move
+                    type: entity-button
+                type: horizontal-stack
+              - cards:
+                  - entity: vacuum.xiaomi_vacuum_cleaner
+                    hold_action:
+                      action: none
+                    icon: 'mdi:subdirectory-arrow-left'
+                    show_icon: true
+                    show_name: false
+                    tap_action:
+                      action: call-service
+                      data:
+                        duration: 1500
+                        entity_id: vacuum.xiaomi_vacuum_cleaner
+                        rotation: 90
+                        velocity: 0.2
+                      service: vacuum.xiaomi_remote_control_move
+                    type: entity-button
+                  - entity: vacuum.xiaomi_vacuum_cleaner
+                    hold_action:
+                      action: none
+                    icon: 'mdi:arrow-down'
+                    show_icon: true
+                    show_name: false
+                    tap_action:
+                      action: call-service
+                      data:
+                        duration: 1500
+                        entity_id: vacuum.xiaomi_vacuum_cleaner
+                        rotation: 90
+                        velocity: 0.2
+                      service: vacuum.xiaomi_remote_control_move
+                    type: entity-button
+                  - entity: vacuum.xiaomi_vacuum_cleaner
+                    hold_action:
+                      action: none
+                    icon: 'mdi:subdirectory-arrow-right'
+                    show_icon: true
+                    show_name: false
+                    tap_action:
+                      action: call-service
+                      data:
+                        duration: 1500
+                        entity_id: vacuum.xiaomi_vacuum_cleaner
+                        rotation: 90
+                        velocity: 0.2
+                      service: vacuum.xiaomi_remote_control_move
+                    type: entity-button
+                type: horizontal-stack
+            type: vertical-stack
       - calibration_points:
           - map:
               x: 946

@@ -12,7 +12,7 @@ This is my primary [Home Assistant](https://home-assistant.io/) configuration, T
 * [MariaDB](https://www.home-assistant.io/addons/mariadb/)
 * [Mosquitto](https://www.home-assistant.io/docs/mqtt/)
 * [SSH & Web Terminal](https://github.com/hassio-addons/addon-ssh)
-* [Z-Wave](https://www.home-assistant.io/docs/z-wave/)
+* [Z-Wave](https://www.home-assistant.io/docs/z-wave/) - [Z-Stick Gen 5](https://aeotec.com/z-wave-usb-stick/)
 
 ## Integrations, Devices, and Services
 Here is a list of all of the devices and services that I use.  I will link to each integration.  I will also indicated which ones require purchasing an item, I'll do this because I'm always surprised about what is available to make your home smart that is readily available for free.  I have not included everything here, because some are custom integrations which I will discuss separately.
@@ -47,7 +47,7 @@ Here is a list of all of the devices and services that I use.  I will link to ea
 | Component | Integration | Requires Purchase | Part | Comment |
 |-----------|-------------|-------------------|------|---------|
 | [Google Play Music Desktop Player](https://www.googleplaymusicdesktopplayer.com/) | [Link](https://www.home-assistant.io/integrations/gpmdp/) | No | | |
-| [LG Netcast](https://www.lg.com/us/tvs) | [Link](https://www.home-assistant.io/integrations/lg_netcast/) | Yes | [TBD]() | Can only power off the TV and display a non refreshing screenshot of the image |
+| [LG Netcast](https://www.lg.com/us/tvs) | [Link](https://www.home-assistant.io/integrations/lg_netcast/) | Yes | [LG 42in Smart TV](https://www.lg.com/us/support/product/lg-42LM6200.AUS) | Can only power off the TV and display a non refreshing screenshot of the image |
 | [Yamaha AVR](https://usa.yamaha.com/products/audio_visual/av_receivers_amps/index.html) | [Link](https://www.home-assistant.io/integrations/yamaha/) | Yes | [RX-V671](https://usa.yamaha.com/products/audio_visual/av_receivers_amps/rx-v671/index.html) | |
 | [Yamaha AVR](https://usa.yamaha.com/products/audio_visual/av_receivers_amps/index.html) | [Link](https://www.home-assistant.io/integrations/yamaha/) | Yes | [RX-V683](https://usa.yamaha.com/products/audio_visual/av_receivers_amps/rx-v683_u/index.html) | |
 
@@ -93,8 +93,9 @@ Here is a list of all of the devices and services that I use.  I will link to ea
 | [TP-Link](https://www.tp-link.com/us/) | [Link](https://www.home-assistant.io/integrations/tplink/) | Yes | [HS100](https://www.kasasmart.com/us/products/smart-plugs/kasa-smart-wifi-plug-hs100) | |
 | [TP-Link](https://www.tp-link.com/us/) | [Link](https://www.home-assistant.io/integrations/tplink/) | Yes | [HS105](https://www.kasasmart.com/us/products/smart-plugs/kasa-smart-wifi-plug-mini) | |
 | [TP-Link](https://www.tp-link.com/us/) | [Link](https://www.home-assistant.io/integrations/tplink/) | Yes | [HS200](https://www.kasasmart.com/us/products/smart-switches/kasa-smart-wi-fi-light-switch-hs200) | |
-| Z-Wave | [Link](https://www.home-assistant.io/docs/z-wave/) | Yes | [TBD]() | |
-| Z-Wave | [Link](https://www.home-assistant.io/docs/z-wave/) | Yes | [TBD]() | |
+| Z-Wave | [Link](https://www.home-assistant.io/docs/z-wave/) | Yes | [GE Smart Dimmer SKU#: 14294](https://byjasco.com/products/ge-z-wave-plus-wall-smart-dimmer) | |
+| Z-Wave | [Link](https://www.home-assistant.io/docs/z-wave/) | Yes | [GE Smart Outlet SKU#: 14288](https://byjasco.com/products/ge-z-wave-plus-wall-tamper-resistant-smart-outlet) | |
+| Z-Wave | [Link](https://www.home-assistant.io/docs/z-wave/) | Yes | [Jasco On/Off Swithc SKU#: 45709](https://www.z-wave.com/shop-z-wave-smart-home-products/smart-lighting-ge-jasco-jasco-white-in-wall-decora-style-on-off-z-wave-switch) | |
 
 ### Vacuum
 | Component | Integration | Requires Purchase | Part | Comment |
