@@ -935,15 +935,6 @@ views:
           - room_name: Dining Room
           - element: light.dining_lights_level
       - card_width: 100%
-        parameters:
-          centeredSlides: true
-          grabCursor: true
-          pagination:
-            type: progressbar
-          slidesPerView: auto
-          spaceBetween: 8
-        start_card: 1
-        type: 'custom:swipe-card'
         cards:
           - cards:
               - elements:
@@ -1385,6 +1376,8 @@ views:
                       service: vacuum.xiaomi_remote_control_move
                     type: entity-button
                   - entity: input_boolean.vacuum_remote
+                    hold_action:
+                      action: more-info
                     show_name: false
                     style: |
                       ha-card {
@@ -1394,11 +1387,9 @@ views:
                           --iron-icon-fill-color: #FFFFFF
                         {% endif %}
                       }
-                    type: entity-button
                     tap_action:
                       action: toggle
-                    hold_action:
-                      action: more-info
+                    type: entity-button
                   - entity: vacuum.xiaomi_vacuum_cleaner
                     hold_action:
                       action: none
@@ -1463,6 +1454,15 @@ views:
                     type: entity-button
                 type: horizontal-stack
             type: vertical-stack
+        parameters:
+          centeredSlides: true
+          grabCursor: true
+          pagination:
+            type: progressbar
+          slidesPerView: auto
+          spaceBetween: 8
+        start_card: 1
+        type: 'custom:swipe-card'
       - calibration_points:
           - map:
               x: 946

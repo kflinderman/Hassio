@@ -1,0 +1,12 @@
+{
+  "domain": "lightpack",
+  "name": "Lightpack integration with Home ASsistant",
+  "documentation": "https://github.com/mihalski/homeassistant/tree/master/custom_components/lightpack",
+  "dependencies": [],
+  "codeowners": ["@mihalski"],
+  "requirements": [
+    "py-lightpack==2.2.0",
+    "colour==0.1.5",
+    "boltons==19.3.0"
+  ]
+}

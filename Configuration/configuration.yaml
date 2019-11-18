@@ -24,15 +24,20 @@ logger:
     homeassistant.components.vacation.calendar: critical
     homeassistant.components.cert_expiry.sensor: critical
     custom_components.weatheralerts.sensor: critical
-    custom_components.lightpack.light: critical
+    custom_components.lightpack.light: debug
     homeassistant.components.skybell.binary_sensor: critical
     homeassistant.components.skybell.switch: critical
     homeassistant.components.skybell.sensor: critical
+    homeassistant.components.skybell_front_door_motion.binary_sensor: critical
+    homeassistant.components.skybell_front_door_button.binary_sensor: critical
+    homeassistant.components.skybell_front_door_do_not_disturb.switch: critical
+    homeassistant.components.front_door.light: critical
     homeassistant.components.websocket_api.http.connection: critical
     homeassistant.components.hue: critical
     homeassistant.components.hue.light: critical
     homeassistant.components.emulated_hue: critical
     homeassistant.components.netgear.device_tracker: critical
+    homeassistant.components.yamaha.media_player: critical
     # homeassistant.helpers.entity_component: critical
     # homeassistant.helpers.entity: critical
     # homeassistant.loader: critical
@@ -122,8 +127,8 @@ ssdp:
 zeroconf:
 
 device_tracker:
-  - platform: bluetooth_le_tracker
-    track_new_devices: true
+  # - platform: bluetooth_le_tracker
+    # track_new_devices: true
   - platform: bluetooth_tracker
     request_rssi: true
   - platform: netgear
@@ -131,13 +136,13 @@ device_tracker:
     username: !secret wifi_username
     password: !secret wifi_password
     port: 5000
-    # devices:
-      # - !secret kcell_mac
-      # - !secret mcell_mac
-      # - !secret kworkcell_mac
-      # - !secret mlap_mac
-      # - !secret nswitch_mac
-      # - !secret ktab_mac
+    devices:
+      - !secret kcell_mac
+      - !secret mcell_mac
+      - !secret kworkcell_mac
+      - !secret mlap_mac
+      - !secret nswitch_mac
+      - !secret ktab_mac
     # accesspoints:
       # - !secret kcell_mac
       # - !secret mcell_mac

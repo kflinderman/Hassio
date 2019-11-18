@@ -114,6 +114,9 @@
   vacuum_upstairs:
     name: Upstairs Vacuum
     icon: mdi:numeric-2-box
+  vacuum_remote:
+    name: Vacuum Remote
+    icon: mdi:power
     
   ##### Other #####
   

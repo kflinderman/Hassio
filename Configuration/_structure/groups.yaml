@@ -333,6 +333,8 @@ vacuum_auto:
     - automation.vacuum_reset_counter
     - automation.vacuum_really_stuck
     - automation.increment_day_since_vacuum
+    - automation.turn_on_remote
+    - automation.turn_off_remote
   
 mastersw_auto:
   name: Master Switches Automations

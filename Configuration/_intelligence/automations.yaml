@@ -1735,6 +1735,26 @@
     - service: counter.increment
       entity_id: counter.upstairs_vacuum
       
+- id: turn_on_remote
+  alias: Turn On Remote
+  trigger:
+    platform: state
+    entity_id: input_boolean.vacuum_remote
+    to: 'on'
+  action:
+    - service: vacuum.xiaomi_remote_control_start
+      entity_id: vacuum.xiaomi_vacuum_cleaner
+      
+- id: turn_off_remote
+  alias: Turn Off Remote
+  trigger:
+    platform: state
+    entity_id: input_boolean.vacuum_remote
+    to: 'off'
+  action:
+    - service: vacuum.xiaomi_remote_control_stop
+      entity_id: vacuum.xiaomi_vacuum_cleaner
+      
 ################################
 #7 Master Switches Automations #
 ################################
