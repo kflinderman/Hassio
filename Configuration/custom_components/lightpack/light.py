@@ -484,15 +484,12 @@ class Lightpack(Light):
             except socket.error:
                 await self.disconnect()
                 return
-            else:
-                _LOGGER.debug("Pass through connect")
-                self._state = False
-                return
 
-        _LOGGER.debug("Got through")
         self.get_state()
         if not self.available:
             return False
+			
+        _LOGGER.debug("Got through")
 
         self.get_effects()
         self.get_effect()
@@ -515,14 +512,17 @@ class Lightpack(Light):
         
         _LOGGER.debug("Host: %s Port: %s, API: %s", self._host, self._port, self._api_key)
         
+		# I think what needs to happen is that it just takes too long for a timeout
         try:
             self._update = lightpack.Lightpack(host=self._host,
                                                port=self._port,
                                                api_key=self._api_key)
+			_LOGGER.debug("Does it get here 1")
             self._update.connect()
             self._control = lightpack.Lightpack(host=self._host,
                                                 port=self._port,
                                                 api_key=self._api_key)
+			_LOGGER.debug("Does it get here 2")
             self._control.connect()
             self._available = True
         except self.lightpack.CannotConnectError as e:
