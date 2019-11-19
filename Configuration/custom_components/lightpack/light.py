@@ -6,6 +6,7 @@ import logging
 import socket
 import sys
 import traceback
+import signal
 
 import voluptuous as vol
 
@@ -505,12 +506,16 @@ class Lightpack(Light):
         _LOGGER.debug("%s: update(); brightness: %s; mode: %s; color: %s",
                       self._name, self._brightness, self._mode, self._hs)
 
+    def handler(signum, frame):
+        raise Exception("end of time")
+        
     async def connect(self) -> bool:
         """Connect to Lightpack."""
         _LOGGER.debug("%s: connect()", self._name)
         import lightpack
         
         _LOGGER.debug("Host: %s Port: %s, API: %s", self._host, self._port, self._api_key)
+        signal.signal(signal.SIGALRM, handler)
         
         # I think what needs to happen is that it just takes too long for a timeout
         try:
@@ -518,7 +523,9 @@ class Lightpack(Light):
                                                port=self._port,
                                                api_key=self._api_key)
             # Fails here
+            signal.alarm(10)
             self._update.connect()
+            signal.alarm(0)
             self._control = lightpack.Lightpack(host=self._host,
                                                 port=self._port,
                                                 api_key=self._api_key)
@@ -528,6 +535,9 @@ class Lightpack(Light):
             # _LOGGER.error("%s:connect(); result: %s", self._name, repr(e))
             # _LOGGER.error("Unexpected error: %s", traceback.format_exception(
                 # *sys.exc_info()))
+            self._available = False
+        except Exception, exc: 
+            _LOGGER.debug("%s: %s", self._name, exc)
             self._available = False
         else:
             api_version = self._update.getApiVersion()
