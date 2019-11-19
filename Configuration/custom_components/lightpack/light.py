@@ -514,26 +514,20 @@ class Lightpack(Light):
         
         # I think what needs to happen is that it just takes too long for a timeout
         try:
-            abcd = 1
-            xyz = 2
-            lmnop = abcd + xyz
-            _LOGGER.debug("Does it get here 0")
             self._update = lightpack.Lightpack(host=self._host,
                                                port=self._port,
                                                api_key=self._api_key)
-            _LOGGER.debug("Does it get here 1")
+            # Fails here
             self._update.connect()
             self._control = lightpack.Lightpack(host=self._host,
                                                 port=self._port,
                                                 api_key=self._api_key)
-            _LOGGER.debug("Does it get here 2")
             self._control.connect()
             self._available = True
         except self.lightpack.CannotConnectError as e:
             # _LOGGER.error("%s:connect(); result: %s", self._name, repr(e))
             # _LOGGER.error("Unexpected error: %s", traceback.format_exception(
                 # *sys.exc_info()))
-            _LOGGER.debug("Testing %s", lmnop)
             self._available = False
         else:
             api_version = self._update.getApiVersion()
