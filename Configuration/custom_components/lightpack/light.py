@@ -66,6 +66,8 @@ LIGHTPACK_SET_STATE_SCHEMA = LIGHT_TURN_ON_SCHEMA.extend({
     ATTR_ZONES: vol.All(cv.ensure_list, [cv.positive_int]),
 })
 
+def handler(signum, frame):
+    raise ExceptTimeOut("end of time")
 
 async def async_setup_platform(hass, config, async_add_entities,
                                discovery_info=None) -> None:
@@ -486,11 +488,11 @@ class Lightpack(Light):
                 await self.disconnect()
                 return
 
-        self.get_state()
+        if self.available:
+          self.get_state()
+        
         if not self.available:
             return False
-			
-        _LOGGER.debug("Got through")
 
         self.get_effects()
         self.get_effect()
@@ -505,9 +507,6 @@ class Lightpack(Light):
 
         _LOGGER.debug("%s: update(); brightness: %s; mode: %s; color: %s",
                       self._name, self._brightness, self._mode, self._hs)
-
-    def handler(signum, frame):
-        raise Exception("end of time")
         
     async def connect(self) -> bool:
         """Connect to Lightpack."""
@@ -522,7 +521,7 @@ class Lightpack(Light):
             self._update = lightpack.Lightpack(host=self._host,
                                                port=self._port,
                                                api_key=self._api_key)
-            # Fails here
+
             signal.alarm(10)
             self._update.connect()
             signal.alarm(0)
@@ -532,12 +531,12 @@ class Lightpack(Light):
             self._control.connect()
             self._available = True
         except self.lightpack.CannotConnectError as e:
-            # _LOGGER.error("%s:connect(); result: %s", self._name, repr(e))
-            # _LOGGER.error("Unexpected error: %s", traceback.format_exception(
-                # *sys.exc_info()))
-            self._available = False
-        except Exception, exc: 
-            _LOGGER.debug("%s: %s", self._name, exc)
+            if "NameError" in str(e):
+                _LOGGER.debug("%s: Time Out", self._name)
+            else:
+                _LOGGER.error("%s:connect(); result: %s", self._name, repr(e))
+                _LOGGER.error("Unexpected error: %s", traceback.format_exception(
+                    *sys.exc_info()))
             self._available = False
         else:
             api_version = self._update.getApiVersion()

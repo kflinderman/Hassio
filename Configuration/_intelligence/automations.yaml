@@ -1352,8 +1352,8 @@
   alias: Lightpack CPU On
   trigger:
   - platform: state
-    entity_id: switch.desktoppc
-    to: 'on'
+    entity_id: light.lightpack
+    from: 'unavailable'
   action:
   - service: input_boolean.turn_on
     entity_id: input_boolean.cpu_lightpack
@@ -1868,9 +1868,12 @@
 - id: office_stereo_off
   alias: Office Stereo Off
   trigger:
-    platform: state
-    entity_id: light.lightpack
-    to: 'off'
+    - platform: state
+      entity_id: light.lightpack
+      to: 'off'
+    - platform: state
+      entity_id: light.lightpack
+      to: 'unavailable'
   condition:
     condition: or
     conditions:
