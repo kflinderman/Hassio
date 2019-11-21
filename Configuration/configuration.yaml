@@ -105,7 +105,7 @@ zwave:
 
 # cloud: !include assistant/cloud.yaml
 
-alexa: !include assistant/alexa.yam
+alexa: !include assistant/alexa.yaml
       
 automation: !include _intelligence/automations.yaml
 
