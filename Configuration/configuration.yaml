@@ -7,6 +7,7 @@ http:
   ssl_certificate: /ssl/fullchain.pem
   ssl_key: /ssl/privkey.pem
   base_url: !secret url4_secret
+  server_port: 443
   
 recorder:
   purge_interval: 2
@@ -100,9 +101,11 @@ zwave:
     light.dining_lights_level:
       refresh_value: true
 
-emulated_hue: !include assistant/emulated_hue.yaml
+# emulated_hue: !include assistant/emulated_hue.yaml
 
-#cloud: !include assistant/cloud.yaml
+# cloud: !include assistant/cloud.yaml
+
+alexa: !include assistant/alexa.yam
       
 automation: !include _intelligence/automations.yaml
 
@@ -125,9 +128,6 @@ discovery:
 ssdp:
 
 zeroconf:
-
-# alexa:
-  # smart_home:
 
 device_tracker:
   # - platform: bluetooth_le_tracker
