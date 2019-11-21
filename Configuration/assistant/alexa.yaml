@@ -2,15 +2,104 @@ smart_home:
   endpoint: https://api.amazonalexa.com/v3/events
   client_id: !secret alexa_client_id
   client_secret: !secret alexa_client_secret
-  # filter:
-    # include_entities:
-      # (list) (Optional) description: Entity IDs to include.
-    # include_domains:
-      # (list) (Optional) Domains to include.
-    # exclude_entities:
-      # (list) (Optional) Entity IDs to exclude.
-    # exclude_domains:
-      # (list) (Optional) Domains to exclude.
+  filter:
+    include_entities:
+      - script.movie_time
+      - script.steam_on
+      - script.wiiu_on
+      - script.bluetooth_on
+      - script.netflix_watch_on
+      - script.after_dark
+      - script.game_on
+      - script.switch_on
+      - script.windows_open
+      - script.pandora_listen_on
+      - script.cable_watch_on
+      - script.dinner_time
+      - script.vinyl_on
+      - script.ps3_on
+      - script.movie_finish
+      - script.radio_listen_on
+      - script.vacuum_the_house
+      - script.tv_area_vacuum
+      - script.back_living_room_vacuum
+      - script.dining_room_vacuum
+      - script.kitchen_vacuum
+      - script.hallway_vacuum
+      - script.away_mode
+      - input_boolean.all_basement
+      - input_boolean.all_firstfloor
+      - input_boolean.all_outside
+      - input_boolean.all_secondfloor
+      - input_boolean.holiday
+      - input_boolean.im_home
+      - input_boolean.party
+      - input_boolean.sexy
+      - input_boolean.vacation
+      - input_boolean.visitor
+      - input_boolean.window
+      - media_player.desktop_media
+      - media_player.lg_tv_remote
+      - media_player.office_stereo
+      - media_player.stereo
+      - sensor.basement_bee_temperature
+      - sensor.bedroom_bee_temperature
+      - sensor.kitchen_temperature
+      - sensor.living_room_bee_temperature
+      - sensor.main_floor_temperature
+      - sensor.thingy_temperature
+      - sensor.target_temp_high
+      - sensor.target_temp_low
+      - switch.airhockey
+      - switch.bedfan
+      - switch.craftfan
+      - switch.deck_ceiling_outlet_switch
+      - switch.desktoppc
+      - switch.guestbed
+      - switch.kitchensw
+      - switch.laundryroom
+      - switch.masterbath
+      - switch.officefan
+      - switch.outlet
+      - switch.sun_room_market_lights
+    include_domains:
+      - climate
+      - group
+      - light
+      - switch
+    exclude_entities:
+      - group.all_automations
+      - group.all_devices
+      - group.all_lights
+      - group.all_plants
+      - group.all_scripts
+      - group.all_switches
+      - group.all_vacuum_cleaners
+      - group.alli_locate
+      - group.default_view
+      - group.holiday
+      - group.hue_lights
+      - group.light_off_auto
+      - group.light_on_auto
+      - group.location_auto
+      - group.mastersw_auto
+      - group.notify_auto
+      - group.office
+      - group.other_auto
+      - group.pc_auto
+      - group.residents
+      - group.switch_lights
+      - group.theme_auto
+      - group.vacuum_auto
+    exclude_domains:
+      - automation
+      - binary_sensor
+      - scene
+      - script
+      - input_boolean
+      - media_player
+      - sensor
+      - switch
   # entity_config:
     # ENTITY_ID:
       # (map) (Optional) Entity to configure.
