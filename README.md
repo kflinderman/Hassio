@@ -117,7 +117,7 @@ These are the remaining items that I have running on my system.  Most are pulled
   * Config Check
   * Favicon Changer
   * Illuminance
-  * Lightpack - Requires Purchase - Currently does not work.  
+  * Lightpack - Requires Purchase 
   * Momentary Switch Component
   * Thingy:52 Sensor - Requires Purchase
   * WeatherAlerts
