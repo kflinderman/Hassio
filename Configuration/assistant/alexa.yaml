@@ -1,7 +1,4 @@
 smart_home:
-  endpoint: https://api.amazonalexa.com/v3/events
-  client_id: !secret alexa_client_id
-  client_secret: !secret alexa_client_secret
   filter:
     include_entities:
       - script.movie_time
@@ -9,7 +6,6 @@ smart_home:
       - script.wiiu_on
       - script.bluetooth_on
       - script.netflix_watch_on
-      - script.after_dark
       - script.game_on
       - script.switch_on
       - script.windows_open
@@ -31,7 +27,6 @@ smart_home:
       - input_boolean.all_firstfloor
       - input_boolean.all_outside
       - input_boolean.all_secondfloor
-      - input_boolean.holiday
       - input_boolean.im_home
       - input_boolean.party
       - input_boolean.sexy
@@ -63,10 +58,8 @@ smart_home:
       - switch.outlet
       - switch.sun_room_market_lights
     include_domains:
-      - climate
       - group
       - light
-      - switch
     exclude_entities:
       - group.all_automations
       - group.all_devices
@@ -77,6 +70,7 @@ smart_home:
       - group.all_vacuum_cleaners
       - group.alli_locate
       - group.default_view
+      - group.calendar
       - group.holiday
       - group.hue_lights
       - group.light_off_auto
@@ -91,16 +85,45 @@ smart_home:
       - group.switch_lights
       - group.theme_auto
       - group.vacuum_auto
+      - light.basement_hue
+      - light.basement_hue_2
+      - light.kitchen_hue
+      - light.living_room_hue
+      - light.master_bedroom_hue
+      - light.outside_hue
+      - light.sun_room
+      - light.craft_room
     exclude_domains:
       - automation
       - binary_sensor
+      - climate
       - scene
       - script
       - input_boolean
       - media_player
       - sensor
       - switch
-  # entity_config:
+  entity_config:
+    switch.airhockey:
+      display_categories: SMARTPLUG
+    switch.outlet:
+      display_categories: SMARTPLUG
+    switch.sun_room_market_lights:
+      display_categories: SMARTPLUG
+    switch.deck_ceiling_outlet_switch:
+      display_categories: SMARTPLUG
+    script.windows_open:
+      name: Windows Open
+    script.away_mode:
+      name: Away Mode
+    script.movie_time:
+      name: Movie Time
+    script.movie_finish:
+      name: Movie Finish
+    script.dinner_time:
+      name: Dinner Time
+    sensor.thingy_temperature:
+      name: Office Temperature
     # ENTITY_ID:
       # (map) (Optional) Entity to configure.
       # name:
