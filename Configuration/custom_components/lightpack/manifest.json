@@ -7,6 +7,7 @@
   "requirements": [
     "py-lightpack==2.2.0",
     "colour==0.1.5",
-    "boltons==19.3.0"
+    "boltons==19.3.0",
+    "future"
   ]
 }
