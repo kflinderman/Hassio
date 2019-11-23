@@ -25,7 +25,6 @@ logger:
     homeassistant.components.vacation.calendar: critical
     homeassistant.components.cert_expiry.sensor: critical
     custom_components.weatheralerts.sensor: critical
-    # custom_components.lightpack.light: debug
     homeassistant.components.skybell.binary_sensor: critical
     homeassistant.components.skybell.switch: critical
     homeassistant.components.skybell.sensor: critical

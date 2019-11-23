@@ -61,6 +61,7 @@ smart_home:
       - group
       - light
     exclude_entities:
+      - climate.main_floor_local
       - group.all_automations
       - group.all_devices
       - group.all_lights
@@ -93,10 +94,12 @@ smart_home:
       - light.outside_hue
       - light.sun_room
       - light.craft_room
+      - light.front_door
+      - light.living_room_lights
     exclude_domains:
       - automation
       - binary_sensor
-      - climate
+      # - climate
       - scene
       - script
       - input_boolean
@@ -108,6 +111,7 @@ smart_home:
       display_categories: SMARTPLUG
     switch.outlet:
       display_categories: SMARTPLUG
+      name: Floor Light
     switch.sun_room_market_lights:
       display_categories: SMARTPLUG
     switch.deck_ceiling_outlet_switch:
@@ -124,6 +128,12 @@ smart_home:
       name: Dinner Time
     sensor.thingy_temperature:
       name: Office Temperature
+    group.basement_floor:
+      name: All of the Basement
+    group.first_floor:
+      name: All of the First Floor
+    group.second_floor:
+      name: All of the Second Floor
     # ENTITY_ID:
       # (map) (Optional) Entity to configure.
       # name:

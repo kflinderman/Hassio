@@ -73,7 +73,7 @@ kitchen:
     - switch.kitchensw
     
 dining_room:
-  name: Dining
+  name: Dining Room
   entities:
     - light.dining_lights_level
     
