@@ -30,7 +30,7 @@ import time
 # DEPENDENCIES = ['libglib2.0-dev']
 # REQUIREMENTS = ['bluepy']
 
-VERSION = '0.0.2'
+VERSION = '0.0.3'
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -199,6 +199,7 @@ class Thingy52Sensor(Entity):
         self._icon = icon
         self._unit_measurement = unit_measurement
         self._mac = mac
+        self._available = False
 
 
     @property
@@ -206,6 +207,11 @@ class Thingy52Sensor(Entity):
         """Return the name of the sensor."""
         return ("{} {}".format(self._friendly_name, self._sensor_name))
 
+    @property
+    def available(self):
+        """Return True if available."""
+        return self._available
+    
     @property
     def state(self):
         """Return the state of the sensor."""
@@ -229,8 +235,20 @@ class Thingy52Sensor(Entity):
         """Fetch new state data for the sensor.
         This is the only method that should fetch new data for Home Assistant.
         """
-        self._thingy.waitForNotifications(timeout=5)
-        _LOGGER.debug("#[%s]: method update, state is %s", self._name, self._state)
+        if not self.available:
+            try:
+                self.thingy.connect(self.mac)
+                self.available = True
+            except:
+                _LOGGER.debug("#[%s]: method did not update", self._name
+        
+        if self.available:
+            try:
+                self._thingy.waitForNotifications(timeout=5)
+                _LOGGER.debug("#[%s]: method update, state is %s", self._name, self._state)
+            except:
+                self.available = False
+                _LOGGER.debug("#[%s]: method did not update", self._name)
         
 
 if (__name__ == "__main__"):
