@@ -129,6 +129,23 @@ class NotificationDelegate(btle.DefaultDelegate):
             i -= 2**8
         return i 
 
+class localThingy(thingy52):
+    def __init__(self, mac, friendly_name):
+        self._mac = mac
+        self._friendly_name = friendly_name
+        self._thingy = None
+        self._available = None
+        
+     def connect(self):
+        try:
+            self._thingy = Thingy52(mac_address)
+            self._available = True
+        except Exception as e:
+            _LOGGER.debug("#[THINGYSENSOR]: Unable to connect to Thingy (%s): %s", self._friendly_name, str(e))
+            self._available = False
+            
+        return self._thingy
+    
 def setup_platform(hass, config, add_devices, discovery_info=None):
     """ Set up the Thingy 52 temperature sensor"""
     global e_battery_handle
@@ -147,11 +164,15 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
     notification_interval = int(refresh_interval) * 1000
     
     sensors = []
+    """
     _LOGGER.debug("#[THINGYSENSOR]: Connecting to Thingy %s with address %s", friendly_name, mac_address[-6:])
     try:
         thingy = thingy52.Thingy52(mac_address)
     except Exception as e:
         _LOGGER.error("#[THINGYSENSOR]: Unable to connect to Thingy (%s): %s", friendly_name, str(e))
+    """
+    thingyInstance = localThingy(mac_address, friendly_name)
+    thingy = thingyInstance.connect()
 
     _LOGGER.debug("#[THINGYSENSOR]: Configuring and enabling environment notifications")
     thingy.environment.enable()
@@ -181,7 +202,7 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
     for sensorname in conf_sensors:
         _LOGGER.debug("Adding sensor: %s", sensorname)
         sensors.append(Thingy52Sensor(thingy, sensorname, SENSOR_TYPES[sensorname][0],
-                                      friendly_name, SENSOR_TYPES[sensorname][1], SENSOR_TYPES[sensorname][2], mac_address))
+                                      friendly_name, SENSOR_TYPES[sensorname][1], SENSOR_TYPES[sensorname][2], mac_address, thingyInstance.available, thingyInstance))
     
     add_devices(sensors)
     thingy.setDelegate(NotificationDelegate(sensors))
@@ -189,7 +210,7 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
 class Thingy52Sensor(Entity):
     """Representation of a Sensor."""
 
-    def __init__(self, thingy, name, sensor_name, friendly_name, unit_measurement, icon, mac):
+    def __init__(self, thingy, name, sensor_name, friendly_name, unit_measurement, icon, mac, available, instance):
         """Initialize the sensor."""
         self._thingy = thingy
         self._name = name
@@ -199,7 +220,8 @@ class Thingy52Sensor(Entity):
         self._icon = icon
         self._unit_measurement = unit_measurement
         self._mac = mac
-        self._available = False
+        self._available = available
+        self._instance = instance
 
 
     @property
@@ -237,7 +259,7 @@ class Thingy52Sensor(Entity):
         """
         if not self.available:
             try:
-                self.thingy.connect(self.mac)
+                self.instance.connect()
                 self.available = True
             except:
                 _LOGGER.debug("#[%s]: method did not update", self._name
