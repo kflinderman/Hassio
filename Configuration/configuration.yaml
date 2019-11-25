@@ -41,7 +41,7 @@ logger:
     # homeassistant.helpers.entity_component: critical
     # homeassistant.helpers.entity: critical
     # homeassistant.loader: critical
-    # custom_components.thingy52.sensor: debug
+    custom_components.thingy52.sensor: debug
     
 history: !include _structure/history.yaml
 
