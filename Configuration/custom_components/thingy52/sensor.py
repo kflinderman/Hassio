@@ -30,7 +30,7 @@ import time
 # DEPENDENCIES = ['libglib2.0-dev']
 # REQUIREMENTS = ['bluepy']
 
-VERSION = '0.0.3'
+VERSION = '0.1.0'
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -40,9 +40,6 @@ RETRY_INTERVAL_SEC = 5
 
 CONF_GAS_INT = 'gas_interval'
 CONF_REFRESH_INT = 'refresh_interval'
-
-CONNECTED = 'conn'
-DISCONNECTED = 'disc'
 
 DEFAULT_NAME = 'Thingy:'
 DEFAULT_REFRESH_INTERVAL = timedelta(seconds=60)
@@ -152,6 +149,8 @@ class localThingy:
     def environmental(self):
         _LOGGER.debug("#[THINGYSENSOR]: Enabling environment notifications")
         self.thingy.environment.enable()
+        
+        _LOGGER.debug("#[THINGYSENSOR]: Config Variables: %s", self.config_variables)
 
         # Enable notifications for enabled services
         # Update interval 1000ms = 1s
@@ -164,10 +163,10 @@ class localThingy:
         if ( ("co2" in self.config_variables['conf_sensors']) or ("tvoc" in self.config_variables['conf_sensors']) ):
             self.thingy.environment.set_gas_notification(True)
             self.thingy.environment.configure(gas_mode_int=self.config_variables['gas_interval'])
-        if "pressure" in self.self.config_variables['conf_sensors']:
+        if "pressure" in self.config_variables['conf_sensors']:
             self.thingy.environment.set_pressure_notification(True)
             self.thingy.environment.configure(press_int=self.config_variables['notification_interval'])
-        if "battery" in self.self.config_variables['conf_sensors']:
+        if "battery" in self.config_variables['conf_sensors']:
             self.thingy.battery.enable()
             # Battery notification not included in bluepy.thingy52
             e_battery_handle = self.thingy.battery.data.getHandle() # Is this needed?
@@ -195,9 +194,10 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
     
     sensors = []
     thingyInstance = localThingy(config_variables)
+    
+    _LOGGER.debug("#[THINGYSENSOR]: Connecting...")
     thingy = thingyInstance.connect()
 
-    _LOGGER.debug("#[THINGYSENSOR]: Configuring and enabling environment notifications")
     """
     thingy.environment.enable()
 
@@ -283,7 +283,6 @@ class Thingy52Sensor(Entity):
         if not self._instance.available:
             try:
                 self._thingy = self._instance.connect()
-                self._instance.available = True
             except Exception as e:
                 _LOGGER.debug("#[%s]: method did not update - disconnected: %s", self._name, str(e))
                 
