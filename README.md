@@ -20,8 +20,8 @@ Here is a list of all of the devices and services that I use.  I will link to ea
 ### Cameras
 | Component | Integration | Requires Purchase | Part | Comment |
 |-----------|-------------|-------------------|------|---------|
-| [Amcrest](https://amcrest.com/) | [Link](https://www.home-assistant.io/integrations/amcrest/) | Yes | [Outside One]() | |
-| [Amcrest](https://amcrest.com/) | [Link](https://www.home-assistant.io/integrations/amcrest/) | Yes | [Inside One]() | |
+| [Amcrest](https://amcrest.com/) | [Link](https://www.home-assistant.io/integrations/amcrest/) | Yes | [IP3M-943B](https://amcrest.com/amcrest-3mp-bullet-wifi-video-security-ip-camera-pt-ip3m-943b.html) | |
+| [Amcrest](https://amcrest.com/) | [Link](https://www.home-assistant.io/integrations/amcrest/) | Yes | [IP2M-841B](https://amcrest.com/amcrest-1080p-wifi-video-security-ip-camera-pt.html) | |
 | [SkyBell](http://www.skybell.com/) | [Link](https://www.home-assistant.io/integrations/skybell/) | Yes | [SkyBell Trim Plus](http://www.skybell.com/product/skybell-video-doorbell-trim-plus/) | |
 
 ### Device Trackers
