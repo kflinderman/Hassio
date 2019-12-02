@@ -111,6 +111,11 @@
       friendly_name: "Office Bay Value"
       unit_of_measurement: 'probability'
       value_template: "{{ state_attr('binary_sensor.office_bay_occupancy', 'probability') }}"
+      
+    livingbay:
+      friendly_name: "Living Room Bay Value"
+      unit_of_measurement: 'probability'
+      value_template: "{{ state_attr('binary_sensor.living_room_bay_occupancy', 'probability') }}"
 
     since_last_boot_round:
       friendly_name: "Since Last Boot"
