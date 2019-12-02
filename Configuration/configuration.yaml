@@ -41,7 +41,7 @@ logger:
     # homeassistant.helpers.entity_component: critical
     # homeassistant.helpers.entity: critical
     # homeassistant.loader: critical
-    custom_components.thingy52.sensor: debug
+    # custom_components.thingy52.sensor: debug
     
 history: !include _structure/history.yaml
 
@@ -283,8 +283,8 @@ clean_up_snapshots_service:
   token: !secret snapshot_cleanup
   number_of_snapshots_to_keep: 10
 
-panel_iframe:
-  grafana:
-    title: Grafana
-    icon: mdi:chart-timeline
-    url: !secret url6_secret
+# panel_iframe:
+  # grafana:
+    # title: Grafana
+    # icon: mdi:chart-timeline
+    # url: !secret url6_secret
