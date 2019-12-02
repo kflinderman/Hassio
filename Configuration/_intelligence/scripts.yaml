@@ -84,9 +84,10 @@ away_mode:
     - service: input_boolean.turn_off
       data:
         entity_id: input_boolean.all_basement
-    - service: input_boolean.turn_off
-      data:
-        entity_id: input_boolean.all_outside
+    - service: light.turn_off
+      entity_id: light.deck_light
+    - service: switch.turn_off
+      entity_id: switch.deck_ceiling_outlet_switch
     - service: script.turn_on
       entity_id: script.run_vacuum
     - condition: state
