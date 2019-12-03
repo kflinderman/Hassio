@@ -138,10 +138,15 @@ class setupThingy:
         self.thingy52.withDelegate(NotificationDelegate(self.conf_sensors))
 
     def disconnect(self):
-        self.thingy52.environment.set_temperature_notification(False)
-        self.thingy52.environment.set_humidity_notification(False)
-        self.thingy52.environment.set_gas_notification(False)
-        self.thingy52.environment.set_pressure_notification(False)
+        if "temperature" in self.conf_sensors
+            self.thingy52.environment.set_temperature_notification(False)
+        if "humidity" in self.conf_sensors:
+            self.thingy52.environment.set_humidity_notification(False)
+        if (("co2" in self.conf_sensors) or ("tvoc" in self.conf_sensors)):
+            self.thingy52.environment.set_gas_notification(False)
+        if "pressure" in self.conf_sensors:
+            self.thingy52.environment.set_pressure_notification(False)
+            
         self.thingy52.disconnect()
         del self.thingy52
 
