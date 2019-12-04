@@ -92,6 +92,8 @@ async def async_setup_platform(hass, config,
         )
 
     async_add_entities(devs)
+    mainConnection.devices = devs
+    mainConnection.setDel()
 
 
 class setupThingy:
@@ -102,6 +104,7 @@ class setupThingy:
         self.gas_interval = gas_interval
         self.conf_sensors = sensors
         self.thingy52 = None
+        self.devices = None
 
     def connect(self):
         try:
@@ -134,8 +137,11 @@ class setupThingy:
             batt_ccd = self.thingy52.battery.data.getDescriptors(forUUID=CCCD_UUID)[0]
             batt_ccd.write(b"\x01\x00", True)
 
+        return self.thingy52
+
+    def setDel(self):
         _LOGGER.debug("#[THINGYSENSOR]: Enabling delegate")
-        self.thingy52.withDelegate(NotificationDelegate(self.conf_sensors))
+        self.thingy52.withDelegate(NotificationDelegate(self.devices))
 
     def disconnect(self):
         if "temperature" in self.conf_sensors
@@ -160,7 +166,6 @@ class Thingy52Sensor(Entity):
         self._name = name
         self._state = None
         self._available = False
-        self.data = []
 
     async def async_added_to_hass(self):
         """Set initial state."""
