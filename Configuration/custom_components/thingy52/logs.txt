@@ -1,0 +1,457 @@
+2019-12-03 22:54:03 WARNING (MainThread) [homeassistant.loader] You are using a custom integration for config_check which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you do experience issues with Home Assistant.
+2019-12-03 22:54:03 WARNING (MainThread) [homeassistant.loader] You are using a custom integration for alexa_media which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you do experience issues with Home Assistant.
+2019-12-03 22:54:03 WARNING (MainThread) [homeassistant.loader] You are using a custom integration for momentary which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you do experience issues with Home Assistant.
+2019-12-03 22:54:03 WARNING (MainThread) [homeassistant.loader] You are using a custom integration for favicon which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you do experience issues with Home Assistant.
+2019-12-03 22:54:03 WARNING (MainThread) [homeassistant.loader] You are using a custom integration for hacs which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you do experience issues with Home Assistant.
+2019-12-03 22:54:03 WARNING (MainThread) [homeassistant.loader] You are using a custom integration for clean_up_snapshots_service which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you do experience issues with Home Assistant.
+2019-12-03 22:54:03 WARNING (MainThread) [homeassistant.loader] You are using a custom integration for breaking_changes which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you do experience issues with Home Assistant.
+2019-12-03 22:55:46 ERROR (MainThread) [homeassistant.core] Error doing job: Task exception was never retrieved
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/components/notify/__init__.py", line 96, in async_setup_platform
+    notify_service.hass = hass
+AttributeError: 'bool' object has no attribute 'hass'
+2019-12-03 22:56:02 ERROR (MainThread) [homeassistant.core] Error doing job: Task exception was never retrieved
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/aiohttp/client.py", line 502, in _request
+    resp = await req.send(conn)
+  File "/usr/local/lib/python3.7/site-packages/aiohttp/client_reqrep.py", line 629, in send
+    await writer.write_headers(status_line, self.headers)
+  File "/usr/local/lib/python3.7/site-packages/aiohttp/http_writer.py", line 112, in write_headers
+    self._write(buf)
+  File "/usr/local/lib/python3.7/site-packages/aiohttp/http_writer.py", line 67, in _write
+    raise ConnectionResetError('Cannot write to closing transport')
+ConnectionResetError: Cannot write to closing transport
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/alexapy/alexawebsocket.py", line 148, in process_messages
+    await self.on_message(cast(bytes, msg.data))
+  File "/usr/local/lib/python3.7/site-packages/alexapy/alexawebsocket.py", line 230, in on_message
+    await self.msg_callback(message_obj)
+  File "/config/custom_components/alexa_media/__init__.py", line 787, in ws_handler
+    await update_devices(login_obj, no_throttle=True)
+  File "/config/custom_components/alexa_media/__init__.py", line 385, in update_devices
+    auth_info = await AlexaAPI.get_authentication(login_obj)
+  File "/usr/local/lib/python3.7/site-packages/alexapy/alexaapi.py", line 532, in get_authentication
+    query=None
+  File "/usr/local/lib/python3.7/site-packages/alexapy/alexaapi.py", line 134, in _static_request
+    ssl=login._ssl,
+  File "/usr/local/lib/python3.7/site-packages/aiohttp/client.py", line 514, in _request
+    raise ClientOSError(*exc.args) from exc
+aiohttp.client_exceptions.ClientOSError: Cannot write to closing transport
+2019-12-03 22:56:04 ERROR (SyncWorker_5) [homeassistant.components.ios.notify] The notify.ios platform was loaded but no devices exist! Please check the documentation at https://home-assistant.io/ecosystem/ios/notifications/ for more information
+2019-12-03 22:56:09 ERROR (MainThread) [homeassistant.config_entries] Error setting up entry kenny.linderman@gmail.com - amazon.com for media_player
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 192, in async_setup
+    hass, self
+  File "/usr/src/homeassistant/homeassistant/components/media_player/__init__.py", line 340, in async_setup_entry
+    return await hass.data[DOMAIN].async_setup_entry(entry)
+  File "/usr/src/homeassistant/homeassistant/helpers/entity_component.py", line 151, in async_setup_entry
+    raise ValueError("Config entry has already been setup!")
+ValueError: Config entry has already been setup!
+2019-12-03 22:56:09 ERROR (MainThread) [homeassistant.config_entries] Error setting up entry kenny.linderman@gmail.com - amazon.com for alarm_control_panel
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 192, in async_setup
+    hass, self
+  File "/usr/src/homeassistant/homeassistant/components/alarm_control_panel/__init__.py", line 74, in async_setup_entry
+    return await hass.data[DOMAIN].async_setup_entry(entry)
+  File "/usr/src/homeassistant/homeassistant/helpers/entity_component.py", line 151, in async_setup_entry
+    raise ValueError("Config entry has already been setup!")
+ValueError: Config entry has already been setup!
+2019-12-03 22:56:09 ERROR (MainThread) [homeassistant.config_entries] Error setting up entry kenny.linderman@gmail.com - amazon.com for switch
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 192, in async_setup
+    hass, self
+  File "/usr/src/homeassistant/homeassistant/components/switch/__init__.py", line 79, in async_setup_entry
+    return await hass.data[DOMAIN].async_setup_entry(entry)
+  File "/usr/src/homeassistant/homeassistant/helpers/entity_component.py", line 151, in async_setup_entry
+    raise ValueError("Config entry has already been setup!")
+ValueError: Config entry has already been setup!
+2019-12-03 22:56:26 DEBUG (MainThread) [custom_components.thingy52.sensor] Version 0.1.0
+2019-12-03 22:56:26 INFO (MainThread) [custom_components.thingy52.sensor] if you have ANY issues with this, please report them here: https://github.com/kflinderman/Hassio/
+2019-12-03 22:56:27 DEBUG (MainThread) [custom_components.thingy52.sensor] #[THINGYSENSOR]: Enabling environment
+2019-12-03 22:57:31 DEBUG (MainThread) [custom_components.thingy52.sensor] #[THINGYSENSOR]: Enabling delegate
+2019-12-03 22:57:33 ERROR (MainThread) [homeassistant.components.sensor] Setup of platform netgear_enhanced is taking longer than 60 seconds. Startup will proceed without waiting any longer.
+2019-12-03 22:57:33 ERROR (MainThread) [homeassistant.components.sensor] Setup of platform systemmonitor is taking longer than 60 seconds. Startup will proceed without waiting any longer.
+2019-12-03 22:57:33 ERROR (MainThread) [homeassistant.components.sensor] Setup of platform darksky is taking longer than 60 seconds. Startup will proceed without waiting any longer.
+2019-12-03 22:57:33 ERROR (MainThread) [homeassistant.components.sensor] Setup of platform weatheralerts is taking longer than 60 seconds. Startup will proceed without waiting any longer.
+2019-12-03 22:57:33 ERROR (MainThread) [homeassistant.components.sensor] Setup of platform skybell is taking longer than 60 seconds. Startup will proceed without waiting any longer.
+2019-12-03 22:57:33 ERROR (MainThread) [homeassistant.components.sensor] Setup of platform authenticated is taking longer than 60 seconds. Startup will proceed without waiting any longer.
+2019-12-03 22:57:34 ERROR (MainThread) [homeassistant.config_entries] Error setting up entry kenny.linderman@gmail.com - amazon.com for sensor
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/config_entries.py", line 192, in async_setup
+    hass, self
+  File "/usr/src/homeassistant/homeassistant/components/sensor/__init__.py", line 60, in async_setup_entry
+    return await hass.data[DOMAIN].async_setup_entry(entry)
+  File "/usr/src/homeassistant/homeassistant/helpers/entity_component.py", line 151, in async_setup_entry
+    raise ValueError("Config entry has already been setup!")
+ValueError: Config entry has already been setup!
+2019-12-03 22:57:35 ERROR (MainThread) [homeassistant.core] Error doing job: Task exception was never retrieved
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/core.py", line 1211, in async_call
+    raise ServiceNotFound(domain, service) from None
+homeassistant.exceptions.ServiceNotFound: Unable to find service group/set
+2019-12-03 22:58:27 DEBUG (SyncWorker_17) [custom_components.thingy52.sensor] #[Thingy Temperature]: Update
+2019-12-03 22:58:29 DEBUG (SyncWorker_17) [custom_components.thingy52.sensor] # [THINGYSENSOR]: Got notification - 33 (b'\x16\x1b')
+2019-12-03 22:58:29 DEBUG (SyncWorker_17) [custom_components.thingy52.sensor] #[Thingy Temperature]: method did not update: 'temperature'
+2019-12-03 22:58:29 DEBUG (SyncWorker_17) [custom_components.thingy52.sensor] #[Thingy Temperature]: method update, state is None
+2019-12-03 22:58:32 ERROR (MainThread) [homeassistant.helpers.entity] Update for sensor.ssl_certificate_expiry fails
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 270, in async_update_ha_state
+    await self.async_device_update()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 450, in async_device_update
+    await self.hass.async_add_executor_job(self.update)
+  File "/usr/local/lib/python3.7/concurrent/futures/thread.py", line 57, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/usr/src/homeassistant/homeassistant/components/cert_expiry/sensor.py", line 122, in update
+    cert = get_cert(self.server_name, self.server_port)
+  File "/usr/src/homeassistant/homeassistant/components/cert_expiry/helper.py", line 12, in get_cert
+    with socket.create_connection(address, timeout=TIMEOUT) as sock:
+  File "/usr/local/lib/python3.7/socket.py", line 727, in create_connection
+    raise err
+  File "/usr/local/lib/python3.7/socket.py", line 716, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+2019-12-03 22:58:36 ERROR (MainThread) [homeassistant.helpers.entity] Update for sensor.thingy_humidity fails
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 270, in async_update_ha_state
+    await self.async_device_update()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 450, in async_device_update
+    await self.hass.async_add_executor_job(self.update)
+  File "/usr/local/lib/python3.7/concurrent/futures/thread.py", line 57, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/config/custom_components/thingy52/sensor.py", line 212, in update
+    if CONNECTED in self.thingy.getState():
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 471, in getState
+    status = self.status()
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 379, in status
+    return self._waitResp(['stat'])
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 375, in _waitResp
+    raise BTLEInternalError("Unexpected response (%s)" % respType, resp)
+bluepy.btle.BTLEInternalError: Unexpected response (ntfy)
+2019-12-03 22:58:38 ERROR (MainThread) [homeassistant.helpers.entity] Update for sensor.thingy_carbon_dioxide fails
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 270, in async_update_ha_state
+    await self.async_device_update()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 450, in async_device_update
+    await self.hass.async_add_executor_job(self.update)
+  File "/usr/local/lib/python3.7/concurrent/futures/thread.py", line 57, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/config/custom_components/thingy52/sensor.py", line 212, in update
+    if CONNECTED in self.thingy.getState():
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 471, in getState
+    status = self.status()
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 379, in status
+    return self._waitResp(['stat'])
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 375, in _waitResp
+    raise BTLEInternalError("Unexpected response (%s)" % respType, resp)
+bluepy.btle.BTLEInternalError: Unexpected response (ntfy)
+2019-12-03 22:58:40 ERROR (MainThread) [homeassistant.helpers.entity] Update for sensor.thingy_air_quality fails
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 270, in async_update_ha_state
+    await self.async_device_update()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 450, in async_device_update
+    await self.hass.async_add_executor_job(self.update)
+  File "/usr/local/lib/python3.7/concurrent/futures/thread.py", line 57, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/config/custom_components/thingy52/sensor.py", line 212, in update
+    if CONNECTED in self.thingy.getState():
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 471, in getState
+    status = self.status()
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 379, in status
+    return self._waitResp(['stat'])
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 375, in _waitResp
+    raise BTLEInternalError("Unexpected response (%s)" % respType, resp)
+bluepy.btle.BTLEInternalError: Unexpected response (ntfy)
+2019-12-03 22:58:41 DEBUG (SyncWorker_10) [custom_components.thingy52.sensor] #[Thingy Atmospheric Pressure]: Update
+2019-12-03 22:58:46 DEBUG (SyncWorker_10) [custom_components.thingy52.sensor] #[Thingy Atmospheric Pressure]: method update, state is None
+2019-12-03 22:58:48 DEBUG (SyncWorker_10) [custom_components.thingy52.sensor] #[Thingy Battery Level]: Update
+2019-12-03 22:58:54 DEBUG (SyncWorker_10) [custom_components.thingy52.sensor] #[Thingy Battery Level]: method update, state is None
+2019-12-03 22:59:04 ERROR (MainThread) [homeassistant.helpers.entity] Update for sensor.thingy_atmospheric_pressure fails
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 270, in async_update_ha_state
+    await self.async_device_update()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 450, in async_device_update
+    await self.hass.async_add_executor_job(self.update)
+  File "/usr/local/lib/python3.7/concurrent/futures/thread.py", line 57, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/config/custom_components/thingy52/sensor.py", line 212, in update
+    if CONNECTED in self.thingy.getState():
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 471, in getState
+    status = self.status()
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 379, in status
+    return self._waitResp(['stat'])
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 375, in _waitResp
+    raise BTLEInternalError("Unexpected response (%s)" % respType, resp)
+bluepy.btle.BTLEInternalError: Unexpected response (ntfy)
+2019-12-03 22:59:06 ERROR (MainThread) [homeassistant.helpers.entity] Update for sensor.thingy_air_quality fails
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 270, in async_update_ha_state
+    await self.async_device_update()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 450, in async_device_update
+    await self.hass.async_add_executor_job(self.update)
+  File "/usr/local/lib/python3.7/concurrent/futures/thread.py", line 57, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/config/custom_components/thingy52/sensor.py", line 212, in update
+    if CONNECTED in self.thingy.getState():
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 471, in getState
+    status = self.status()
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 379, in status
+    return self._waitResp(['stat'])
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 375, in _waitResp
+    raise BTLEInternalError("Unexpected response (%s)" % respType, resp)
+bluepy.btle.BTLEInternalError: Unexpected response (ntfy)
+2019-12-03 22:59:06 DEBUG (SyncWorker_15) [custom_components.thingy52.sensor] #[Thingy Temperature]: Update
+2019-12-03 22:59:11 DEBUG (SyncWorker_15) [custom_components.thingy52.sensor] #[Thingy Temperature]: method update, state is None
+2019-12-03 22:59:11 DEBUG (SyncWorker_12) [custom_components.thingy52.sensor] #[Thingy Humidity]: Update
+2019-12-03 22:59:16 DEBUG (SyncWorker_12) [custom_components.thingy52.sensor] #[Thingy Humidity]: method update, state is None
+2019-12-03 22:59:16 DEBUG (SyncWorker_17) [custom_components.thingy52.sensor] #[Thingy Carbon Dioxide]: Update
+2019-12-03 22:59:21 DEBUG (SyncWorker_17) [custom_components.thingy52.sensor] #[Thingy Carbon Dioxide]: method update, state is None
+2019-12-03 22:59:21 DEBUG (SyncWorker_19) [custom_components.thingy52.sensor] #[Thingy Battery Level]: Update
+2019-12-03 22:59:26 DEBUG (SyncWorker_19) [custom_components.thingy52.sensor] #[Thingy Battery Level]: method update, state is None
+2019-12-03 22:59:30 ERROR (MainThread) [homeassistant.helpers.entity] Update for sensor.thingy_temperature fails
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 270, in async_update_ha_state
+    await self.async_device_update()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 450, in async_device_update
+    await self.hass.async_add_executor_job(self.update)
+  File "/usr/local/lib/python3.7/concurrent/futures/thread.py", line 57, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/config/custom_components/thingy52/sensor.py", line 212, in update
+    if CONNECTED in self.thingy.getState():
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 471, in getState
+    status = self.status()
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 379, in status
+    return self._waitResp(['stat'])
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 375, in _waitResp
+    raise BTLEInternalError("Unexpected response (%s)" % respType, resp)
+bluepy.btle.BTLEInternalError: Unexpected response (ntfy)
+2019-12-03 22:59:30 ERROR (MainThread) [homeassistant.helpers.entity] Update for sensor.thingy_battery_level fails
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 270, in async_update_ha_state
+    await self.async_device_update()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 450, in async_device_update
+    await self.hass.async_add_executor_job(self.update)
+  File "/usr/local/lib/python3.7/concurrent/futures/thread.py", line 57, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/config/custom_components/thingy52/sensor.py", line 212, in update
+    if CONNECTED in self.thingy.getState():
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 471, in getState
+    status = self.status()
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 379, in status
+    return self._waitResp(['stat'])
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 375, in _waitResp
+    raise BTLEInternalError("Unexpected response (%s)" % respType, resp)
+bluepy.btle.BTLEInternalError: Unexpected response (ntfy)
+2019-12-03 22:59:30 ERROR (MainThread) [homeassistant.helpers.entity] Update for sensor.thingy_air_quality fails
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 270, in async_update_ha_state
+    await self.async_device_update()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 450, in async_device_update
+    await self.hass.async_add_executor_job(self.update)
+  File "/usr/local/lib/python3.7/concurrent/futures/thread.py", line 57, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/config/custom_components/thingy52/sensor.py", line 212, in update
+    if CONNECTED in self.thingy.getState():
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 471, in getState
+    status = self.status()
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 379, in status
+    return self._waitResp(['stat'])
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 375, in _waitResp
+    raise BTLEInternalError("Unexpected response (%s)" % respType, resp)
+bluepy.btle.BTLEInternalError: Unexpected response (ntfy)
+2019-12-03 22:59:30 DEBUG (SyncWorker_1) [custom_components.thingy52.sensor] #[Thingy Atmospheric Pressure]: Update
+2019-12-03 22:59:35 DEBUG (SyncWorker_1) [custom_components.thingy52.sensor] #[Thingy Atmospheric Pressure]: method update, state is None
+2019-12-03 22:59:35 DEBUG (SyncWorker_12) [custom_components.thingy52.sensor] #[Thingy Carbon Dioxide]: Update
+2019-12-03 22:59:35 DEBUG (SyncWorker_12) [custom_components.thingy52.sensor] # [THINGYSENSOR]: Got notification - 42 (b'\x00\x00\x00\x00')
+2019-12-03 22:59:35 DEBUG (SyncWorker_12) [custom_components.thingy52.sensor] #[Thingy Carbon Dioxide]: method update, state is None
+2019-12-03 22:59:35 DEBUG (SyncWorker_0) [custom_components.thingy52.sensor] #[Thingy Humidity]: Update
+2019-12-03 22:59:40 DEBUG (SyncWorker_0) [custom_components.thingy52.sensor] #[Thingy Humidity]: method update, state is None
+2019-12-03 23:00:01 DEBUG (SyncWorker_17) [custom_components.thingy52.sensor] #[Thingy Atmospheric Pressure]: Update
+2019-12-03 23:00:06 DEBUG (SyncWorker_17) [custom_components.thingy52.sensor] #[Thingy Atmospheric Pressure]: method update, state is None
+2019-12-03 23:00:06 DEBUG (SyncWorker_8) [custom_components.thingy52.sensor] #[Thingy Battery Level]: Update
+2019-12-03 23:00:11 DEBUG (SyncWorker_8) [custom_components.thingy52.sensor] #[Thingy Battery Level]: method update, state is None
+2019-12-03 23:00:11 DEBUG (SyncWorker_13) [custom_components.thingy52.sensor] #[Thingy Temperature]: Update
+2019-12-03 23:00:16 DEBUG (SyncWorker_13) [custom_components.thingy52.sensor] #[Thingy Temperature]: method update, state is None
+2019-12-03 23:00:16 DEBUG (SyncWorker_8) [custom_components.thingy52.sensor] #[Thingy Humidity]: Update
+2019-12-03 23:00:21 DEBUG (SyncWorker_8) [custom_components.thingy52.sensor] #[Thingy Humidity]: method update, state is None
+2019-12-03 23:00:21 DEBUG (SyncWorker_2) [custom_components.thingy52.sensor] #[Thingy Carbon Dioxide]: Update
+2019-12-03 23:00:26 DEBUG (SyncWorker_2) [custom_components.thingy52.sensor] #[Thingy Carbon Dioxide]: method update, state is None
+2019-12-03 23:00:26 DEBUG (SyncWorker_19) [custom_components.thingy52.sensor] #[Thingy Air Quality]: Update
+2019-12-03 23:00:29 DEBUG (SyncWorker_19) [custom_components.thingy52.sensor] # [THINGYSENSOR]: Got notification - 33 (b'\x16\x19')
+2019-12-03 23:00:29 DEBUG (SyncWorker_19) [custom_components.thingy52.sensor] #[Thingy Air Quality]: method did not update: 'temperature'
+2019-12-03 23:00:29 DEBUG (SyncWorker_19) [custom_components.thingy52.sensor] #[Thingy Air Quality]: method update, state is None
+2019-12-03 23:00:32 ERROR (MainThread) [homeassistant.helpers.entity] Update for sensor.thingy_air_quality fails
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 270, in async_update_ha_state
+    await self.async_device_update()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 450, in async_device_update
+    await self.hass.async_add_executor_job(self.update)
+  File "/usr/local/lib/python3.7/concurrent/futures/thread.py", line 57, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/config/custom_components/thingy52/sensor.py", line 212, in update
+    if CONNECTED in self.thingy.getState():
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 471, in getState
+    status = self.status()
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 379, in status
+    return self._waitResp(['stat'])
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 375, in _waitResp
+    raise BTLEInternalError("Unexpected response (%s)" % respType, resp)
+bluepy.btle.BTLEInternalError: Unexpected response (ntfy)
+2019-12-03 23:00:32 ERROR (MainThread) [homeassistant.helpers.entity] Update for sensor.thingy_atmospheric_pressure fails
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 270, in async_update_ha_state
+    await self.async_device_update()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 450, in async_device_update
+    await self.hass.async_add_executor_job(self.update)
+  File "/usr/local/lib/python3.7/concurrent/futures/thread.py", line 57, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/config/custom_components/thingy52/sensor.py", line 212, in update
+    if CONNECTED in self.thingy.getState():
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 471, in getState
+    status = self.status()
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 379, in status
+    return self._waitResp(['stat'])
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 375, in _waitResp
+    raise BTLEInternalError("Unexpected response (%s)" % respType, resp)
+bluepy.btle.BTLEInternalError: Unexpected response (ntfy)
+2019-12-03 23:00:32 DEBUG (SyncWorker_2) [custom_components.thingy52.sensor] #[Thingy Battery Level]: Update
+2019-12-03 23:00:37 DEBUG (SyncWorker_2) [custom_components.thingy52.sensor] #[Thingy Battery Level]: method update, state is None
+2019-12-03 23:00:37 DEBUG (SyncWorker_14) [custom_components.thingy52.sensor] #[Thingy Carbon Dioxide]: Update
+2019-12-03 23:00:38 DEBUG (SyncWorker_14) [custom_components.thingy52.sensor] # [THINGYSENSOR]: Got notification - 42 (b'\x90\x01\x00\x00')
+2019-12-03 23:00:38 DEBUG (SyncWorker_14) [custom_components.thingy52.sensor] #[Thingy Carbon Dioxide]: method update, state is None
+2019-12-03 23:00:38 DEBUG (SyncWorker_19) [custom_components.thingy52.sensor] #[Thingy Temperature]: Update
+2019-12-03 23:00:43 DEBUG (SyncWorker_19) [custom_components.thingy52.sensor] #[Thingy Temperature]: method update, state is None
+2019-12-03 23:00:43 DEBUG (SyncWorker_3) [custom_components.thingy52.sensor] #[Thingy Humidity]: Update
+2019-12-03 23:00:48 DEBUG (SyncWorker_3) [custom_components.thingy52.sensor] #[Thingy Humidity]: method update, state is None
+2019-12-03 23:01:03 DEBUG (SyncWorker_5) [custom_components.thingy52.sensor] #[Thingy Humidity]: Update
+2019-12-03 23:01:08 DEBUG (SyncWorker_5) [custom_components.thingy52.sensor] #[Thingy Humidity]: method update, state is None
+2019-12-03 23:01:08 DEBUG (SyncWorker_8) [custom_components.thingy52.sensor] #[Thingy Battery Level]: Update
+2019-12-03 23:01:13 DEBUG (SyncWorker_8) [custom_components.thingy52.sensor] #[Thingy Battery Level]: method update, state is None
+2019-12-03 23:01:13 DEBUG (SyncWorker_4) [custom_components.thingy52.sensor] #[Thingy Air Quality]: Update
+2019-12-03 23:01:18 DEBUG (SyncWorker_4) [custom_components.thingy52.sensor] #[Thingy Air Quality]: method update, state is None
+2019-12-03 23:01:18 DEBUG (SyncWorker_1) [custom_components.thingy52.sensor] #[Thingy Atmospheric Pressure]: Update
+2019-12-03 23:01:23 DEBUG (SyncWorker_1) [custom_components.thingy52.sensor] #[Thingy Atmospheric Pressure]: method update, state is None
+2019-12-03 23:01:23 DEBUG (SyncWorker_4) [custom_components.thingy52.sensor] #[Thingy Temperature]: Update
+2019-12-03 23:01:28 DEBUG (SyncWorker_4) [custom_components.thingy52.sensor] #[Thingy Temperature]: method update, state is None
+2019-12-03 23:01:28 DEBUG (SyncWorker_9) [custom_components.thingy52.sensor] #[Thingy Carbon Dioxide]: Update
+2019-12-03 23:01:29 DEBUG (SyncWorker_9) [custom_components.thingy52.sensor] # [THINGYSENSOR]: Got notification - 33 (b'\x16.')
+2019-12-03 23:01:29 DEBUG (SyncWorker_9) [custom_components.thingy52.sensor] #[Thingy Carbon Dioxide]: method did not update: 'temperature'
+2019-12-03 23:01:29 DEBUG (SyncWorker_9) [custom_components.thingy52.sensor] #[Thingy Carbon Dioxide]: method update, state is None
+2019-12-03 23:01:34 ERROR (MainThread) [homeassistant.helpers.entity] Update for sensor.thingy_temperature fails
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 270, in async_update_ha_state
+    await self.async_device_update()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 450, in async_device_update
+    await self.hass.async_add_executor_job(self.update)
+  File "/usr/local/lib/python3.7/concurrent/futures/thread.py", line 57, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/config/custom_components/thingy52/sensor.py", line 212, in update
+    if CONNECTED in self.thingy.getState():
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 471, in getState
+    status = self.status()
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 379, in status
+    return self._waitResp(['stat'])
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 375, in _waitResp
+    raise BTLEInternalError("Unexpected response (%s)" % respType, resp)
+bluepy.btle.BTLEInternalError: Unexpected response (ntfy)
+2019-12-03 23:01:34 ERROR (MainThread) [homeassistant.helpers.entity] Update for sensor.thingy_air_quality fails
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 270, in async_update_ha_state
+    await self.async_device_update()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 450, in async_device_update
+    await self.hass.async_add_executor_job(self.update)
+  File "/usr/local/lib/python3.7/concurrent/futures/thread.py", line 57, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/config/custom_components/thingy52/sensor.py", line 212, in update
+    if CONNECTED in self.thingy.getState():
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 471, in getState
+    status = self.status()
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 379, in status
+    return self._waitResp(['stat'])
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 375, in _waitResp
+    raise BTLEInternalError("Unexpected response (%s)" % respType, resp)
+bluepy.btle.BTLEInternalError: Unexpected response (ntfy)
+2019-12-03 23:01:34 DEBUG (SyncWorker_1) [custom_components.thingy52.sensor] #[Thingy Atmospheric Pressure]: Update
+2019-12-03 23:01:40 DEBUG (SyncWorker_1) [custom_components.thingy52.sensor] #[Thingy Atmospheric Pressure]: method update, state is None
+2019-12-03 23:01:40 DEBUG (SyncWorker_12) [custom_components.thingy52.sensor] #[Thingy Battery Level]: Update
+2019-12-03 23:01:41 DEBUG (SyncWorker_12) [custom_components.thingy52.sensor] # [THINGYSENSOR]: Got notification - 42 (b'\x90\x01\x00\x00')
+2019-12-03 23:01:41 DEBUG (SyncWorker_12) [custom_components.thingy52.sensor] #[Thingy Battery Level]: method update, state is None
+2019-12-03 23:01:41 DEBUG (SyncWorker_15) [custom_components.thingy52.sensor] #[Thingy Carbon Dioxide]: Update
+2019-12-03 23:01:46 DEBUG (SyncWorker_15) [custom_components.thingy52.sensor] #[Thingy Carbon Dioxide]: method update, state is None
+2019-12-03 23:01:46 DEBUG (SyncWorker_1) [custom_components.thingy52.sensor] #[Thingy Humidity]: Update
+2019-12-03 23:01:51 DEBUG (SyncWorker_1) [custom_components.thingy52.sensor] #[Thingy Humidity]: method update, state is None
+2019-12-03 23:02:05 DEBUG (SyncWorker_1) [custom_components.thingy52.sensor] #[Thingy Carbon Dioxide]: Update
+2019-12-03 23:02:10 DEBUG (SyncWorker_1) [custom_components.thingy52.sensor] #[Thingy Carbon Dioxide]: method update, state is None
+2019-12-03 23:02:10 DEBUG (SyncWorker_0) [custom_components.thingy52.sensor] #[Thingy Battery Level]: Update
+2019-12-03 23:02:15 DEBUG (SyncWorker_0) [custom_components.thingy52.sensor] #[Thingy Battery Level]: method update, state is None
+2019-12-03 23:02:15 DEBUG (SyncWorker_1) [custom_components.thingy52.sensor] #[Thingy Humidity]: Update
+2019-12-03 23:02:20 DEBUG (SyncWorker_1) [custom_components.thingy52.sensor] #[Thingy Humidity]: method update, state is None
+2019-12-03 23:02:20 DEBUG (SyncWorker_5) [custom_components.thingy52.sensor] #[Thingy Air Quality]: Update
+2019-12-03 23:02:25 DEBUG (SyncWorker_5) [custom_components.thingy52.sensor] #[Thingy Air Quality]: method update, state is None
+2019-12-03 23:02:25 DEBUG (SyncWorker_17) [custom_components.thingy52.sensor] #[Thingy Atmospheric Pressure]: Update
+2019-12-03 23:02:29 DEBUG (SyncWorker_17) [custom_components.thingy52.sensor] # [THINGYSENSOR]: Got notification - 33 (b'\x16\x1b')
+2019-12-03 23:02:29 DEBUG (SyncWorker_17) [custom_components.thingy52.sensor] #[Thingy Atmospheric Pressure]: method did not update: 'temperature'
+2019-12-03 23:02:29 DEBUG (SyncWorker_17) [custom_components.thingy52.sensor] #[Thingy Atmospheric Pressure]: method update, state is None
+2019-12-03 23:02:29 ERROR (MainThread) [homeassistant.helpers.entity] Update for sensor.thingy_temperature fails
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 270, in async_update_ha_state
+    await self.async_device_update()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 450, in async_device_update
+    await self.hass.async_add_executor_job(self.update)
+  File "/usr/local/lib/python3.7/concurrent/futures/thread.py", line 57, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/config/custom_components/thingy52/sensor.py", line 212, in update
+    if CONNECTED in self.thingy.getState():
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 471, in getState
+    status = self.status()
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 379, in status
+    return self._waitResp(['stat'])
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 375, in _waitResp
+    raise BTLEInternalError("Unexpected response (%s)" % respType, resp)
+bluepy.btle.BTLEInternalError: Unexpected response (ntfy)
+2019-12-03 23:02:36 DEBUG (SyncWorker_15) [custom_components.thingy52.sensor] #[Thingy Temperature]: Update
+2019-12-03 23:02:36 DEBUG (SyncWorker_15) [custom_components.thingy52.sensor] # [THINGYSENSOR]: Got notification - 36 (b'\xe0\x03\x00\x00[')
+2019-12-03 23:02:36 DEBUG (SyncWorker_15) [custom_components.thingy52.sensor] #[Thingy Temperature]: method did not update: 'pressure'
+2019-12-03 23:02:36 DEBUG (SyncWorker_15) [custom_components.thingy52.sensor] #[Thingy Temperature]: method update, state is None
+2019-12-03 23:02:36 DEBUG (SyncWorker_3) [custom_components.thingy52.sensor] #[Thingy Battery Level]: Update
+2019-12-03 23:02:41 DEBUG (SyncWorker_3) [custom_components.thingy52.sensor] #[Thingy Battery Level]: method update, state is None
+2019-12-03 23:02:41 DEBUG (SyncWorker_2) [custom_components.thingy52.sensor] #[Thingy Carbon Dioxide]: Update
+2019-12-03 23:02:44 DEBUG (SyncWorker_2) [custom_components.thingy52.sensor] # [THINGYSENSOR]: Got notification - 42 (b'\x90\x01\x00\x00')
+2019-12-03 23:02:44 DEBUG (SyncWorker_2) [custom_components.thingy52.sensor] #[Thingy Carbon Dioxide]: method update, state is None
+2019-12-03 23:02:44 DEBUG (SyncWorker_5) [custom_components.thingy52.sensor] #[Thingy Air Quality]: Update
+2019-12-03 23:02:49 DEBUG (SyncWorker_5) [custom_components.thingy52.sensor] #[Thingy Air Quality]: method update, state is None
+2019-12-03 23:02:49 DEBUG (SyncWorker_1) [custom_components.thingy52.sensor] #[Thingy Humidity]: Update
+2019-12-03 23:02:54 DEBUG (SyncWorker_1) [custom_components.thingy52.sensor] #[Thingy Humidity]: method update, state is None
+2019-12-03 23:02:54 DEBUG (SyncWorker_9) [custom_components.thingy52.sensor] #[Thingy Atmospheric Pressure]: Update
+2019-12-03 23:02:59 DEBUG (SyncWorker_9) [custom_components.thingy52.sensor] #[Thingy Atmospheric Pressure]: method update, state is None
+2019-12-03 23:03:07 DEBUG (SyncWorker_16) [custom_components.thingy52.sensor] #[Thingy Battery Level]: Update
+2019-12-03 23:03:12 DEBUG (SyncWorker_16) [custom_components.thingy52.sensor] #[Thingy Battery Level]: method update, state is None
+2019-12-03 23:03:12 DEBUG (SyncWorker_0) [custom_components.thingy52.sensor] #[Thingy Atmospheric Pressure]: Update
+2019-12-03 23:03:17 DEBUG (SyncWorker_0) [custom_components.thingy52.sensor] #[Thingy Atmospheric Pressure]: method update, state is None
+2019-12-03 23:03:17 DEBUG (SyncWorker_14) [custom_components.thingy52.sensor] #[Thingy Carbon Dioxide]: Update
+2019-12-03 23:03:22 DEBUG (SyncWorker_14) [custom_components.thingy52.sensor] #[Thingy Carbon Dioxide]: method update, state is None
+2019-12-03 23:03:22 DEBUG (SyncWorker_15) [custom_components.thingy52.sensor] #[Thingy Humidity]: Update
+2019-12-03 23:03:27 DEBUG (SyncWorker_15) [custom_components.thingy52.sensor] #[Thingy Humidity]: method update, state is None
+2019-12-03 23:03:27 DEBUG (SyncWorker_18) [custom_components.thingy52.sensor] #[Thingy Air Quality]: Update
+2019-12-03 23:03:29 DEBUG (SyncWorker_18) [custom_components.thingy52.sensor] # [THINGYSENSOR]: Got notification - 33 (b'\x16\x07')
+2019-12-03 23:03:29 DEBUG (SyncWorker_18) [custom_components.thingy52.sensor] #[Thingy Air Quality]: method did not update: 'temperature'
+2019-12-03 23:03:29 DEBUG (SyncWorker_18) [custom_components.thingy52.sensor] #[Thingy Air Quality]: method update, state is None
+2019-12-03 23:03:29 ERROR (MainThread) [homeassistant.helpers.entity] Update for sensor.thingy_temperature fails
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 270, in async_update_ha_state
+    await self.async_device_update()
+  File "/usr/src/homeassistant/homeassistant/helpers/entity.py", line 450, in async_device_update
+    await self.hass.async_add_executor_job(self.update)
+  File "/usr/local/lib/python3.7/concurrent/futures/thread.py", line 57, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/config/custom_components/thingy52/sensor.py", line 212, in update
+    if CONNECTED in self.thingy.getState():
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 471, in getState
+    status = self.status()
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 379, in status
+    return self._waitResp(['stat'])
+  File "/usr/local/lib/python3.7/site-packages/bluepy/btle.py", line 375, in _waitResp
+    raise BTLEInternalError("Unexpected response (%s)" % respType, resp)
+bluepy.btle.BTLEInternalError: Unexpected response (ntfy)
