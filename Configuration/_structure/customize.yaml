@@ -85,6 +85,10 @@ sensor.living_room_light_level:
   icon: mdi:flashlight
 sensor.office_light_level:
   icon: mdi:flashlight
+sensor.average_download_speed:
+  icon: mdi:download
+sensor.average_upload_speed:
+  icon: mdi:upload
   
   ##### Lights #####
 
@@ -158,10 +162,10 @@ sensor.kitchen_luminance:
 switch.outlet:
   # friendly_name: Spooky Lights
   # icon: mdi:ghost
-#  friendly_name: Christmas Lights
-#  icon: mdi:pine-tree
- friendly_name: Basement Floor Light
- icon: mdi:floor-lamp
+  friendly_name: Christmas Lights
+  icon: mdi:pine-tree
+  # friendly_name: Basement Floor Light
+  # icon: mdi:floor-lamp
 switch.airhockey:
   friendly_name: Air Hockey Table
   icon: mdi:trophy

@@ -618,8 +618,8 @@
   action:
   - service: homeassistant.turn_off
     entity_id: group.outside
-  - service: homeassistant.turn_off
-    entity_id: group.holiday
+  # - service: homeassistant.turn_off
+    # entity_id: group.holiday
     
 - id: vacation_bedtime
   alias: Vacation Bedtime
@@ -1596,7 +1596,7 @@
   trigger:
     - platform: numeric_state
       entity_id: sensor.vacuum_area
-      above: 40
+      above: 35
   action:
     - service: input_boolean.turn_off
       entity_id: input_boolean.vacuum_daily

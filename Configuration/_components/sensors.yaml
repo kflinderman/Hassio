@@ -51,6 +51,31 @@
   # name: 'Sun Room Light'
   # entities:
    # - sensor.money_plant_light_intensity
+- platform: average
+  name: Average Download Speed
+  duration:
+    hours: 1
+  entities:
+    - sensor.my_computer_network_download_mbps
+- platform: average
+  name: Average Upload Speed
+  duration:
+    hours: 1
+  entities:
+    - sensor.my_computer_network_upload_mbps
+- platform: netgear_enhanced
+  host: !secret router_ip
+  username: !secret wifi_username
+  password: !secret wifi_password
+  resources:
+    - firmware
+    # - traffic_meter
+    # - traffic_meter_on
+    # - traffic_meter_options
+    - info
+    - speed_test_result
+    - 2g_wifi_info
+    - 5g_wifi_info
   
   ##### Template Sensors #####
   
@@ -165,6 +190,16 @@
       device_class: battery
       unit_of_measurement: '%'
 
+    my_computer_network_download_mbps:
+      friendly_name: "My Computer - Network Download"
+      value_template: "{{ (states('sensor.my_computer_network_download')|int / 1000000) | round(3) }}"
+      unit_of_measurement: 'Mbps'
+      
+    my_computer_network_upload_mbps:
+      friendly_name: "My Computer - Network Upload"
+      value_template: "{{ (states('sensor.my_computer_network_upload')|int / 1000000) | round(3) }}"
+      unit_of_measurement: 'Mbps'
+      
     pickup_day:
       friendly_name: "Pickup Day"
       value_template: >-
@@ -521,6 +556,67 @@
   state_topic: "flora/C4:7C:8D:6A:E5:ED/conductivity"
   unit_of_measurement: 'μS/cm'
   expire_after: 2000
+- platform: mqtt
+  name: "My Computer - Current User"
+  state_topic: "iotlink/workgroup/desktop-q6f6v0s/windows-monitor/stats/system/current-user"
+  unit_of_measurement: ''
+  icon: mdi:account
+  value_template: "{{ value }}"
+  availability_topic: "iotlink/workgroup/desktop-q6f6v0s/lwt"
+  payload_available: "ON"
+  payload_not_available: "OFF"
+  qos: 1
+- platform: mqtt
+  name: "My Computer - Idle Time"
+  state_topic: "iotlink/workgroup/desktop-q6f6v0s/windows-monitor/stats/system/idle-time"
+  unit_of_measurement: 'seconds'
+  icon: mdi:timer
+  value_template: "{{ value }}"
+  availability_topic: "iotlink/workgroup/desktop-q6f6v0s/lwt"
+  payload_available: "ON"
+  payload_not_available: "OFF"
+  qos: 1
+- platform: mqtt
+  name: "My Computer - CPU Usage"
+  state_topic: "iotlink/workgroup/desktop-q6f6v0s/windows-monitor/stats/cpu/usage"
+  unit_of_measurement: '%'
+  icon: mdi:speedometer
+  value_template: "{{ value }}"
+  availability_topic: "iotlink/workgroup/desktop-q6f6v0s/lwt"
+  payload_available: "ON"
+  payload_not_available: "OFF"
+  qos: 1
+- platform: mqtt
+  name: "My Computer - RAM Usage"
+  state_topic: "iotlink/workgroup/desktop-q6f6v0s/windows-monitor/stats/memory/usage"
+  unit_of_measurement: '%'
+  icon: mdi:memory
+  value_template: "{{ value }}"
+  availability_topic: "iotlink/workgroup/desktop-q6f6v0s/lwt"
+  payload_available: "ON"
+  payload_not_available: "OFF"
+  qos: 1
+- platform: mqtt
+  name: "My Computer - Network Upload"
+  state_topic: "iotlink/workgroup/desktop-q6f6v0s/windows-monitor/stats/network/0/bytes-sent-per-second"
+  unit_of_measurement: 'bps'
+  icon: mdi:speedometer
+  value_template: "{{ value }}"
+  availability_topic: "iotlink/workgroup/desktop-q6f6v0s/lwt"
+  payload_available: "ON"
+  payload_not_available: "OFF"
+  qos: 1
+- platform: mqtt
+  name: "My Computer - Network Download"
+  state_topic: "iotlink/workgroup/desktop-q6f6v0s/windows-monitor/stats/network/0/bytes-received-per-second"
+  unit_of_measurement: 'bps'
+  icon: mdi:speedometer
+  value_template: "{{ value }}"
+  availability_topic: "iotlink/workgroup/desktop-q6f6v0s/lwt"
+  payload_available: "ON"
+  payload_not_available: "OFF"
+  qos: 1
+
   
   ##### History Stats #####
   

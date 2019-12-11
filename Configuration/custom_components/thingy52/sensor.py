@@ -30,7 +30,7 @@ import time
 # DEPENDENCIES = ['libglib2.0-dev']
 # REQUIREMENTS = ['bluepy']
 
-VERSION = '0.0.3'
+VERSION = '0.1.0'
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -130,25 +130,81 @@ class NotificationDelegate(btle.DefaultDelegate):
         return i 
 
 class localThingy:
-    def __init__(self, mac, friendly_name):
-        self.mac = mac
+    def __init__(self, mac_address, conf_sensors, friendly_name, refresh_interval, gas_interval, notification_interval):
+        self.mac = mac_address
+        self.conf_sensors = conf_sensors
         self.friendly_name = friendly_name
+        self.refresh_interval = refresh_interval
+        self.gas_interval = gas_interval
+        self.notification_interval = notification_interval
         self.thingy = None
+        self.sensors = None
         self.available = None
+        self.environment_set = False
+        self.delegate_set = False
+        self.first_time = True
+        self.connecting = False
         
     def connect(self):
+        self.connecting = True
         try:
             self.thingy = thingy52.Thingy52(self.mac)
             self.available = True
+            _LOGGER.debug("#[THINGYSENSOR]: Connected")
+            
+            # if not self.environment_set:
+            self.environmental()
         except Exception as e:
             _LOGGER.debug("#[THINGYSENSOR]: Unable to connect to Thingy: %s", str(e))
             self.available = False
             
+        self.connecting = False
         return self.thingy
+        
+    def setDel(self):
+        _LOGGER.debug("#[THINGYSENSOR]: Enabling notifications - %s", self.sensors)
+        self.thingy.setDelegate(NotificationDelegate(self.sensors))
+        self.delegate_set = True
+        
+    def environmental(self):
+        _LOGGER.debug("#[THINGYSENSOR]: Enabling environment - %s", self.conf_sensors)
+        global e_battery_handle
+        self.thingy.environment.enable()
+
+        # Enable notifications for enabled services
+        # Update interval 1000ms = 1s
+        if "temperature" in self.conf_sensors:
+            self.thingy.environment.set_temperature_notification(True)
+            self.thingy.environment.configure(temp_int=self.notification_interval)
+            _LOGGER.debug("#[THINGYSENSOR]: Temp Set")
+        if "humidity" in self.conf_sensors:
+            self.thingy.environment.set_humidity_notification(True)
+            self.thingy.environment.configure(humid_int=self.notification_interval)
+            _LOGGER.debug("#[THINGYSENSOR]: Humidity Set")
+        if ( ("co2" in self.conf_sensors) or ("tvoc" in self.conf_sensors) ):
+            self.thingy.environment.set_gas_notification(True)
+            self.thingy.environment.configure(gas_mode_int=self.gas_interval)
+            _LOGGER.debug("#[THINGYSENSOR]: CO2 Set")
+        if "pressure" in self.conf_sensors:
+            self.thingy.environment.set_pressure_notification(True)
+            self.thingy.environment.configure(press_int=self.notification_interval)
+            _LOGGER.debug("#[THINGYSENSOR]: Pressure Set")
+        if "battery" in self.conf_sensors:
+            self.thingy.battery.enable()
+            # Battery notification not included in bluepy.thingy52
+            e_battery_handle = self.thingy.battery.data.getHandle() # Is this needed?
+            battery_ccd = self.thingy.battery.data.getDescriptors(forUUID=CCCD_UUID)[0]
+            battery_ccd.write(b"\x01\x00", True)
+            _LOGGER.debug("#[THINGYSENSOR]: Batt Set")
+            
+        self.environment_set = True
+        
+        # if not self.delegate_set and not self.first_time:
+        if not self.first_time:
+            self.setDel()
     
 def setup_platform(hass, config, add_devices, discovery_info=None):
     """ Set up the Thingy 52 temperature sensor"""
-    global e_battery_handle
     
     _LOGGER.debug('Version %s', VERSION)
     _LOGGER.info('if you have ANY issues with this, please report them here:'
@@ -171,32 +227,33 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
     except Exception as e:
         _LOGGER.error("#[THINGYSENSOR]: Unable to connect to Thingy (%s): %s", friendly_name, str(e))
     """
-    thingyInstance = localThingy(mac_address, friendly_name)
+    thingyInstance = localThingy(mac_address, conf_sensors, friendly_name, refresh_interval, gas_interval, notification_interval)
+    _LOGGER.debug("#[THINGYSENSOR]: Connecting")
     thingy = thingyInstance.connect()
 
-    _LOGGER.debug("#[THINGYSENSOR]: Configuring and enabling environment notifications")
-    thingy.environment.enable()
+    # _LOGGER.debug("#[THINGYSENSOR]: Configuring and enabling environment notifications")
+    # thingy.environment.enable()
 
-    # Enable notifications for enabled services
-    # Update interval 1000ms = 1s
-    if "temperature" in conf_sensors:
-        thingy.environment.set_temperature_notification(True)
-        thingy.environment.configure(temp_int=notification_interval)
-    if "humidity" in conf_sensors:
-        thingy.environment.set_humidity_notification(True)
-        thingy.environment.configure(humid_int=notification_interval)
-    if ( ("co2" in conf_sensors) or ("tvoc" in conf_sensors) ):
-        thingy.environment.set_gas_notification(True)
-        thingy.environment.configure(gas_mode_int=gas_interval)
-    if "pressure" in conf_sensors:
-        thingy.environment.set_pressure_notification(True)
-        thingy.environment.configure(press_int=notification_interval)
-    if "battery" in conf_sensors:
-        thingy.battery.enable()
-        # Battery notification not included in bluepy.thingy52
-        e_battery_handle = thingy.battery.data.getHandle() # Is this needed?
-        battery_ccd = thingy.battery.data.getDescriptors(forUUID=CCCD_UUID)[0]
-        battery_ccd.write(b"\x01\x00", True)
+    # # Enable notifications for enabled services
+    # # Update interval 1000ms = 1s
+    # if "temperature" in conf_sensors:
+        # thingy.environment.set_temperature_notification(True)
+        # thingy.environment.configure(temp_int=notification_interval)
+    # if "humidity" in conf_sensors:
+        # thingy.environment.set_humidity_notification(True)
+        # thingy.environment.configure(humid_int=notification_interval)
+    # if ( ("co2" in conf_sensors) or ("tvoc" in conf_sensors) ):
+        # thingy.environment.set_gas_notification(True)
+        # thingy.environment.configure(gas_mode_int=gas_interval)
+    # if "pressure" in conf_sensors:
+        # thingy.environment.set_pressure_notification(True)
+        # thingy.environment.configure(press_int=notification_interval)
+    # if "battery" in conf_sensors:
+        # thingy.battery.enable()
+        # # Battery notification not included in bluepy.thingy52
+        # e_battery_handle = thingy.battery.data.getHandle() # Is this needed?
+        # battery_ccd = thingy.battery.data.getDescriptors(forUUID=CCCD_UUID)[0]
+        # battery_ccd.write(b"\x01\x00", True)
 
 
     for sensorname in conf_sensors:
@@ -205,7 +262,13 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
                                       friendly_name, SENSOR_TYPES[sensorname][1], SENSOR_TYPES[sensorname][2], mac_address, thingyInstance))
     
     add_devices(sensors)
-    thingy.setDelegate(NotificationDelegate(sensors))
+    
+    _LOGGER.debug("Sensors Added: %s", sensors)
+    
+    thingyInstance.sensors = sensors
+    thingyInstance.first_time = False
+    if thingyInstance.available:
+        thingyInstance.setDel()
 
 class Thingy52Sensor(Entity):
     """Representation of a Sensor."""
@@ -221,6 +284,7 @@ class Thingy52Sensor(Entity):
         self._unit_measurement = unit_measurement
         self._mac = mac
         self._instance = instance
+        self._retries = 10
 
 
     @property
@@ -256,21 +320,37 @@ class Thingy52Sensor(Entity):
         """Fetch new state data for the sensor.
         This is the only method that should fetch new data for Home Assistant.
         """
-        if not self._instance.available:
-            try:
-                self._thingy = self._instance.connect()
-                self._instance.available = True
-            except Exception as e:
-                _LOGGER.debug("#[%s]: method did not update - disconnected: %s", self._name, str(e))
+        _LOGGER.debug("#[%s]: Update", self._name)
+        # if not self._instance.available:
+            # _LOGGER.debug("#[%s]: Not available, try to reconnect", self._name)
+            # try:
+                # if not self._instance.connecting:
+                    # self._thingy = self._instance.connect()
+            # except Exception as e:
+                # _LOGGER.debug("#[%s]: method did not update - disconnected: %s", self._name, str(e))
                 
         if self._instance.available:
+            _LOGGER.debug("#[%s]: Available, wait for notification", self._name)
             try:
-                self._thingy.waitForNotifications(timeout=5)
-                _LOGGER.debug("#[%s]: method update, state is %s", self._name, self._state)
+                if not self._instance.connecting:
+                    self._thingy.waitForNotifications(timeout=10)
+                    _LOGGER.debug("#[%s]: method update, state is %s", self._name, self._state)
+                    # self._retries = 10
             except Exception as e:
+                # if "disconnected" in str(e):
                 _LOGGER.debug("#[%s]: method did not update - connected: %s", self._name, str(e))
-                self._instance.available = False
-        
+                # self._retries -= 1
+                # if self._retries <= 0:
+                if "Device disconnected" in str(e):
+                    self._instance.available = False
+                    self._thingy.disconnect()
+        else:
+            _LOGGER.debug("#[%s]: Not available, try to reconnect", self._name)
+            try:
+                if not self._instance.connecting:
+                    self._thingy = self._instance.connect()
+            except Exception as e:
+                _LOGGER.debug("#[%s]: method did not update - disconnected: %s", self._name, str(e))
 
 if (__name__ == "__main__"):
     setup_platform()

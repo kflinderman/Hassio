@@ -13,3 +13,11 @@
     name: Weather Alert Notification
     on_for: 7200
     allow_off: false
+  - platform: netgear_enhanced
+    host: !secret router_ip
+    username: !secret wifi_username
+    password: !secret wifi_password
+    resources:
+      # - 'traffic_meter'
+      - 'run_speed_test'
+      - 'reboot'

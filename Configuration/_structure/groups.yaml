@@ -59,10 +59,10 @@ outside:
 livingroom:
   name: Living Room
   entities:
-    # - switch.outlet
+    - switch.outlet
     - light.floor_lamp
     - light.rock_lamp
-    - light.chair_lamp
+    # - light.chair_lamp
     - media_player.stereo
     - media_player.lg_tv_remote
 
@@ -123,7 +123,7 @@ guest:
 basement:
   name: Basement Lights
   entities:
-   - switch.outlet
+   # - switch.outlet
    - light.basement_ceiling_lights
    - switch.laundryroom
    
@@ -191,7 +191,7 @@ secondfloor:
 holiday:
   name: Holiday Lights
   entities:
-    # - switch.outlet
+    - switch.outlet
     - input_boolean.holiday
     
 ###############
