@@ -8,6 +8,7 @@
 - platform: authenticated
   enable_notification: false
 - platform: uptime
+- platform: version
 - platform: time_date
   display_options:
     - 'time'
@@ -43,6 +44,9 @@
 - platform: illuminance
   name: DSS Illuminance
   entity_id: sensor.dark_sky_icon
+- platform: weatheralerts
+  state: NC
+  zone: "025"
 # - platform: average
   # name: 'Sun Room Temperature'
   # entities:
@@ -63,19 +67,19 @@
     hours: 1
   entities:
     - sensor.my_computer_network_upload_mbps
-- platform: netgear_enhanced
-  host: !secret router_ip
-  username: !secret wifi_username
-  password: !secret wifi_password
-  resources:
-    - firmware
-    # - traffic_meter
-    # - traffic_meter_on
-    # - traffic_meter_options
-    - info
-    - speed_test_result
-    - 2g_wifi_info
-    - 5g_wifi_info
+# - platform: netgear_enhanced
+  # host: !secret router_ip
+  # username: !secret wifi_username
+  # password: !secret wifi_password
+  # resources:
+    # - firmware
+    # # - traffic_meter
+    # # - traffic_meter_on
+    # # - traffic_meter_options
+    # - info
+    # - speed_test_result
+    # - 2g_wifi_info
+    # - 5g_wifi_info
   
   ##### Template Sensors #####
   
@@ -529,8 +533,6 @@
   state_topic: "ble/livingroomlight/livingroom/light"
   unit_of_measurement: 'lux'
   expire_after: 150
-- platform: weatheralerts
-  sameid: '037063'
 - platform: mqtt
   name: "Money Plant Battery"
   state_topic: "flora/C4:7C:8D:6A:E5:ED/battery"

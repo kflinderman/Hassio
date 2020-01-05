@@ -68,6 +68,8 @@
       entity_id: group.kitchen
     - service: homeassistant.turn_on
       entity_id: group.dining_room
+    - service: switch.turn_on
+      entity_id: switch.entrance_switch
       
 - id: mere_wake_up
   alias: Mere Wake Up
@@ -93,6 +95,8 @@
       entity_id: group.kitchen
     - service: homeassistant.turn_on
       entity_id: group.dining_room
+    - service: switch.turn_on
+      entity_id: switch.entrance_switch
      
 - id: mere_wake_up_gym_day
   alias: Mere Wake Up Gym Day
@@ -121,6 +125,8 @@
       entity_id: group.kitchen
     - service: homeassistant.turn_on
       entity_id: group.dining_room
+    - service: switch.turn_on
+      entity_id: switch.entrance_switch
       
 - id: turn_on_outside_light_at_sunset
   alias: Turn on outside light at sunset
@@ -207,6 +213,8 @@
   action:
     - service: homeassistant.turn_on
       entity_id: group.dining_room
+    - service: switch.turn_on
+      entity_id: switch.entrance_switch
     - service: light.turn_on
       entity_id: light.deck_light
     - service: switch.turn_on
@@ -608,6 +616,10 @@
       entity_id: group.kitchen
     - service: homeassistant.turn_off
       entity_id: group.dining_room
+    - service: homeassistant.turn_off
+      entity_id: group.hallways
+    - service: homeassistant.turn_off
+      entity_id: group.hallways
       
 - id: turn_off_outside_light_at_sunrise
   alias: Turn off outside light at sunrise
@@ -696,6 +708,8 @@
   action:
     - service: homeassistant.turn_off
       entity_id: group.dining_room
+    - service: homeassistant.turn_off
+      entity_id: group.hallways
     - service: homeassistant.turn_off
       entity_id: group.outside
     - service: homeassistant.turn_off
@@ -2292,10 +2306,81 @@
     service: input_boolean.turn_on
     entity_id: input_boolean.dog_med
     
-- id: daily_snapshot_clean_up
-  alias: Daily snapshot clean up
-  trigger: 
-    platform: time
-    at: '03:00:00'
+# - id: daily_snapshot_clean_up
+  # alias: Daily snapshot clean up
+  # trigger: 
+    # platform: time
+    # at: '03:00:00'
+  # action:
+    # - service: clean_up_snapshots_service.clean_up
+
+- id: perform_auto_backup
+  alias: Perform Auto Backup
+  trigger:
+    platform: time_pattern # Perform backup every 3 hours.
+    hours: "/3"
+  condition:
+    condition: numeric_state
+    entity_id: counter.backup
+    below: 4
   action:
-    - service: clean_up_snapshots_service.clean_up
+    - service: counter.increment
+      entity_id: counter.backup
+    - service: auto_backup.snapshot_partial # Only perform a partial snapshot to save storage.
+      data_template:
+        name: "AutoBackup: {{ now().strftime('%a, %-I:%M %p (%d/%m/%Y)') }} Version: {{ states('sensor.current_version') }}"
+        password: !secret backup_password
+        addons:
+          - Mosquitto broker
+        folders:
+          - homeassistant
+          - share
+          - ssl
+          - addons/local
+        keep_days: 2
+
+- id: perform_daily_backup
+  alias: Perform Daily Backup
+  trigger:
+    platform: time
+    at: "02:30:00"
+  condition:
+    condition: and
+    conditions:
+      - condition: numeric_state
+        entity_id: counter.backup
+        below: 12
+      - condition: time # Perform backup every day except Mondays.
+        weekday:
+          - tue
+          - wed
+          - thu
+          - fri
+          - sat
+          - sun
+  action:
+    - service: counter.increment
+      entity_id: counter.backup
+    - service: auto_backup.snapshot_full
+      data_template:
+        name: "DailyBackup: {{ now().strftime('%A, %B %-d, %Y') }} Version: {{ states('sensor.current_version') }}"
+        password: !secret backup_password
+        keep_days: 7
+
+- id: perform_weekly_backup
+  alias: Perform Weekly Backup
+  trigger:
+    platform: time
+    at: "02:30:00"
+  condition:
+    condition: time # On Mondays perform a weekly backup
+    weekday:
+      - mon
+  action:
+    - service: counter.increment
+      entity_id: counter.backup
+    - service: auto_backup.snapshot_full
+      data_template:
+        name: "WeeklyBackup: {{ now().strftime('%A, %B %-d, %Y') }} Version: {{ states('sensor.current_version') }}"
+        password: !secret backup_password
+        keep_days: 28   

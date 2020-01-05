@@ -18,6 +18,20 @@ cch:
   swipe: true
   swipe_animate: swipe
   voice: hide
+custom_header:
+  chevrons: false
+  compact_mode: true
+  exceptions:
+    - conditions:
+        user: kenny
+      config:
+        header_text: Home Assistant
+        hide_tabs: '7'
+        options_hide: false
+  header_text: My Home
+  hide_tabs: '4, 5'
+  options_hide: true
+  voice_hide: true
 decluttering_templates:
   alexa_template:
     card:
@@ -235,8 +249,6 @@ resources:
   - type: module
     url: /community_plugin/swipe-card/swipe-card.js
   - type: module
-    url: /community_plugin/compact-custom-header/compact-custom-header.js
-  - type: module
     url: /community_plugin/lovelace-card-tools/card-tools.js
   - type: module
     url: /community_plugin/simple-thermostat/simple-thermostat.js
@@ -249,6 +261,10 @@ resources:
   - type: module
     url: >-
       /community_plugin/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js
+  - type: module
+    url: /community_plugin/mini-media-player/mini-media-player-bundle.js
+  - type: module
+    url: /community_plugin/custom-header/custom-header.js
 title: Home
 views:
   - badges: []
@@ -777,7 +793,7 @@ views:
                 tap_action:
                   action: toggle
                 type: state-icon
-              - entity: switch.outlet
+              - entity: light.chair_lamp
                 hold_action:
                   action: more-info
                 style:
@@ -933,6 +949,14 @@ views:
           - on_pic: /local/room_pic/Dining_all.jpg
           - room_name: Dining Room
           - element: light.dining_lights_level
+      - template: simple_room_template
+        type: 'custom:decluttering-card'
+        variables:
+          - group: group.hallways
+          - off_pic: /local/room_pic/Hallway_off.jpg
+          - on_pic: /local/room_pic/Hallway_on.jpg
+          - room_name: Hallways
+          - element: switch.entrance_switch
       - card_width: 100%
         cards:
           - cards:
@@ -2090,7 +2114,7 @@ views:
                   top: 0
                   transform: scale(0.8)
                 type: state-icon
-              - entity: light.chair_lamp
+              - entity: switch.outlet
                 hold_action:
                   action: more-info
                 style:

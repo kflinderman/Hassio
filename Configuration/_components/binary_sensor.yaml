@@ -78,7 +78,7 @@
   - platform: bayesian
     name: Living Room Bay Occupancy
     prior: 0.4
-    probability_threshold: 0.9
+    probability_threshold: 0.8
     observations:
       - entity_id: 'media_player.stereo'
         prob_given_true: 0.7

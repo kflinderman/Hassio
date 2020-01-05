@@ -36,17 +36,18 @@ logger:
     homeassistant.components.hue: critical
     homeassistant.components.hue.light: critical
     homeassistant.components.emulated_hue: critical
-    # homeassistant.components.netgear.device_tracker: critical
+    homeassistant.components.netgear.device_tracker: critical
+    custom_components.netgear_enhanced.sensor: critical
+    custom_components.netgear_enhanced.switch: critical
     # homeassistant.components.netgear: debug
     # custom_components.netgear_enhanced.sensor: debug
     # custom_components.netgear_enhanced.switch: debug
     homeassistant.components.yamaha.media_player: critical
-    # homeassistant.helpers.entity_component: critical
-    # homeassistant.helpers.entity: critical
-    # homeassistant.loader: critical
     # custom_components.thingy52.sensor: debug
+    custom_components.lightpack.sensor: critical
+    # custom_components.auto_backup: debug
     
-# history: !include _structure/history.yaml
+history: !include _structure/history.yaml
 
 influxdb:
   host: a0d7b954-influxdb
@@ -287,13 +288,6 @@ notify:
       - service: pushbullet
       - service: mobile_app_iphone
 
-clean_up_snapshots_service:
-  host: !secret url7_secret
-  token: !secret snapshot_cleanup
-  number_of_snapshots_to_keep: 10
-
-# panel_iframe:
-  # grafana:
-    # title: Grafana
-    # icon: mdi:chart-timeline
-    # url: !secret url6_secret
+auto_backup:
+  auto_purge: true
+  backup_timeout: 1500

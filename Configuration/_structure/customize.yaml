@@ -114,6 +114,8 @@ light.lightpack:
   icon: mdi:television-guide
 light.tripod_lamp:
   icon: mdi:floor-lamp
+light.entrance_dimmer_level:
+  icon: mdi:ceiling-light
   
   ##### Switches #####
   
@@ -125,6 +127,8 @@ switch.laundryroom:
   icon: mdi:washing-machine
 switch.sun_room_market_lights:
   icon: mdi:lightbulb
+switch.entrance_switch:
+  icon: mdi:ceiling-light
   
   ##### Other #####
 script.vacuumed_basement:
@@ -162,10 +166,10 @@ sensor.kitchen_luminance:
 switch.outlet:
   # friendly_name: Spooky Lights
   # icon: mdi:ghost
-  friendly_name: Christmas Lights
-  icon: mdi:pine-tree
-  # friendly_name: Basement Floor Light
-  # icon: mdi:floor-lamp
+  # friendly_name: Christmas Lights
+  # icon: mdi:pine-tree
+  friendly_name: Basement Floor Light
+  icon: mdi:floor-lamp
 switch.airhockey:
   friendly_name: Air Hockey Table
   icon: mdi:trophy

@@ -21,3 +21,8 @@ upstairs_vacuum:
   step: 1
   restore: true
   minimum: 0
+backup:
+  initial: 0
+  step: 1
+  restore: false
+  minimum: 0

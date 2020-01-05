@@ -61,9 +61,17 @@ ATTR_PERSIST = 'persist'
 ATTR_POWER = 'power'
 ATTR_ZONES = 'zones'
 
+"""
 LIGHTPACK_SET_STATE_SCHEMA = LIGHT_TURN_ON_SCHEMA.extend({
     ATTR_POWER: cv.boolean,
     ATTR_ZONES: vol.All(cv.ensure_list, [cv.positive_int]),
+})
+"""
+
+LIGHTPACK_SET_STATE_SCHEMA = cv.make_entity_service_schema({
+    **LIGHT_TURN_ON_SCHEMA, 
+    ATTR_POWER: cv.boolean, 
+    ATTR_ZONES: vol.All(cv.ensure_list, [cv.positive_int])
 })
 
 def handler(signum, frame):
@@ -213,11 +221,11 @@ class Lightpack(Light):
         """Return the name of the light."""
         return self._name
 
-    @property
-    def state_attributes(self) -> dict:
-        """Return the state attributes."""
-        attr = super().state_attributes
-        return {**attr, **self._attributes}
+    # @property
+    # def state_attributes(self) -> dict:
+        # """Return the state attributes."""
+        # attr = super().state_attributes
+        # return {**attr, **self._attributes}
 
     @property
     def supported_features(self) -> int:

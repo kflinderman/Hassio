@@ -20,6 +20,7 @@ First Floor:
     - group.livingroom
     - group.kitchen
     - group.dining_room
+    - switch.entrance_switch
 
 Second Floor:
   view: yes
@@ -59,10 +60,10 @@ outside:
 livingroom:
   name: Living Room
   entities:
-    - switch.outlet
+    # - switch.outlet
     - light.floor_lamp
     - light.rock_lamp
-    # - light.chair_lamp
+    - light.chair_lamp
     - media_player.stereo
     - media_player.lg_tv_remote
 
@@ -123,7 +124,7 @@ guest:
 basement:
   name: Basement Lights
   entities:
-   # - switch.outlet
+   - switch.outlet
    - light.basement_ceiling_lights
    - switch.laundryroom
    
@@ -167,6 +168,11 @@ residents:
     - person.kenny
     - person.meredith
 
+hallways:
+  name: Hallway Lights
+  entities:
+    - switch.entrance_switch
+
 firstfloor:
   name: First Floor Lights
   entities:
@@ -176,6 +182,7 @@ firstfloor:
     - light.oven_light
     - light.dining_lights_level
     - switch.kitchensw
+    - switch.entrance_switch
     
 secondfloor:
   name: Second Floor Lights
@@ -191,7 +198,7 @@ secondfloor:
 holiday:
   name: Holiday Lights
   entities:
-    - switch.outlet
+    # - switch.outlet
     - input_boolean.holiday
     
 ###############
@@ -376,4 +383,7 @@ other_auto:
     - automation.bedroom_fan_on
     - automation.bedroom_fan_off
     - automation.dog_meds_flag
-    - automation.daily_snapshot_clean_up
+    # - automation.daily_snapshot_clean_up
+    - automation.perform_auto_backup
+    - automation.perform_daily_backup
+    - automation.perform_weekly_backup

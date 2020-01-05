@@ -57,6 +57,7 @@ smart_home:
       - switch.officefan
       - switch.outlet
       - switch.sun_room_market_lights
+      - switch.entrance_switch
     include_domains:
       - group
       - light
@@ -95,6 +96,7 @@ smart_home:
       - light.craft_room
       - light.front_door
       - light.living_room_lights
+      - light.entrance_dimmer_level
     exclude_domains:
       - automation
       - binary_sensor
