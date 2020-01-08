@@ -29,7 +29,8 @@ Here is a list of all of the devices and services that I use.  I will link to ea
 |-----------|-------------|-------------------|------|---------|
 | [GPSLogger](http://gpslogger.app/) | [Link](https://www.home-assistant.io/integrations/gpslogger/) | No | [GPSLogger App](https://play.google.com/store/apps/details?id=com.mendhak.gpslogger) | |
 | Home Assistant Bluetooth | [Link](https://www.home-assistant.io/integrations/bluetooth_tracker/) | No | | |
-| Home Assistant IOS | [Link](https://www.home-assistant.io/docs/ecosystem/ios/) | No | [Home Assistant Companion](https://apps.apple.com/us/app/home-assistant-open-source-home-automation/id1099568401) | |
+| Home Assistant IOS | [Link](https://companion.home-assistant.io/) | No | [Home Assistant Companion](https://apps.apple.com/us/app/home-assistant-open-source-home-automation/id1099568401) | |
+| Home Assistant Android | [Link](https://companion.home-assistant.io/) | No | [Home Assistant](https://play.google.com/store/apps/details?id=io.homeassistant.companion.android) | |
 | [Netgear](https://www.netgear.com/default.aspx) | [Link](https://www.home-assistant.io/integrations/netgear/) | Yes | [Netgear R7000](https://www.netgear.com/home/products/networking/wifi-routers/R7000.aspx) | Currently not functioning correctly.  It does not update status correctly and is often unreliable | 
 
 ### HVAC
@@ -61,6 +62,7 @@ Here is a list of all of the devices and services that I use.  I will link to ea
 | Component | Integration | Requires Purchase | Part | Comment |
 |-----------|-------------|-------------------|------|---------|
 | [IFTTT](https://ifttt.com/) | [Link](https://www.home-assistant.io/integrations/ifttt/) | No | [IFTTT App](https://play.google.com/store/apps/details?id=com.ifttt.ifttt&hl=en_US) | |
+| N/A | N/A | Yes | [Lutron Aurora](http://www.lutron.com/en-US/Products/Pages/StandAloneControls/Dimmers-Switches/SmartBulbDimmer/overview.aspx) | Used so people stop turning off Hue bulbs |
 
 ### PC Control
 | Component | Integration | Requires Purchase | Part | Comment |
@@ -96,6 +98,7 @@ Here is a list of all of the devices and services that I use.  I will link to ea
 | Z-Wave | [Link](https://www.home-assistant.io/docs/z-wave/) | Yes | [GE Smart Dimmer SKU#: 14294](https://byjasco.com/products/ge-z-wave-plus-wall-smart-dimmer) | |
 | Z-Wave | [Link](https://www.home-assistant.io/docs/z-wave/) | Yes | [GE Smart Outlet SKU#: 14288](https://byjasco.com/products/ge-z-wave-plus-wall-tamper-resistant-smart-outlet) | |
 | Z-Wave | [Link](https://www.home-assistant.io/docs/z-wave/) | Yes | [Jasco On/Off Swithc SKU#: 45709](https://www.z-wave.com/shop-z-wave-smart-home-products/smart-lighting-ge-jasco-jasco-white-in-wall-decora-style-on-off-z-wave-switch) | |
+| Z-Wave | [Link](https://www.home-assistant.io/docs/z-wave/) | Yes | [Aeotec Nano Dimmer](https://aeotec.com/z-wave-light-dimmer-switch/) | A [bypass](https://aeotec.com/z-wave-low-voltage-dimmer/) was needed for some lights |
 
 ### Vacuum
 | Component | Integration | Requires Purchase | Part | Comment |
@@ -146,7 +149,3 @@ These are the remaining items that I have running on my system.  Most are pulled
 ## Things to Add
 * Upstairs hallway 3-way light switch - No neutral wire available
 * Downstairs hallway 3-way light switch - No neutral wire available
-* Main bathroom switch
-* Guest bathroom switch
-* Entrance hallway switch - Not sure about neutral wire
-* Master bathroom - Currently 3 seperate switches, I need to figure out if I want/need them all to be smart, and if I tie some together to the same switch.
