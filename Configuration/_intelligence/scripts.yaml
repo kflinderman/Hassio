@@ -125,8 +125,8 @@ after_dark:
   sequence:
     - service: light.turn_on
       entity_id: light.lightpack
-    - service: switch.turn_off
-      entity_id: switch.officefan
+    - service: homeassistant.turn_off
+      entity_id: group.basement_no_aux
       
 timed_cpu_off:
   sequence:
@@ -419,11 +419,40 @@ sunset_switch:
 goodnight_kenny:
   sequence:
     - service: switch.turn_on
-      entity_id: switch.officefan
+      entity_id: switch.entrance_switch
     - delay:
         minutes: 2
     - service: switch.turn_off
-      entity_id: switch.officefan
+      entity_id: switch.entrance_switch
+      
+night_time:
+  sequence:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.bedroom
+    - service: homeassistant.turn_off
+      entity_id: group.bedroom
+    - service: light.turn_off
+      entity_id: light.basement_ceiling_lights
+    - delay:
+        seconds: 1
+    - service: light.turn_on
+      entity_id: light.basement_ceiling_lights
+    - delay:
+        seconds: 1
+    - service: light.turn_off
+      entity_id: light.basement_ceiling_lights
+    - delay:
+        seconds: 1
+    - service: light.turn_on
+      entity_id: light.basement_ceiling_lights
+    - delay:
+        seconds: 1
+    - service: light.turn_off
+      entity_id: light.basement_ceiling_lights
+    - delay:
+        seconds: 1
+    - service: light.turn_on
+      entity_id: light.basement_ceiling_lights
       
 door:
   sequence:
@@ -517,7 +546,7 @@ basement_off:
     - delay:
         seconds: 2
     - service: homeassistant.turn_off
-      entity_id: group.basement
+      entity_id: group.basement_no_aux
     - delay:
         seconds: 2
     - service: input_boolean.turn_off
@@ -603,7 +632,7 @@ alli_location_spreadsheet:
       entity_id: group.alli_locate
       state: 'on'
     - service: ifttt.trigger
-      data_template: {"event":"Alli_Location", "value1":"{{ states('sensor.alli_spreadsheet') }}", "value2":"{{ states('sensor.alli_location') }}", "value3":"{{ states('sensor.basement_alli_signal') }}, {{ states('sensor.bedroom_alli_signal') }}, {{ states('sensor.living_room_alli_signal') }}, {{ states('sensor.office_alli_signal') }}"}
+      data_template: {"event":"Alli_Location", "value1":"{{ states('sensor.alli_spreadsheet') }}", "value2":"{{ states('sensor.alli_location') }}", "value3":"{{ states('sensor.basement_alli_signal') }}, {{ states('sensor.bedroom_alli_signal') }}, {{ states('sensor.living_room_alli_signal') }}, {{ states('sensor.nursery_alli_signal') }}"}
     - service: script.turn_on
       data:
         entity_id: script.alli_location_spreadsheet_loop
@@ -654,7 +683,7 @@ rand_vac2:
         entity_id: script.vac_living
     - service: script.turn_on
       data:
-        entity_id: script.vac_office
+        entity_id: script.vac_nursery
 
 rand_vac3:
   sequence:
@@ -705,7 +734,7 @@ rand_vac5:
         entity_id: script.vac_bed
     - service: script.turn_on
       data:
-        entity_id: script.vac_office
+        entity_id: script.vac_nursery
 
 rand_vac6:
   sequence:
@@ -753,7 +782,7 @@ rand_vac8:
       below: 9
     - service: script.turn_on
       data:
-        entity_id: script.vac_office
+        entity_id: script.vac_nursery
     - service: script.turn_on
       data:
         entity_id: script.vac_craft
@@ -771,7 +800,7 @@ rand_vac9:
       below: 10
     - service: script.turn_on
       data:
-        entity_id: script.vac_office
+        entity_id: script.vac_nursery
 
 rand_vac10:
   sequence:
@@ -800,14 +829,14 @@ vac_bed:
     - service: homeassistant.turn_off
       entity_id: group.bedroom
 
-vac_office:
+vac_nursery:
   sequence:
     - delay: '{{ (range(0, 1)|random|int) }}:{{ (range(1, 59)|random|int) }}:00'
     - service: switch.turn_on
-      entity_id: group.office
+      entity_id: group.nursery
     - delay: '{{ (range(0, 2)|random|int) }}:{{ (range(1, 59)|random|int) }}:00'
     - service: switch.turn_off
-      entity_id: group.office
+      entity_id: group.nursery
 
 vac_craft:
   sequence:

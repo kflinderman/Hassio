@@ -29,8 +29,8 @@
        AUDIO1: "TV"
        AUDIO5: "Turntable"
   - platform: yamaha
-    host: !secret office_yam
-    name: Office Stereo
+    host: !secret basement_yam
+    name: Basement Stereo
     zone_ignore :
       - "Zone_2"
     source_ignore:

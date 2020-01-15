@@ -299,7 +299,7 @@
           state: 'on'
   action:
     service: homeassistant.turn_on
-    entity_id: group.basement
+    entity_id: group.basement_no_aux
     
 - id: bedroom_lights_on
   alias: Bedroom Lights ON
@@ -391,11 +391,17 @@
     - platform: state
       entity_id: group.firstfloor
       to: 'off'
+    - platform: state
+      entity_id: group.basement_no_pc
+      to: 'off'
+    - platform: state
+      entity_id: media_player.basement_stereo
+      to: 'off'
   condition:
     condition: or
     conditions:
       - condition: time
-        after: '23:35'
+        after: '23:31'
       - condition: time
         before: '3:30'
   action:
@@ -754,7 +760,7 @@
       entity_id: input_boolean.vacation
       state: 'off'
     - condition: state
-      entity_id: group.basement
+      entity_id: group.basement_no_aux
       state: 'on'
     - condition: time
       after: '8:00:00'
@@ -860,10 +866,6 @@
   action:
     - service: homeassistant.turn_off
       entity_id: group.secondfloor
-    - service: media_player.turn_off
-      entity_id: media_player.office_stereo
-    - service: script.turn_on
-      entity_id: script.timed_cpu_off
       
 - id: turn_off_all_basement_floor
   alias: Turn Off All Basement Floor
@@ -878,6 +880,10 @@
   action:
     - service: homeassistant.turn_off
       entity_id: group.basement_floor
+    - service: media_player.turn_off
+      entity_id: media_player.basement_stereo
+    - service: script.turn_on
+      entity_id: script.timed_cpu_off
       
 - id: turn_off_all_outside
   alias: Turn Off All Outside
@@ -978,9 +984,7 @@
     - service: homeassistant.turn_off
       entity_id: group.dining_room
     - service: switch.turn_off
-      entity_id: switch.officefan
-    - service: light.turn_off
-      entity_id: light.lightpack
+      entity_id: switch.nurseryfan
 
 - id: basement_off_check
   alias: Basement Off Check
@@ -1301,7 +1305,7 @@
     - service: script.turn_on
       entity_id: script.cpu_off
     - service: media_player.turn_off
-      entity_id: media_player.office_stereo
+      entity_id: media_player.basement_stereo
     
 - id: turn_off_pc_night_weekday
   alias: Turn off PC night weekday
@@ -1320,7 +1324,7 @@
     - service: script.turn_on
       entity_id: script.cpu_off
     - service: media_player.turn_off
-      entity_id: media_player.office_stereo
+      entity_id: media_player.basement_stereo
     
 - id: turn_off_pc_not_home
   alias: Turn off PC not home
@@ -1879,8 +1883,8 @@
     service: media_player.turn_off
     entity_id: media_player.lg_tv_remote
     
-- id: office_stereo_off
-  alias: Office Stereo Off
+- id: basement_stereo_off
+  alias: Basement Stereo Off
   trigger:
     - platform: state
       entity_id: light.lightpack
@@ -1897,7 +1901,7 @@
       before: '04:00:00'
   action:
     service: media_player.turn_off
-    entity_id: media_player.office_stereo
+    entity_id: media_player.basement_stereo
     
 - id: visitor_on
   alias: Visitor ON
@@ -2105,6 +2109,23 @@
   - service: input_boolean.turn_on
     entity_id: input_boolean.kitchen
     
+- id: goodnight_automation
+  alias: Bedroom Stop Motion
+  trigger:
+  - entity_id: input_boolean.goodnight
+    platform: state
+    to: 'off'
+  condition:
+    condition: or
+    conditions:
+      - condition: time
+        after: '20:30:00'
+      - condition: time
+        before: '8:00:00'
+  action:
+  - service: script.turn_on
+    entity_id: script.night_time
+    
 - id: bedroom_stop_motion
   alias: Bedroom Stop Motion
   trigger:
@@ -2127,8 +2148,8 @@
         - condition: time
           before: '8:00:00'
   action:
-  - service: input_boolean.turn_off
-    entity_id: input_boolean.bedroom
+  - service: script.turn_on
+    entity_id: script.night_time
     
 - id: basement_stop_motion
   alias: Basement Stop Motion
@@ -2282,7 +2303,7 @@
 - id: sexy_time_over
   alias: Sexy Time Over
   trigger:
-  - entity_id: light.rock_lamp
+  - entity_id: light.swirl_lamp
     platform: state
     to: 'on'
     for: 

@@ -57,8 +57,8 @@
   alli_bed:
     name: Alli Bedroom
     icon: mdi:dog
-  alli_office:
-    name: Alli Office
+  alli_nursery:
+    name: Alli Nursery
     icon: mdi:dog
   alli_craft:
     name: Alli Craft Room
@@ -127,11 +127,16 @@
     icon: mdi:door-closed
   door:
     name: Door Activity
+    initial: off
   sexy_time:
     name: Sexy Time
+    initial: off
   cpu_lightpack:
     name: CPU Lightpack
   holiday:
     name: Holiday Group Dummy
   dog_med:
     name: Dog Medications
+  goodnight:
+    name: Goodnight
+    initial: off

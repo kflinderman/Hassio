@@ -190,7 +190,7 @@ tplink:
     # - host: !secret outlet_ip
     # - host: !secret airhockey_ip
     # - host: !secret bedfan_ip
-    # - host: !secret officefan_ip
+    # - host: !secret nurseryfan_ip
     # - host: !secret craftfan_ip
     # - host: !secret masterbath_ip
     # - host: !secret kitchen_ip

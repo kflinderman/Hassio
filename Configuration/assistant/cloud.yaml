@@ -66,7 +66,7 @@ alexa:
       - script.rand_vac9
       - script.rand_vac10
       - script.vac_craft
-      - script.vac_office
+      - script.vac_nursery
       - script.vac_bed
       - script.vac_living
       - script.vacation_temp

@@ -40,7 +40,7 @@
       hidden: false
     group.firstfloor:
       hidden: false
-    group.office:
+    group.nursery:
       hidden: false
     group.craft:
       hidden: false
@@ -63,7 +63,7 @@
       
     ##### Media Players #####
     
-    media_player.office_stereo:
+    media_player.basement_stereo:
       hidden: false
     media_player.stereo:
       hidden: false

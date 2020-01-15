@@ -136,10 +136,10 @@
       device_class: battery
       value_template: "{{ state_attr('zwave.kitchen_multisensor', 'battery_level') }}"
         
-    officebay:
-      friendly_name: "Office Bay Value"
+    basementbay:
+      friendly_name: "Basement Bay Value"
       unit_of_measurement: 'probability'
-      value_template: "{{ state_attr('binary_sensor.office_bay_occupancy', 'probability') }}"
+      value_template: "{{ state_attr('binary_sensor.basement_bay_occupancy', 'probability') }}"
       
     livingbay:
       friendly_name: "Living Room Bay Value"
@@ -232,33 +232,33 @@
     alli_location:
       friendly_name: "Alli Location"
       value_template: >-
-        {% if states('sensor.office_alli_signal')|int != 0 
-            and (states('sensor.office_alli_signal')|int > states('sensor.living_room_alli_signal')|int
+        {% if states('sensor.nursery_alli_signal')|int != 0 
+            and (states('sensor.nursery_alli_signal')|int > states('sensor.living_room_alli_signal')|int
             or states('sensor.living_room_alli_signal')|int == 0) 
-            and (states('sensor.office_alli_signal')|int > states('sensor.bedroom_alli_signal')|int 
+            and (states('sensor.nursery_alli_signal')|int > states('sensor.bedroom_alli_signal')|int 
             or states('sensor.bedroom_alli_signal')|int == 0) 
-            and (states('sensor.office_alli_signal')|int > states('sensor.basement_alli_signal')|int 
+            and (states('sensor.nursery_alli_signal')|int > states('sensor.basement_alli_signal')|int 
             or states('sensor.basement_alli_signal')|int == 0) %}
-          Office
+          Nursery
         {% elif states('sensor.living_room_alli_signal')|int != 0 
-            and (states('sensor.living_room_alli_signal')|int > states('sensor.office_alli_signal')|int 
-            or states('sensor.office_alli_signal')|int == 0) 
+            and (states('sensor.living_room_alli_signal')|int > states('sensor.nursery_alli_signal')|int 
+            or states('sensor.nursery_alli_signal')|int == 0) 
             and (states('sensor.living_room_alli_signal')|int > states('sensor.bedroom_alli_signal')|int 
             or states('sensor.bedroom_alli_signal')|int == 0) 
             and (states('sensor.living_room_alli_signal')|int > states('sensor.basement_alli_signal')|int 
             or states('sensor.basement_alli_signal')|int == 0) %}
           Living Room
         {% elif states('sensor.bedroom_alli_signal')|int != 0 
-            and (states('sensor.bedroom_alli_signal')|int > states('sensor.office_alli_signal')|int 
-            or states('sensor.office_alli_signal')|int == 0) 
+            and (states('sensor.bedroom_alli_signal')|int > states('sensor.nursery_alli_signal')|int 
+            or states('sensor.nursery_alli_signal')|int == 0) 
             and (states('sensor.bedroom_alli_signal')|int > states('sensor.living_room_alli_signal')|int 
             or states('sensor.living_room_alli_signal')|int == 0) 
             and (states('sensor.bedroom_alli_signal')|int > states('sensor.basement_alli_signal')|int 
             or states('sensor.basement_alli_signal')|int == 0) %}
           Bedoom
         {% elif states('sensor.basement_alli_signal')|int != 0 
-            and (states('sensor.basement_alli_signal')|int > states('sensor.office_alli_signal')|int 
-            or states('sensor.office_alli_signal')|int == 0) 
+            and (states('sensor.basement_alli_signal')|int > states('sensor.nursery_alli_signal')|int 
+            or states('sensor.nursery_alli_signal')|int == 0) 
             and (states('sensor.basement_alli_signal')|int > states('sensor.living_room_alli_signal')|int 
             or states('sensor.living_room_alli_signal')|int == 0) 
             and (states('sensor.basement_alli_signal')|int > states('sensor.bedroom_alli_signal')|int 
@@ -271,17 +271,17 @@
     alli_button:
       friendly_name: "Alli Button"
       value_template: >-
-        {% if is_state('sensor.office_alli_beacon', 'unknown') 
+        {% if is_state('sensor.nursery_alli_beacon', 'unknown') 
             and is_state('sensor.living_room_alli_beacon', 'unknown') 
             and is_state('sensor.bedroom_alli_beacon', 'unknown') 
             and is_state('sensor.basement_alli_beacon', 'unknown') %}
           0
-        {% elif is_state('sensor.office_alli_beacon', '0') 
+        {% elif is_state('sensor.nursery_alli_beacon', '0') 
             or is_state('sensor.living_room_alli_beacon', '0') 
             or is_state('sensor.bedroom_alli_beacon', '0') 
             or is_state('sensor.basement_alli_beacon', '0') %}
           1
-        {% elif is_state('sensor.office_alli_beacon', '1') 
+        {% elif is_state('sensor.nursery_alli_beacon', '1') 
             or is_state('sensor.living_room_alli_beacon', '1') 
             or is_state('sensor.bedroom_alli_beacon', '1') 
             or is_state('sensor.basement_alli_beacon', '1') %}
@@ -292,33 +292,33 @@
       friendly_name: "Alli Battery"
       device_class: battery
       value_template: >-
-        {% if states('sensor.office_alli_battery')|float != 0 
-            and (states('sensor.office_alli_battery')|float <= states('sensor.living_room_alli_battery')|float 
+        {% if states('sensor.nursery_alli_battery')|float != 0 
+            and (states('sensor.nursery_alli_battery')|float <= states('sensor.living_room_alli_battery')|float 
             or states('sensor.living_room_alli_battery')|float == 0) 
-            and (states('sensor.office_alli_battery')|float <= states('sensor.bedroom_alli_battery')|float 
+            and (states('sensor.nursery_alli_battery')|float <= states('sensor.bedroom_alli_battery')|float 
             or states('sensor.bedroom_alli_battery')|float == 0) 
-            and (states('sensor.office_alli_battery')|float <= states('sensor.basement_alli_battery')|float 
+            and (states('sensor.nursery_alli_battery')|float <= states('sensor.basement_alli_battery')|float 
             or states('sensor.basement_alli_battery')|float == 0) %}
-          {{ states('sensor.office_alli_battery')|float }}
+          {{ states('sensor.nursery_alli_battery')|float }}
         {% elif states('sensor.living_room_alli_battery')|float != 0 
-            and (states('sensor.living_room_alli_battery')|float <= states('sensor.office_alli_battery')|float 
-            or states('sensor.office_alli_battery')|float == 0) 
+            and (states('sensor.living_room_alli_battery')|float <= states('sensor.nursery_alli_battery')|float 
+            or states('sensor.nursery_alli_battery')|float == 0) 
             and (states('sensor.living_room_alli_battery')|float <= states('sensor.bedroom_alli_battery')|float 
             or states('sensor.bedroom_alli_battery')|float == 0) 
             and (states('sensor.living_room_alli_battery')|float <= states('sensor.basement_alli_battery')|float 
             or states('sensor.basement_alli_battery')|float == 0) %}
           {{ states('sensor.living_room_alli_battery')|float }}
         {% elif states('sensor.bedroom_alli_battery')|float != 0 
-            and (states('sensor.bedroom_alli_battery')|float <= states('sensor.office_alli_battery')|float 
-            or states('sensor.office_alli_battery')|float == 0) 
+            and (states('sensor.bedroom_alli_battery')|float <= states('sensor.nursery_alli_battery')|float 
+            or states('sensor.nursery_alli_battery')|float == 0) 
             and (states('sensor.bedroom_alli_battery')|float <= states('sensor.living_room_alli_battery')|float 
             or states('sensor.living_room_alli_battery')|float == 0) 
             and (states('sensor.bedroom_alli_battery')|float <= states('sensor.basement_alli_battery')|float 
             or states('sensor.basement_alli_battery')|float == 0) %}
           {{ states('sensor.bedroom_alli_battery')|float }}
         {% elif states('sensor.basement_alli_battery')|float != 0 
-            and (states('sensor.basement_alli_battery')|float <= states('sensor.office_alli_battery')|float 
-            or states('sensor.office_alli_battery')|float == 0) 
+            and (states('sensor.basement_alli_battery')|float <= states('sensor.nursery_alli_battery')|float 
+            or states('sensor.nursery_alli_battery')|float == 0) 
             and (states('sensor.basement_alli_battery')|float <= states('sensor.living_room_alli_battery')|float 
             or states('sensor.living_room_alli_battery')|float == 0) 
             and (states('sensor.basement_alli_battery')|float <= states('sensor.bedroom_alli_battery')|float 
@@ -332,8 +332,8 @@
           Bedroom
         {% elif is_state('input_boolean.alli_craft', 'on') %}
           Craft Room
-        {% elif is_state('input_boolean.alli_office', 'on') %}
-          Office
+        {% elif is_state('input_boolean.alli_nursery', 'on') %}
+          Nursery
         {% elif is_state('input_boolean.alli_kitchen', 'on') %}
           Kitchen
         {% elif is_state('input_boolean.alli_living', 'on') %}
@@ -369,10 +369,6 @@
       friendly_name: "Rock Lamp Light Hours Round"
       value_template: "{{ states('sensor.rock_lamp_light_hours') | round(1) }}"
 
-    floor_lamp_light_hours_round:
-      friendly_name: "Floor Lamp Light Hours Round"
-      value_template: "{{ states('sensor.floor_lamp_light_hours') | round(1) }}"
-
     chair_lamp_light_hours_round:
       friendly_name: "Chair Lamp Light Hours Round"
       value_template: "{{ states('sensor.chair_lamp_light_hours') | round(1) }}"
@@ -401,10 +397,14 @@
       friendly_name: "Dining Room Light Hours Round"
       value_template: "{{ states('sensor.dining_room_light_hours') | round(1) }}"
 
-    basement_light_hours_round:
-      friendly_name: "Basement Light Hours Round"
-      value_template: "{{ states('sensor.basement_light_hours') | round(1) }}"
+    basement_floor_light_hours_round:
+      friendly_name: "Basement Floor Light Hours Round"
+      value_template: "{{ states('sensor.basement_floor_light_hours') | round(1) }}"
 
+    entrance_light_hours_round:
+      friendly_name: "Entrance Light Hours Round"
+      value_template: "{{ states('sensor.entrance_light_hours') | round(1) }}"
+      
     basement_1_light_hours_round:
       friendly_name: "Basement 1 Light Hours Round"
       value_template: "{{ states('sensor.basement_1_light_hours') | round(1) }}"
@@ -433,9 +433,9 @@
       friendly_name: "Master Bathroom Hours Round"
       value_template: "{{ states('sensor.master_bathroom_hours') | round(1) }}"
 
-    office_fan_hours_round:
-      friendly_name: "Office Fan Hours Round"
-      value_template: "{{ states('sensor.office_fan_hours') | round(1) }}"
+    nursery_fan_hours_round:
+      friendly_name: "Nursery Fan Hours Round"
+      value_template: "{{ states('sensor.nursery_fan_hours') | round(1) }}"
 
     prep_area_hours_round:
       friendly_name: "Prep Area Hours Round"
@@ -472,16 +472,16 @@
   ##### MQTT Sensors #####
   
 - platform: mqtt
-  name: "Office Alli Signal"
+  name: "Nursery Alli Signal"
   state_topic: "ble/cd648cdff2ab/office/rssi"
   unit_of_measurement: 'dBm'
   expire_after: 175
 - platform: mqtt
-  name: "Office Alli Battery"
+  name: "Nursery Alli Battery"
   state_topic: "ble/cd648cdff2ab/office/volt"
   unit_of_measurement: 'V'
 - platform: mqtt
-  name: "Office Alli Beacon"
+  name: "Nursery Alli Beacon"
   state_topic: "ble/cd648cdff2ab/office/BEA"
   expire_after: 175
 - platform: mqtt
@@ -524,7 +524,7 @@
   state_topic: "ble/cd648cdff2ab/basement/BEA"
   expire_after: 175
 - platform: mqtt
-  name: "Office Light Level"
+  name: "Nursery Light Level"
   state_topic: "ble/officelight/office/light"
   unit_of_measurement: 'lux'
   expire_after: 150
@@ -728,8 +728,15 @@
   duration:
     days: 1
 - platform: history_stats
-  name: Basement Light Hours
-  entity_id: switch.outlet
+  name: Basement Floor Light Hours
+  entity_id: switch.basement_floor_light
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Entrance Light Hours
+  entity_id: switch.entrance_switch
   state: 'on'
   end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
   duration:
@@ -749,8 +756,8 @@
   duration:
     days: 1
 - platform: history_stats
-  name: Office Fan Hours
-  entity_id: switch.officefan
+  name: Nursery Fan Hours
+  entity_id: switch.nurseryfan
   state: 'on'
   end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
   duration:

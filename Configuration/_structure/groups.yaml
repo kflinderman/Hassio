@@ -28,14 +28,14 @@ Second Floor:
   entities:
     - group.bedroom
     - group.craft
-    - group.office_no_pc
+    - group.nursery
     
 Basement Floor:
   view: yes
   icon: mdi:arrow-down-bold-box
   entities:
     - group.guest
-    - group.basement
+    - group.basement_no_pc
     - group.sun_room
     
 ##############################
@@ -95,22 +95,10 @@ bedroom:
     - switch.bedfan
     - switch.masterbath
     
-office:
-  name: Office
+nursery:
+  name: Nursery
   entities:
-    - switch.officefan
-    - media_player.desktop_media
-    - switch.desktopPC
-    - light.lightpack
-    - media_player.office_stereo
-    
-office_no_pc:
-  name: Office
-  entities:
-    - switch.officefan
-    - media_player.desktop_media
-    - light.lightpack
-    - media_player.office_stereo
+    - switch.nurseryfan
     
 ##################
 # Basement Floor #
@@ -124,7 +112,28 @@ guest:
 basement:
   name: Basement Lights
   entities:
-   - switch.outlet
+   - switch.basement_floor_light
+   - light.basement_ceiling_lights
+   - switch.laundryroom
+   - media_player.desktop_media
+   - switch.desktopPC
+   - light.lightpack
+   - media_player.basement_stereo
+   
+basement_no_pc:
+  name: Basement Lights
+  entities:
+   - switch.basement_floor_light
+   - light.basement_ceiling_lights
+   - switch.laundryroom
+   - media_player.desktop_media
+   - light.lightpack
+   - media_player.basement_stereo
+   
+basement_no_aux:
+  name: Basement Lights
+  entities:
+   - switch.basement_floor_light
    - light.basement_ceiling_lights
    - switch.laundryroom
    
@@ -155,7 +164,8 @@ Switch Lights:
   view: no
   entities:
     - switch.outlet
-    - switch.officefan
+    - switch.basement_floor_light
+    - switch.nurseryfan
     - switch.bedfan
     - switch.craftfan
     - switch.masterbath
@@ -192,8 +202,7 @@ secondfloor:
     - switch.masterbath
     - switch.craftfan
     - light.sewing_light
-    - switch.officefan
-    - light.lightpack
+    - switch.nurseryfan
     
 holiday:
   name: Holiday Lights
@@ -210,7 +219,7 @@ alli_locate:
   entities:
     - input_boolean.alli_bed
     - input_boolean.alli_craft
-    - input_boolean.alli_office
+    - input_boolean.alli_nursery
     - input_boolean.alli_kitchen
     - input_boolean.alli_living
     - input_boolean.alli_dining
@@ -360,7 +369,7 @@ other_auto:
   entities:
     - automation.watch_tv
     - automation.tv_off
-    - automation.office_stereo_off
+    - automation.basement_stereo_off
     - automation.visitor_on
     - automation.visitor_off
     - automation.temperature_party
@@ -383,7 +392,6 @@ other_auto:
     - automation.bedroom_fan_on
     - automation.bedroom_fan_off
     - automation.dog_meds_flag
-    # - automation.daily_snapshot_clean_up
     - automation.perform_auto_backup
     - automation.perform_daily_backup
     - automation.perform_weekly_backup

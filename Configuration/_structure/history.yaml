@@ -58,8 +58,8 @@
         - sensor.my_computer_current_user
         - sensor.my_computer_idle_time
         - sensor.my_computer_ram_usage
-        - sensor.office_light_level
-        - sensor.officebay
+        - sensor.nursery_light_level
+        - sensor.basementbay
         - sensor.outside_temp
         - sensor.processor_use
         - sensor.speedtest_download
@@ -83,7 +83,7 @@
         
         - switch.outlet
         - switch.bedfan
-        - switch.officefan
+        - switch.nurseryfan
         - switch.craftfan
         - switch.masterbath
         - switch.kitchensw
@@ -103,7 +103,7 @@
         - input_boolean.visitor
         - input_boolean.party
         - input_boolean.alli_bed
-        - input_boolean.alli_office
+        - input_boolean.alli_nursery
         - input_boolean.alli_craft
         - input_boolean.alli_living
         - input_boolean.alli_kitchen

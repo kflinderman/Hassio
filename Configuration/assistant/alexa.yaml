@@ -35,7 +35,7 @@ smart_home:
       - input_boolean.window
       - media_player.desktop_media
       - media_player.lg_tv_remote
-      - media_player.office_stereo
+      - media_player.basement_stereo
       - media_player.stereo
       - sensor.basement_bee_temperature
       - sensor.bedroom_bee_temperature
@@ -54,7 +54,7 @@ smart_home:
       - switch.kitchensw
       - switch.laundryroom
       - switch.masterbath
-      - switch.officefan
+      - switch.nurseryfan
       - switch.outlet
       - switch.sun_room_market_lights
       - switch.entrance_switch
@@ -72,6 +72,8 @@ smart_home:
       - group.all_vacuum_cleaners
       - group.alli_locate
       - group.default_view
+      - group.basement
+      - group.basement_no_aux
       - group.calendar
       - group.hue_lights
       - group.light_off_auto
@@ -79,7 +81,7 @@ smart_home:
       - group.location_auto
       - group.mastersw_auto
       - group.notify_auto
-      - group.office
+      - group.nursery
       - group.other_auto
       - group.pc_auto
       - group.residents
@@ -128,7 +130,7 @@ smart_home:
     script.dinner_time:
       name: Dinner Time
     sensor.thingy_temperature:
-      name: Office Temperature
+      name: Nursery Temperature
     group.basement_floor:
       name: All of the Basement
     group.first_floor:
