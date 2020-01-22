@@ -36,7 +36,7 @@
   maximum: 10
 - platform: cert_expiry
   host: !secret url2_secret
-  port: 8123
+  # port: 8123
 - platform: darksky
   api_key: !secret dark_api
   monitored_conditions:
@@ -368,6 +368,10 @@
     rock_lamp_light_hours_round:
       friendly_name: "Rock Lamp Light Hours Round"
       value_template: "{{ states('sensor.rock_lamp_light_hours') | round(1) }}"
+      
+    floor_lamp_light_hours_round:
+      friendly_name: "Floor Lamp Light Hours Round"
+      value_template: "{{ states('sensor.floor_lamp_light_hours') | round(1) }}"
 
     chair_lamp_light_hours_round:
       friendly_name: "Chair Lamp Light Hours Round"

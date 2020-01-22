@@ -395,3 +395,4 @@ other_auto:
     - automation.perform_auto_backup
     - automation.perform_daily_backup
     - automation.perform_weekly_backup
+    - automation.set_cert_data

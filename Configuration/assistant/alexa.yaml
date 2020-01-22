@@ -33,6 +33,7 @@ smart_home:
       - input_boolean.vacation
       - input_boolean.visitor
       - input_boolean.window
+      - input_boolean.goodnight
       - media_player.desktop_media
       - media_player.lg_tv_remote
       - media_player.basement_stereo

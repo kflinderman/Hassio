@@ -23,7 +23,7 @@ logger:
   logs:
     homeassistant.components.visitor.calendar: critical
     homeassistant.components.vacation.calendar: critical
-    homeassistant.components.cert_expiry.sensor: critical
+    homeassistant.components.ssl_certificate_expiry.sensor: critical
     custom_components.weatheralerts.sensor: critical
     homeassistant.components.skybell.binary_sensor: critical
     homeassistant.components.skybell.switch: critical
@@ -172,6 +172,13 @@ input_select:
       - "Turbo"
       - "Max"
 
+input_number:
+  ssl_cert:
+    name: SSL Certificate
+    min: -20
+    max: 100
+    icon: mdi:certificate
+
 counter: !include _components/counter.yaml
 
 sensor: !include _components/sensors.yaml
@@ -199,12 +206,12 @@ tplink:
 
 momentary:
 
-alexa_media:
-  accounts:
-    - email: !secret kemail
-      password: !secret amz_secret
-      url: amazon.com
-      scan_interval: 30
+# alexa_media:
+  # accounts:
+    # - email: !secret kemail
+      # password: !secret amz_secret
+      # url: amazon.com
+      # scan_interval: 30
 
 hue:
   bridges:
@@ -277,15 +284,15 @@ ecobee:
   api_key: !secret ecobee_key
  
 notify:
-  - platform: pushbullet
-    api_key: !secret push_key
-    name: pushbullet
+  # - platform: pushbullet
+    # api_key: !secret push_key
+    # name: pushbullet
   - platform: alexa_media
     name: alexa_media
   - platform: group
     name: residents
     services:
-      - service: pushbullet
+      - service: mobile_app_pixelxl_kenny
       - service: mobile_app_iphone
 
 auto_backup:

@@ -389,7 +389,7 @@
   alias: Kenny Bed
   trigger:
     - platform: state
-      entity_id: group.firstfloor
+      entity_id: group.livingroom
       to: 'off'
     - platform: state
       entity_id: group.basement_no_pc
@@ -1058,10 +1058,10 @@
   action:
     - service: switch.turn_on
       entity_id: switch.momentary_weather_alert_notification
-    - service: notify.pushbullet
+    - service: notify.mobile_app_pixelxl_kenny
       data:
-        title: "{{ state_attr('sensor.weatheralerts', 'title') }}"
-        message: "{{ state_attr('sensor.weatheralerts', 'link') }}"
+        title: "{{ state_attr('sensor.weatheralerts', 'alerts.event') }}"
+        message: "{{ state_attr('sensor.weatheralerts', 'alerts.description') }}"
       
 - id: alli_battery
   alias: Alli Battery
@@ -1072,7 +1072,7 @@
     for:
       minutes: 12
   action:
-    service: notify.pushbullet
+    service: notify.mobile_app_pixelxl_kenny
     data:
       title: Alli's Collar Low Battery
       message: "Alli's collar has very low battery."
@@ -1084,7 +1084,7 @@
     entity_id: sensor.kitchensensorbatt
     below: 20
   action:
-    service: notify.pushbullet
+    service: notify.mobile_app_pixelxl_kenny
     data:
       title: Kitchen Sensor Low Battery
       message: "The kitchen sensor has very low battery."
@@ -1098,7 +1098,7 @@
     for:
       minutes: 60
   action:
-    service: notify.pushbullet
+    service: notify.mobile_app_pixelxl_kenny
     data:
       title: Thingy Sensor Low Battery
       message: "The thingy sensor has very low battery."
@@ -1124,7 +1124,7 @@
     entity_id: sensor.hacs
     above: 0
   action:
-    service: notify.pushbullet
+    service: notify.mobile_app_pixelxl_kenny
     data:
       title: HACS Updates
       message: "There are some HACS updates ready to be installed."
@@ -1133,10 +1133,10 @@
   alias: SSL Certification Alert
   trigger:
     platform: numeric_state
-    entity_id: sensor.ssl_certificate_expiry
+    entity_id: input_number.ssl_cert
     below: 25
   action:
-    service: notify.pushbullet
+    service: notify.mobile_app_pixelxl_kenny
     data:
       title: SSL Certification Alert
       message: "Check to make sure your SSL certificate doesn't expire soon."
@@ -1174,7 +1174,7 @@
     entity_id: sensor.vacuum_main_brush
     below: 2
   action:
-    service: notify.pushbullet
+    service: notify.mobile_app_pixelxl_kenny
     data:
       title: Robot Vacuum Maintenance
       message: "The main brush on the vacuum needs replacing."
@@ -1186,7 +1186,7 @@
     entity_id: sensor.vacuum_side_brush
     below: 2
   action:
-    service: notify.pushbullet
+    service: notify.mobile_app_pixelxl_kenny
     data:
       title: Robot Vacuum Maintenance
       message: "The side brush on the vacuum needs replacing."
@@ -1198,7 +1198,7 @@
     entity_id: sensor.vacuum_filter
     below: 2
   action:
-    service: notify.pushbullet
+    service: notify.mobile_app_pixelxl_kenny
     data:
       title: Robot Vacuum Maintenance
       message: "The filter on the vacuum needs replacing."
@@ -1210,7 +1210,7 @@
     entity_id: sensor.vacuum_sensor
     below: 2
   action:
-    service: notify.pushbullet
+    service: notify.mobile_app_pixelxl_kenny
     data:
       title: Robot Vacuum Maintenance
       message: "The sensors on the vacuum needs cleaning."
@@ -1231,7 +1231,7 @@
       entity_id: input_boolean.vacuum_daily
       state: 'off'
   action:
-    - service: notify.pushbullet
+    - service: notify.mobile_app_pixelxl_kenny
       data:
         title: Robot Vacuum Finished
         message: "The vacuum finished cleaning for today!"
@@ -1737,7 +1737,7 @@
     entity_id: counter.robo_error
     below: 0
   action:
-    - service: notify.pushbullet
+    - service: notify.mobile_app_pixelxl_kenny
       data:
         title: Robot Vacuum Error
         message: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'error') }}"
@@ -1914,7 +1914,7 @@
   - service: input_boolean.turn_on
     data:
       entity_id: input_boolean.visitor
-  - service: notify.pushbullet
+  - service: notify.mobile_app_pixelxl_kenny
     data:
       title: Visitors Coming
       message: Change Ecobee Sleep to include downstairs
@@ -1930,7 +1930,7 @@
   - service: input_boolean.turn_off
     data:
       entity_id: input_boolean.visitor
-  - service: notify.pushbullet
+  - service: notify.mobile_app_pixelxl_kenny
     data:
       title: Visitors Left
       message: Change Ecobee Sleep to remove downstairs
@@ -2017,7 +2017,7 @@
     entity_id: script.climate_reset
   - service: input_boolean.turn_off
     entity_id: input_boolean.window
-  - service: notify.pushbullet
+  - service: notify.mobile_app_pixelxl_kenny
     data:
       title: Windows Closed
       message: Weather is changing.  Time to close the windows.
@@ -2101,6 +2101,9 @@
         - condition: state
           entity_id: input_boolean.kitchen
           state: 'off'
+        - condition: state
+          entity_id: input_boolean.goodnight
+          state: 'on'
   action:
   - service: input_boolean.turn_on
     entity_id: input_boolean.basement
@@ -2108,13 +2111,15 @@
     entity_id: input_boolean.livingroom
   - service: input_boolean.turn_on
     entity_id: input_boolean.kitchen
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.goodnight
     
 - id: goodnight_automation
   alias: Bedroom Stop Motion
   trigger:
   - entity_id: input_boolean.goodnight
     platform: state
-    to: 'off'
+    to: 'on'
   condition:
     condition: or
     conditions:
@@ -2148,8 +2153,8 @@
         - condition: time
           before: '8:00:00'
   action:
-  - service: script.turn_on
-    entity_id: script.night_time
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.goodnight
     
 - id: basement_stop_motion
   alias: Basement Stop Motion
@@ -2404,4 +2409,18 @@
       data_template:
         name: "WeeklyBackup: {{ now().strftime('%A, %B %-d, %Y') }} Version: {{ states('sensor.current_version') }}"
         password: !secret backup_password
-        keep_days: 28   
+        keep_days: 28
+        
+- id: set_cert_data
+  alias: Set Cert Data
+  trigger:
+    platform: state
+    entity_id: sensor.ssl_certificate_expiry
+  condition:
+    condition: template
+    value_template: "{{ states('sensor.ssl_certificate_expiry') != 'unavailable' }}"
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.ssl_cert
+        value: "{{ states('sensor.ssl_certificate_expiry') }}"
