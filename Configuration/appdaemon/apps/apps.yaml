@@ -6,3 +6,29 @@ hello_world:
 check_config:
   module: checkconfig
   class: CheckConfig
+  
+livingroom_volume:
+  module: convert_media_volume
+  class: ConvertMediaVolume
+  media_player: media_player.stereo
+  unit_of_measurement: dB
+  min_volume:
+    device: -80.0
+    media_player: 0.2
+  max_volume:
+    device: 0.0
+    media_player: 1.0
+  precision: 0
+  
+basement_volume:
+  module: convert_media_volume
+  class: ConvertMediaVolume
+  media_player: media_player.basement_stereo
+  unit_of_measurement: dB
+  min_volume:
+    device: -80.0
+    media_player: 0.2
+  max_volume:
+    device: 0.0
+    media_player: 1.0
+  precision: 0

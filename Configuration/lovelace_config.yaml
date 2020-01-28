@@ -505,6 +505,7 @@ views:
                 'off':
                   name: false
               preset:
+                Awake: false
                 Open: false
                 Party: false
                 Vac: false
