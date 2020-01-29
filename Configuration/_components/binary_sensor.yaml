@@ -77,22 +77,22 @@
     
   - platform: bayesian
     name: Living Room Bay Occupancy
-    prior: 0.4
+    prior: 0.5
     probability_threshold: 0.8
     observations:
       - entity_id: 'media_player.stereo'
         prob_given_true: 0.7
-        prob_given_false: 0.3
+        prob_given_false: 0.2
         platform: state
         to_state: 'on'
       - entity_id: 'media_player.lg_tv_remote'
-        prob_given_true: 0.8
-        prob_given_false: 0.2
+        prob_given_true: 0.9
+        prob_given_false: 0.1
         platform: state
         to_state: 'playing'
       - entity_id: 'binary_sensor.living_room_camera_motion_detected'
-        prob_given_true: 0.9
-        prob_given_false: 0.1
+        prob_given_true: 0.8
+        prob_given_false: 0.2
         platform: state
         to_state: 'on'
       - entity_id: 'binary_sensor.living_room_bee_occupancy'
@@ -116,12 +116,12 @@
         platform: state
         to_state: 'on'
       - entity_id: 'light.lightpack'
-        prob_given_true: 0.6
+        prob_given_true: 0.7
         prob_given_false: 0.3
         platform: state
         to_state: 'off'
       - entity_id: 'media_player.desktop_media'
-        prob_given_true: 0.6
+        prob_given_true: 0.7
         prob_given_false: 0.3
         platform: state
         to_state: 'paused'
@@ -130,11 +130,6 @@
         prob_given_false: 0.1
         platform: state
         to_state: 'playing'
-      # - entity_id: 'switch.desktoppc'
-        # prob_given_true: 0.6
-        # prob_given_false: 0.4
-        # platform: state
-        # to_state: 'on'
       - entity_id: 'sensor.my_computer_current_user'
         prob_given_true: 0.6
         prob_given_false: 0.2
@@ -144,4 +139,14 @@
         prob_given_true: 1.0
         prob_given_false: 0.0
         platform: numeric_state
-        below: 60
+        below: 600
+      - entity_id: 'binary_sensor.basement_bee_occupancy'
+        prob_given_true: 0.9
+        prob_given_false: 0.2
+        platform: state
+        to_state: 'on'
+      - entity_id: 'binary_sensor.basement_occupancy'
+        prob_given_true: 0.8
+        prob_given_false: 0.2
+        platform: state
+        to_state: 'on'

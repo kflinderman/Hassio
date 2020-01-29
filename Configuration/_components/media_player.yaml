@@ -52,9 +52,8 @@
     source_names:
        AUDIO2: "Vinyl"
        AV1: "Wii"
-       AV3: "NES"
        AV5: "GameCube"
-       AV6: "N64"
+       AV6: "Retro"
        HDMI1: "PC"
        HDMI2: "Cable"
        HDMI3: "Pi"
@@ -62,7 +61,7 @@
        HDMI5: "PS4"
        Pandora: "Pandora"
        TUNER: "Radio"
-       V-AUX: "SNES"
+       V-AUX: "V-AUX"
   - platform: lg_netcast
     host: !secret lg_ip
     access_token: 542850

@@ -750,9 +750,11 @@
 - id: basement_lights_off
   alias: Basement Lights OFF
   trigger:
-    platform: numeric_state
-    entity_id: sensor.basement_multisensor_burglar
-    below: 4
+    - platform: state
+      entity_id: binary_sensor.basement_bay_occupancy
+      to: 'off'
+      for:
+        minutes: 5
   condition:
     condition: and
     conditions:
@@ -1039,10 +1041,27 @@
     entity_id: input_boolean.door
     state: 'off'
   action:
-    - service: notify.residents
+    - service: camera.snapshot
+      data:
+        entity_id: camera.front_door_last_activity
+        filename: '/config/www/camerasnapshot/front_door_last_activity.jpg'
+    - service: notify.mobile_app_pixelxl_kenny
       data:
         title: Door Activity
         message: "There is activity at the front door..."
+        data:
+          android:
+            notification:
+              image: !secret img_location
+    - service: notify.mobile_app_iphone
+      data:
+        title: Door Activity
+        message: "There is activity at the front door..."
+        data:
+          attachment:
+            url: !secret img_location
+            content-type: JPEG
+            hide-thumbnail: false
     - service: script.turn_on
       entity_id: script.door
       
@@ -1060,8 +1079,8 @@
       entity_id: switch.momentary_weather_alert_notification
     - service: notify.mobile_app_pixelxl_kenny
       data:
-        title: "{{ state_attr('sensor.weatheralerts', 'alerts.event') }}"
-        message: "{{ state_attr('sensor.weatheralerts', 'alerts.description') }}"
+        title: "{{ state_attr('sensor.weatheralerts', 'alerts').event }}"
+        message: "{{ state_attr('sensor.weatheralerts', 'alerts').description }}"
       
 - id: alli_battery
   alias: Alli Battery

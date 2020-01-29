@@ -1865,7 +1865,7 @@ views:
                 tap_action:
                   action: none
                 type: state-label
-              - entity: binary_sensor.basement_occupancy
+              - entity: binary_sensor.basement_bay_occupancy
                 style:
                   '--paper-item-icon-color': 'rgb(255,255,255)'
                   color: 'rgba(255,255,255,1)'

@@ -536,7 +536,7 @@ basement_off:
     - delay:
         seconds: 2
     - service: homeassistant.turn_off
-      entity_id: group.basement_no_aux
+      entity_id: group.basement_no_pc
     - delay:
         seconds: 2
     - service: input_boolean.turn_off
