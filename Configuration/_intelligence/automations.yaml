@@ -773,6 +773,22 @@
     service: script.turn_on
     entity_id: script.basement_off
     
+- id: basement_lights_off_no_one
+  alias: Basement Lights OFF No One
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.basement_occupancy
+      to: 'off'
+      for:
+        minutes: 5
+  condition:
+    - condition: state
+      entity_id: binary_sensor.basement_bay_occupancy
+      state: 'off'
+  action:
+    service: script.turn_on
+    entity_id: script.basement_off
+    
 - id: bedroom_lights_off
   alias: Bedroom Lights OFF
   trigger:
@@ -927,7 +943,7 @@
       entity_id: input_boolean.party
       state: 'off'
     - condition: state
-      entity_id: media_player.lg_tv_remote
+      entity_id: media_player.living_room_tv
       state: 'off'
   action:
     - service: script.turn_on
@@ -1077,10 +1093,10 @@
   action:
     - service: switch.turn_on
       entity_id: switch.momentary_weather_alert_notification
-    - service: notify.mobile_app_pixelxl_kenny
+    - service: notify.residents
       data:
-        title: "{{ state_attr('sensor.weatheralerts', 'alerts').event }}"
-        message: "{{ state_attr('sensor.weatheralerts', 'alerts').description }}"
+        title: "{{ state_attr('sensor.weatheralerts', 'alerts')[states('sensor.weatheralerts')|int - 1].event }}"
+        message: "{{ state_attr('sensor.weatheralerts', 'alerts')[states('sensor.weatheralerts')|int - 1].description }}"
       
 - id: alli_battery
   alias: Alli Battery
@@ -1882,7 +1898,7 @@
   alias: Watch TV
   trigger:
     platform: state
-    entity_id: media_player.lg_tv_remote
+    entity_id: media_player.living_room_tv
     to: playing
   condition:
   - condition: state
@@ -1900,7 +1916,7 @@
     to: 'off'
   action:
     service: media_player.turn_off
-    entity_id: media_player.lg_tv_remote
+    entity_id: media_player.living_room_tv
     
 - id: basement_stereo_off
   alias: Basement Stereo Off
@@ -2036,7 +2052,7 @@
     entity_id: script.climate_reset
   - service: input_boolean.turn_off
     entity_id: input_boolean.window
-  - service: notify.mobile_app_pixelxl_kenny
+  - service: notify.residents
     data:
       title: Windows Closed
       message: Weather is changing.  Time to close the windows.

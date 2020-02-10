@@ -35,7 +35,7 @@ smart_home:
       - input_boolean.window
       - input_boolean.goodnight
       - media_player.desktop_media
-      - media_player.lg_tv_remote
+      - media_player.living_room_tv
       - media_player.basement_stereo
       - media_player.stereo
       - sensor.basement_bee_temperature

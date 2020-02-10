@@ -62,6 +62,6 @@
        Pandora: "Pandora"
        TUNER: "Radio"
        V-AUX: "V-AUX"
-  - platform: lg_netcast
-    host: !secret lg_ip
-    access_token: 542850
+  # - platform: lg_netcast
+    # host: !secret lg_ip
+    # access_token: 542850

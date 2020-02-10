@@ -3,7 +3,6 @@
 #############################
 
 default_view:
-  view: yes
   icon: mdi:home
   entities:
     - person.kenny
@@ -14,7 +13,6 @@ default_view:
     - group.outside
 
 First Floor:
-  view: yes
   icon: mdi:numeric-1-box
   entities:
     - group.livingroom
@@ -23,7 +21,6 @@ First Floor:
     - switch.entrance_switch
 
 Second Floor:
-  view: yes
   icon: mdi:numeric-2-box
   entities:
     - group.bedroom
@@ -31,7 +28,6 @@ Second Floor:
     - group.nursery
     
 Basement Floor:
-  view: yes
   icon: mdi:arrow-down-bold-box
   entities:
     - group.guest
@@ -65,7 +61,7 @@ livingroom:
     - light.rock_lamp
     - light.chair_lamp
     - media_player.stereo
-    - media_player.lg_tv_remote
+    - media_player.living_room_tv
 
 kitchen:
   name: Kitchen
@@ -148,7 +144,6 @@ sun_room:
 ################
 
 Hue Lights:
-  view: no
   entities:
     - group.livingroom
     - light.oven_light
@@ -161,7 +156,6 @@ Hue Lights:
     - light.deck_light
     
 Switch Lights:
-  view: no
   entities:
     - switch.outlet
     - switch.basement_floor_light
@@ -268,6 +262,7 @@ light_off_auto:
     - automation.turn_off_all_lights_at_morning_on_vacation
     - automation.turn_off_lights_day_dark
     - automation.basement_lights_off
+    - automation.basement_lights_off_no_one
     - automation.bedroom_lights_off
     - automation.kitchen_lights_off
     - automation.living_room_stop_on

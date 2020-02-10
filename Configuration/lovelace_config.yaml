@@ -26,8 +26,8 @@ custom_header:
         user: kenny
       config:
         header_text: Home Assistant
-        hide_tabs: '7'
         options_hide: false
+        show_tabs: '0,1,2,3,4,5'
   header_text: My Home
   hide_tabs: '4, 5'
   options_hide: true
@@ -240,9 +240,6 @@ resources:
   - type: module
     url: /community_plugin/mini-media-player/mini-media-player.js
   - type: js
-    url: >-
-      /community_plugin/lovelace-toggle-lock-entity-row/toggle-lock-entity-row.js
-  - type: js
     url: /community_plugin/lovelace-fold-entity-row/fold-entity-row.js
   - type: module
     url: /community_plugin/lovelace-card-mod/card-mod.js
@@ -267,6 +264,8 @@ resources:
     url: /community_plugin/custom-header/custom-header.js
   - type: module
     url: /community_plugin/lovelace-layout-card/layout-card.js
+  - type: module
+    url: /community_plugin/restriction-card/restriction-card.js
 title: Home
 views:
   - badges: []
@@ -369,11 +368,13 @@ views:
                 image: /local/alli.jpg
                 type: picture-elements
             type: horizontal-stack
-          - cards:
-              - head: group.alli_locate
-                type: 'custom:fold-entity-row'
-            popup: timeout
-            type: 'custom:love-lock-card'
+          - block:
+              exemptions:
+                - user: kenny
+            card:
+              head: group.alli_locate
+              type: 'custom:fold-entity-row'
+            type: 'custom:restriction-card'
         id: 09ef49e989f142258d287c90cb5a90db
         type: vertical-stack
       - cards:
@@ -571,16 +572,15 @@ views:
                 type: picture-entity
             type: horizontal-stack
         type: vertical-stack
-      - cards:
-          - entities:
-              - input_boolean.all_firstfloor
-              - input_boolean.all_secondfloor
-              - input_boolean.all_basement
-              - input_boolean.all_outside
-            title: Master Switches
-            type: entities
-        popup: timeout
-        type: 'custom:love-lock-card'
+      - card:
+          entities:
+            - input_boolean.all_firstfloor
+            - input_boolean.all_secondfloor
+            - input_boolean.all_basement
+            - input_boolean.all_outside
+          title: Master Switches
+          type: entities
+        type: 'custom:restriction-card'
       - entities:
           - binary_sensor.trash_day
           - binary_sensor.recycling_day
@@ -589,25 +589,40 @@ views:
       - card_width: 70%
         cards:
           - entities:
-              - entity: input_boolean.visitor
-                type: 'custom:toggle-lock-entity-row'
+              - block:
+                  exemptions:
+                    - kenny
+                    - meredith
+                card:
+                  entity: input_boolean.visitor
+                row: true
+                type: 'custom:restriction-card'
               - entity: calendar.visitors
             show_header_toggle: false
             title: Visitor
             type: entities
           - entities:
-              - entity: input_boolean.vacation
-                type: 'custom:toggle-lock-entity-row'
-                users:
-                  - kenny
-                  - meredith
+              - block:
+                  exemptions:
+                    - kenny
+                    - meredith
+                card:
+                  entity: input_boolean.vacation
+                row: true
+                type: 'custom:restriction-card'
               - entity: calendar.vacations
             show_header_toggle: false
             title: Vacation
             type: entities
           - entities:
-              - entity: input_boolean.party
-                type: 'custom:toggle-lock-entity-row'
+              - block:
+                  exemptions:
+                    - kenny
+                    - meredith
+                card:
+                  entity: input_boolean.party
+                row: true
+                type: 'custom:restriction-card'
               - entity: calendar.party
             show_header_toggle: false
             title: Party
@@ -809,10 +824,8 @@ views:
             image: /local/room_pic/camera_error.jpg
             type: picture-elements
           - artwork: full-cover
-            entity: media_player.lg_tv_remote
+            entity: media_player.living_room_tv
             hide:
-              controls: true
-              info: true
               mute: true
               volume: true
             power_color: true
@@ -1669,6 +1682,163 @@ views:
         id: 360ab61ff9b342bc93642ffc5e28315c
         type: vertical-stack
       - elements:
+          - camera_image: camera.nursery_camera
+            entity: camera.nursery_camera
+            style:
+              left: 50%
+              top: 50%
+              width: 100%
+            type: image
+          - entity: sensor.blank
+            prefix: Nursery
+            style:
+              background-color: 'rgba(0, 0, 0, 0.5)'
+              bottom: 0
+              color: white
+              font-size: 16px
+              left: 0
+              line-height: 32px
+              padding: 0 8px
+              transform: initial
+              width: 100%
+            tap_action:
+              action: none
+            type: state-label
+          - entity: binary_sensor.nursery_occupancy
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              color: 'rgba(255,255,255,1)'
+              line-height: 32px
+              margin: 3px 5px 0 0
+              right: 0
+              top: 0
+              transform: scale(0.8)
+            type: state-icon
+          - entity: sensor.nursery_light_level
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              color: 'rgba(255,255,255,1)'
+              line-height: 32px
+              margin: 35px 5px 0 0
+              right: 0
+              top: 0
+              transform: scale(0.8)
+            type: state-icon
+          - entity: sensor.nursery_light_level
+            style:
+              color: 'rgba(255,255,255,1)'
+              font-size: 12px
+              font-weight: bold
+              line-height: 32px
+              margin: 30px 35px
+              pointer-events: none
+              right: 0
+              text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+              top: 0
+              transform: initial
+            type: state-label
+          - entity: sensor.thingy_temperature
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              color: 'rgba(255,255,255,1)'
+              line-height: 32px
+              margin: 65px 5px 0 0
+              right: 0
+              top: 0
+              transform: scale(0.8)
+            type: state-icon
+          - entity: sensor.thingy_temperature
+            style:
+              color: 'rgba(255,255,255,1)'
+              font-size: 12px
+              font-weight: bold
+              line-height: 32px
+              margin: 60px 35px
+              pointer-events: none
+              right: 0
+              text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+              top: 0
+              transform: initial
+            type: state-label
+          - entity: group.nursery
+            hold_action:
+              action: more-info
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              color: 'rgba(255,255,255,1)'
+              left: 0
+              line-height: 32px
+              margin: 3px 5px 0 0
+              top: 0
+              transform: scale(0.8)
+            tap_action:
+              action: toggle
+            type: state-icon
+          - icon: 'mdi:numeric-1-circle'
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              color: 'rgba(255,255,255,1)'
+              left: 30%
+              top: 91.3%
+            tap_action:
+              action: call-service
+              service: amcrest.goto_preset
+              service_data:
+                entity_id: camera.nursery_camera
+                preset: '1'
+            type: icon
+          - icon: 'mdi:numeric-2-circle'
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              color: 'rgba(255,255,255,1)'
+              left: 38%
+              top: 91.3%
+            tap_action:
+              action: call-service
+              service: amcrest.goto_preset
+              service_data:
+                entity_id: camera.nursery_camera
+                preset: '2'
+            type: icon
+          - icon: 'mdi:numeric-3-circle'
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              color: 'rgba(255,255,255,1)'
+              left: 46%
+              top: 91.3%
+            tap_action:
+              action: call-service
+              service: amcrest.goto_preset
+              service_data:
+                entity_id: camera.nursery_camera
+                preset: '3'
+            type: icon
+          - icon: 'mdi:numeric-4-circle'
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              color: 'rgba(255,255,255,1)'
+              left: 54%
+              top: 91.3%
+            tap_action:
+              action: call-service
+              service: amcrest.goto_preset
+              service_data:
+                entity_id: camera.nursery_camera
+                preset: '4'
+            type: icon
+          - entity: switch.nurseryfan
+            hold_action:
+              action: more-info
+            style:
+              '--paper-item-icon-color': 'rgb(255,255,255)'
+              left: 95%
+              top: 91.3%
+            tap_action:
+              action: toggle
+            type: state-icon
+        image: /local/room_pic/camera_error.jpg
+        type: picture-elements
+      - elements:
           - entity: group.craft
             image: /local/room_pic/Craft_off.jpg
             state_image:
@@ -1737,101 +1907,6 @@ views:
             type: state-icon
         id: ecad39e4848d4be5a479ca467b2535bd
         image: /local/room_pic/Craft_off.jpg
-        type: picture-elements
-      - elements:
-          - entity: group.office
-            image: /local/room_pic/Office_off.jpg
-            state_image:
-              'on': /local/room_pic/Office_all.jpg
-            style:
-              left: 50%
-              top: 50%
-              width: 100%
-            tap_action:
-              action: toggle
-            type: image
-          - entity: sensor.blank
-            prefix: Nursery
-            style:
-              background-color: 'rgba(0, 0, 0, 0.5)'
-              bottom: 0
-              color: white
-              font-size: 16px
-              left: 0
-              line-height: 32px
-              padding: 0 8px
-              transform: initial
-              width: 100%
-            tap_action:
-              action: none
-            type: state-label
-          - entity: sensor.nursery_light_level
-            style:
-              '--paper-item-icon-color': 'rgb(255,255,255)'
-              color: 'rgba(255,255,255,1)'
-              line-height: 32px
-              margin: 35px 5px 0 0
-              right: 0
-              top: 0
-              transform: scale(0.8)
-            type: state-icon
-          - entity: sensor.nursery_light_level
-            style:
-              color: 'rgba(255,255,255,1)'
-              font-size: 12px
-              font-weight: bold
-              line-height: 32px
-              margin: 30px 35px
-              pointer-events: none
-              right: 0
-              text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-              top: 0
-              transform: initial
-            type: state-label
-          - entity: sensor.thingy_temperature
-            style:
-              '--paper-item-icon-color': 'rgb(255,255,255)'
-              color: 'rgba(255,255,255,1)'
-              line-height: 32px
-              margin: 65px 5px 0 0
-              right: 0
-              top: 0
-              transform: scale(0.8)
-            type: state-icon
-          - entity: sensor.thingy_temperature
-            style:
-              color: 'rgba(255,255,255,1)'
-              font-size: 12px
-              font-weight: bold
-              line-height: 32px
-              margin: 60px 35px
-              pointer-events: none
-              right: 0
-              text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-              top: 0
-              transform: initial
-            type: state-label
-          - entity: group.nursery
-            style:
-              '--paper-item-icon-color': 'rgb(255,255,255)'
-              color: 'rgba(255,255,255,1)'
-              left: 0
-              line-height: 32px
-              margin: 3px 5px 0 0
-              top: 0
-              transform: scale(0.8)
-            type: state-icon
-          - entity: switch.nurseryfan
-            hold_action:
-              action: more-info
-            style:
-              '--paper-item-icon-color': 'rgb(255,255,255)'
-              left: 95%
-              top: 91.3%
-            tap_action:
-              action: toggle
-            type: state-icon
-        image: /local/room_pic/Office_off.jpg
         type: picture-elements
     icon: 'mdi:numeric-2-box'
     id: 2

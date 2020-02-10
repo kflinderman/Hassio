@@ -52,6 +52,11 @@
         friendly_name: Weather Alert
         value_template: >-
           {{ not is_state('sensor.weatheralerts', 'unknown') }}
+          
+      nursery_occupancy:
+        friendly_name: Nursery Occupancy
+        value_template: >-
+          {{ is_state('binary_sensor.nursery_camera_motion_detected', 'on') }}
       
 ##### Occupancy Threshold Sensors #####
           
@@ -85,7 +90,7 @@
         prob_given_false: 0.2
         platform: state
         to_state: 'on'
-      - entity_id: 'media_player.lg_tv_remote'
+      - entity_id: 'media_player.living_room_tv'
         prob_given_true: 0.9
         prob_given_false: 0.1
         platform: state

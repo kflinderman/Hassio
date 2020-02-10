@@ -4,12 +4,19 @@ import threading
 import datetime
 import logging
 
+from homeassistant import config as conf_util
 from homeassistant.core import callback
+from homeassistant.loader import async_get_integration
 import homeassistant.components.logbook as lb
-import homeassistant.helpers.config_validation as cv
 import homeassistant.util.dt as dt_util
 
-from .const import DOMAIN, CACHE_DAYS, DEFAULT_CACHE_DAYS
+from .const import (
+    DOMAIN,
+    CACHE_DAYS,
+    ONLY_CACHE,
+    DEFAULT_CACHE_DAYS,
+    DEFAULT_ONLY_CACHE,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -19,7 +26,18 @@ logbook_config = None
 
 async def async_setup(hass, config):
     global logbook_config
+
+    logbook_integration = await async_get_integration(hass, lb.DOMAIN)
+    config = await conf_util.async_process_component_config(
+        hass, config, logbook_integration
+    )
     logbook_config = config.get(lb.DOMAIN, {})
+
+    recorder_config = config.get("recorder", {})
+
+    _LOGGER.debug(
+        f"Setup, logbook_config={logbook_config}, recorder_config={recorder_config}"
+    )
 
     return True
 
@@ -79,7 +97,8 @@ class MonkeyClass:
     @callback
     def async_update_listener(self):
         cache_days = self.config_entry.options.get(CACHE_DAYS, DEFAULT_CACHE_DAYS)
-        _LOGGER.debug(f"cache_days={cache_days}")
+        only_cache = self.config_entry.options.get(ONLY_CACHE, DEFAULT_ONLY_CACHE)
+        _LOGGER.debug(f"cache_days={cache_days}, only_cache={only_cache}")
 
         if self.async_refresh_unsub:
             self.async_refresh_unsub()
@@ -87,21 +106,29 @@ class MonkeyClass:
 
         self.async_refresh_cache()
 
-    def wrap_get_events(self, hass, logbook_config, start_day, end_day, entity_id=None):
-        if entity_id is not None or end_day <= self.cache_start():
-            _LOGGER.debug(f"Forwarding for {start_day}-{end_day}")
-            return self.original_get_events(
-                hass, logbook_config, start_day, end_day, entity_id
-            )
+    def wrap_get_events(self, hass, config, start_day, end_day, entity_id=None):
+        _LOGGER.debug(
+            f"wrap_get_events(start_day={start_day}, end_day={end_day}, entity_id={entity_id})"
+        )
+        only_cache = self.config_entry.options.get(ONLY_CACHE, DEFAULT_ONLY_CACHE)
+
+        if entity_id is not None:
+            _LOGGER.debug(f"Forwarding for {entity_id} {start_day}-{end_day}")
+            return self.original_get_events(hass, config, start_day, end_day, entity_id)
+
+        if end_day <= self.cache_start() and not only_cache:
+            _LOGGER.debug(f"Forwarding for old {start_day}-{end_day}")
+            return self.original_get_events(hass, config, start_day, end_day, entity_id)
 
         events = []
 
         timestamp = start_day
         with self.load_lock:
             while timestamp < end_day:
-                events.extend(self.load_chunk(timestamp))
+                events.extend(self.load_chunk(timestamp, only_cache=only_cache))
                 timestamp = step_timestamp(timestamp)
 
+        _LOGGER.debug(f"Found {len(events)} events")
         return events
 
     def cache_start(self):
@@ -145,15 +172,19 @@ class MonkeyClass:
 
         self.hass.async_add_executor_job(refresh)
 
-    def load_chunk(self, timestamp):
+    def load_chunk(self, timestamp, only_cache=False):
         if timestamp in self.cache:
             return self.cache[timestamp]
 
         if timestamp > dt_util.utcnow():
             return []
 
-        _LOGGER.debug(f"Loading {timestamp}")
         next_timestamp = step_timestamp(timestamp)
+
+        if only_cache and next_timestamp < dt_util.utcnow():
+            return []
+
+        _LOGGER.debug(f"Loading {timestamp}")
         chunk = self.original_get_events(
             self.hass, logbook_config, timestamp, next_timestamp
         )

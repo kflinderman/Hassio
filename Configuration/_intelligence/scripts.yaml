@@ -419,7 +419,7 @@ goodnight_kenny:
     - service: switch.turn_on
       entity_id: switch.entrance_switch
     - delay:
-        minutes: 2
+        minutes: 5
     - service: switch.turn_off
       entity_id: switch.entrance_switch
       

@@ -32,3 +32,13 @@ basement_volume:
     device: 0.0
     media_player: 1.0
   precision: 0
+  
+all_groups:
+  module: bbgax
+  class: group_all_x
+  domains: 
+    - script
+    - automation
+    - plant
+    - light
+    - switch

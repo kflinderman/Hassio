@@ -22,7 +22,7 @@ sensor.kitchen_burglar:
 media_player.yamaha_receiver:
   emulated_hue_name: stereo
   friendly_name: Stereo
-media_player.lg_tv_remote:
+media_player.living_room_tv:
   friendly_name: Living Room TV
 weather.yweather:
   friendly_name: Weather

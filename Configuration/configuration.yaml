@@ -58,6 +58,8 @@ influxdb:
   max_retries: 3
   default_measurement: state
 
+uilogs:
+
 logbook:
   exclude:
     domains:
@@ -116,7 +118,7 @@ scene: !include _intelligence/scene.yaml
 
 script: !include _intelligence/scripts.yaml
 
-zone: !include _structure/zone.yaml
+# zone: !include _structure/zone.yaml
 
 group: !include _structure/groups.yaml
 
@@ -250,6 +252,14 @@ amcrest:
       - motion_detected
     port: !secret amcrest2_port
     scan_interval: 20
+  - host: !secret nursery_IP
+    username: !secret nursery_user
+    password: !secret nursery_pswd
+    name: "Nursery Camera"
+    binary_sensors:
+      - motion_detected
+    port: !secret amcrest3_port
+    scan_interval: 20
 
 ffmpeg:
       
@@ -282,6 +292,23 @@ google:
  
 ecobee:
   api_key: !secret ecobee_key
+  
+webostv:
+  host: !secret lg_ip
+  name: Living Room TV
+  # standby_connection: true
+  turn_on_action:
+    service: wake_on_lan.send_magic_packet
+    data:
+      mac: !secret lg_mac
+  customize:
+    sources:
+      - Amazon Prime Video
+      - Disney+
+      - Google Play Movies & TV
+      - Netflix
+      - YouTube
+      - YouTube TV
  
 notify:
   # - platform: pushbullet
@@ -294,6 +321,12 @@ notify:
     services:
       - service: mobile_app_pixelxl_kenny
       - service: mobile_app_iphone
+  - platform: group
+    name: everything
+    services:
+      - service: mobile_app_pixelxl_kenny
+      - service: mobile_app_iphone
+      - service: living_room_tv
 
 auto_backup:
   auto_purge: true

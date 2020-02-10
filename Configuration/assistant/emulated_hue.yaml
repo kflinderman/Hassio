@@ -67,7 +67,7 @@
       hidden: false
     media_player.stereo:
       hidden: false
-    media_player.lg_tv_remote:
+    media_player.living_room_tv:
       hidden: false
 
     ##### Scripts #####
