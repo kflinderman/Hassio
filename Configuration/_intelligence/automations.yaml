@@ -2279,7 +2279,7 @@
     at: '12:00:00'
   action:
     service: ifttt.trigger
-    data_template: {"event":"WattHour_Month", "value1":"{{ states('sensor.watthour') }}", "value2":"{{ states('sensor.cpuwhr') }}", "value3":"{{ states('sensor.auxwhr') }}"}#, "value4":"{{ states('sensor.totalwhr') }}", "value5":"20"}
+    data_template: {"event":"WattHour_Month", "value1":"{{ states('input_number.lighthour') }}", "value2":"{{ states('input_number.cpuhour') }}", "value3":"{{ states('sensor.auxwhr') }}"}#, "value4":"{{ states('input_number.watthour') }}", "value5":"20"}
     
 - id: update_alli
   alias: Update Alli
