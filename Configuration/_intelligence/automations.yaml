@@ -1770,7 +1770,7 @@
   trigger:
     platform: numeric_state
     entity_id: counter.robo_error
-    below: 0
+    below: 1
   action:
     - service: notify.mobile_app_pixelxl_kenny
       data:
@@ -2460,6 +2460,7 @@
         entity_id: input_number.ssl_cert
         value: "{{ states('sensor.ssl_certificate_expiry') }}"
         
+
 - id: watthour_data
   alias: Watt Hour Data
   trigger:
@@ -2501,3 +2502,15 @@
       data_template:
         entity_id: input_number.lighthour
         value: "{{ states('sensor.watthour') }}"
+
+- id: ha_restart
+  alias: HA Restart
+  trigger:
+    platform: homeassistant
+    event: start
+  action:
+    - delay:
+        seconds: 90
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.restart
+
