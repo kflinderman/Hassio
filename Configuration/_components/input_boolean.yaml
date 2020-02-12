@@ -140,3 +140,8 @@
   goodnight:
     name: Goodnight
     initial: off
+  nodered:
+    name: Node Red
+  restart:
+    name: Restart
+    initial: off

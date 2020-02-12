@@ -169,10 +169,11 @@ input_select:
     name: Fan Mode
     icon: mdi:fan
     options:
-      - "Quiet"
-      - "Balanced"
+      - "Silent"
+      - "Standard"
+      - "Medium"
       - "Turbo"
-      - "Max"
+      - "Gentle"
 
 input_number:
   ssl_cert:

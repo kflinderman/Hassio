@@ -301,7 +301,7 @@ views:
                       Bedroom: /local/alli.jpg
                       Living Room: /local/alli.jpg
                       Nowhere: /local/alli_gone.jpg
-                      Office: /local/alli.jpg
+                      Nursery: /local/alli.jpg
                     style:
                       left: 50%
                       top: 50%
@@ -3000,6 +3000,8 @@ views:
         type: 'custom:fold-entity-row'
       - head: group.other_auto
         id: afd0420feff241c5ba4e84d9392d8b25
+        type: 'custom:fold-entity-row'
+      - head: group.all_scripts
         type: 'custom:fold-entity-row'
     icon: 'mdi:recycle'
     id: 5

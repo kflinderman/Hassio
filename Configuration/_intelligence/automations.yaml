@@ -1770,7 +1770,7 @@
   trigger:
     platform: numeric_state
     entity_id: counter.robo_error
-    below: 0
+    below: 1
   action:
     - service: notify.mobile_app_pixelxl_kenny
       data:
@@ -2459,3 +2459,14 @@
       data_template:
         entity_id: input_number.ssl_cert
         value: "{{ states('sensor.ssl_certificate_expiry') }}"
+        
+- id: ha_restart
+  alias: HA Restart
+  trigger:
+    platform: homeassistant
+    event: start
+  action:
+    - delay:
+        seconds: 90
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.restart

@@ -20,7 +20,7 @@ home_mode:
     - service: vacuum.set_fan_speed
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-        fan_speed: "Quiet"
+        fan_speed: "Silent"
     - service: vacuum.return_to_base
       entity_id: vacuum.xiaomi_vacuum_cleaner
     - condition: state
@@ -74,7 +74,7 @@ away_mode:
     - service: vacuum.set_fan_speed
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-        fan_speed: "Max"
+        fan_speed: "Turbo"
     - service: input_boolean.turn_off
       data:
         entity_id: input_boolean.all_firstfloor
