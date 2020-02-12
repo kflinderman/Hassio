@@ -181,6 +181,24 @@ input_number:
     min: -20
     max: 100
     icon: mdi:certificate
+  watthour:
+    name: Daily Total Usage
+    min: 0
+    max: 50
+    icon: mdi:power-socket-us
+    unit_of_measurement: 'kWh'
+  cpuhour:
+    name: CPU Total Usage
+    min: 0
+    max: 50
+    icon: mdi:power-socket-us
+    unit_of_measurement: 'kWh'
+  lighthour:
+    name: Light Total Usage
+    min: 0
+    max: 50
+    icon: mdi:power-socket-us
+    unit_of_measurement: 'kWh'
 
 counter: !include _components/counter.yaml
 

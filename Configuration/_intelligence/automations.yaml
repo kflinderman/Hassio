@@ -2279,7 +2279,7 @@
     at: '12:00:00'
   action:
     service: ifttt.trigger
-    data_template: {"event":"WattHour_Month", "value1":"{{ states('sensor.watthour') }}", "value2":"{{ states('sensor.cpuwhr') }}", "value3":"{{ states('sensor.auxwhr') }}"}#, "value4":"{{ states('sensor.totalwhr') }}", "value5":"20"}
+    data_template: {"event":"WattHour_Month", "value1":"{{ states('input_number.lighthour') }}", "value2":"{{ states('input_number.cpuhour') }}", "value3":"{{ states('sensor.auxwhr') }}"}#, "value4":"{{ states('input_number.watthour') }}", "value5":"20"}
     
 - id: update_alli
   alias: Update Alli
@@ -2460,6 +2460,49 @@
         entity_id: input_number.ssl_cert
         value: "{{ states('sensor.ssl_certificate_expiry') }}"
         
+
+- id: watthour_data
+  alias: Watt Hour Data
+  trigger:
+    platform: state
+    entity_id: sensor.totalwhr
+  condition:
+    condition: template
+    value_template: "{{ states('sensor.totalwhr') != 'unavailable' }}"
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.watthour
+        value: "{{ states('sensor.totalwhr') }}"
+        
+- id: cpuhour_data
+  alias: CPU Hour Data
+  trigger:
+    platform: state
+    entity_id: sensor.cpuwhr
+  condition:
+    condition: template
+    value_template: "{{ states('sensor.cpuwhr') != 'unavailable' }}"
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.cpuhour
+        value: "{{ states('sensor.cpuwhr') }}"
+        
+- id: lighthour_data
+  alias: Light Hour Data
+  trigger:
+    platform: state
+    entity_id: sensor.watthour
+  condition:
+    condition: template
+    value_template: "{{ states('sensor.watthour') != 'unavailable' }}"
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.lighthour
+        value: "{{ states('sensor.watthour') }}"
+
 - id: ha_restart
   alias: HA Restart
   trigger:
@@ -2470,3 +2513,4 @@
         seconds: 90
     - service: input_boolean.turn_on
       entity_id: input_boolean.restart
+
