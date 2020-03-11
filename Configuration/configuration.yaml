@@ -338,15 +338,15 @@ notify:
   - platform: group
     name: residents
     services:
-      - service: mobile_app_pixelxl_kenny
+      - service: mobile_app_pixel_3a_xl
       - service: mobile_app_iphone
   - platform: group
     name: everything
     services:
-      - service: mobile_app_pixelxl_kenny
+      - service: mobile_app_pixel_3a_xl
       - service: mobile_app_iphone
       - service: living_room_tv
 
 auto_backup:
   auto_purge: true
-  backup_timeout: 1500
+  backup_timeout: 1800

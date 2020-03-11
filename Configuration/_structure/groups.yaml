@@ -56,12 +56,20 @@ outside:
 livingroom:
   name: Living Room
   entities:
-    # - switch.outlet
+    - group.holiday
     - light.floor_lamp
     - light.rock_lamp
     - light.chair_lamp
     - media_player.stereo
     - media_player.living_room_tv
+    
+livingroom_no_aux:
+  name: Living Room
+  entities:
+    - group.holiday
+    - light.floor_lamp
+    - light.rock_lamp
+    - light.chair_lamp
 
 kitchen:
   name: Kitchen
@@ -122,8 +130,6 @@ basement_no_pc:
    - switch.basement_floor_light
    - light.basement_ceiling_lights
    - switch.laundryroom
-   - media_player.desktop_media
-   - light.lightpack
    - media_player.basement_stereo
    
 basement_no_aux:
@@ -391,3 +397,4 @@ other_auto:
     - automation.perform_daily_backup
     - automation.perform_weekly_backup
     - automation.set_cert_data
+    - automation.goodnight_automation

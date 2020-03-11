@@ -1061,7 +1061,7 @@
       data:
         entity_id: camera.front_door_last_activity
         filename: '/config/www/camerasnapshot/front_door_last_activity.jpg'
-    - service: notify.mobile_app_pixelxl_kenny
+    - service: notify.mobile_app_pixel_3a_xl
       data:
         title: Door Activity
         message: "There is activity at the front door..."
@@ -1107,7 +1107,7 @@
     for:
       minutes: 12
   action:
-    service: notify.mobile_app_pixelxl_kenny
+    service: notify.mobile_app_pixel_3a_xl
     data:
       title: Alli's Collar Low Battery
       message: "Alli's collar has very low battery."
@@ -1119,7 +1119,7 @@
     entity_id: sensor.kitchensensorbatt
     below: 20
   action:
-    service: notify.mobile_app_pixelxl_kenny
+    service: notify.mobile_app_pixel_3a_xl
     data:
       title: Kitchen Sensor Low Battery
       message: "The kitchen sensor has very low battery."
@@ -1133,7 +1133,7 @@
     for:
       minutes: 60
   action:
-    service: notify.mobile_app_pixelxl_kenny
+    service: notify.mobile_app_pixel_3a_xl
     data:
       title: Thingy Sensor Low Battery
       message: "The thingy sensor has very low battery."
@@ -1159,7 +1159,7 @@
     entity_id: sensor.hacs
     above: 0
   action:
-    service: notify.mobile_app_pixelxl_kenny
+    service: notify.mobile_app_pixel_3a_xl
     data:
       title: HACS Updates
       message: "There are some HACS updates ready to be installed."
@@ -1171,7 +1171,7 @@
     entity_id: input_number.ssl_cert
     below: 25
   action:
-    service: notify.mobile_app_pixelxl_kenny
+    service: notify.mobile_app_pixel_3a_xl
     data:
       title: SSL Certification Alert
       message: "Check to make sure your SSL certificate doesn't expire soon."
@@ -1209,7 +1209,7 @@
     entity_id: sensor.vacuum_main_brush
     below: 2
   action:
-    service: notify.mobile_app_pixelxl_kenny
+    service: notify.mobile_app_pixel_3a_xl
     data:
       title: Robot Vacuum Maintenance
       message: "The main brush on the vacuum needs replacing."
@@ -1221,7 +1221,7 @@
     entity_id: sensor.vacuum_side_brush
     below: 2
   action:
-    service: notify.mobile_app_pixelxl_kenny
+    service: notify.mobile_app_pixel_3a_xl
     data:
       title: Robot Vacuum Maintenance
       message: "The side brush on the vacuum needs replacing."
@@ -1233,7 +1233,7 @@
     entity_id: sensor.vacuum_filter
     below: 2
   action:
-    service: notify.mobile_app_pixelxl_kenny
+    service: notify.mobile_app_pixel_3a_xl
     data:
       title: Robot Vacuum Maintenance
       message: "The filter on the vacuum needs replacing."
@@ -1245,7 +1245,7 @@
     entity_id: sensor.vacuum_sensor
     below: 2
   action:
-    service: notify.mobile_app_pixelxl_kenny
+    service: notify.mobile_app_pixel_3a_xl
     data:
       title: Robot Vacuum Maintenance
       message: "The sensors on the vacuum needs cleaning."
@@ -1266,7 +1266,7 @@
       entity_id: input_boolean.vacuum_daily
       state: 'off'
   action:
-    - service: notify.mobile_app_pixelxl_kenny
+    - service: notify.mobile_app_pixel_3a_xl
       data:
         title: Robot Vacuum Finished
         message: "The vacuum finished cleaning for today!"
@@ -1401,45 +1401,45 @@
     service: script.turn_on
     entity_id: script.after_dark
     
-- id: lightpack_cpu_on
-  alias: Lightpack CPU On
-  trigger:
-  - platform: state
-    entity_id: light.lightpack
-    from: 'unavailable'
-  action:
-  - service: input_boolean.turn_on
-    entity_id: input_boolean.cpu_lightpack
-  - delay:
-      seconds: 10
-  - service: light.turn_on
-    entity_id: light.lightpack
-  - delay:
-      seconds: 10
-  - service: light.turn_off
-    entity_id: light.lightpack
+# - id: lightpack_cpu_on
+  # alias: Lightpack CPU On
+  # trigger:
+  # - platform: state
+    # entity_id: light.lightpack
+    # from: 'unavailable'
+  # action:
+  # - service: input_boolean.turn_on
+    # entity_id: input_boolean.cpu_lightpack
+  # - delay:
+      # seconds: 10
+  # - service: light.turn_on
+    # entity_id: light.lightpack
+  # - delay:
+      # seconds: 10
+  # - service: light.turn_off
+    # entity_id: light.lightpack
 
-- id: lightpack_cpu_go
-  alias: Lightpack CPU Go
-  trigger:
-  - platform: state
-    entity_id:  media_player.desktop_media
-    to: 'paused'
-  condition:
-  - condition: state
-    entity_id: input_boolean.cpu_lightpack
-    state: 'on'
-  action:
-  - service: input_boolean.turn_off
-    entity_id: input_boolean.cpu_lightpack
-  - delay:
-      seconds: 1
-  - service: light.turn_on
-    entity_id: light.lightpack
-  - delay:
-      seconds: 1
-  - service: light.turn_off
-    entity_id: light.lightpack
+# - id: lightpack_cpu_go
+  # alias: Lightpack CPU Go
+  # trigger:
+  # - platform: state
+    # entity_id:  media_player.desktop_media
+    # to: 'paused'
+  # condition:
+  # - condition: state
+    # entity_id: input_boolean.cpu_lightpack
+    # state: 'on'
+  # action:
+  # - service: input_boolean.turn_off
+    # entity_id: input_boolean.cpu_lightpack
+  # - delay:
+      # seconds: 1
+  # - service: light.turn_on
+    # entity_id: light.lightpack
+  # - delay:
+      # seconds: 1
+  # - service: light.turn_off
+    # entity_id: light.lightpack
       
 #########################
 #4 Location Automations #
@@ -1772,7 +1772,7 @@
     entity_id: counter.robo_error
     below: 1
   action:
-    - service: notify.mobile_app_pixelxl_kenny
+    - service: notify.mobile_app_pixel_3a_xl
       data:
         title: Robot Vacuum Error
         message: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'error') }}"
@@ -1949,7 +1949,7 @@
   - service: input_boolean.turn_on
     data:
       entity_id: input_boolean.visitor
-  - service: notify.mobile_app_pixelxl_kenny
+  - service: notify.mobile_app_pixel_3a_xl
     data:
       title: Visitors Coming
       message: Change Ecobee Sleep to include downstairs
@@ -1965,7 +1965,7 @@
   - service: input_boolean.turn_off
     data:
       entity_id: input_boolean.visitor
-  - service: notify.mobile_app_pixelxl_kenny
+  - service: notify.mobile_app_pixel_3a_xl
     data:
       title: Visitors Left
       message: Change Ecobee Sleep to remove downstairs
@@ -2150,11 +2150,12 @@
     entity_id: input_boolean.goodnight
     
 - id: goodnight_automation
-  alias: Bedroom Stop Motion
+  alias: Goodnight Automation
   trigger:
   - entity_id: input_boolean.goodnight
     platform: state
     to: 'on'
+    from: 'off'
   condition:
     condition: or
     conditions:

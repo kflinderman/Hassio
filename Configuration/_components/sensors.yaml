@@ -94,7 +94,7 @@
       friendly_name: "Pixel XL Battery"
       unit_of_measurement: 'V'
       device_class: battery
-      value_template: "{{ state_attr('device_tracker.kenny_pixelxl_gps_2', 'battery') }}"
+      value_template: "{{ state_attr('device_tracker.pixel_3a_xl', 'battery_level') }}"
       
     outside_temp:
       friendly_name: "Outside Temperature"
@@ -255,7 +255,7 @@
             or states('sensor.living_room_alli_signal')|int == 0) 
             and (states('sensor.bedroom_alli_signal')|int > states('sensor.basement_alli_signal')|int 
             or states('sensor.basement_alli_signal')|int == 0) %}
-          Bedoom
+          Bedroom
         {% elif states('sensor.basement_alli_signal')|int != 0 
             and (states('sensor.basement_alli_signal')|int > states('sensor.nursery_alli_signal')|int 
             or states('sensor.nursery_alli_signal')|int == 0) 

@@ -106,8 +106,8 @@ away_mode:
 
 cpu_off:
   sequence:
-    - service: script.turn_on
-      entity_id: script.lightpack_off
+    # - service: script.turn_on
+      # entity_id: script.lightpack_off
     - delay:
         seconds: 30
     - service: hassio.addon_stdin
@@ -115,16 +115,19 @@ cpu_off:
         addon: core_rpc_shutdown
         input: Desktop-Shutdown
       
-lightpack_off:
-  sequence:
-    - service: light.turn_off
-      data:
-        entity_id: light.lightpack
+# lightpack_off:
+  # sequence:
+    # - condition: state
+      # entity_id: light.lightpack
+      # state: 'on'
+    # - service: light.turn_off
+      # data:
+        # entity_id: light.lightpack
       
 after_dark:
   sequence:
-    - service: light.turn_on
-      entity_id: light.lightpack
+    # - service: light.turn_on
+      # entity_id: light.lightpack
     - service: homeassistant.turn_off
       entity_id: group.basement_no_aux
       
@@ -372,7 +375,7 @@ vacuum_error_notify:
     - condition: state
       entity_id: input_boolean.vacuum_stop_notify
       state: 'off'
-    - service: notify.mobile_app_pixelxl_kenny
+    - service: notify.mobile_app_pixel_3a_xl
       data:
         title: Robot Vacuum Error
         message: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'error') }}"
@@ -536,7 +539,7 @@ basement_off:
     - delay:
         seconds: 2
     - service: homeassistant.turn_off
-      entity_id: group.basement_no_pc
+      entity_id: group.basement_no_aux
     - delay:
         seconds: 2
     - service: input_boolean.turn_off

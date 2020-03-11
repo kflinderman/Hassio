@@ -413,6 +413,14 @@ views:
                   left: 50%
                   top: 91.3%
                 type: state-icon
+              - entity: input_boolean.front_door_snooze
+                style:
+                  '--paper-item-icon-color': 'rgb(255,255,255)'
+                  left: 65%
+                  top: 91.3%
+                tap_action:
+                  action: toggle
+                type: state-icon
               - entity: switch.skybell_front_door_motion_sensor
                 style:
                   '--paper-item-icon-color': 'rgb(255,255,255)'
@@ -1342,8 +1350,24 @@ views:
                       }
                     type: entity-button
                   - entity: input_boolean.vacuum_basement
+                    style: |
+                      ha-card {
+                        {% if is_state('input_boolean.vacuum_basement', 'on') %}
+                          background: #73000A;
+                          color: #FFFFFF;
+                          --iron-icon-fill-color: #FFFFFF
+                        {% endif %}
+                      }
                     type: entity-button
                   - entity: input_boolean.vacuum_upstairs
+                    style: |
+                      ha-card {
+                        {% if is_state('input_boolean.vacuum_upstairs', 'on') %}
+                          background: #73000A;
+                          color: #FFFFFF;
+                          --iron-icon-fill-color: #FFFFFF
+                        {% endif %}
+                      }
                     type: entity-button
                 type: horizontal-stack
               - entities:
@@ -1914,7 +1938,7 @@ views:
   - cards:
       - cards:
           - elements:
-              - entity: group.basement
+              - entity: group.basement_no_aux
                 image: /local/room_pic/Basement_off.jpg
                 state_image:
                   'on': /local/room_pic/Basement_all.jpg
@@ -2541,13 +2565,13 @@ views:
                 tap_action:
                   action: none
                 type: state-label
-              - entity: sensor.watthour
+              - entity: input_number.lighthour
                 style:
                   '--paper-item-icon-color': 'rgb(255,255,255)'
                   left: 10%
                   top: 10%
                 type: state-icon
-              - entity: sensor.watthour
+              - entity: input_number.lighthour
                 style:
                   color: white
                   left: 50%
@@ -2570,13 +2594,13 @@ views:
                 tap_action:
                   action: none
                 type: state-label
-              - entity: sensor.cpuwhr
+              - entity: input_number.cpuhour
                 style:
                   '--paper-item-icon-color': 'rgb(255,255,255)'
                   left: 10%
                   top: 10%
                 type: state-icon
-              - entity: sensor.cpuwhr
+              - entity: input_number.cpuhour
                 style:
                   color: white
                   left: 50%
@@ -2599,13 +2623,13 @@ views:
                 tap_action:
                   action: none
                 type: state-label
-              - entity: sensor.totalwhr
+              - entity: input_number.watthour
                 style:
                   '--paper-item-icon-color': 'rgb(255,255,255)'
                   left: 10%
                   top: 10%
                 type: state-icon
-              - entity: sensor.totalwhr
+              - entity: input_number.watthour
                 style:
                   color: white
                   left: 50%

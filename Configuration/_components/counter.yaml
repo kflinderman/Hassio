@@ -1,9 +1,9 @@
 robo_error:
-  initial: 3
+  initial: 4
   step: 1
   restore: true
-  minimum: 0
-  maximum: 3
+  minimum: -1
+  maximum: 4
 robo_empty:
   initial: 0
   step: 1

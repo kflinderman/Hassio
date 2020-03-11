@@ -122,6 +122,9 @@
   
   basement_light_off_loop:
     name: Basement Light Off Loop
+  front_door_snooze:
+    name: Front Door Motion Snooze
+    icon: mdi:alarm-snooze
   im_home:
     name: Home
     icon: mdi:door-closed
@@ -135,6 +138,8 @@
     name: CPU Lightpack
   holiday:
     name: Holiday Group Dummy
+  kitchen_reno:
+    name: Kitchen Renovation
   dog_med:
     name: Dog Medications
   goodnight:
