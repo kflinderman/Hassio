@@ -59,6 +59,8 @@ smart_home:
       - switch.outlet
       - switch.sun_room_market_lights
       - switch.entrance_switch
+      - switch.basement_hallway_switch
+      - switch.upstairs_hallway_switch
     include_domains:
       - group
       - light
@@ -79,6 +81,7 @@ smart_home:
       - group.hue_lights
       - group.light_off_auto
       - group.light_on_auto
+      - group.livingroom
       - group.location_auto
       - group.mastersw_auto
       - group.notify_auto

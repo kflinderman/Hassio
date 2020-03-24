@@ -2,7 +2,7 @@ robo_error:
   initial: 4
   step: 1
   restore: true
-  minimum: -1
+  minimum: 0
   maximum: 4
 robo_empty:
   initial: 0

@@ -271,14 +271,14 @@ amcrest:
       - motion_detected
     port: !secret amcrest2_port
     scan_interval: 20
-  - host: !secret nursery_IP
-    username: !secret nursery_user
-    password: !secret nursery_pswd
-    name: "Nursery Camera"
-    binary_sensors:
-      - motion_detected
-    port: !secret amcrest3_port
-    scan_interval: 20
+  # - host: !secret nursery_IP
+    # username: !secret nursery_user
+    # password: !secret nursery_pswd
+    # name: "Nursery Camera"
+    # binary_sensors:
+      # - motion_detected
+    # port: !secret amcrest3_port
+    # scan_interval: 20
 
 ffmpeg:
       
@@ -349,4 +349,4 @@ notify:
 
 auto_backup:
   auto_purge: true
-  backup_timeout: 1800
+  backup_timeout: 2400

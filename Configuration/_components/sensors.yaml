@@ -89,6 +89,10 @@
     blank:
       friendly_name: "Blank"
       value_template: "{{ state }}"
+    
+    space:
+      friendly_name: "Space"
+      value_template: "{{ ' ' }}"
       
     kenny_pixelxl_batt:
       friendly_name: "Pixel XL Battery"
@@ -408,6 +412,14 @@
     entrance_light_hours_round:
       friendly_name: "Entrance Light Hours Round"
       value_template: "{{ states('sensor.entrance_light_hours') | round(1) }}"
+      
+    basement_hallway_light_hours_round:
+      friendly_name: "Basement Hallway Light Hours Round"
+      value_template: "{{ states('sensor.basement_hallway_light_hours') | round(1) }}"
+      
+    upstairs_hallway_light_hours_round:
+      friendly_name: "Upstairs Hallway Light Hours Round"
+      value_template: "{{ states('sensor.upstairs_hallway_light_hours') | round(1) }}"
       
     basement_1_light_hours_round:
       friendly_name: "Basement 1 Light Hours Round"
@@ -741,6 +753,20 @@
 - platform: history_stats
   name: Entrance Light Hours
   entity_id: switch.entrance_switch
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Basement Hallway Light Hours
+  entity_id: switch.basement_hallway_switch
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Upstairs Hallway Light Hours
+  entity_id: switch.upstairs_hallway_switch
   state: 'on'
   end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
   duration:

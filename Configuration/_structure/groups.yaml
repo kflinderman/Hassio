@@ -26,6 +26,7 @@ Second Floor:
     - group.bedroom
     - group.craft
     - group.nursery
+    - switch.upstairs_hallway_switch
     
 Basement Floor:
   icon: mdi:arrow-down-bold-box
@@ -33,6 +34,7 @@ Basement Floor:
     - group.guest
     - group.basement_no_pc
     - group.sun_room
+    - switch.basement_hallway_switch
     
 ##############################
 #           GROUPS           #
@@ -123,6 +125,7 @@ basement:
    - switch.desktopPC
    - light.lightpack
    - media_player.basement_stereo
+   - switch.basement_hallway_switch
    
 basement_no_pc:
   name: Basement Lights
@@ -131,6 +134,7 @@ basement_no_pc:
    - light.basement_ceiling_lights
    - switch.laundryroom
    - media_player.basement_stereo
+   - switch.basement_hallway_switch
    
 basement_no_aux:
   name: Basement Lights
@@ -138,6 +142,7 @@ basement_no_aux:
    - switch.basement_floor_light
    - light.basement_ceiling_lights
    - switch.laundryroom
+   - switch.basement_hallway_switch
    
 sun_room:
   name: Sun Room
@@ -182,6 +187,8 @@ hallways:
   name: Hallway Lights
   entities:
     - switch.entrance_switch
+    - switch.basement_hallway_switch
+    - switch.upstairs_hallway_switch
 
 firstfloor:
   name: First Floor Lights
@@ -203,6 +210,7 @@ secondfloor:
     - switch.craftfan
     - light.sewing_light
     - switch.nurseryfan
+    - switch.upstairs_hallway_switch
     
 holiday:
   name: Holiday Lights

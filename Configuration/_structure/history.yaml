@@ -91,6 +91,8 @@
         - switch.airhockey
         - switch.deck_ceiling_outlet_switch
         - switch.entrance_switch
+        - switch.upstairs_hallway_switch
+        - switch.basement_hallway_switch
         - switch.desktoppc
         - switch.laundryroom
         - switch.sun_room_market_lights

@@ -89,6 +89,10 @@ sensor.average_download_speed:
   icon: mdi:download
 sensor.average_upload_speed:
   icon: mdi:upload
+sensor.blank:
+  icon: mdi:fake
+sensor.space:
+  icon: mdi:fake
   
   ##### Lights #####
 
@@ -128,6 +132,10 @@ switch.laundryroom:
 switch.sun_room_market_lights:
   icon: mdi:lightbulb
 switch.entrance_switch:
+  icon: mdi:ceiling-light
+switch.basement_hallway_switch:
+  icon: mdi:ceiling-light
+switch.upstairs_hallway_switch:
   icon: mdi:ceiling-light
   
   ##### Other #####

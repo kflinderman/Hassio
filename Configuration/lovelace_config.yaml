@@ -74,6 +74,8 @@ decluttering_templates:
             width: 100%
           tap_action:
             action: none
+          hold_action:
+            action: none
           type: state-label
         - entity: '[[occupancy]]'
           style:
@@ -84,6 +86,10 @@ decluttering_templates:
             right: 0
             top: 0
             transform: scale(0.8)
+          tap_action:
+            action: '[[occupancy_action]]'
+          hold_action:
+            action: '[[occupancy_action]]'
           type: state-icon
         - entity: '[[brightness]]'
           style:
@@ -94,6 +100,10 @@ decluttering_templates:
             right: 0
             top: 0
             transform: scale(0.8)
+          tap_action:
+            action: '[[brightness_action]]'
+          hold_action:
+            action: '[[brightness_action]]'
           type: state-icon
         - entity: '[[brightness]]'
           style:
@@ -107,6 +117,10 @@ decluttering_templates:
             text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
             top: 0
             transform: initial
+          tap_action:
+            action: '[[brightness_action]]'
+          hold_action:
+            action: '[[brightness_action]]'
           type: state-label
         - entity: '[[temperature]]'
           style:
@@ -117,6 +131,10 @@ decluttering_templates:
             right: 0
             top: 0
             transform: scale(0.8)
+          tap_action:
+            action: '[[temperature_action]]'
+          hold_action:
+            action: '[[temperature_action]]'
           type: state-icon
         - entity: '[[temperature]]'
           style:
@@ -130,6 +148,10 @@ decluttering_templates:
             text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
             top: 0
             transform: initial
+          tap_action:
+            action: '[[temperature_action]]'
+          hold_action:
+            action: '[[temperature_action]]'
           type: state-label
         - entity: '[[group]]'
           style:
@@ -141,61 +163,57 @@ decluttering_templates:
             top: 0
             transform: scale(0.8)
           type: state-icon
-        - entity: '[[element1]]'
-          hold_action:
-            action: more-info
+        - entity: '[[element4]]'
           style:
             '--paper-item-icon-color': 'rgb(255,255,255)'
             left: 65%
             top: 91.3%
           tap_action:
-            action: toggle
-          type: state-icon
-        - entity: '[[element2]]'
+            action: '[[element4_tap]]'
           hold_action:
-            action: more-info
+            action: '[[element4_hold]]'
+          type: state-icon
+        - entity: '[[element3]]'
           style:
             '--paper-item-icon-color': 'rgb(255,255,255)'
             left: 75%
             top: 91.3%
           tap_action:
-            action: toggle
-          type: state-icon
-        - entity: '[[element3]]'
+            action: '[[element3_tap]]'
           hold_action:
-            action: more-info
+            action: '[[element3_hold]]'
+          type: state-icon
+        - entity: '[[element2]]'
           style:
             '--paper-item-icon-color': 'rgb(255,255,255)'
             left: 85%
             top: 91.3%
           tap_action:
-            action: toggle
-          type: state-icon
-        - entity: '[[element4]]'
+            action: '[[element2_tap]]'
           hold_action:
-            action: more-info
+            action: '[[element2_hold]]'
+          type: state-icon
+        - entity: '[[element1]]'
           style:
             '--paper-item-icon-color': 'rgb(255,255,255)'
             left: 95%
             top: 91.3%
           tap_action:
-            action: toggle
+            action: '[[element1_tap]]'
+          hold_action:
+            action: '[[element1_hold]]'
           type: state-icon
       image: '[[off_pic]]'
       type: picture-elements
-  simple_room_template:
+  camera1_template:
     card:
       elements:
-        - entity: '[[group]]'
-          image: '[[off_pic]]'
-          state_image:
-            'on': '[[on_pic]]'
+        - camera_image: '[[camera]]'
+          entity: '[[camera]]'
           style:
             left: 50%
             top: 50%
             width: 100%
-          tap_action:
-            action: toggle
           type: image
         - entity: sensor.blank
           prefix: '[[room_name]]'
@@ -212,7 +230,85 @@ decluttering_templates:
           tap_action:
             action: none
           type: state-label
+        - entity: '[[occupancy]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            color: 'rgba(255,255,255,1)'
+            line-height: 32px
+            margin: 3px 5px 0 0
+            right: 0
+            top: 0
+            transform: scale(0.8)
+          tap_action:
+            action: '[[occupancy_action]]'
+          hold_action:
+            action: '[[occupancy_action]]'
+          type: state-icon
+        - entity: '[[brightness]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            color: 'rgba(255,255,255,1)'
+            line-height: 32px
+            margin: 35px 5px 0 0
+            right: 0
+            top: 0
+            transform: scale(0.8)
+          tap_action:
+            action: '[[brightness_action]]'
+          hold_action:
+            action: '[[brightness_action]]'
+          type: state-icon
+        - entity: '[[brightness]]'
+          style:
+            color: 'rgba(255,255,255,1)'
+            font-size: 12px
+            font-weight: bold
+            line-height: 32px
+            margin: 30px 35px
+            pointer-events: none
+            right: 0
+            text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+            top: 0
+            transform: initial
+          tap_action:
+            action: '[[brightness_action]]'
+          hold_action:
+            action: '[[brightness_action]]'
+          type: state-label
+        - entity: '[[temperature]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            color: 'rgba(255,255,255,1)'
+            line-height: 32px
+            margin: 65px 5px 0 0
+            right: 0
+            top: 0
+            transform: scale(0.8)
+          tap_action:
+            action: '[[temperature_action]]'
+          hold_action:
+            action: '[[temperature_action]]'
+          type: state-icon
+        - entity: '[[temperature]]'
+          style:
+            color: 'rgba(255,255,255,1)'
+            font-size: 12px
+            font-weight: bold
+            line-height: 32px
+            margin: 60px 35px
+            pointer-events: none
+            right: 0
+            text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+            top: 0
+            transform: initial
+          tap_action:
+            action: '[[temperature_action]]'
+          hold_action:
+            action: '[[temperature_action]]'
+          type: state-label
         - entity: '[[group]]'
+          hold_action:
+            action: more-info
           style:
             '--paper-item-icon-color': 'rgb(255,255,255)'
             color: 'rgba(255,255,255,1)'
@@ -221,51 +317,190 @@ decluttering_templates:
             margin: 3px 5px 0 0
             top: 0
             transform: scale(0.8)
+          tap_action:
+            action: toggle
           type: state-icon
-        - entity: '[[element]]'
+        - icon: 'mdi:numeric-1-circle'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            color: 'rgba(255,255,255,1)'
+            left: 30%
+            top: 91.3%
+          tap_action:
+            action: call-service
+            service: amcrest.goto_preset
+            service_data:
+              entity_id: '[[camera]]'
+              preset: '1'
+          type: icon
+        - icon: 'mdi:numeric-2-circle'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            color: 'rgba(255,255,255,1)'
+            left: 38%
+            top: 91.3%
+          tap_action:
+            action: call-service
+            service: amcrest.goto_preset
+            service_data:
+              entity_id: '[[camera]]'
+              preset: '2'
+          type: icon
+        - icon: 'mdi:numeric-3-circle'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            color: 'rgba(255,255,255,1)'
+            left: 46%
+            top: 91.3%
+          tap_action:
+            action: call-service
+            service: amcrest.goto_preset
+            service_data:
+              entity_id: '[[camera]]'
+              preset: '3'
+          type: icon
+        - icon: 'mdi:numeric-4-circle'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            color: 'rgba(255,255,255,1)'
+            left: 54%
+            top: 91.3%
+          tap_action:
+            action: call-service
+            service: amcrest.goto_preset
+            service_data:
+              entity_id: '[[camera]]'
+              preset: '4'
+          type: icon
+        - entity: '[[element4]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            left: 65%
+            top: 91.3%
+          tap_action:
+            action: '[[element4_tap]]'
           hold_action:
-            action: more-info
+            action: '[[element4_hold]]'
+          type: state-icon
+        - entity: '[[element3]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            left: 75%
+            top: 91.3%
+          tap_action:
+            action: '[[element3_tap]]'
+          hold_action:
+            action: '[[element3_hold]]'
+          type: state-icon
+        - entity: '[[element2]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            left: 85%
+            top: 91.3%
+          tap_action:
+            action: '[[element2_tap]]'
+          hold_action:
+            action: '[[element2_hold]]'
+          type: state-icon
+        - entity: '[[element1]]'
           style:
             '--paper-item-icon-color': 'rgb(255,255,255)'
             left: 95%
             top: 91.3%
           tap_action:
-            action: toggle
+            action: '[[element1_tap]]'
+          hold_action:
+            action: '[[element1_hold]]'
           type: state-icon
-      image: '[[off_pic]]'
+      image: /local/room_pic/camera_error.jpg
       type: picture-elements
-resources:
-  - type: module
-    url: /community_plugin/radial-menu/radial-menu.js
-  - type: module
-    url: /community_plugin/mini-media-player/mini-media-player.js
-  - type: js
-    url: /community_plugin/lovelace-fold-entity-row/fold-entity-row.js
-  - type: module
-    url: /community_plugin/lovelace-card-mod/card-mod.js
-  - type: module
-    url: /community_plugin/swipe-card/swipe-card.js
-  - type: module
-    url: /community_plugin/lovelace-card-tools/card-tools.js
-  - type: module
-    url: /community_plugin/simple-thermostat/simple-thermostat.js
-  - type: module
-    url: /community_plugin/simple-weather-card/simple-weather-card-bundle.js
-  - type: module
-    url: /community_plugin/decluttering-card/decluttering-card.js
-  - type: js
-    url: /community_plugin/love-lock-card/love-lock-card.js
-  - type: module
-    url: >-
-      /community_plugin/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js
-  - type: module
-    url: /community_plugin/mini-media-player/mini-media-player-bundle.js
-  - type: module
-    url: /community_plugin/custom-header/custom-header.js
-  - type: module
-    url: /community_plugin/lovelace-layout-card/layout-card.js
-  - type: module
-    url: /community_plugin/restriction-card/restriction-card.js
+  camera2_template:
+    card:
+      elements:
+        - camera_image: '[[camera1]]'
+          entity: '[[camera2]]'
+          style:
+            left: 50%
+            top: 50%
+            width: 100%
+          type: image
+        - entity: sensor.blank
+          prefix: '[[room_name]]'
+          style:
+            background-color: 'rgba(0, 0, 0, 0.5)'
+            bottom: 0
+            color: white
+            font-size: 16px
+            left: 0
+            line-height: 32px
+            padding: 0 8px
+            transform: initial
+            width: 100%
+          tap_action:
+            action: none
+          type: state-label
+        - entity: '[[button]]'
+          tap_action:
+            action: '[[button_action]]'
+          hold_action:
+            action: '[[button_action]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            left: 40%
+            top: 91.3%
+          type: state-icon
+        - entity: '[[motion]]'
+          tap_action:
+            action: '[[motion_action]]'
+          hold_action:
+            action: '[[motion_action]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            left: 50%
+            top: 91.3%
+          type: state-icon
+        - entity: '[[element4]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            left: 65%
+            top: 91.3%
+          tap_action:
+            action: '[[element4_tap]]'
+          hold_action:
+            action: '[[element4_hold]]'
+          type: state-icon
+        - entity: '[[element3]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            left: 75%
+            top: 91.3%
+          tap_action:
+            action: '[[element3_tap]]'
+          hold_action:
+            action: '[[element3_hold]]'
+          type: state-icon
+        - entity: '[[element2]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            left: 85%
+            top: 91.3%
+          tap_action:
+            action: '[[element2_tap]]'
+          hold_action:
+            action: '[[element2_hold]]'
+          type: state-icon
+        - entity: '[[element1]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            left: 95%
+            top: 91.3%
+          tap_action:
+            action: '[[element1_tap]]'
+          hold_action:
+            action: '[[element1_hold]]'
+          type: state-icon
+      image: /local/room_pic/camera_error.jpg
+      type: picture-elements
 title: Home
 views:
   - badges: []
@@ -375,132 +610,52 @@ views:
               head: group.alli_locate
               type: 'custom:fold-entity-row'
             type: 'custom:restriction-card'
-        id: 09ef49e989f142258d287c90cb5a90db
         type: vertical-stack
       - cards:
-          - elements:
-              - camera_image: camera.front_door
-                entity: camera.front_door_last_activity
-                style:
-                  left: 50%
-                  top: 50%
-                  width: 100%
-                type: image
-              - entity: sensor.blank
-                prefix: Front Door
-                style:
-                  background-color: 'rgba(0, 0, 0, 0.5)'
-                  bottom: 0
-                  color: white
-                  font-size: 16px
-                  left: 0
-                  line-height: 32px
-                  padding: 0 8px
-                  transform: initial
-                  width: 100%
-                tap_action:
-                  action: none
-                type: state-label
-              - entity: binary_sensor.skybell_front_door_button
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  left: 40%
-                  top: 91.3%
-                type: state-icon
-              - entity: binary_sensor.skybell_front_door_motion
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  left: 50%
-                  top: 91.3%
-                type: state-icon
-              - entity: input_boolean.front_door_snooze
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  left: 65%
-                  top: 91.3%
-                tap_action:
-                  action: toggle
-                type: state-icon
-              - entity: switch.skybell_front_door_motion_sensor
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  left: 75%
-                  top: 91.3%
-                tap_action:
-                  action: toggle
-                type: state-icon
-              - entity: switch.skybell_front_door_do_not_disturb
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  left: 85%
-                  top: 91.3%
-                tap_action:
-                  action: toggle
-                type: state-icon
-              - entity: light.front_outside
-                hold_action:
-                  action: more-info
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  left: 95%
-                  top: 91.3%
-                tap_action:
-                  action: toggle
-                type: state-icon
-            image: /local/room_pic/camera_error.jpg
-            type: picture-elements
-          - elements:
-              - camera_image: camera.backyard_camera
-                entity: camera.backyard_camera
-                style:
-                  left: 50%
-                  top: 50%
-                  width: 100%
-                type: image
-              - entity: sensor.blank
-                prefix: Backyard
-                style:
-                  background-color: 'rgba(0, 0, 0, 0.5)'
-                  bottom: 0
-                  color: white
-                  font-size: 16px
-                  left: 0
-                  line-height: 32px
-                  padding: 0 8px
-                  transform: initial
-                  width: 100%
-                tap_action:
-                  action: none
-                type: state-label
-              - entity: binary_sensor.backyard_camera_motion_detected
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  left: 50%
-                  top: 91.3%
-                type: state-icon
-              - entity: light.deck_light
-                hold_action:
-                  action: more-info
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  left: 85%
-                  top: 91.3%
-                tap_action:
-                  action: toggle
-                type: state-icon
-              - entity: switch.deck_ceiling_outlet_switch
-                hold_action:
-                  action: more-info
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  left: 95%
-                  top: 91.3%
-                tap_action:
-                  action: toggle
-                type: state-icon
-            image: /local/room_pic/camera_error.jpg
-            type: picture-elements
-        id: ff7c17af634b47d18e03d186c4c0ef0d
+          - template: camera2_template
+            type: 'custom:decluttering-card'
+            variables:
+              - camera1: camera.front_door
+              - camera2: camera.front_door_last_activity
+              - room_name: Front Door
+              - button: binary_sensor.skybell_front_door_button
+              - button_action: more-info
+              - motion: binary_sensor.skybell_front_door_motion
+              - motion_action: more-info
+              - element4: input_boolean.front_door_snooze
+              - element4_tap: toggle
+              - element4_hold: more-info
+              - element3: switch.skybell_front_door_motion_sensor
+              - element3_tap: toggle
+              - element3_hold: more-info
+              - element2: switch.skybell_front_door_do_not_disturb
+              - element2_tap: toggle
+              - element2_hold: more-info
+              - element1: light.front_outside
+              - element1_tap: toggle
+              - element1_hold: more-info
+          - template: camera2_template
+            type: 'custom:decluttering-card'
+            variables:
+              - camera1: camera.backyard_camera
+              - camera2: camera.backyard_camera
+              - room_name: Backyard
+              - button: sensor.blank
+              - button_action: none
+              - motion: binary_sensor.backyard_camera_motion_detected
+              - motion_action: more-info
+              - element4: sensor.blank
+              - element4_tap: none
+              - element4_hold: none
+              - element3: sensor.blank
+              - element3_tap: none
+              - element3_hold: none
+              - element2: light.deck_light
+              - element2_tap: toggle
+              - element2_hold: more-info
+              - element1: switch.deck_ceiling_outlet_switch
+              - element1_tap: toggle
+              - element1_hold: more-info
         type: vertical-stack
       - cards:
           - control:
@@ -654,183 +809,30 @@ views:
     title: Default
   - cards:
       - cards:
-          - elements:
-              - camera_image: camera.living_room_camera
-                entity: camera.living_room_camera
-                style:
-                  left: 50%
-                  top: 50%
-                  width: 100%
-                type: image
-              - entity: sensor.blank
-                prefix: Living Room
-                style:
-                  background-color: 'rgba(0, 0, 0, 0.5)'
-                  bottom: 0
-                  color: white
-                  font-size: 16px
-                  left: 0
-                  line-height: 32px
-                  padding: 0 8px
-                  transform: initial
-                  width: 100%
-                tap_action:
-                  action: none
-                type: state-label
-              - entity: binary_sensor.living_room_bay_occupancy
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  line-height: 32px
-                  margin: 3px 5px 0 0
-                  right: 0
-                  top: 0
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: sensor.living_room_light_level
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  line-height: 32px
-                  margin: 35px 5px 0 0
-                  right: 0
-                  top: 0
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: sensor.living_room_light_level
-                style:
-                  color: 'rgba(255,255,255,1)'
-                  font-size: 12px
-                  font-weight: bold
-                  line-height: 32px
-                  margin: 30px 35px
-                  pointer-events: none
-                  right: 0
-                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-                  top: 0
-                  transform: initial
-                type: state-label
-              - entity: sensor.living_room_bee_temperature
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  line-height: 32px
-                  margin: 65px 5px 0 0
-                  right: 0
-                  top: 0
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: sensor.living_room_bee_temperature
-                style:
-                  color: 'rgba(255,255,255,1)'
-                  font-size: 12px
-                  font-weight: bold
-                  line-height: 32px
-                  margin: 60px 35px
-                  pointer-events: none
-                  right: 0
-                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-                  top: 0
-                  transform: initial
-                type: state-label
-              - entity: group.livingroom
-                hold_action:
-                  action: more-info
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  left: 0
-                  line-height: 32px
-                  margin: 3px 5px 0 0
-                  top: 0
-                  transform: scale(0.8)
-                tap_action:
-                  action: toggle
-                type: state-icon
-              - icon: 'mdi:numeric-1-circle'
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  left: 30%
-                  top: 91.3%
-                tap_action:
-                  action: call-service
-                  service: amcrest.goto_preset
-                  service_data:
-                    entity_id: camera.living_room_camera
-                    preset: '1'
-                type: icon
-              - icon: 'mdi:numeric-2-circle'
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  left: 38%
-                  top: 91.3%
-                tap_action:
-                  action: call-service
-                  service: amcrest.goto_preset
-                  service_data:
-                    entity_id: camera.living_room_camera
-                    preset: '2'
-                type: icon
-              - icon: 'mdi:numeric-3-circle'
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  left: 46%
-                  top: 91.3%
-                tap_action:
-                  action: call-service
-                  service: amcrest.goto_preset
-                  service_data:
-                    entity_id: camera.living_room_camera
-                    preset: '3'
-                type: icon
-              - icon: 'mdi:numeric-4-circle'
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  left: 54%
-                  top: 91.3%
-                tap_action:
-                  action: call-service
-                  service: amcrest.goto_preset
-                  service_data:
-                    entity_id: camera.living_room_camera
-                    preset: '4'
-                type: icon
-              - entity: light.floor_lamp
-                hold_action:
-                  action: more-info
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  left: 75%
-                  top: 91.3%
-                tap_action:
-                  action: toggle
-                type: state-icon
-              - entity: light.rock_lamp
-                hold_action:
-                  action: more-info
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  left: 85%
-                  top: 91.3%
-                tap_action:
-                  action: toggle
-                type: state-icon
-              - entity: light.chair_lamp
-                hold_action:
-                  action: more-info
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  left: 95%
-                  top: 91.3%
-                tap_action:
-                  action: toggle
-                type: state-icon
-            image: /local/room_pic/camera_error.jpg
-            type: picture-elements
+          - template: camera1_template
+            type: 'custom:decluttering-card'
+            variables:
+              - camera: camera.living_room_camera
+              - group: group.livingroom
+              - room_name: Living Room
+              - occupancy: binary_sensor.living_room_bay_occupancy
+              - occupancy_action: more-info
+              - brightness: sensor.living_room_light_level
+              - brightness_action: more-info
+              - temperature: sensor.living_room_bee_temperature
+              - temperature_action: more-info
+              - element4: sensor.blank
+              - element4_tap: none
+              - element4_hold: none
+              - element3: light.floor_lamp
+              - element3_tap: toggle
+              - element3_hold: more-info
+              - element2: light.rock_lamp
+              - element2_tap: toggle
+              - element2_hold: more-info
+              - element1: light.chair_lamp
+              - element1_tap: toggle
+              - element1_hold: more-info
           - artwork: full-cover
             entity: media_player.living_room_tv
             hide:
@@ -848,142 +850,95 @@ views:
             type: 'custom:decluttering-card'
             variables:
               - alexa: media_player.living_room_dot
-        id: 8e704b9e69794c9c8f8b425a032a0b6e
         type: vertical-stack
-      - elements:
-          - entity: group.kitchen
-            image: /local/room_pic/Kitchen_off.jpg
-            state_image:
-              'on': /local/room_pic/Kitchen_all.jpg
-            style:
-              left: 50%
-              top: 50%
-              width: 100%
-            tap_action:
-              action: toggle
-            type: image
-          - entity: sensor.blank
-            prefix: Kitchen
-            style:
-              background-color: 'rgba(0, 0, 0, 0.5)'
-              bottom: 0
-              color: white
-              font-size: 16px
-              left: 0
-              line-height: 32px
-              padding: 0 8px
-              transform: initial
-              width: 100%
-            tap_action:
-              action: none
-            type: state-label
-          - entity: binary_sensor.kitchen_occupancy
-            style:
-              '--paper-item-icon-color': 'rgb(255,255,255)'
-              color: 'rgba(255,255,255,1)'
-              line-height: 32px
-              margin: 3px 5px 0 0
-              right: 0
-              top: 0
-              transform: scale(0.8)
-            type: state-icon
-          - entity: sensor.kitchen_luminance
-            style:
-              '--paper-item-icon-color': 'rgb(255,255,255)'
-              color: 'rgba(255,255,255,1)'
-              line-height: 32px
-              margin: 35px 5px 0 0
-              right: 0
-              top: 0
-              transform: scale(0.8)
-            type: state-icon
-          - entity: sensor.kitchen_luminance
-            style:
-              color: 'rgba(255,255,255,1)'
-              font-size: 12px
-              font-weight: bold
-              line-height: 32px
-              margin: 30px 35px
-              pointer-events: none
-              right: 0
-              text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-              top: 0
-              transform: initial
-            type: state-label
-          - entity: sensor.kitchen_temperature
-            style:
-              '--paper-item-icon-color': 'rgb(255,255,255)'
-              color: 'rgba(255,255,255,1)'
-              line-height: 32px
-              margin: 65px 5px 0 0
-              right: 0
-              top: 0
-              transform: scale(0.8)
-            type: state-icon
-          - entity: sensor.kitchen_temperature
-            style:
-              color: 'rgba(255,255,255,1)'
-              font-size: 12px
-              font-weight: bold
-              line-height: 32px
-              margin: 60px 35px
-              pointer-events: none
-              right: 0
-              text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-              top: 0
-              transform: initial
-            type: state-label
-          - entity: group.kitchen
-            style:
-              '--paper-item-icon-color': 'rgb(255,255,255)'
-              color: 'rgba(255,255,255,1)'
-              left: 0
-              line-height: 32px
-              margin: 3px 5px 0 0
-              top: 0
-              transform: scale(0.8)
-            type: state-icon
-          - entity: light.oven_light
-            hold_action: 'action:more-info'
-            style:
-              '--paper-item-icon-color': 'rgb(255,255,255)'
-              left: 85%
-              top: 91.3%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: switch.kitchensw
-            hold_action:
-              action: more-info
-            style:
-              '--paper-item-icon-color': 'rgb(255,255,255)'
-              left: 95%
-              top: 91.3%
-            tap_action:
-              action: toggle
-            type: state-icon
-        id: c9aa0cdb47694b4d96fc441aaab10989
-        image: /local/room_pic/Kitchen_off.jpg
-        type: picture-elements
-      - template: simple_room_template
+      - template: room_template
+        type: 'custom:decluttering-card'
+        variables:
+          - group: group.kitchen
+          - off_pic: /local/room_pic/Kitchen_off.jpg
+          - on_pic: /local/room_pic/Kitchen_all.jpg
+          - room_name: Kitchen
+          - occupancy: binary_sensor.kitchen_occupancy
+          - occupancy_action: more-info
+          - brightness: sensor.kitchen_luminance
+          - brightness_action: more-info
+          - temperature: sensor.kitchen_temperature
+          - temperature_action: more-info
+          - element4: sensor.blank
+          - element4_tap: none
+          - element4_hold: none
+          - element3: sensor.blank
+          - element3_tap: none
+          - element3_hold: none
+          - element2: light.oven_light
+          - element2_tap: toggle
+          - element2_hold: more-info
+          - element1: switch.kitchensw
+          - element1_tap: toggle
+          - element1_hold: more-info
+      - template: room_template
         type: 'custom:decluttering-card'
         variables:
           - group: group.dining_room
           - off_pic: /local/room_pic/Dining_off.jpg
           - on_pic: /local/room_pic/Dining_all.jpg
           - room_name: Dining Room
-          - element: light.dining_lights_level
-      - template: simple_room_template
+          - occupancy: sensor.space
+          - occupancy_action: none
+          - brightness: sensor.space
+          - brightness_action: none
+          - temperature: sensor.space
+          - temperature_action: none
+          - element4: sensor.blank
+          - element4_tap: none
+          - element4_hold: none
+          - element3: sensor.blank
+          - element3_tap: none
+          - element3_hold: none
+          - element2: sensor.blank
+          - element2_tap: none
+          - element2_hold: none
+          - element1: light.dining_lights_level
+          - element1_tap: toggle
+          - element1_hold: more-info
+      - template: room_template
         type: 'custom:decluttering-card'
         variables:
           - group: group.hallways
           - off_pic: /local/room_pic/Hallway_off.jpg
           - on_pic: /local/room_pic/Hallway_on.jpg
           - room_name: Hallways
-          - element: switch.entrance_switch
-      - card_width: 100%
+          - occupancy: sensor.space
+          - occupancy_action: none
+          - brightness: sensor.space
+          - brightness_action: none
+          - temperature: sensor.main_floor_temperature
+          - temperature_action: more-info
+          - element4: sensor.blank
+          - element4_tap: none
+          - element4_hold: none
+          - element3: switch.upstairs_hallway_switch
+          - element3_tap: toggle
+          - element3_hold: more-info
+          - element2: switch.entrance_switch
+          - element2_tap: toggle
+          - element2_hold: more-info
+          - element1: switch.basement_hallway_switch
+          - element1_tap: toggle
+          - element1_hold: more-info
+      - type: vertical-stack
         cards:
-          - cards:
+          - parameters:
+              centeredSlides: true
+              grabCursor: true
+              pagination:
+                type: progressbar
+              slidesPerView: auto
+              spaceBetween: 8
+            start_card: 1
+            type: 'custom:swipe-card'
+            card_width: 100%
+            cards:
               - elements:
                   - entity: vacuum.xiaomi_vacuum_cleaner
                     image: /local/room_pic/Vacuum_error.jpg
@@ -1329,203 +1284,193 @@ views:
                 image: /local/room_pic/Vacuum_error.jpg
                 type: picture-elements
               - cards:
-                  - entity: input_boolean.vacuum_cancel
-                    style: |
-                      ha-card {
-                        {% if is_state('input_boolean.vacuum_cancel', 'on') %}
-                          background: #73000A;
-                          color: #FFFFFF;
-                          --iron-icon-fill-color: #FFFFFF
-                        {% endif %}
-                      }
-                    type: entity-button
-                  - entity: input_boolean.vacuum_stop_notify
-                    style: |
-                      ha-card {
-                        {% if is_state('input_boolean.vacuum_stop_notify', 'on') %}
-                          background: #73000A;
-                          color: #FFFFFF;
-                          --iron-icon-fill-color: #FFFFFF
-                        {% endif %}
-                      }
-                    type: entity-button
-                  - entity: input_boolean.vacuum_basement
-                    style: |
-                      ha-card {
-                        {% if is_state('input_boolean.vacuum_basement', 'on') %}
-                          background: #73000A;
-                          color: #FFFFFF;
-                          --iron-icon-fill-color: #FFFFFF
-                        {% endif %}
-                      }
-                    type: entity-button
-                  - entity: input_boolean.vacuum_upstairs
-                    style: |
-                      ha-card {
-                        {% if is_state('input_boolean.vacuum_upstairs', 'on') %}
-                          background: #73000A;
-                          color: #FFFFFF;
-                          --iron-icon-fill-color: #FFFFFF
-                        {% endif %}
-                      }
-                    type: entity-button
-                type: horizontal-stack
-              - entities:
-                  - input_select.fanmode
-                type: entities
-            type: vertical-stack
-          - cards:
-              - cards:
-                  - entity: vacuum.xiaomi_vacuum_cleaner
-                    hold_action:
-                      action: none
-                    icon: 'mdi:rotate-left'
-                    show_icon: true
-                    show_name: false
-                    tap_action:
-                      action: call-service
-                      data:
-                        duration: 1500
-                        entity_id: vacuum.xiaomi_vacuum_cleaner
-                        rotation: 90
-                        velocity: 0.2
-                      service: vacuum.xiaomi_remote_control_move
-                    type: entity-button
-                  - entity: vacuum.xiaomi_vacuum_cleaner
-                    hold_action:
-                      action: none
-                    icon: 'mdi:arrow-up'
-                    show_icon: true
-                    show_name: false
-                    tap_action:
-                      action: call-service
-                      data:
-                        duration: 1500
-                        entity_id: vacuum.xiaomi_vacuum_cleaner
-                        rotation: 90
-                        velocity: 0.2
-                      service: vacuum.xiaomi_remote_control_move
-                    type: entity-button
-                  - entity: vacuum.xiaomi_vacuum_cleaner
-                    hold_action:
-                      action: none
-                    icon: 'mdi:rotate-right'
-                    show_icon: true
-                    show_name: false
-                    tap_action:
-                      action: call-service
-                      data:
-                        duration: 1500
-                        entity_id: vacuum.xiaomi_vacuum_cleaner
-                        rotation: 90
-                        velocity: 0.2
-                      service: vacuum.xiaomi_remote_control_move
-                    type: entity-button
-                type: horizontal-stack
-              - cards:
-                  - entity: vacuum.xiaomi_vacuum_cleaner
-                    hold_action:
-                      action: none
-                    icon: 'mdi:arrow-left'
-                    show_icon: true
-                    show_name: false
-                    tap_action:
-                      action: call-service
-                      data:
-                        duration: 1500
-                        entity_id: vacuum.xiaomi_vacuum_cleaner
-                        rotation: 90
-                        velocity: 0.2
-                      service: vacuum.xiaomi_remote_control_move
-                    type: entity-button
-                  - entity: input_boolean.vacuum_remote
-                    hold_action:
-                      action: more-info
-                    show_name: false
-                    style: |
-                      ha-card {
-                        {% if is_state('input_boolean.vacuum_remote', 'on') %}
-                          background: #73000A;
-                          color: #FFFFFF;
-                          --iron-icon-fill-color: #FFFFFF
-                        {% endif %}
-                      }
-                    tap_action:
-                      action: toggle
-                    type: entity-button
-                  - entity: vacuum.xiaomi_vacuum_cleaner
-                    hold_action:
-                      action: none
-                    icon: 'mdi:arrow-right'
-                    show_icon: true
-                    show_name: false
-                    tap_action:
-                      action: call-service
-                      data:
-                        duration: 1500
-                        entity_id: vacuum.xiaomi_vacuum_cleaner
-                        rotation: 90
-                        velocity: 0.2
-                      service: vacuum.xiaomi_remote_control_move
-                    type: entity-button
-                type: horizontal-stack
-              - cards:
-                  - entity: vacuum.xiaomi_vacuum_cleaner
-                    hold_action:
-                      action: none
-                    icon: 'mdi:subdirectory-arrow-left'
-                    show_icon: true
-                    show_name: false
-                    tap_action:
-                      action: call-service
-                      data:
-                        duration: 1500
-                        entity_id: vacuum.xiaomi_vacuum_cleaner
-                        rotation: 90
-                        velocity: 0.2
-                      service: vacuum.xiaomi_remote_control_move
-                    type: entity-button
-                  - entity: vacuum.xiaomi_vacuum_cleaner
-                    hold_action:
-                      action: none
-                    icon: 'mdi:arrow-down'
-                    show_icon: true
-                    show_name: false
-                    tap_action:
-                      action: call-service
-                      data:
-                        duration: 1500
-                        entity_id: vacuum.xiaomi_vacuum_cleaner
-                        rotation: 90
-                        velocity: 0.2
-                      service: vacuum.xiaomi_remote_control_move
-                    type: entity-button
-                  - entity: vacuum.xiaomi_vacuum_cleaner
-                    hold_action:
-                      action: none
-                    icon: 'mdi:subdirectory-arrow-right'
-                    show_icon: true
-                    show_name: false
-                    tap_action:
-                      action: call-service
-                      data:
-                        duration: 1500
-                        entity_id: vacuum.xiaomi_vacuum_cleaner
-                        rotation: 90
-                        velocity: 0.2
-                      service: vacuum.xiaomi_remote_control_move
-                    type: entity-button
-                type: horizontal-stack
-            type: vertical-stack
-        parameters:
-          centeredSlides: true
-          grabCursor: true
-          pagination:
-            type: progressbar
-          slidesPerView: auto
-          spaceBetween: 8
-        start_card: 1
-        type: 'custom:swipe-card'
+                  - cards:
+                      - entity: vacuum.xiaomi_vacuum_cleaner
+                        hold_action:
+                          action: none
+                        icon: 'mdi:rotate-left'
+                        show_icon: true
+                        show_name: false
+                        tap_action:
+                          action: call-service
+                          data:
+                            duration: 1500
+                            entity_id: vacuum.xiaomi_vacuum_cleaner
+                            rotation: 90
+                            velocity: 0.2
+                          service: vacuum.xiaomi_remote_control_move
+                        type: entity-button
+                      - entity: vacuum.xiaomi_vacuum_cleaner
+                        hold_action:
+                          action: none
+                        icon: 'mdi:arrow-up'
+                        show_icon: true
+                        show_name: false
+                        tap_action:
+                          action: call-service
+                          data:
+                            duration: 1500
+                            entity_id: vacuum.xiaomi_vacuum_cleaner
+                            rotation: 90
+                            velocity: 0.2
+                          service: vacuum.xiaomi_remote_control_move
+                        type: entity-button
+                      - entity: vacuum.xiaomi_vacuum_cleaner
+                        hold_action:
+                          action: none
+                        icon: 'mdi:rotate-right'
+                        show_icon: true
+                        show_name: false
+                        tap_action:
+                          action: call-service
+                          data:
+                            duration: 1500
+                            entity_id: vacuum.xiaomi_vacuum_cleaner
+                            rotation: 90
+                            velocity: 0.2
+                          service: vacuum.xiaomi_remote_control_move
+                        type: entity-button
+                    type: horizontal-stack
+                  - cards:
+                      - entity: vacuum.xiaomi_vacuum_cleaner
+                        hold_action:
+                          action: none
+                        icon: 'mdi:arrow-left'
+                        show_icon: true
+                        show_name: false
+                        tap_action:
+                          action: call-service
+                          data:
+                            duration: 1500
+                            entity_id: vacuum.xiaomi_vacuum_cleaner
+                            rotation: 90
+                            velocity: 0.2
+                          service: vacuum.xiaomi_remote_control_move
+                        type: entity-button
+                      - entity: input_boolean.vacuum_remote
+                        hold_action:
+                          action: more-info
+                        show_name: false
+                        style: |
+                          ha-card {
+                            {% if is_state('input_boolean.vacuum_remote', 'on') %}
+                              background: #73000A;
+                              color: #FFFFFF;
+                              --iron-icon-fill-color: #FFFFFF
+                            {% endif %}
+                          }
+                        tap_action:
+                          action: toggle
+                        type: entity-button
+                      - entity: vacuum.xiaomi_vacuum_cleaner
+                        hold_action:
+                          action: none
+                        icon: 'mdi:arrow-right'
+                        show_icon: true
+                        show_name: false
+                        tap_action:
+                          action: call-service
+                          data:
+                            duration: 1500
+                            entity_id: vacuum.xiaomi_vacuum_cleaner
+                            rotation: 90
+                            velocity: 0.2
+                          service: vacuum.xiaomi_remote_control_move
+                        type: entity-button
+                    type: horizontal-stack
+                  - cards:
+                      - entity: vacuum.xiaomi_vacuum_cleaner
+                        hold_action:
+                          action: none
+                        icon: 'mdi:subdirectory-arrow-left'
+                        show_icon: true
+                        show_name: false
+                        tap_action:
+                          action: call-service
+                          data:
+                            duration: 1500
+                            entity_id: vacuum.xiaomi_vacuum_cleaner
+                            rotation: 90
+                            velocity: 0.2
+                          service: vacuum.xiaomi_remote_control_move
+                        type: entity-button
+                      - entity: vacuum.xiaomi_vacuum_cleaner
+                        hold_action:
+                          action: none
+                        icon: 'mdi:arrow-down'
+                        show_icon: true
+                        show_name: false
+                        tap_action:
+                          action: call-service
+                          data:
+                            duration: 1500
+                            entity_id: vacuum.xiaomi_vacuum_cleaner
+                            rotation: 90
+                            velocity: 0.2
+                          service: vacuum.xiaomi_remote_control_move
+                        type: entity-button
+                      - entity: vacuum.xiaomi_vacuum_cleaner
+                        hold_action:
+                          action: none
+                        icon: 'mdi:subdirectory-arrow-right'
+                        show_icon: true
+                        show_name: false
+                        tap_action:
+                          action: call-service
+                          data:
+                            duration: 1500
+                            entity_id: vacuum.xiaomi_vacuum_cleaner
+                            rotation: 90
+                            velocity: 0.2
+                          service: vacuum.xiaomi_remote_control_move
+                        type: entity-button
+                    type: horizontal-stack
+                type: vertical-stack
+          - type: horizontal-stack
+            cards:
+              - entity: input_boolean.vacuum_cancel
+                style: |
+                  ha-card {
+                    {% if is_state('input_boolean.vacuum_cancel', 'on') %}
+                      background: #73000A;
+                      color: #FFFFFF;
+                      --iron-icon-fill-color: #FFFFFF
+                    {% endif %}
+                  }
+                type: entity-button
+              - entity: input_boolean.vacuum_stop_notify
+                style: |
+                  ha-card {
+                    {% if is_state('input_boolean.vacuum_stop_notify', 'on') %}
+                      background: #73000A;
+                      color: #FFFFFF;
+                      --iron-icon-fill-color: #FFFFFF
+                    {% endif %}
+                  }
+                type: entity-button
+              - entity: input_boolean.vacuum_basement
+                style: |
+                  ha-card {
+                    {% if is_state('input_boolean.vacuum_basement', 'on') %}
+                      background: #73000A;
+                      color: #FFFFFF;
+                      --iron-icon-fill-color: #FFFFFF
+                    {% endif %}
+                  }
+                type: entity-button
+              - entity: input_boolean.vacuum_upstairs
+                style: |
+                  ha-card {
+                    {% if is_state('input_boolean.vacuum_upstairs', 'on') %}
+                      background: #73000A;
+                      color: #FFFFFF;
+                      --iron-icon-fill-color: #FFFFFF
+                    {% endif %}
+                  }
+                type: entity-button
+          - type: entities
+            entities:
+              - entity: input_select.fanmode
       - calibration_points:
           - map:
               x: 946
@@ -1573,495 +1518,117 @@ views:
     id: 1
     title: First Floor
   - cards:
-      - cards:
-          - elements:
-              - entity: group.bedroom
-                image: /local/room_pic/Bedroom_off.jpg
-                state_image:
-                  'on': /local/room_pic/Bedroom_all.jpg
-                style:
-                  left: 50%
-                  top: 50%
-                  width: 100%
-                tap_action:
-                  action: toggle
-                type: image
-              - entity: sensor.blank
-                prefix: Bedroom
-                style:
-                  background-color: 'rgba(0, 0, 0, 0.5)'
-                  bottom: 0
-                  color: white
-                  font-size: 16px
-                  left: 0
-                  line-height: 32px
-                  padding: 0 8px
-                  transform: initial
-                  width: 100%
-                tap_action:
-                  action: none
-                type: state-label
-              - entity: binary_sensor.bedroom_occupancy
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  line-height: 32px
-                  margin: 3px 5px 0 0
-                  right: 0
-                  top: 0
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: sensor.bedroom_multisensor_luminance
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  line-height: 32px
-                  margin: 35px 5px 0 0
-                  right: 0
-                  top: 0
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: sensor.bedroom_multisensor_luminance
-                style:
-                  color: 'rgba(255,255,255,1)'
-                  font-size: 12px
-                  font-weight: bold
-                  line-height: 32px
-                  margin: 30px 35px
-                  pointer-events: none
-                  right: 0
-                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-                  top: 0
-                  transform: initial
-                type: state-label
-              - entity: sensor.bedroom_bee_temperature
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  line-height: 32px
-                  margin: 65px 5px 0 0
-                  right: 0
-                  top: 0
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: sensor.bedroom_bee_temperature
-                style:
-                  color: 'rgba(255,255,255,1)'
-                  font-size: 12px
-                  font-weight: bold
-                  line-height: 32px
-                  margin: 60px 35px
-                  pointer-events: none
-                  right: 0
-                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-                  top: 0
-                  transform: initial
-                type: state-label
-              - entity: group.bedroom
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  left: 0
-                  line-height: 32px
-                  margin: 3px 5px 0 0
-                  top: 0
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: light.swirl_lamp
-                hold_action:
-                  action: more-info
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  left: 75%
-                  top: 91.3%
-                tap_action:
-                  action: toggle
-                type: state-icon
-              - entity: switch.bedfan
-                hold_action:
-                  action: more-info
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  left: 85%
-                  top: 91.3%
-                tap_action:
-                  action: toggle
-                type: state-icon
-              - entity: switch.masterbath
-                hold_action:
-                  action: more-info
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  left: 95%
-                  top: 91.3%
-                tap_action:
-                  action: toggle
-                type: state-icon
-            image: /local/room_pic/Bedroom_off.jpg
-            type: picture-elements
+      - type: vertical-stack
+        cards:
+          - template: room_template
+            type: 'custom:decluttering-card'
+            variables:
+              - group: group.bedroom
+              - off_pic: /local/room_pic/Bedroom_off.jpg
+              - on_pic: /local/room_pic/Bedroom_all.jpg
+              - room_name: Bedroom
+              - occupancy: binary_sensor.bedroom_occupancy
+              - occupancy_action: more-info
+              - brightness: sensor.bedroom_multisensor_luminance
+              - brightness_action: more-info
+              - temperature: sensor.bedroom_bee_temperature
+              - temperature_action: more-info
+              - element1: light.swirl_lamp
+              - element1_tap: toggle
+              - element1_hold: more-info
+              - element2: switch.bedfan
+              - element2_tap: toggle
+              - element2_hold: more-info
+              - element3: switch.masterbath
+              - element3_tap: toggle
+              - element3_hold: more-info
+              - element4: sensor.blank
+              - element4_tap: none
+              - element4_hold: none
           - template: alexa_template
             type: 'custom:decluttering-card'
             variables:
               - alexa: media_player.bedroom_dot
-        id: 360ab61ff9b342bc93642ffc5e28315c
-        type: vertical-stack
-      - elements:
-          - camera_image: camera.nursery_camera
-            entity: camera.nursery_camera
-            style:
-              left: 50%
-              top: 50%
-              width: 100%
-            type: image
-          - entity: sensor.blank
-            prefix: Nursery
-            style:
-              background-color: 'rgba(0, 0, 0, 0.5)'
-              bottom: 0
-              color: white
-              font-size: 16px
-              left: 0
-              line-height: 32px
-              padding: 0 8px
-              transform: initial
-              width: 100%
-            tap_action:
-              action: none
-            type: state-label
-          - entity: binary_sensor.nursery_occupancy
-            style:
-              '--paper-item-icon-color': 'rgb(255,255,255)'
-              color: 'rgba(255,255,255,1)'
-              line-height: 32px
-              margin: 3px 5px 0 0
-              right: 0
-              top: 0
-              transform: scale(0.8)
-            type: state-icon
-          - entity: sensor.nursery_light_level
-            style:
-              '--paper-item-icon-color': 'rgb(255,255,255)'
-              color: 'rgba(255,255,255,1)'
-              line-height: 32px
-              margin: 35px 5px 0 0
-              right: 0
-              top: 0
-              transform: scale(0.8)
-            type: state-icon
-          - entity: sensor.nursery_light_level
-            style:
-              color: 'rgba(255,255,255,1)'
-              font-size: 12px
-              font-weight: bold
-              line-height: 32px
-              margin: 30px 35px
-              pointer-events: none
-              right: 0
-              text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-              top: 0
-              transform: initial
-            type: state-label
-          - entity: sensor.thingy_temperature
-            style:
-              '--paper-item-icon-color': 'rgb(255,255,255)'
-              color: 'rgba(255,255,255,1)'
-              line-height: 32px
-              margin: 65px 5px 0 0
-              right: 0
-              top: 0
-              transform: scale(0.8)
-            type: state-icon
-          - entity: sensor.thingy_temperature
-            style:
-              color: 'rgba(255,255,255,1)'
-              font-size: 12px
-              font-weight: bold
-              line-height: 32px
-              margin: 60px 35px
-              pointer-events: none
-              right: 0
-              text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-              top: 0
-              transform: initial
-            type: state-label
-          - entity: group.nursery
-            hold_action:
-              action: more-info
-            style:
-              '--paper-item-icon-color': 'rgb(255,255,255)'
-              color: 'rgba(255,255,255,1)'
-              left: 0
-              line-height: 32px
-              margin: 3px 5px 0 0
-              top: 0
-              transform: scale(0.8)
-            tap_action:
-              action: toggle
-            type: state-icon
-          - icon: 'mdi:numeric-1-circle'
-            style:
-              '--paper-item-icon-color': 'rgb(255,255,255)'
-              color: 'rgba(255,255,255,1)'
-              left: 30%
-              top: 91.3%
-            tap_action:
-              action: call-service
-              service: amcrest.goto_preset
-              service_data:
-                entity_id: camera.nursery_camera
-                preset: '1'
-            type: icon
-          - icon: 'mdi:numeric-2-circle'
-            style:
-              '--paper-item-icon-color': 'rgb(255,255,255)'
-              color: 'rgba(255,255,255,1)'
-              left: 38%
-              top: 91.3%
-            tap_action:
-              action: call-service
-              service: amcrest.goto_preset
-              service_data:
-                entity_id: camera.nursery_camera
-                preset: '2'
-            type: icon
-          - icon: 'mdi:numeric-3-circle'
-            style:
-              '--paper-item-icon-color': 'rgb(255,255,255)'
-              color: 'rgba(255,255,255,1)'
-              left: 46%
-              top: 91.3%
-            tap_action:
-              action: call-service
-              service: amcrest.goto_preset
-              service_data:
-                entity_id: camera.nursery_camera
-                preset: '3'
-            type: icon
-          - icon: 'mdi:numeric-4-circle'
-            style:
-              '--paper-item-icon-color': 'rgb(255,255,255)'
-              color: 'rgba(255,255,255,1)'
-              left: 54%
-              top: 91.3%
-            tap_action:
-              action: call-service
-              service: amcrest.goto_preset
-              service_data:
-                entity_id: camera.nursery_camera
-                preset: '4'
-            type: icon
-          - entity: switch.nurseryfan
-            hold_action:
-              action: more-info
-            style:
-              '--paper-item-icon-color': 'rgb(255,255,255)'
-              left: 95%
-              top: 91.3%
-            tap_action:
-              action: toggle
-            type: state-icon
-        image: /local/room_pic/camera_error.jpg
-        type: picture-elements
-      - elements:
-          - entity: group.craft
-            image: /local/room_pic/Craft_off.jpg
-            state_image:
-              'on': /local/room_pic/Craft_all.jpg
-            style:
-              left: 50%
-              top: 50%
-              width: 100%
-            tap_action:
-              action: toggle
-            type: image
-          - entity: sensor.blank
-            prefix: Craft Room
-            style:
-              background-color: 'rgba(0, 0, 0, 0.5)'
-              bottom: 0
-              color: white
-              font-size: 16px
-              left: 0
-              line-height: 32px
-              padding: 0 8px
-              transform: initial
-              width: 100%
-            tap_action:
-              action: none
-            type: state-label
-          - entity: binary_sensor.craft_room_occupancy
-            style:
-              '--paper-item-icon-color': 'rgb(255,255,255)'
-              color: 'rgba(255,255,255,1)'
-              line-height: 32px
-              margin: 3px 5px 0 0
-              right: 0
-              top: 0
-              transform: scale(0.8)
-            type: state-icon
-          - entity: group.craft
-            style:
-              '--paper-item-icon-color': 'rgb(255,255,255)'
-              color: 'rgba(255,255,255,1)'
-              left: 0
-              line-height: 32px
-              margin: 3px 5px 0 0
-              top: 0
-              transform: scale(0.8)
-            type: state-icon
-          - entity: switch.craftfan
-            hold_action:
-              action: more-info
-            style:
-              '--paper-item-icon-color': 'rgb(255,255,255)'
-              left: 85%
-              top: 91.3%
-            tap_action:
-              action: toggle
-            type: state-icon
-          - entity: light.sewing_light
-            hold_action:
-              action: more-info
-            style:
-              '--paper-item-icon-color': 'rgb(255,255,255)'
-              left: 95%
-              top: 91.3%
-            tap_action:
-              action: toggle
-            type: state-icon
-        id: ecad39e4848d4be5a479ca467b2535bd
-        image: /local/room_pic/Craft_off.jpg
-        type: picture-elements
+      - template: camera1_template
+        type: 'custom:decluttering-card'
+        variables:
+          - camera: camera.nursery_camera
+          - group: group.nursery
+          - room_name: Nursery
+          - occupancy: binary_sensor.nursery_occupancy
+          - occupancy_action: more-info
+          - brightness: sensor.nursery_light_level
+          - brightness_action: more-info
+          - temperature: sensor.thingy_temperature
+          - temperature_action: more-info
+          - element4: sensor.blank
+          - element4_tap: none
+          - element4_hold: none
+          - element3: sensor.blank
+          - element3_tap: none
+          - element3_hold: none
+          - element2: sensor.blank
+          - element2_tap: none
+          - element2_hold: none
+          - element1: switch.nurseryfan
+          - element1_tap: toggle
+          - element1_hold: more-info
+      - template: room_template
+        type: 'custom:decluttering-card'
+        variables:
+          - group: group.craft
+          - off_pic: /local/room_pic/Craft_off.jpg
+          - on_pic: /local/room_pic/Craft_all.jpg
+          - room_name: Craft Room
+          - occupancy: binary_sensor.craft_room_occupancy
+          - occupancy_action: more-info
+          - brightness: sensor.space
+          - brightness_action: none
+          - temperature: sensor.space
+          - temperature_action: none
+          - element4: sensor.blank
+          - element4_tap: none
+          - element4_hold: none
+          - element3: sensor.blank
+          - element3_tap: none
+          - element3_hold: none
+          - element2: switch.craftfan
+          - element2_tap: toggle
+          - element2_hold: more-info
+          - element1: light.sewing_light
+          - element1_tap: toggle
+          - element1_hold: more-info
     icon: 'mdi:numeric-2-box'
     id: 2
     title: Second Floor
   - cards:
-      - cards:
-          - elements:
-              - entity: group.basement_no_aux
-                image: /local/room_pic/Basement_off.jpg
-                state_image:
-                  'on': /local/room_pic/Basement_all.jpg
-                style:
-                  left: 50%
-                  top: 50%
-                  width: 100%
-                tap_action:
-                  action: toggle
-                type: image
-              - entity: sensor.blank
-                prefix: Basement
-                style:
-                  background-color: 'rgba(0, 0, 0, 0.5)'
-                  bottom: 0
-                  color: white
-                  font-size: 16px
-                  left: 0
-                  line-height: 32px
-                  padding: 0 8px
-                  transform: initial
-                  width: 100%
-                tap_action:
-                  action: none
-                type: state-label
-              - entity: binary_sensor.basement_bay_occupancy
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  line-height: 32px
-                  margin: 3px 5px 0 0
-                  right: 0
-                  top: 0
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: sensor.basement_multisensor_luminance
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  line-height: 32px
-                  margin: 35px 5px 0 0
-                  right: 0
-                  top: 0
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: sensor.basement_multisensor_luminance
-                style:
-                  color: 'rgba(255,255,255,1)'
-                  font-size: 12px
-                  font-weight: bold
-                  line-height: 32px
-                  margin: 30px 35px
-                  pointer-events: none
-                  right: 0
-                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-                  top: 0
-                  transform: initial
-                type: state-label
-              - entity: sensor.basement_bee_temperature
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  line-height: 32px
-                  margin: 65px 5px 0 0
-                  right: 0
-                  top: 0
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: sensor.basement_bee_temperature
-                style:
-                  color: 'rgba(255,255,255,1)'
-                  font-size: 12px
-                  font-weight: bold
-                  line-height: 32px
-                  margin: 60px 35px
-                  pointer-events: none
-                  right: 0
-                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-                  top: 0
-                  transform: initial
-                type: state-label
-              - entity: group.basement
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  left: 0
-                  line-height: 32px
-                  margin: 3px 5px 0 0
-                  top: 0
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: switch.basement_floor_light
-                hold_action:
-                  action: more-info
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  left: 75%
-                  top: 91.3%
-                tap_action:
-                  action: toggle
-                type: state-icon
-              - entity: light.basement_ceiling_lights
-                hold_action:
-                  action: more-info
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  left: 85%
-                  top: 91.3%
-                tap_action:
-                  action: toggle
-                type: state-icon
-              - entity: switch.laundryroom
-                hold_action:
-                  action: more-info
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  left: 95%
-                  top: 91.3%
-                tap_action:
-                  action: toggle
-                type: state-icon
-            image: /local/room_pic/Basement_off.jpg
-            type: picture-elements
+      - type: vertical-stack
+        cards:
+          - template: room_template
+            type: 'custom:decluttering-card'
+            variables:
+              - group: group.basement_no_aux
+              - off_pic: /local/room_pic/Basement_off.jpg
+              - on_pic: /local/room_pic/Basement_all.jpg
+              - room_name: Basement
+              - occupancy: binary_sensor.basement_bay_occupancy
+              - occupancy_action: more-info
+              - brightness: sensor.basement_multisensor_luminance
+              - brightness_action: more-info
+              - temperature: sensor.basement_bee_temperature
+              - temperature_action: more-info
+              - element4: light.consoles
+              - element4_tap: toggle
+              - element4_hold: more-info
+              - element3: switch.basement_floor_light
+              - element3_tap: toggle
+              - element3_hold: more-info
+              - element2: light.basement_ceiling_lights
+              - element2_tap: toggle
+              - element2_hold: more-info
+              - element1: switch.laundryroom
+              - element1_tap: toggle
+              - element1_hold: more-info
           - elements:
               - camera_image: camera.my_computer_screen_0
                 entity: camera.my_computer_screen_0
@@ -2231,122 +1798,57 @@ views:
             type: 'custom:decluttering-card'
             variables:
               - alexa: media_player.basement_dot
-        id: d314202ba6894dda8ff9f4d11575a686
-        type: vertical-stack
-      - template: simple_room_template
+      - template: room_template
         type: 'custom:decluttering-card'
         variables:
           - group: group.guest
           - off_pic: /local/room_pic/Guest_off.jpg
           - on_pic: /local/room_pic/Guest_on.jpg
           - room_name: Guest Room
-          - element: switch.guestbed
+          - occupancy: sensor.space
+          - occupancy_action: none
+          - brightness: sensor.space
+          - brightness_action: none
+          - temperature: sensor.space
+          - temperature_action: none
+          - element4: sensor.blank
+          - element4_tap: none
+          - element4_hold: none
+          - element3: sensor.blank
+          - element3_tap: none
+          - element3_hold: none
+          - element2: sensor.blank
+          - element2_tap: none
+          - element2_hold: none
+          - element1: switch.guestbed
+          - element1_tap: toggle
+          - element1_hold: more-info
       - cards:
-          - elements:
-              - entity: group.sun_room
-                image: /local/room_pic/Sun_off.jpg
-                state_image:
-                  'on': /local/room_pic/Sun_all.jpg
-                style:
-                  left: 50%
-                  top: 50%
-                  width: 100%
-                tap_action:
-                  action: toggle
-                type: image
-              - entity: sensor.blank
-                prefix: Sun Room
-                style:
-                  background-color: 'rgba(0, 0, 0, 0.5)'
-                  bottom: 0
-                  color: white
-                  font-size: 16px
-                  left: 0
-                  line-height: 32px
-                  padding: 0 8px
-                  transform: initial
-                  width: 100%
-                tap_action:
-                  action: none
-                type: state-label
-              - entity: sensor.money_plant_light_intensity
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  line-height: 32px
-                  margin: 35px 5px 0 0
-                  right: 0
-                  top: 0
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: sensor.money_plant_light_intensity
-                style:
-                  color: 'rgba(255,255,255,1)'
-                  font-size: 12px
-                  font-weight: bold
-                  line-height: 32px
-                  margin: 30px 35px
-                  pointer-events: none
-                  right: 0
-                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-                  top: 0
-                  transform: initial
-                type: state-label
-              - entity: sensor.money_plant_temperature_round
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  line-height: 32px
-                  margin: 65px 5px 0 0
-                  right: 0
-                  top: 0
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: sensor.money_plant_temperature_round
-                style:
-                  color: 'rgba(255,255,255,1)'
-                  font-size: 12px
-                  font-weight: bold
-                  line-height: 32px
-                  margin: 60px 35px
-                  pointer-events: none
-                  right: 0
-                  text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-                  top: 0
-                  transform: initial
-                type: state-label
-              - entity: group.sun_room
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  color: 'rgba(255,255,255,1)'
-                  left: 0
-                  line-height: 32px
-                  margin: 3px 5px 0 0
-                  top: 0
-                  transform: scale(0.8)
-                type: state-icon
-              - entity: switch.sun_room_market_lights
-                hold_action:
-                  action: more-info
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  left: 85%
-                  top: 91.3%
-                tap_action:
-                  action: toggle
-                type: state-icon
-              - entity: light.tripod_lamp
-                hold_action:
-                  action: more-info
-                style:
-                  '--paper-item-icon-color': 'rgb(255,255,255)'
-                  left: 95%
-                  top: 91.3%
-                tap_action:
-                  action: toggle
-                type: state-icon
-            image: /local/room_pic/Sun_off.jpg
-            type: picture-elements
+          - template: room_template
+            type: 'custom:decluttering-card'
+            variables:
+              - group: group.sun_room
+              - off_pic: /local/room_pic/Sun_off.jpg
+              - on_pic: /local/room_pic/Sun_all.jpg
+              - room_name: Sun Room
+              - occupancy: sensor.space
+              - occupancy_action: none
+              - brightness: sensor.money_plant_light_intensity
+              - brightness_action: more-info
+              - temperature: sensor.money_plant_temperature_round
+              - temperature_action: more-info
+              - element4: sensor.blank
+              - element4_tap: none
+              - element4_hold: none
+              - element3: sensor.blank
+              - element3_tap: none
+              - element3_hold: none
+              - element2: switch.sun_room_market_lights
+              - element2_tap: toggle
+              - element2_hold: more-info
+              - element1: light.tripod_lamp
+              - element1_tap: toggle
+              - element1_hold: more-info
           - entity: plant.money_plant
             type: plant-status
           - template: alexa_template
@@ -2637,7 +2139,6 @@ views:
                 type: state-label
             image: /local/calendar.jpg
             type: picture-elements
-        id: 5e3b7cda32e644cabaa77a7f1d126372
         type: horizontal-stack
       - card_width: 60%
         cards:

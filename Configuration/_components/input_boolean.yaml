@@ -117,6 +117,9 @@
   vacuum_remote:
     name: Vacuum Remote
     icon: mdi:power
+  run_vacuum:
+    name: Run Vacuum
+    icon: mdi:robot-vacuum
     
   ##### Other #####
   
