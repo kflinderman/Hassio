@@ -11,6 +11,31 @@
 # #7 Stereo Scripts          #
 ##############################
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #####################
 #0 Location Scripts #
 #####################
@@ -227,11 +252,11 @@ movie_finish:
 dinner_time:
   sequence:
     - service: switch.turn_off
-      entity_id: switch.kitchensw
+      entity_id: switch.cabinet_lights
     - service: homeassistant.turn_off
       entity_id: group.livingroom
     - service: light.turn_on
-      entity_id: light.oven_light
+      entity_id: light.sink_light
       data:
         brightness: 25
     - service: light.turn_on
@@ -288,9 +313,9 @@ run_vacuum:
     - condition: state
       entity_id: input_boolean.vacation
       state: 'off'
-    - condition: state
-      entity_id: input_boolean.visitor
-      state: 'off'
+    # - condition: state
+      # entity_id: input_boolean.visitor
+      # state: 'off'
     - condition: state
       entity_id: input_boolean.party
       state: 'off'
@@ -406,7 +431,7 @@ sunset_switch:
     - delay:
         minutes: 30
     - service: switch.turn_on
-      entity_id: switch.kitchensw
+      entity_id: switch.cabinet_lights
     - service: homeassistant.turn_on
       entity_id: group.holiday
     - service: light.turn_on
@@ -637,6 +662,15 @@ alli_location_spreadsheet_loop:
     - service: script.turn_on
       data:
         entity_id: script.alli_location_spreadsheet
+        
+front_door_snooze:
+  sequence:
+    - service: switch.turn_off
+      entity_id: switch.skybell_front_door_motion_sensor
+    - delay:
+        minutes: 60
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.front_door_snooze
       
 ############################
 #6 Random Vacation Scripts #

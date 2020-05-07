@@ -29,7 +29,7 @@ smart_home:
       - input_boolean.all_secondfloor
       - input_boolean.im_home
       - input_boolean.party
-      - input_boolean.sexy
+      - input_boolean.sexy_time
       - input_boolean.vacation
       - input_boolean.visitor
       - input_boolean.window
@@ -38,32 +38,30 @@ smart_home:
       - media_player.living_room_tv
       - media_player.basement_stereo
       - media_player.stereo
-      - sensor.basement_bee_temperature
-      - sensor.bedroom_bee_temperature
-      - sensor.kitchen_temperature
-      - sensor.living_room_bee_temperature
-      - sensor.main_floor_temperature
-      - sensor.thingy_temperature
-      - sensor.target_temp_high
-      - sensor.target_temp_low
-      - switch.airhockey
-      - switch.bedfan
-      - switch.craftfan
+      # - sensor.basement_bee_temperature
+      # - sensor.bedroom_bee_temperature
+      # - sensor.kitchen_temperature
+      # - sensor.living_room_bee_temperature
+      # - sensor.main_floor_temperature
+      # - sensor.thingy_temperature
+      # - switch.airhockey
+      # - switch.bedfan
+      # - switch.craftfan
       - switch.deck_ceiling_outlet_switch
       - switch.desktoppc
-      - switch.guestbed
-      - switch.kitchensw
-      - switch.laundryroom
-      - switch.masterbath
-      - switch.nurseryfan
-      - switch.outlet
-      - switch.sun_room_market_lights
+      # - switch.guestbed
+      # - switch.cabinet_lights
+      # - switch.laundryroom
+      # - switch.masterbath
+      # - switch.nurseryfan
+      # - switch.outlet
+      # - switch.sun_room_market_lights
       - switch.entrance_switch
       - switch.basement_hallway_switch
       - switch.upstairs_hallway_switch
     include_domains:
       - group
-      - light
+      # - light
     exclude_entities:
       - climate.main_floor_local
       - group.all_automations
@@ -92,6 +90,10 @@ smart_home:
       - group.switch_lights
       - group.theme_auto
       - group.vacuum_auto
+      - light.basement_1
+      - light.basement_2
+      - light.basement_3
+      - light.basement_4
       - light.basement_hue
       - light.basement_hue_2
       - light.kitchen_hue
@@ -106,7 +108,6 @@ smart_home:
     exclude_domains:
       - automation
       - binary_sensor
-      # - climate
       - scene
       - script
       - input_boolean
@@ -114,13 +115,13 @@ smart_home:
       - sensor
       - switch
   entity_config:
-    switch.airhockey:
-      display_categories: SMARTPLUG
-    switch.outlet:
-      display_categories: SMARTPLUG
-      name: Floor Light
-    switch.sun_room_market_lights:
-      display_categories: SMARTPLUG
+    # switch.airhockey:
+      # display_categories: SMARTPLUG
+    # switch.outlet:
+      # display_categories: SMARTPLUG
+      # name: Floor Light
+    # switch.sun_room_market_lights:
+      # display_categories: SMARTPLUG
     switch.deck_ceiling_outlet_switch:
       display_categories: SMARTPLUG
     script.windows_open:

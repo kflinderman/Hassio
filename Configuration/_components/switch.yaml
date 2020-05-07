@@ -11,8 +11,10 @@
       - motion_sensor
   - platform: momentary
     name: Weather Alert Notification
-    on_for: 7200
-    allow_off: false
+    mode: on
+    toggle_for: 
+      hours: 2
+    cancellable: true
   # - platform: netgear_enhanced
     # host: !secret router_ip
     # username: !secret wifi_username

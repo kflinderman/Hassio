@@ -141,8 +141,6 @@
     name: CPU Lightpack
   holiday:
     name: Holiday Group Dummy
-  kitchen_reno:
-    name: Kitchen Renovation
   dog_med:
     name: Dog Medications
   goodnight:

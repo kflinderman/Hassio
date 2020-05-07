@@ -37,13 +37,9 @@
 - platform: cert_expiry
   host: !secret url2_secret
   # port: 8123
-- platform: darksky
-  api_key: !secret dark_api
-  monitored_conditions:
-    - icon
-- platform: illuminance
-  name: DSS Illuminance
-  entity_id: sensor.dark_sky_icon
+# - platform: illuminance
+  # name: DSS Illuminance
+  # entity_id: sensor.dark_sky_icon
 - platform: weatheralerts
   state: NC
   zone: "025"
@@ -103,26 +99,21 @@
     outside_temp:
       friendly_name: "Outside Temperature"
       unit_of_measurement: '°F'
-      value_template: "{{ state_attr('weather.dark_sky', 'temperature') }}"
+      value_template: "{{ state_attr('weather.main_floor', 'temperature') }}"
       
     tomorrow_high:
       friendly_name: "Tomrrow High"
       unit_of_measurement: '°F'
-      value_template: "{{ state_attr('weather.dark_sky', 'forecast')[1].temperature }}"
+      value_template: "{{ state_attr('weather.main_floor', 'forecast')[1].temperature }}"
       
     tomorrow_low:
       friendly_name: "Tomrrow Low"
       unit_of_measurement: '°F'
-      value_template: "{{ state_attr('weather.dark_sky', 'forecast')[1].templow }}"
+      value_template: "{{ state_attr('weather.main_floor', 'forecast')[1].templow }}"
       
     tomorrow_condition:
       friendly_name: "Tomrrow Condition"
-      value_template: "{{ state_attr('weather.dark_sky', 'forecast')[1].condition.capitalize() }}"
-      
-    tomorrow_rain:
-      friendly_name: "Tomrrow Rain"
-      unit_of_measurement: 'in'
-      value_template: "{{ state_attr('weather.dark_sky', 'forecast')[1].precipitation }}"
+      value_template: "{{ state_attr('weather.main_floor', 'forecast')[1].condition.capitalize() }}"
       
     target_temp_high:
       friendly_name: "Target Temp High"
@@ -385,9 +376,9 @@
       friendly_name: "Swirl Lamp Light Hours Round"
       value_template: "{{ states('sensor.swirl_lamp_light_hours') | round(1) }}"
 
-    oven_light_hours_round:
-      friendly_name: "Oven Light Hours Round"
-      value_template: "{{ states('sensor.oven_light_hours') | round(1) }}"
+    sink_light_hours_round:
+      friendly_name: "Sink Light Hours Round"
+      value_template: "{{ states('sensor.sink_light_hours') | round(1) }}"
       
     tripod_light_hours_round:
       friendly_name: "Tripod Light Hours Round"
@@ -453,9 +444,13 @@
       friendly_name: "Nursery Fan Hours Round"
       value_template: "{{ states('sensor.nursery_fan_hours') | round(1) }}"
 
-    prep_area_hours_round:
-      friendly_name: "Prep Area Hours Round"
-      value_template: "{{ states('sensor.prep_area_hours') | round(1) }}"
+    nursery_light_hours_round:
+      friendly_name: "Nursery Light Hours Round"
+      value_template: "{{ states('sensor.nursery_light_hours') | round(1) }}"
+      
+    cabinet_light_hours_round:
+      friendly_name: "Cabinet Light Hours Round"
+      value_template: "{{ states('sensor.cabinet_light_hours') | round(1) }}"
 
     guest_bedroom_fan_hours_round:
       friendly_name: "Guest Bedroom Fan Hours Round"
@@ -730,8 +725,8 @@
   duration:
     days: 1
 - platform: history_stats
-  name: Oven Light Hours
-  entity_id: light.oven_light
+  name: Sink Light Hours
+  entity_id: light.sink_light
   state: 'on'
   end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
   duration:
@@ -800,8 +795,8 @@
   duration:
     days: 1
 - platform: history_stats
-  name: Prep Area Hours
-  entity_id: switch.kitchensw
+  name: Cabinet Light Hours
+  entity_id: switch.cabinet_lights
   state: 'on'
   end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
   duration:
@@ -844,6 +839,13 @@
 - platform: history_stats
   name: Washroom Light Hours
   entity_id: switch.laundryroom
+  state: 'on'
+  end: '{{ (now().replace(hour=0).replace(minute=0).replace(second=0))|round(1) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Nursery Light Hours
+  entity_id: light.nursery_light
   state: 'on'
   end: '{{ (now().replace(hour=0).replace(minute=0).replace(second=0))|round(1) }}'
   duration:

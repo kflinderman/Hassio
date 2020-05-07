@@ -105,21 +105,23 @@ light.floor_lamp:
 light.rock_lamp:
   icon: mdi:lamp
 light.chair_lamp:
-  icon: mdi:desk-lamp
+  icon: mdi:floor-lamp-variant
 light.sewing_light:
   icon: mdi:lamp
-light.oven_light:
-  icon: mdi:stove
+light.nursery_light:
+  icon: mdi:floor-lamp
 light.swirl_lamp:
   icon: mdi:lamp
 light.basement_ceiling_lights:
   icon: mdi:ceiling-light
 light.lightpack:
-  icon: mdi:television-guide
+  icon: mdi:television-ambient-light
 light.tripod_lamp:
-  icon: mdi:floor-lamp
+  icon: mdi:floor-lamp-variant
 light.entrance_dimmer_level:
   icon: mdi:ceiling-light
+light.consoles:
+  icon: mdi:gamepad-variant
   
   ##### Switches #####
   
@@ -130,13 +132,13 @@ switch.skybell_front_door_motion_sensor:
 switch.laundryroom:
   icon: mdi:washing-machine
 switch.sun_room_market_lights:
-  icon: mdi:lightbulb
+  icon: mdi:string-lights
 switch.entrance_switch:
-  icon: mdi:ceiling-light
+  icon: mdi:home
 switch.basement_hallway_switch:
-  icon: mdi:ceiling-light
+  icon: mdi:arrow-down-box
 switch.upstairs_hallway_switch:
-  icon: mdi:ceiling-light
+  icon: mdi:arrow-up-box
   
   ##### Other #####
 script.vacuumed_basement:
@@ -192,9 +194,9 @@ switch.craftfan:
 switch.masterbath:
   friendly_name: Master Bathroom Lights
   icon: mdi:water
-switch.kitchensw:
-  friendly_name: Prep Area
-  icon: mdi:ceiling-light
+switch.cabinet_lights:
+  friendly_name: Cabinet Lights
+  icon: mdi:wall-sconce-flat
 switch.guestbed:
   friendly_name: Guest Room Fan
   icon: mdi:ceiling-light
@@ -203,12 +205,15 @@ switch.desktopPC:
   icon: mdi:laptop
 switch.deck_ceiling_outlet_switch:
   friendly_name: Market Lights
-  icon: mdi:lightbulb
+  icon: mdi:string-lights
   
   ##### Other #####
   
 light.dining_lights_level:
   friendly_name: Dining Room Lights
+  icon: mdi:ceiling-light
+light.sink_light:
+  friendly_name: Sink Light
   icon: mdi:ceiling-light
   
 #######################

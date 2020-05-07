@@ -7,8 +7,8 @@
     
     light.dining_lights_level:
       hidden: false
-    light.lightpack:
-      hidden: false
+    # light.lightpack:
+      # hidden: false
       
     ##### Switches #####
     
@@ -17,6 +17,12 @@
     switch.deck_ceiling_outlet_switch:
       hidden: false
     switch.laundryroom:
+      hidden: false
+    switch.entrance_switch:
+      hidden: false
+    switch.basement_hallway_switch:
+      hidden: false
+    switch.upstairs_hallway_switch:
       hidden: false
       
     ##### Input Booleans #####
@@ -31,10 +37,22 @@
       hidden: false
     input_boolean.sexy_time:
       hidden: false
+    input_boolean.all_basement:
+      hidden: false
+    input_boolean.all_firstfloor:
+      hidden: false
+    input_boolean.all_outside:
+      hidden: false
+    input_boolean.all_secondfloor:
+      hidden: false
+    input_boolean.party:
+      hidden: false
+    input_boolean.goodnight:
+      hidden: false
       
     ##### Groups #####
     
-    group.basement:
+    group.basement_no_pc:
       hidden: false
     group.bedroom:
       hidden: false
@@ -50,15 +68,17 @@
       hidden: false
     group.secondfloor:
       hidden: false
+    group.basement_floor:
+      hidden: false
     group.sun_room:
       hidden: false
     group.guest:
       hidden: false
     group.outside:
       hidden: false
-    group.livingroom:
+    group.livingroom_no_aux:
       hidden: false
-    group.dining_room:
+    group.hallways:
       hidden: false
       
     ##### Media Players #####
@@ -82,8 +102,8 @@
       hidden: false
     script.netflix_watch_on:
       hidden: false
-    script.after_dark:
-      hidden: false
+    # script.after_dark:
+      # hidden: false
     script.game_on:
       hidden: false
     script.switch_on:
@@ -92,8 +112,8 @@
       hidden: false
     script.pandora_listen_on:
       hidden: false
-    script.cable_watch_on:
-      hidden: false
+    # script.cable_watch_on:
+      # hidden: false
     script.dinner_time:
       hidden: false
     script.vinyl_on:
@@ -104,15 +124,15 @@
       hidden: false
     script.radio_listen_on:
       hidden: false
-    script.vacuum_the_house:
-      hidden: false
-    script.tv_area_vacuum:
-      hidden: false
-    script.back_living_room_vacuum:
-      hidden: false
-    script.dining_room_vacuum:
-      hidden: false
-    script.kitchen_vacuum:
-      hidden: false
-    script.hallway_vacuum:
-      hidden: false
+    # script.vacuum_the_house:
+      # hidden: false
+    # script.tv_area_vacuum:
+      # hidden: false
+    # script.back_living_room_vacuum:
+      # hidden: false
+    # script.dining_room_vacuum:
+      # hidden: false
+    # script.kitchen_vacuum:
+      # hidden: false
+    # script.hallway_vacuum:
+      # hidden: false

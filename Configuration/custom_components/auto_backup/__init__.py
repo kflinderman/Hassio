@@ -47,6 +47,8 @@ DEFAULT_SNAPSHOT_FOLDERS = {
 CONF_AUTO_PURGE = "auto_purge"
 CONF_BACKUP_TIMEOUT = "backup_timeout"
 
+CHUNK_SIZE = 64 * 1024  # 64 KB
+
 DEFAULT_BACKUP_TIMEOUT = 1200
 
 SERVICE_PURGE = "purge"
@@ -113,7 +115,9 @@ async def async_setup(hass: HomeAssistantType, config: ConfigType):
     await auto_backup.load_snapshots_expiry()
 
     # load the auto backup sensor.
-    await hass.helpers.discovery.async_load_platform("sensor", DOMAIN, {}, config)
+    hass.async_create_task(
+        hass.helpers.discovery.async_load_platform("sensor", DOMAIN, {}, config)
+    )
 
     # register services.
     async def snapshot_service_handler(call: ServiceCallType):
@@ -447,7 +451,11 @@ class AutoBackup:
                     raise HassioAPIError()
 
                 with open(output_path, "wb") as file:
-                    file.write(await request.read())
+                    while True:
+                        chunk = await request.content.read(CHUNK_SIZE)
+                        if not chunk:
+                            break
+                        file.write(chunk)
 
                 _LOGGER.info("Downloaded snapshot '%s' to '%s'", slug, output_path)
                 return

@@ -10,7 +10,7 @@ http:
   server_port: 443
   
 recorder:
-  purge_interval: 2
+  auto_purge: true
   purge_keep_days: 7
   db_url: !secret db_secret
 
@@ -58,8 +58,6 @@ influxdb:
   max_retries: 3
   default_measurement: state
 
-uilogs:
-
 logbook:
   exclude:
     domains:
@@ -106,11 +104,13 @@ zwave:
     light.dining_lights_level:
       refresh_value: true
 
-# emulated_hue: !include assistant/emulated_hue.yaml
+emulated_hue: !include assistant/emulated_hue.yaml
 
 # cloud: !include assistant/cloud.yaml
 
-alexa: !include assistant/alexa.yaml
+# alexa: !include assistant/alexa.yaml
+
+api:
       
 automation: !include _intelligence/automations.yaml
 
@@ -118,13 +118,11 @@ scene: !include _intelligence/scene.yaml
 
 script: !include _intelligence/scripts.yaml
 
-# zone: !include _structure/zone.yaml
-
 group: !include _structure/groups.yaml
 
 config:
 
-config_check:
+# config_check:
 
 updater:
 
@@ -227,13 +225,6 @@ tplink:
 
 momentary:
 
-# alexa_media:
-  # accounts:
-    # - email: !secret kemail
-      # password: !secret amz_secret
-      # url: amazon.com
-      # scan_interval: 30
-
 hue:
   bridges:
     - host: !secret hue_ip
@@ -271,21 +262,16 @@ amcrest:
       - motion_detected
     port: !secret amcrest2_port
     scan_interval: 20
-  # - host: !secret nursery_IP
-    # username: !secret nursery_user
-    # password: !secret nursery_pswd
-    # name: "Nursery Camera"
-    # binary_sensors:
-      # - motion_detected
-    # port: !secret amcrest3_port
-    # scan_interval: 20
+  - host: !secret nursery_IP
+    username: !secret nursery_user
+    password: !secret nursery_pswd
+    name: "Nursery Camera"
+    binary_sensors:
+      - motion_detected
+    port: !secret amcrest3_port
+    scan_interval: 20
 
 ffmpeg:
-      
-weather:
-  - platform: darksky
-    api_key: !secret dark_api
-    mode: 'daily'
 
 camera:
   - platform: skybell
@@ -315,7 +301,6 @@ ecobee:
 webostv:
   host: !secret lg_ip
   name: Living Room TV
-  # standby_connection: true
   turn_on_action:
     service: wake_on_lan.send_magic_packet
     data:
@@ -330,9 +315,6 @@ webostv:
       - YouTube TV
  
 notify:
-  # - platform: pushbullet
-    # api_key: !secret push_key
-    # name: pushbullet
   - platform: alexa_media
     name: alexa_media
   - platform: group

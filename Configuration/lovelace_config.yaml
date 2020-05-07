@@ -46,165 +46,6 @@ decluttering_templates:
       tts:
         platform: alexa
       type: 'custom:mini-media-player'
-  room_template:
-    card:
-      elements:
-        - entity: '[[group]]'
-          image: '[[off_pic]]'
-          state_image:
-            'on': '[[on_pic]]'
-          style:
-            left: 50%
-            top: 50%
-            width: 100%
-          tap_action:
-            action: toggle
-          type: image
-        - entity: sensor.blank
-          prefix: '[[room_name]]'
-          style:
-            background-color: 'rgba(0, 0, 0, 0.5)'
-            bottom: 0
-            color: white
-            font-size: 16px
-            left: 0
-            line-height: 32px
-            padding: 0 8px
-            transform: initial
-            width: 100%
-          tap_action:
-            action: none
-          hold_action:
-            action: none
-          type: state-label
-        - entity: '[[occupancy]]'
-          style:
-            '--paper-item-icon-color': 'rgb(255,255,255)'
-            color: 'rgba(255,255,255,1)'
-            line-height: 32px
-            margin: 3px 5px 0 0
-            right: 0
-            top: 0
-            transform: scale(0.8)
-          tap_action:
-            action: '[[occupancy_action]]'
-          hold_action:
-            action: '[[occupancy_action]]'
-          type: state-icon
-        - entity: '[[brightness]]'
-          style:
-            '--paper-item-icon-color': 'rgb(255,255,255)'
-            color: 'rgba(255,255,255,1)'
-            line-height: 32px
-            margin: 35px 5px 0 0
-            right: 0
-            top: 0
-            transform: scale(0.8)
-          tap_action:
-            action: '[[brightness_action]]'
-          hold_action:
-            action: '[[brightness_action]]'
-          type: state-icon
-        - entity: '[[brightness]]'
-          style:
-            color: 'rgba(255,255,255,1)'
-            font-size: 12px
-            font-weight: bold
-            line-height: 32px
-            margin: 30px 35px
-            pointer-events: none
-            right: 0
-            text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-            top: 0
-            transform: initial
-          tap_action:
-            action: '[[brightness_action]]'
-          hold_action:
-            action: '[[brightness_action]]'
-          type: state-label
-        - entity: '[[temperature]]'
-          style:
-            '--paper-item-icon-color': 'rgb(255,255,255)'
-            color: 'rgba(255,255,255,1)'
-            line-height: 32px
-            margin: 65px 5px 0 0
-            right: 0
-            top: 0
-            transform: scale(0.8)
-          tap_action:
-            action: '[[temperature_action]]'
-          hold_action:
-            action: '[[temperature_action]]'
-          type: state-icon
-        - entity: '[[temperature]]'
-          style:
-            color: 'rgba(255,255,255,1)'
-            font-size: 12px
-            font-weight: bold
-            line-height: 32px
-            margin: 60px 35px
-            pointer-events: none
-            right: 0
-            text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
-            top: 0
-            transform: initial
-          tap_action:
-            action: '[[temperature_action]]'
-          hold_action:
-            action: '[[temperature_action]]'
-          type: state-label
-        - entity: '[[group]]'
-          style:
-            '--paper-item-icon-color': 'rgb(255,255,255)'
-            color: 'rgba(255,255,255,1)'
-            left: 0
-            line-height: 32px
-            margin: 3px 5px 0 0
-            top: 0
-            transform: scale(0.8)
-          type: state-icon
-        - entity: '[[element4]]'
-          style:
-            '--paper-item-icon-color': 'rgb(255,255,255)'
-            left: 65%
-            top: 91.3%
-          tap_action:
-            action: '[[element4_tap]]'
-          hold_action:
-            action: '[[element4_hold]]'
-          type: state-icon
-        - entity: '[[element3]]'
-          style:
-            '--paper-item-icon-color': 'rgb(255,255,255)'
-            left: 75%
-            top: 91.3%
-          tap_action:
-            action: '[[element3_tap]]'
-          hold_action:
-            action: '[[element3_hold]]'
-          type: state-icon
-        - entity: '[[element2]]'
-          style:
-            '--paper-item-icon-color': 'rgb(255,255,255)'
-            left: 85%
-            top: 91.3%
-          tap_action:
-            action: '[[element2_tap]]'
-          hold_action:
-            action: '[[element2_hold]]'
-          type: state-icon
-        - entity: '[[element1]]'
-          style:
-            '--paper-item-icon-color': 'rgb(255,255,255)'
-            left: 95%
-            top: 91.3%
-          tap_action:
-            action: '[[element1_tap]]'
-          hold_action:
-            action: '[[element1_hold]]'
-          type: state-icon
-      image: '[[off_pic]]'
-      type: picture-elements
   camera1_template:
     card:
       elements:
@@ -231,6 +72,8 @@ decluttering_templates:
             action: none
           type: state-label
         - entity: '[[occupancy]]'
+          hold_action:
+            action: '[[occupancy_action]]'
           style:
             '--paper-item-icon-color': 'rgb(255,255,255)'
             color: 'rgba(255,255,255,1)'
@@ -241,10 +84,10 @@ decluttering_templates:
             transform: scale(0.8)
           tap_action:
             action: '[[occupancy_action]]'
-          hold_action:
-            action: '[[occupancy_action]]'
           type: state-icon
         - entity: '[[brightness]]'
+          hold_action:
+            action: '[[brightness_action]]'
           style:
             '--paper-item-icon-color': 'rgb(255,255,255)'
             color: 'rgba(255,255,255,1)'
@@ -255,10 +98,10 @@ decluttering_templates:
             transform: scale(0.8)
           tap_action:
             action: '[[brightness_action]]'
-          hold_action:
-            action: '[[brightness_action]]'
           type: state-icon
         - entity: '[[brightness]]'
+          hold_action:
+            action: '[[brightness_action]]'
           style:
             color: 'rgba(255,255,255,1)'
             font-size: 12px
@@ -272,10 +115,10 @@ decluttering_templates:
             transform: initial
           tap_action:
             action: '[[brightness_action]]'
-          hold_action:
-            action: '[[brightness_action]]'
           type: state-label
         - entity: '[[temperature]]'
+          hold_action:
+            action: '[[temperature_action]]'
           style:
             '--paper-item-icon-color': 'rgb(255,255,255)'
             color: 'rgba(255,255,255,1)'
@@ -286,10 +129,10 @@ decluttering_templates:
             transform: scale(0.8)
           tap_action:
             action: '[[temperature_action]]'
-          hold_action:
-            action: '[[temperature_action]]'
           type: state-icon
         - entity: '[[temperature]]'
+          hold_action:
+            action: '[[temperature_action]]'
           style:
             color: 'rgba(255,255,255,1)'
             font-size: 12px
@@ -302,8 +145,6 @@ decluttering_templates:
             top: 0
             transform: initial
           tap_action:
-            action: '[[temperature_action]]'
-          hold_action:
             action: '[[temperature_action]]'
           type: state-label
         - entity: '[[group]]'
@@ -373,44 +214,44 @@ decluttering_templates:
               preset: '4'
           type: icon
         - entity: '[[element4]]'
+          hold_action:
+            action: '[[element4_hold]]'
           style:
             '--paper-item-icon-color': 'rgb(255,255,255)'
             left: 65%
             top: 91.3%
           tap_action:
             action: '[[element4_tap]]'
-          hold_action:
-            action: '[[element4_hold]]'
           type: state-icon
         - entity: '[[element3]]'
+          hold_action:
+            action: '[[element3_hold]]'
           style:
             '--paper-item-icon-color': 'rgb(255,255,255)'
             left: 75%
             top: 91.3%
           tap_action:
             action: '[[element3_tap]]'
-          hold_action:
-            action: '[[element3_hold]]'
           type: state-icon
         - entity: '[[element2]]'
+          hold_action:
+            action: '[[element2_hold]]'
           style:
             '--paper-item-icon-color': 'rgb(255,255,255)'
             left: 85%
             top: 91.3%
           tap_action:
             action: '[[element2_tap]]'
-          hold_action:
-            action: '[[element2_hold]]'
           type: state-icon
         - entity: '[[element1]]'
+          hold_action:
+            action: '[[element1_hold]]'
           style:
             '--paper-item-icon-color': 'rgb(255,255,255)'
             left: 95%
             top: 91.3%
           tap_action:
             action: '[[element1_tap]]'
-          hold_action:
-            action: '[[element1_hold]]'
           type: state-icon
       image: /local/room_pic/camera_error.jpg
       type: picture-elements
@@ -440,66 +281,225 @@ decluttering_templates:
             action: none
           type: state-label
         - entity: '[[button]]'
-          tap_action:
-            action: '[[button_action]]'
           hold_action:
             action: '[[button_action]]'
           style:
             '--paper-item-icon-color': 'rgb(255,255,255)'
             left: 40%
             top: 91.3%
+          tap_action:
+            action: '[[button_action]]'
           type: state-icon
         - entity: '[[motion]]'
-          tap_action:
-            action: '[[motion_action]]'
           hold_action:
             action: '[[motion_action]]'
           style:
             '--paper-item-icon-color': 'rgb(255,255,255)'
             left: 50%
             top: 91.3%
+          tap_action:
+            action: '[[motion_action]]'
           type: state-icon
         - entity: '[[element4]]'
+          hold_action:
+            action: '[[element4_hold]]'
           style:
             '--paper-item-icon-color': 'rgb(255,255,255)'
             left: 65%
             top: 91.3%
           tap_action:
             action: '[[element4_tap]]'
-          hold_action:
-            action: '[[element4_hold]]'
           type: state-icon
         - entity: '[[element3]]'
+          hold_action:
+            action: '[[element3_hold]]'
           style:
             '--paper-item-icon-color': 'rgb(255,255,255)'
             left: 75%
             top: 91.3%
           tap_action:
             action: '[[element3_tap]]'
-          hold_action:
-            action: '[[element3_hold]]'
           type: state-icon
         - entity: '[[element2]]'
+          hold_action:
+            action: '[[element2_hold]]'
           style:
             '--paper-item-icon-color': 'rgb(255,255,255)'
             left: 85%
             top: 91.3%
           tap_action:
             action: '[[element2_tap]]'
-          hold_action:
-            action: '[[element2_hold]]'
           type: state-icon
         - entity: '[[element1]]'
+          hold_action:
+            action: '[[element1_hold]]'
           style:
             '--paper-item-icon-color': 'rgb(255,255,255)'
             left: 95%
             top: 91.3%
           tap_action:
             action: '[[element1_tap]]'
-          hold_action:
-            action: '[[element1_hold]]'
           type: state-icon
       image: /local/room_pic/camera_error.jpg
+      type: picture-elements
+  room_template:
+    card:
+      elements:
+        - entity: '[[group]]'
+          image: '[[off_pic]]'
+          state_image:
+            'on': '[[on_pic]]'
+          style:
+            left: 50%
+            top: 50%
+            width: 100%
+          tap_action:
+            action: toggle
+          type: image
+        - entity: sensor.blank
+          hold_action:
+            action: none
+          prefix: '[[room_name]]'
+          style:
+            background-color: 'rgba(0, 0, 0, 0.5)'
+            bottom: 0
+            color: white
+            font-size: 16px
+            left: 0
+            line-height: 32px
+            padding: 0 8px
+            transform: initial
+            width: 100%
+          tap_action:
+            action: none
+          type: state-label
+        - entity: '[[occupancy]]'
+          hold_action:
+            action: '[[occupancy_action]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            color: 'rgba(255,255,255,1)'
+            line-height: 32px
+            margin: 3px 5px 0 0
+            right: 0
+            top: 0
+            transform: scale(0.8)
+          tap_action:
+            action: '[[occupancy_action]]'
+          type: state-icon
+        - entity: '[[brightness]]'
+          hold_action:
+            action: '[[brightness_action]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            color: 'rgba(255,255,255,1)'
+            line-height: 32px
+            margin: 35px 5px 0 0
+            right: 0
+            top: 0
+            transform: scale(0.8)
+          tap_action:
+            action: '[[brightness_action]]'
+          type: state-icon
+        - entity: '[[brightness]]'
+          hold_action:
+            action: '[[brightness_action]]'
+          style:
+            color: 'rgba(255,255,255,1)'
+            font-size: 12px
+            font-weight: bold
+            line-height: 32px
+            margin: 30px 35px
+            pointer-events: none
+            right: 0
+            text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+            top: 0
+            transform: initial
+          tap_action:
+            action: '[[brightness_action]]'
+          type: state-label
+        - entity: '[[temperature]]'
+          hold_action:
+            action: '[[temperature_action]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            color: 'rgba(255,255,255,1)'
+            line-height: 32px
+            margin: 65px 5px 0 0
+            right: 0
+            top: 0
+            transform: scale(0.8)
+          tap_action:
+            action: '[[temperature_action]]'
+          type: state-icon
+        - entity: '[[temperature]]'
+          hold_action:
+            action: '[[temperature_action]]'
+          style:
+            color: 'rgba(255,255,255,1)'
+            font-size: 12px
+            font-weight: bold
+            line-height: 32px
+            margin: 60px 35px
+            pointer-events: none
+            right: 0
+            text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+            top: 0
+            transform: initial
+          tap_action:
+            action: '[[temperature_action]]'
+          type: state-label
+        - entity: '[[group]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            color: 'rgba(255,255,255,1)'
+            left: 0
+            line-height: 32px
+            margin: 3px 5px 0 0
+            top: 0
+            transform: scale(0.8)
+          type: state-icon
+        - entity: '[[element4]]'
+          hold_action:
+            action: '[[element4_hold]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            left: 65%
+            top: 91.3%
+          tap_action:
+            action: '[[element4_tap]]'
+          type: state-icon
+        - entity: '[[element3]]'
+          hold_action:
+            action: '[[element3_hold]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            left: 75%
+            top: 91.3%
+          tap_action:
+            action: '[[element3_tap]]'
+          type: state-icon
+        - entity: '[[element2]]'
+          hold_action:
+            action: '[[element2_hold]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            left: 85%
+            top: 91.3%
+          tap_action:
+            action: '[[element2_tap]]'
+          type: state-icon
+        - entity: '[[element1]]'
+          hold_action:
+            action: '[[element1_hold]]'
+          style:
+            '--paper-item-icon-color': 'rgb(255,255,255)'
+            left: 95%
+            top: 91.3%
+          tap_action:
+            action: '[[element1_tap]]'
+          type: state-icon
+      image: '[[off_pic]]'
       type: picture-elements
 title: Home
 views:
@@ -634,67 +634,67 @@ views:
               - element1: light.front_outside
               - element1_tap: toggle
               - element1_hold: more-info
-          - template: camera2_template
-            type: 'custom:decluttering-card'
-            variables:
-              - camera1: camera.backyard_camera
-              - camera2: camera.backyard_camera
-              - room_name: Backyard
-              - button: sensor.blank
-              - button_action: none
-              - motion: binary_sensor.backyard_camera_motion_detected
-              - motion_action: more-info
-              - element4: sensor.blank
-              - element4_tap: none
-              - element4_hold: none
-              - element3: sensor.blank
-              - element3_tap: none
-              - element3_hold: none
-              - element2: light.deck_light
-              - element2_tap: toggle
-              - element2_hold: more-info
-              - element1: switch.deck_ceiling_outlet_switch
-              - element1_tap: toggle
-              - element1_hold: more-info
         type: vertical-stack
+      - template: camera2_template
+        type: 'custom:decluttering-card'
+        variables:
+          - camera1: camera.backyard_camera
+          - camera2: camera.backyard_camera
+          - room_name: Backyard
+          - button: sensor.blank
+          - button_action: none
+          - motion: binary_sensor.backyard_camera_motion_detected
+          - motion_action: more-info
+          - element4: sensor.blank
+          - element4_tap: none
+          - element4_hold: none
+          - element3: sensor.blank
+          - element3_tap: none
+          - element3_hold: none
+          - element2: light.deck_light
+          - element2_tap: toggle
+          - element2_hold: more-info
+          - element1: switch.deck_ceiling_outlet_switch
+          - element1_tap: toggle
+          - element1_hold: more-info
+      - control:
+          hvac:
+            cool:
+              name: false
+            heat:
+              name: false
+            heat_cool:
+              name: false
+            'off':
+              name: false
+          preset:
+            Awake: false
+            Open: false
+            Party: false
+            Vac: false
+            Wake: false
+        decimals: 0
+        entity: climate.main_floor
+        icon:
+          auto: 'mdi:autorenew'
+          cool: 'mdi:snowflake'
+          heat: 'mdi:fire'
+          'off': 'mdi:cancel'
+        sensors:
+          - attribute: current_humidity
+            name: Humidity
+            unit: '%'
+        step_size: 1
+        style: |
+          ha-card {
+            --st-spacing: 3px
+          }
+        type: 'custom:simple-thermostat'
       - cards:
-          - control:
-              hvac:
-                auto:
-                  name: false
-                cool:
-                  name: false
-                heat:
-                  name: false
-                'off':
-                  name: false
-              preset:
-                Awake: false
-                Open: false
-                Party: false
-                Vac: false
-                Wake: false
-            decimals: 0
-            entity: climate.main_floor
-            icon:
-              auto: 'mdi:autorenew'
-              cool: 'mdi:snowflake'
-              heat: 'mdi:fire'
-              'off': 'mdi:cancel'
-            sensors:
-              - attribute: current_humidity
-                name: Humidity
-                unit: '%'
-            step_size: 1
-            style: |
-              ha-card {
-                --st-spacing: 3px
-              }
-            type: 'custom:simple-thermostat'
-          - backdrop: true
-            entity: weather.dark_sky
-            name: ' '
-            type: 'custom:simple-weather-card'
+          - entity: weather.main_floor
+            name: 'Durham, NC'
+            show_forecast: false
+            type: weather-forecast
           - cards:
               - elements:
                   - entity: switch.momentary_weather_alert_notification
@@ -870,10 +870,10 @@ views:
           - element3: sensor.blank
           - element3_tap: none
           - element3_hold: none
-          - element2: light.oven_light
+          - element2: switch.cabinet_lights
           - element2_tap: toggle
           - element2_hold: more-info
-          - element1: switch.kitchensw
+          - element1: light.sink_light
           - element1_tap: toggle
           - element1_hold: more-info
       - template: room_template
@@ -926,18 +926,8 @@ views:
           - element1: switch.basement_hallway_switch
           - element1_tap: toggle
           - element1_hold: more-info
-      - type: vertical-stack
-        cards:
-          - parameters:
-              centeredSlides: true
-              grabCursor: true
-              pagination:
-                type: progressbar
-              slidesPerView: auto
-              spaceBetween: 8
-            start_card: 1
-            type: 'custom:swipe-card'
-            card_width: 100%
+      - cards:
+          - card_width: 100%
             cards:
               - elements:
                   - entity: vacuum.xiaomi_vacuum_cleaner
@@ -1426,8 +1416,16 @@ views:
                         type: entity-button
                     type: horizontal-stack
                 type: vertical-stack
-          - type: horizontal-stack
-            cards:
+            parameters:
+              centeredSlides: true
+              grabCursor: true
+              pagination:
+                type: progressbar
+              slidesPerView: auto
+              spaceBetween: 8
+            start_card: 1
+            type: 'custom:swipe-card'
+          - cards:
               - entity: input_boolean.vacuum_cancel
                 style: |
                   ha-card {
@@ -1468,9 +1466,11 @@ views:
                     {% endif %}
                   }
                 type: entity-button
-          - type: entities
-            entities:
+            type: horizontal-stack
+          - entities:
               - entity: input_select.fanmode
+            type: entities
+        type: vertical-stack
       - calibration_points:
           - map:
               x: 946
@@ -1518,8 +1518,37 @@ views:
     id: 1
     title: First Floor
   - cards:
-      - type: vertical-stack
-        cards:
+      - cards:
+          - template: camera1_template
+            type: 'custom:decluttering-card'
+            variables:
+              - camera: camera.nursery_camera
+              - group: group.nursery
+              - room_name: Nursery
+              - occupancy: binary_sensor.nursery_occupancy
+              - occupancy_action: more-info
+              - brightness: sensor.nursery_light_level
+              - brightness_action: more-info
+              - temperature: sensor.thingy_temperature
+              - temperature_action: more-info
+              - element4: sensor.blank
+              - element4_tap: none
+              - element4_hold: none
+              - element3: sensor.blank
+              - element3_tap: none
+              - element3_hold: none
+              - element2: light.nursery_light
+              - element2_tap: toggle
+              - element2_hold: more-info
+              - element1: switch.nurseryfan
+              - element1_tap: toggle
+              - element1_hold: more-info
+          - template: alexa_template
+            type: 'custom:decluttering-card'
+            variables:
+              - alexa: media_player.nursery_dot
+        type: vertical-stack
+      - cards:
           - template: room_template
             type: 'custom:decluttering-card'
             variables:
@@ -1549,30 +1578,7 @@ views:
             type: 'custom:decluttering-card'
             variables:
               - alexa: media_player.bedroom_dot
-      - template: camera1_template
-        type: 'custom:decluttering-card'
-        variables:
-          - camera: camera.nursery_camera
-          - group: group.nursery
-          - room_name: Nursery
-          - occupancy: binary_sensor.nursery_occupancy
-          - occupancy_action: more-info
-          - brightness: sensor.nursery_light_level
-          - brightness_action: more-info
-          - temperature: sensor.thingy_temperature
-          - temperature_action: more-info
-          - element4: sensor.blank
-          - element4_tap: none
-          - element4_hold: none
-          - element3: sensor.blank
-          - element3_tap: none
-          - element3_hold: none
-          - element2: sensor.blank
-          - element2_tap: none
-          - element2_hold: none
-          - element1: switch.nurseryfan
-          - element1_tap: toggle
-          - element1_hold: more-info
+        type: vertical-stack
       - template: room_template
         type: 'custom:decluttering-card'
         variables:
@@ -1602,8 +1608,7 @@ views:
     id: 2
     title: Second Floor
   - cards:
-      - type: vertical-stack
-        cards:
+      - cards:
           - template: room_template
             type: 'custom:decluttering-card'
             variables:
@@ -1798,6 +1803,7 @@ views:
             type: 'custom:decluttering-card'
             variables:
               - alexa: media_player.basement_dot
+        type: vertical-stack
       - template: room_template
         type: 'custom:decluttering-card'
         variables:
@@ -2162,20 +2168,20 @@ views:
               yellow: 18
             theme: default
             type: gauge
-          - entity: sensor.prep_area_hours_round
+          - entity: sensor.sink_light_hours_round
             max: 24
             min: 0
-            name: Prep Area Light
+            name: Sink Light
             severity:
               green: 12
               red: 24
               yellow: 18
             theme: default
             type: gauge
-          - entity: sensor.oven_light_hours_round
+          - entity: sensor.cabinet_light_hours_round
             max: 24
             min: 0
-            name: Oven Light
+            name: Cabinet Lights
             severity:
               green: 12
               red: 24
@@ -2265,7 +2271,17 @@ views:
           - entity: sensor.nursery_fan_hours_round
             max: 24
             min: 0
-            name: Office Fan
+            name: Nursery Fan
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.nursery_light_hours_round
+            max: 24
+            min: 0
+            name: Nursery Light
             severity:
               green: 12
               red: 24
@@ -2500,31 +2516,45 @@ views:
     id: 4
     title: Statistics
   - cards:
-      - head: group.light_on_auto
-        id: c7a5162e2f3e4f8fa065eef3cb8de173
+      - head: group.bedroom_auto
         type: 'custom:fold-entity-row'
-      - head: group.light_off_auto
-        id: 6e1385e890864ca393511a1380c2e0da
+      - head: group.nursery_auto
         type: 'custom:fold-entity-row'
-      - head: group.notify_auto
-        id: c317d9f387454c2180876f3629eece57
+      - head: group.craft_auto
         type: 'custom:fold-entity-row'
-      - head: group.pc_auto
-        id: bbaf0450c806479688ab1a6e95a5e7f6
+      - head: group.living_auto
+        type: 'custom:fold-entity-row'
+      - head: group.kitchen_auto
+        type: 'custom:fold-entity-row'
+      - head: group.dining_auto
+        type: 'custom:fold-entity-row'
+      - head: group.basement_auto
+        type: 'custom:fold-entity-row'
+      - head: group.guest_auto
+        type: 'custom:fold-entity-row'
+      - head: group.sun_auto
+        type: 'custom:fold-entity-row'
+      - head: group.outside_auto
+        type: 'custom:fold-entity-row'
+      - head: group.bedtime_auto
         type: 'custom:fold-entity-row'
       - head: group.location_auto
-        id: 0e11b09ed695498b864744784a03d6fd
         type: 'custom:fold-entity-row'
-      - head: group.theme_auto
-        id: 06fb0036897d4a3aa6dc2d7cc1ec94bb
+      - head: group.pc_auto
         type: 'custom:fold-entity-row'
       - head: group.vacuum_auto
         type: 'custom:fold-entity-row'
       - head: group.mastersw_auto
-        id: d344f273e8784efa816b8926a8888aff
+        type: 'custom:fold-entity-row'
+      - head: group.notify_auto
+        type: 'custom:fold-entity-row'
+      - head: group.weather_auto
+        type: 'custom:fold-entity-row'
+      - head: group.theme_auto
+        type: 'custom:fold-entity-row'
+      - head: group.ha_auto
         type: 'custom:fold-entity-row'
       - head: group.other_auto
-        id: afd0420feff241c5ba4e84d9392d8b25
         type: 'custom:fold-entity-row'
       - head: group.all_scripts
         type: 'custom:fold-entity-row'

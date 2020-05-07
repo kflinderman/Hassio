@@ -51,7 +51,7 @@
       weather_alert:
         friendly_name: Weather Alert
         value_template: >-
-          {{ not is_state('sensor.weatheralerts', 'unknown') and not is_state('sensor.weatheralerts', '0') }}
+          {{ states('sensor.weatheralerts')|int > 0 }}
           
       nursery_occupancy:
         friendly_name: Nursery Occupancy
