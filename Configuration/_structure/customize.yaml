@@ -197,6 +197,9 @@ switch.masterbath:
 switch.cabinet_lights:
   friendly_name: Cabinet Lights
   icon: mdi:wall-sconce-flat
+switch.cabinet_lights_2:
+  friendly_name: Cabinet Lights
+  icon: mdi:wall-sconce-flat
 switch.guestbed:
   friendly_name: Guest Room Fan
   icon: mdi:ceiling-light
@@ -215,6 +218,9 @@ light.dining_lights_level:
 light.sink_light:
   friendly_name: Sink Light
   icon: mdi:ceiling-light
+light.kitchen_ceiling:
+  friendly_name: Kitchen Ceiling Light
+  icon: mdi:lightbulb-group
   
 #######################
 # Unit of Measurement #

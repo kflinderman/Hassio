@@ -452,6 +452,14 @@
       friendly_name: "Cabinet Light Hours Round"
       value_template: "{{ states('sensor.cabinet_light_hours') | round(1) }}"
 
+    cabinet_light_2_hours_round:
+      friendly_name: "Cabinet Light Hours Round"
+      value_template: "{{ states('sensor.cabinet_light_2_hours') | round(1) }}"
+      
+    kitchen_ceiling_light_hours_round:
+      friendly_name: "Cabinet Light Hours Round"
+      value_template: "{{ states('sensor.kitchen_ceiling_light_hours') | round(1) }}"
+      
     guest_bedroom_fan_hours_round:
       friendly_name: "Guest Bedroom Fan Hours Round"
       value_template: "{{ states('sensor.guest_bedroom_fan_hours') | round(1) }}"
@@ -797,6 +805,20 @@
 - platform: history_stats
   name: Cabinet Light Hours
   entity_id: switch.cabinet_lights
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Cabinet Light 2 Hours
+  entity_id: switch.cabinet_lights_2
+  state: 'on'
+  end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  duration:
+    days: 1
+- platform: history_stats
+  name: Kitchen Ceiling Light Hours
+  entity_id: light.kitchen_ceiling
   state: 'on'
   end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
   duration:

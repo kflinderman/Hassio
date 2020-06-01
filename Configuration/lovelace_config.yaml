@@ -843,9 +843,11 @@ views:
           - entity: media_player.stereo
             hide:
               controls: true
+            min_volume: 20
             source: full
             type: 'custom:mini-media-player'
             volume_stateless: true
+            volume_step: 2
           - template: alexa_template
             type: 'custom:decluttering-card'
             variables:
@@ -867,9 +869,9 @@ views:
           - element4: sensor.blank
           - element4_tap: none
           - element4_hold: none
-          - element3: sensor.blank
-          - element3_tap: none
-          - element3_hold: none
+          - element3: light.kitchen_ceiling
+          - element3_tap: toggle
+          - element3_hold: more-info
           - element2: switch.cabinet_lights
           - element2_tap: toggle
           - element2_hold: more-info
@@ -883,8 +885,8 @@ views:
           - off_pic: /local/room_pic/Dining_off.jpg
           - on_pic: /local/room_pic/Dining_all.jpg
           - room_name: Dining Room
-          - occupancy: sensor.space
-          - occupancy_action: none
+          - occupancy: binary_sensor.dining_occupancy
+          - occupancy_action: more-info
           - brightness: sensor.space
           - brightness_action: none
           - temperature: sensor.space
@@ -908,8 +910,8 @@ views:
           - off_pic: /local/room_pic/Hallway_off.jpg
           - on_pic: /local/room_pic/Hallway_on.jpg
           - room_name: Hallways
-          - occupancy: sensor.space
-          - occupancy_action: none
+          - occupancy: binary_sensor.main_floor_occupancy
+          - occupancy_action: more-info
           - brightness: sensor.space
           - brightness_action: none
           - temperature: sensor.main_floor_temperature
@@ -1586,7 +1588,7 @@ views:
           - off_pic: /local/room_pic/Craft_off.jpg
           - on_pic: /local/room_pic/Craft_all.jpg
           - room_name: Craft Room
-          - occupancy: binary_sensor.craft_room_occupancy
+          - occupancy: binary_sensor.craft_occupancy
           - occupancy_action: more-info
           - brightness: sensor.space
           - brightness_action: none
@@ -1787,9 +1789,11 @@ views:
           - entity: media_player.basement_stereo
             hide:
               controls: true
+            min_volume: 20
             source: full
             type: 'custom:mini-media-player'
             volume_stateless: true
+            volume_step: 2
           - artwork: cover
             entity: media_player.desktop_media
             hide:
@@ -1811,8 +1815,8 @@ views:
           - off_pic: /local/room_pic/Guest_off.jpg
           - on_pic: /local/room_pic/Guest_on.jpg
           - room_name: Guest Room
-          - occupancy: sensor.space
-          - occupancy_action: none
+          - occupancy: binary_sensor.guest_occupancy
+          - occupancy_action: more-info
           - brightness: sensor.space
           - brightness_action: none
           - temperature: sensor.space
@@ -1837,8 +1841,8 @@ views:
               - off_pic: /local/room_pic/Sun_off.jpg
               - on_pic: /local/room_pic/Sun_all.jpg
               - room_name: Sun Room
-              - occupancy: sensor.space
-              - occupancy_action: none
+              - occupancy: binary_sensor.sunroom_occupancy
+              - occupancy_action: more-info
               - brightness: sensor.money_plant_light_intensity
               - brightness_action: more-info
               - temperature: sensor.money_plant_temperature_round
@@ -2168,6 +2172,16 @@ views:
               yellow: 18
             theme: default
             type: gauge
+          - entity: sensor.kitchen_ceiling_light_hours_round
+            max: 24
+            min: 0
+            name: Kitchen Ceiling Lights
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
           - entity: sensor.sink_light_hours_round
             max: 24
             min: 0
@@ -2182,6 +2196,16 @@ views:
             max: 24
             min: 0
             name: Cabinet Lights
+            severity:
+              green: 12
+              red: 24
+              yellow: 18
+            theme: default
+            type: gauge
+          - entity: sensor.cabinet_light_2_hours_round
+            max: 24
+            min: 0
+            name: Cabinet Lights 2
             severity:
               green: 12
               red: 24

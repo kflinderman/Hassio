@@ -411,7 +411,7 @@ vacuum_basement_reset:
       entity_id: counter.basement_vacuum
     - delay:
         seconds: 5
-    - service: turn_off.input_boolean
+    - service: input_boolean.turn_off
       entity_id: input_boolean.vacuum_basement
 
 vacuum_upstairs_reset:
@@ -420,7 +420,7 @@ vacuum_upstairs_reset:
       entity_id: counter.upstairs_vacuum
     - delay:
         seconds: 5
-    - service: turn_off.input_boolean
+    - service: input_boolean.turn_off
       entity_id: input_boolean.vacuum_upstairs
 
 ##################
@@ -671,7 +671,26 @@ front_door_snooze:
         minutes: 60
     - service: input_boolean.turn_off
       entity_id: input_boolean.front_door_snooze
-      
+
+dining_occupancy_off:
+  sequence:
+    - delay:
+        minutes: 30
+    - condition: numeric_state
+      entity_id: counter.occupancy
+      above: 1
+    - condition: numeric_state
+      entity_id: sensor.numhome
+      below: 3
+      above: 1
+    - condition: state
+      entity_id: group.dining_room
+      state: 'on'
+    - service: homeassistant.turn_off
+      entity_id: group.dining_room
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.dining_room_occupancy
+
 ############################
 #6 Random Vacation Scripts #
 ############################

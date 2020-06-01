@@ -261,6 +261,26 @@
     - service: light.turn_off
       entity_id: light.sewing_light
 
+- id: craft_occupancy
+  alias: Craft Occupancy
+  trigger:
+    - platform: state
+      entity_id: group.craft
+      to: 'on'
+  action:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.craftroom_occupancy
+
+- id: craft_occupancy_off
+  alias: Craft Occupancy Off
+  trigger:
+    - platform: state
+      entity_id: group.craft
+      to: 'off'
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.craftroom_occupancy
+      
 - id: craft_room_no_occupancy
   alias: Craft Room No Occupancy
   trigger:
@@ -392,9 +412,14 @@
     - condition: state
       entity_id: input_boolean.party
       state: 'off'
-    - condition: state
-      entity_id: media_player.living_room_tv
-      state: 'off'
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: media_player.living_room_tv
+          state: 'unavailable'
+        - condition: state
+          entity_id: media_player.living_room_tv
+          state: 'off'
   action:
     - service: script.turn_on
       entity_id: script.livingroom_off
@@ -475,8 +500,8 @@
 #4 Kitchen Automations #
 ########################
 
-- id: kitchen_lights_on
-  alias: Kitchen Lights ON
+- id: kitchen_lights_on_bright
+  alias: Kitchen Lights ON Bright
   trigger:
     - platform: numeric_state
       entity_id: sensor.kitchen_burglar
@@ -484,6 +509,9 @@
   condition:
     condition: and
     conditions:
+    - condition: numeric_state
+      entity_id: sensor.kitchen_luminance
+      above: 15
     - condition: state
       entity_id: input_boolean.kitchen
       state: 'on'
@@ -492,6 +520,9 @@
       state: 'off'
     - condition: state
       entity_id: switch.cabinet_lights
+      state: 'off'
+    - condition: state
+      entity_id: switch.cabinet_lights_2
       state: 'off'
     - condition: or
       conditions:
@@ -502,10 +533,47 @@
           entity_id: input_boolean.im_home
           state: 'on'
   action:
-    - service: light.turn_on
+    - service: homeassistant.turn_on
+      entity_id: group.kitchen_no_ceiling
+
+- id: kitchen_lights_on_dark
+  alias: Kitchen Lights ON Dark
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.kitchen_burglar
+      above: 4
+  condition:
+    condition: and
+    conditions:
+    - condition: numeric_state
+      entity_id: sensor.kitchen_luminance
+      below: 16
+    - condition: state
+      entity_id: input_boolean.kitchen
+      state: 'on'
+    - condition: state
       entity_id: light.sink_light
-    - service: switch.turn_on
+      state: 'off'
+    - condition: state
       entity_id: switch.cabinet_lights
+      state: 'off'
+    - condition: state
+      entity_id: switch.cabinet_lights_2
+      state: 'off'
+    - condition: state
+      entity_id: switch.kitchen_ceiling
+      state: 'off'
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: group.residents
+          state: home
+        - condition: state
+          entity_id: input_boolean.im_home
+          state: 'on'
+  action:
+    - service: homeassistant.turn_on
+      entity_id: group.kitchen
 
 - id: kitchen_lights_off
   alias: Kitchen Lights OFF
@@ -571,6 +639,127 @@
 ############################
 #5 Dining Room Automations #
 ############################
+
+- id: dining_light_occupancy
+  alias: Dining Light Occupancy
+  trigger:
+    - platform: state
+      entity_id: group.dining_room
+      to: 'on'
+  action:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.dining_room_occupancy
+
+- id: dining_light_occupancy_off
+  alias: Dining Light Occupancy Off
+  trigger:
+    - platform: state
+      entity_id: group.dining_room
+      to: 'off'
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.dining_room_occupancy
+
+- id: dining_one_person_move_off_lights
+  alias: One Person Move Off Lights
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.basement_occupancy
+      to: 'on'
+      for:
+        minutes: 15
+    - platform: state
+      entity_id: binary_sensor.bedroom_occupancy
+      to: 'on'
+      for:
+        minutes: 15
+    - platform: state
+      entity_id: binary_sensor.kitchen_occupancy
+      to: 'on'
+      for:
+        minutes: 15
+    - platform: state
+      entity_id: binary_sensor.living_room_bay_occupancy
+      to: 'on'
+      for:
+        minutes: 15
+    - platform: state
+      entity_id: binary_sensor.craft_room_occupancy
+      to: 'on'
+      for:
+        minutes: 15
+  condition:
+    condition: and
+    conditions:
+    - condition: numeric_state
+      entity_id: sensor.numhome
+      below: 2
+      above: 0
+    - condition: state
+      entity_id: group.dining_room
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.party
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.visitor
+      state: 'off'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: group.dining_room
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.dining_room_occupancy
+
+- id: dining_two_people_move_off_lights
+  alias: One Person Move Off Lights
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.basement_occupancy
+      to: 'on'
+      for:
+        minutes: 15
+    - platform: state
+      entity_id: binary_sensor.bedroom_occupancy
+      to: 'on'
+      for:
+        minutes: 15
+    - platform: state
+      entity_id: binary_sensor.kitchen_occupancy
+      to: 'on'
+      for:
+        minutes: 15
+    - platform: state
+      entity_id: binary_sensor.living_room_bay_occupancy
+      to: 'on'
+      for:
+        minutes: 15
+    - platform: state
+      entity_id: binary_sensor.craft_room_occupancy
+      to: 'on'
+      for:
+        minutes: 15
+  condition:
+    condition: and
+    conditions:
+    - condition: numeric_state
+      entity_id: sensor.numhome
+      below: 3
+      above: 1
+    - condition: numeric_state
+      entity_id: counter.occupancy
+      above: 1
+    - condition: state
+      entity_id: group.dining_room
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.party
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.visitor
+      state: 'off'
+  action:
+    - service: script.turn_on
+      entity_id: script.dining_occupancy_off
 
 #########################
 #6 Basement Automations #
@@ -652,6 +841,26 @@
   action:
     - service: script.turn_on
       entity_id: script.basement_off
+
+- id: basement_stereo_on
+  alias: Basement Stereo On
+  trigger:
+    - platform: state
+      entity_id: sensor.my_computer_current_user
+      to: 'kenny'
+  condition:
+    - condition: state
+      entity_id: media_player.basement_stereo
+      state: 'off'
+  action:
+    - service: media_player.turn_on
+      entity_id: media_player.basement_stereo
+    - delay:
+        seconds: 2
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.basement_stereo
+        source: HDMI1
 
 - id: basement_stereo_off
   alias: Basement Stereo Off
@@ -735,6 +944,26 @@
 #7 Guest Room Automations #
 ###########################
 
+- id: guest_occupancy
+  alias: Guest Occupancy
+  trigger:
+    - platform: state
+      entity_id: group.guest
+      to: 'on'
+  action:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.guest_occupancy
+
+- id: guest_occupancy_off
+  alias: Guest Occupancy Off
+  trigger:
+    - platform: state
+      entity_id: group.guest
+      to: 'off'
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.guest_occupancy
+
 #########################
 #8 Sun Room Automations #
 #########################
@@ -767,6 +996,20 @@
     - service: switch.turn_on
       entity_id: switch.sun_room_market_lights
 
+- id: turn_on_sun_room_2
+  alias: Turn on Sun Room 2
+  trigger:
+    - platform: state
+      entity_id: switch.sun_room_market_lights
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: light.tripod_lamp
+      state: 'off'
+  action:
+    - service: light.turn_on
+      entity_id: light.tripod_lamp
+
 - id: turn_off_sun_room
   alias: Turn off Sun Room
   trigger:
@@ -780,6 +1023,40 @@
   action:
     - service: switch.turn_off
       entity_id: switch.sun_room_market_lights
+
+- id: turn_off_sun_room_2
+  alias: Turn off Sun Room 2
+  trigger:
+    - platform: state
+      entity_id: switch.sun_room_market_lights
+      to: 'off'
+  condition:
+    - condition: state
+      entity_id: light.tripod_lamp
+      state: 'on'
+  action:
+    - service: light.turn_off
+      entity_id: light.tripod_lamp
+
+- id: sun_occupancy
+  alias: Sun Occupancy
+  trigger:
+    - platform: state
+      entity_id: group.sun_room
+      to: 'on'
+  action:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.sunroom_occupancy
+
+- id: sun_occupancy_off
+  alias: Sun Occupancy Off
+  trigger:
+    - platform: state
+      entity_id: group.sun_room
+      to: 'off'
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.sunroom_occupancy
 
 - id: money_thirsty
   alias: Money Thirsty
@@ -1381,48 +1658,6 @@
       entity_id: light.deck_light
     - service: switch.turn_on
       entity_id: switch.deck_ceiling_outlet_switch
-
-- id: one_person_move_off_lights
-  alias: One Person Move Off Lights
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.basement_occupancy
-      to: 'on'
-      for:
-        minutes: 15
-    - platform: state
-      entity_id: binary_sensor.bedroom_occupancy
-      to: 'on'
-      for:
-        minutes: 15
-    - platform: state
-      entity_id: binary_sensor.kitchen_occupancy
-      to: 'on'
-      for:
-        minutes: 15
-    - platform: state
-      entity_id: binary_sensor.living_room_bay_occupancy
-      to: 'on'
-      for:
-        minutes: 15
-    - platform: state
-      entity_id: binary_sensor.craft_room_occupancy
-      to: 'on'
-      for:
-        minutes: 15
-  condition:
-    condition: and
-    conditions:
-    - condition: numeric_state
-      entity_id: sensor.numhome
-      below: 2
-      above: 0
-    - condition: state
-      entity_id: group.dining_room
-      state: 'on'
-  action:
-    - service: homeassistant.turn_off
-      entity_id: group.dining_room
 
 ###################
 #C PC Automations #
@@ -2435,6 +2670,147 @@
         entity_id: input_number.lighthour
         value: "{{ states('sensor.watthour') }}"
 
+- id: visitor_on
+  alias: Visitor ON
+  trigger:
+    - platform: state
+      entity_id: calendar.visitors
+      from: 'off'
+      to: 'on'
+  action:
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.visitor
+    - service: notify.mobile_app_pixel_3a_xl
+      data:
+        title: Visitors Coming
+        message: Change Ecobee Sleep to include downstairs
+
+- id: visitor_off
+  alias: Visitor OFF
+  trigger:
+    - platform: state
+      entity_id: calendar.visitors
+      from: 'on'
+      to: 'off'
+  action:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.visitor
+    - service: notify.mobile_app_pixel_3a_xl
+      data:
+        title: Visitors Left
+        message: Change Ecobee Sleep to remove downstairs
+
+- id: party_on
+  alias: Party ON
+  trigger:
+    - platform: state
+      entity_id: calendar.party
+      from: 'off'
+      to: 'on'
+  action:
+    - service: input_boolean.turn_on
+      data:
+        entity_id: input_boolean.party
+
+- id: party_off
+  alias: Party OFF
+  trigger:
+    - platform: state
+      entity_id: calendar.party
+      from: 'on'
+      to: 'off'
+  action:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.party
+
+- id: update_watt_hour
+  alias: Update Watt Hour
+  trigger:
+    - platform: time_pattern
+      minutes: '/15'
+      seconds: '00'
+  action:
+    - service: python_script.watthour
+
+- id: drive_watthour_update
+  alias: Drive Watthour Update
+  trigger:
+    - platform: time
+      at: '12:00:00'
+  action:
+    - service: ifttt.trigger
+      data_template: {"event":"WattHour_Month", "value1":"{{ states('input_number.lighthour') }}", "value2":"{{ states('input_number.cpuhour') }}", "value3":"{{ states('sensor.auxwhr') }}"}#, "value4":"{{ states('input_number.watthour') }}", "value5":"20"}
+
+- id: allow_motion
+  alias: Allow Motion
+  trigger:
+    - platform: time_pattern
+      minutes: '/5'
+      seconds: '00'
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      before: '21:00:00'
+    - condition: time
+      after: '8:00:00'
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: input_boolean.basement
+        state: 'off'
+      - condition: state
+        entity_id: input_boolean.livingroom
+        state: 'off'
+      - condition: state
+        entity_id: input_boolean.kitchen
+        state: 'off'
+      - condition: state
+        entity_id: input_boolean.goodnight
+        state: 'on'
+  action:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.basement
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.livingroom
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.kitchen
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.goodnight
+
+- id: occupancy_counter
+  alias: Occupancy Counter
+  trigger:
+    - platform: homeassistant
+      event: start
+    - platform: time_pattern
+      minutes: '/1'
+  action:
+    - service: python_script.occupancy_counter
+    
+- id: occupancy_python_script
+  alias: Occupancy Python Script
+  trigger:
+    - platform: time_pattern
+      minutes: '/1'
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.vacation
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.visitor
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.party
+      state: 'off'
+  action:
+    - service: python_script.occupancy
+
 ######################
 #J Other Automations #
 ######################
@@ -2544,38 +2920,6 @@
     - service: homeassistant.turn_off
       entity_id: group.bedroom
 
-- id: visitor_on
-  alias: Visitor ON
-  trigger:
-    - platform: state
-      entity_id: calendar.visitors
-      from: 'off'
-      to: 'on'
-  action:
-    - service: input_boolean.turn_on
-      data:
-        entity_id: input_boolean.visitor
-    - service: notify.mobile_app_pixel_3a_xl
-      data:
-        title: Visitors Coming
-        message: Change Ecobee Sleep to include downstairs
-
-- id: visitor_off
-  alias: Visitor OFF
-  trigger:
-    - platform: state
-      entity_id: calendar.visitors
-      from: 'on'
-      to: 'off'
-  action:
-    - service: input_boolean.turn_off
-      data:
-        entity_id: input_boolean.visitor
-    - service: notify.mobile_app_pixel_3a_xl
-      data:
-        title: Visitors Left
-        message: Change Ecobee Sleep to remove downstairs
-
 - id: temperature_party
   alias: Temperature Party
   trigger:
@@ -2591,85 +2935,6 @@
   action:
     - service: script.turn_on
       entity_id: script.party_temp
-
-- id: party_on
-  alias: Party ON
-  trigger:
-    - platform: state
-      entity_id: calendar.party
-      from: 'off'
-      to: 'on'
-  action:
-    - service: input_boolean.turn_on
-      data:
-        entity_id: input_boolean.party
-
-- id: party_off
-  alias: Party OFF
-  trigger:
-    - platform: state
-      entity_id: calendar.party
-      from: 'on'
-      to: 'off'
-  action:
-    - service: input_boolean.turn_off
-      data:
-        entity_id: input_boolean.party
-
-- id: allow_motion
-  alias: Allow Motion
-  trigger:
-    - platform: time_pattern
-      minutes: '/5'
-      seconds: '00'
-  condition:
-    condition: and
-    conditions:
-    - condition: time
-      before: '21:00:00'
-    - condition: time
-      after: '8:00:00'
-    - condition: or
-      conditions:
-      - condition: state
-        entity_id: input_boolean.basement
-        state: 'off'
-      - condition: state
-        entity_id: input_boolean.livingroom
-        state: 'off'
-      - condition: state
-        entity_id: input_boolean.kitchen
-        state: 'off'
-      - condition: state
-        entity_id: input_boolean.goodnight
-        state: 'on'
-  action:
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.basement
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.livingroom
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.kitchen
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.goodnight
-
-- id: update_watt_hour
-  alias: Update Watt Hour
-  trigger:
-    - platform: time_pattern
-      minutes: '/15'
-      seconds: '00'
-  action:
-    - service: python_script.watthour
-
-- id: drive_watthour_update
-  alias: Drive Watthour Update
-  trigger:
-    - platform: time
-      at: '12:00:00'
-  action:
-    - service: ifttt.trigger
-      data_template: {"event":"WattHour_Month", "value1":"{{ states('input_number.lighthour') }}", "value2":"{{ states('input_number.cpuhour') }}", "value3":"{{ states('sensor.auxwhr') }}"}#, "value4":"{{ states('input_number.watthour') }}", "value5":"20"}
     
 - id: update_alli
   alias: Update Alli

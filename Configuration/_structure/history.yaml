@@ -98,6 +98,8 @@
         - switch.sun_room_market_lights
         - switch.ng_enhanced_reboot
         - switch.ng_enhanced_run_speed_test
+        - switch.cabinet_lights
+        - switch.cabinet_lights_2
         
       ##### Input Booleans #####
         

@@ -46,6 +46,7 @@ logger:
     # custom_components.thingy52.sensor: debug
     custom_components.lightpack.sensor: critical
     # custom_components.auto_backup: debug
+    # homeassistant.components.python_script: debug
     
 history: !include _structure/history.yaml
 
@@ -78,20 +79,22 @@ logbook:
       - device_tracker.mere_lap
       - device_tracker.pc
 
-hacs:
-  token: !secret hacs_token
-  sidepanel_title: Custom
-  sidepanel_icon: "mdi:home-plus"
-  appdaemon: true
-  python_script: true
-  theme: true
-  options:
-    country: US
+# hacs:
+  # token: !secret hacs_token
+  # sidepanel_title: Custom
+  # sidepanel_icon: "mdi:home-plus"
+  # appdaemon: true
+  # python_script: true
+  # theme: true
+  # options:
+    # country: US
 
 breaking_changes:
   scan_interval: 1800
     
 frontend:
+  extra_module_url:
+    - /hacsfiles/custom-sidebar/custom-sidebar.js
   themes: !include_dir_merge_named themes
 
 lovelace:

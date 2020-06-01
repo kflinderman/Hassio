@@ -14,26 +14,37 @@
     icon: mdi:window-closed
     
   ##### Occupancy Sensors #####
+  
+  craftroom_occupancy:
+    name: Craft Room Occupancy
+  dining_room_occupancy:
+    name: Dining Room Occupancy
+  guest_occupancy:
+    name: Guest Room Occupancy
+  sunroom_occupancy:
+    name: Sun Room Occupancy
+    
+  ##### Motion Manual Sensors #####
     
   bedroom:
-    name: Bedroom Occupancy
+    name: Bedroom Motion Manual
   basement:
-    name: Basement Occupancy
+    name: Basement Motion Manual
   kitchen:
-    name: Kitchen Occupancy
+    name: Kitchen Motion Manual
   livingroom:
-    name: Living Room Occupancy
+    name: Living Room Motion Manual
     
-  ##### Motion Sensors #####
+  ##### Motion Control Sensors #####
     
   bedroom_motion:
-    name: Bedroom Motion
+    name: Bedroom Motion Control
   basement_motion:
-    name: Basement Motion
+    name: Basement Motion Control
   kitchen_motion:
-    name: Kitchen Motion
+    name: Kitchen Motion Control
   livingroom_motion:
-    name: Living Room Motion
+    name: Living Room Motion Control
     
   ##### Master Switches #####
     

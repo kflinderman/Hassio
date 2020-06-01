@@ -6,6 +6,8 @@
     ##### Lights #####
     
     light.dining_lights_level:
+      hidden: false    
+    light.kitchen_ceiling:
       hidden: false
     # light.lightpack:
       # hidden: false
@@ -65,6 +67,8 @@
     group.master:
       hidden: false
     group.kitchen:
+      hidden: false
+    group.kitchen_no_ceiling:
       hidden: false
     group.secondfloor:
       hidden: false

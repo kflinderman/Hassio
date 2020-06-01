@@ -27,6 +27,15 @@
               {%- else -%}
                 {{ is_state('person.meredith', 'home') }}
               {%- endif -%}
+            {%- elif is_state(' light.sewing_light', 'on') -%}
+              {%- if is_state('person.kenny', 'not_home') -%}
+                {{ is_state('binary_sensor.basement_occupancy', 'off')
+                   and is_state('binary_sensor.bedroom_occupancy', 'off')
+                   and is_state('binary_sensor.kitchen_occupancy', 'off')
+                   and is_state('binary_sensor.living_room_bay_occupancy', 'off') }}
+              {%- else -%}
+                {{ is_state('person.meredith', 'home') }}
+              {%- endif -%}
             {%- else -%}
               {{ is_state('person.meredith', 'not_home') }}
             {%- endif -%}
@@ -57,6 +66,26 @@
         friendly_name: Nursery Occupancy
         value_template: >-
           {{ is_state('binary_sensor.nursery_camera_motion_detected', 'on') }}
+          
+      craft_occupancy:
+        friendly_name: Craft Room Occupancy
+        value_template: >-
+          {{ is_state('input_boolean.craftroom_occupancy', 'on') }}
+          
+      guest_occupancy:
+        friendly_name: Guest Room Occupancy
+        value_template: >-
+          {{ is_state('input_boolean.guest_occupancy', 'on') }}
+          
+      sunroom_occupancy:
+        friendly_name: Sun Room Occupancy
+        value_template: >-
+          {{ is_state('input_boolean.sunroom_occupancy', 'on') }}
+          
+      dining_occupancy:
+        friendly_name: Dining Room Occupancy
+        value_template: >-
+          {{ is_state('input_boolean.dining_room_occupancy', 'on') }}
       
 ##### Occupancy Threshold Sensors #####
           

@@ -26,3 +26,15 @@ backup:
   step: 1
   restore: false
   minimum: 0
+occupancy:
+  initial: 0
+  step: 1
+  restore: false
+  minimum: 0
+  maximum: 5
+occupancy_total:
+  initial: 0
+  step: 1
+  restore: false
+  minimum: 0
+  maximum: 10
