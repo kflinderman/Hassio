@@ -1637,8 +1637,8 @@ views:
               - element1_tap: toggle
               - element1_hold: more-info
           - elements:
-              - camera_image: camera.my_computer_screen_0
-                entity: camera.my_computer_screen_0
+              - camera_image: camera.desktop_q6f6v0s_screen_0
+                entity: camera.desktop_q6f6v0s_screen_0
                 style:
                   left: 50%
                   top: 50%
@@ -1659,7 +1659,7 @@ views:
                 tap_action:
                   action: none
                 type: state-label
-              - entity: sensor.my_computer_cpu_usage
+              - entity: sensor.desktop_q6f6v0s_cpu_usage
                 style:
                   '--paper-item-icon-color': 'rgb(255,255,255)'
                   color: 'rgba(255,255,255,1)'
@@ -1669,7 +1669,7 @@ views:
                   top: 0
                   transform: scale(0.8)
                 type: state-icon
-              - entity: sensor.my_computer_cpu_usage
+              - entity: sensor.desktop_q6f6v0s_cpu_usage
                 style:
                   color: 'rgba(255,255,255,1)'
                   font-size: 12px
@@ -1682,7 +1682,7 @@ views:
                   top: 0
                   transform: initial
                 type: state-label
-              - entity: sensor.my_computer_ram_usage
+              - entity: sensor.desktop_q6f6v0s_memory_usage
                 style:
                   '--paper-item-icon-color': 'rgb(255,255,255)'
                   color: 'rgba(255,255,255,1)'
@@ -1692,7 +1692,7 @@ views:
                   top: 0
                   transform: scale(0.8)
                 type: state-icon
-              - entity: sensor.my_computer_ram_usage
+              - entity: sensor.desktop_q6f6v0s_memory_usage
                 style:
                   color: 'rgba(255,255,255,1)'
                   font-size: 12px
@@ -1753,7 +1753,7 @@ views:
                   top: 0
                   transform: initial
                 type: state-label
-              - entity: sensor.my_computer_current_user
+              - entity: sensor.desktop_q6f6v0s_current_username
                 prefix: 'User: '
                 style:
                   bottom: 0

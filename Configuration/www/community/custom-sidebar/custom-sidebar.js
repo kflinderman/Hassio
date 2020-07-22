@@ -45,7 +45,7 @@ function Current_Order(config) {
         }
         if (current_environment_enabled) {
           if (current_exception.order) {
-            if(current_exception.base_order && return_order){
+            if (current_exception.base_order && return_order) {
               rearrange(return_order);
             }
             return_order = current_exception.order;
@@ -58,9 +58,14 @@ function Current_Order(config) {
   return return_order;
 }
 
-function rearrange(order){
+function rearrange(order) {
   for (var i = order.length - 1; i >= 0; i--) {
-    moveItem(Root, order[i].item.toLowerCase(), order[i].bottom, order[i].hide, order[i].href);
+    if (order[i].new_item == true) {
+      createItem(Root, order[i]);
+    }
+  }
+  for (var i = order.length - 1; i >= 0; i--) {
+    moveItem(Root, order[i]);
   }
 }
 
@@ -78,7 +83,7 @@ function run() {
     req.onerror = function () {
       clearInterval(Hacky_Hackerson);
     }
-    req.open('GET', "/local/sidebar-order.yaml?rnd=" + rando());
+    req.open("GET", "/local/sidebar-order.yaml?rnd=" + rando());
     req.send();
   }
 }
@@ -96,23 +101,69 @@ function getSidebar() {
   return root;
 }
 
-function moveItem(elements, name, after_space, hide, href) {
+function createItem(elements, item) {
+  var cln = getConfigurationElement(elements).cloneNode(true);
+  if (cln) {
+    cln.querySelector("paper-icon-item").querySelector("ha-icon").setAttribute("icon", item.icon);
+    cln.querySelector("paper-icon-item").querySelector("span").innerHTML = item.item;
+    cln.href = item.href;
+    cln.setAttribute("data-panel", item.item);
+    elements.insertBefore(cln, elements.children[0]);
+  }
+}
+
+function getConfigurationElement(elements) {
   for (var i = 0; i < elements.children.length; i++) {
     if (elements.children[i].tagName == "A") {
-      var current = elements.children[i].children[0].getElementsByTagName('span')[0].innerHTML;
-      if (current.toLowerCase().includes(name)) {
-        if(href){
-          elements.children[i].href = href;
+      var current = elements.children[i].children[0].getElementsByTagName("span")[0].innerHTML;
+      if (current == "<!---->Configuration<!---->") {
+        console.log(elements.children[i]);
+        return elements.children[i];
+      }
+    }
+  }
+}
+
+function moveItem(elements, config_entry) {
+  for (var i = 0; i < elements.children.length; i++) {
+    if (elements.children[i].tagName == "A") {
+      var current = elements.children[i].children[0].getElementsByTagName("span")[0].innerHTML;
+      var match = false;
+      if (config_entry.exact) {
+        match = current == config_entry.item;
+      } else {
+        match = current.toLowerCase().includes(config_entry.item.toLowerCase());
+      }
+
+      if (match) {
+        if (config_entry.href) {
+          elements.children[i].href = config_entry.href;
         }
-        if (hide == true) {
-          elements.children[i].style.display = "none";
-        }
-        else {
-          elements.children[i].style.display = "block";
-          if (after_space == true) {
-            elements.insertBefore(elements.children[i], elements.querySelector("div").nextSibling);
+        if (config_entry.icon) {
+          console.log(elements.children[i]);
+          var icon_holder = elements.children[i].querySelector("ha-icon");
+          if (icon_holder) {
+            icon_holder.setAttribute("icon", config_entry.icon);
+          } else {
+            var old_icon = elements.children[i].querySelector("ha-svg-icon");
+            if (old_icon) {
+              var icon_item = elements.children[i].querySelector("paper-icon-item");
+              icon_item.removeChild(old_icon);
+              icon_holder = document.createElement("ha-icon");
+              icon_holder.setAttribute("slot", "item-icon");
+              icon_holder.setAttribute("icon", config_entry.icon);
+              icon_item.prepend(icon_holder);
+            }
           }
-          else {
+          console.log("test");
+        }
+        if (config_entry.hide == true) {
+          elements.children[i].style.display = "none";
+        } else {
+          elements.children[i].style.display = "block";
+          if (config_entry.bottom == true) {
+            elements.insertBefore(elements.children[i], elements.querySelector("div").nextSibling);
+          } else {
             elements.insertBefore(elements.children[i], elements.children[0]);
           }
         }
@@ -126,7 +177,32 @@ function rando() {
 }
 
 //YAML parser taken from https://github.com/jeremyfa/yaml.js
-(function () { function r(e, n, t) { function o(i, f) { if (!n[i]) { if (!e[i]) { var c = "function" == typeof require && require; if (!f && c) return c(i, !0); if (u) return u(i, !0); var a = new Error("Cannot find module '" + i + "'"); throw a.code = "MODULE_NOT_FOUND", a } var p = n[i] = { exports: {} }; e[i][0].call(p.exports, function (r) { var n = e[i][1][r]; return o(n || r) }, p, p.exports, r, e, n, t) } return n[i].exports } for (var u = "function" == typeof require && require, i = 0; i < t.length; i++)o(t[i]); return o } return r })()({
+(function () {
+  function r(e, n, t) {
+    function o(i, f) {
+      if (!n[i]) {
+        if (!e[i]) {
+          var c = "function" == typeof require && require;
+          if (!f && c) return c(i, !0);
+          if (u) return u(i, !0);
+          var a = new Error("Cannot find module '" + i + "'");
+          throw a.code = "MODULE_NOT_FOUND", a
+        }
+        var p = n[i] = {
+          exports: {}
+        };
+        e[i][0].call(p.exports, function (r) {
+          var n = e[i][1][r];
+          return o(n || r)
+        }, p, p.exports, r, e, n, t)
+      }
+      return n[i].exports
+    }
+    for (var u = "function" == typeof require && require, i = 0; i < t.length; i++) o(t[i]);
+    return o
+  }
+  return r
+})()({
   1: [function (require, module, exports) {
     var Dumper, Inline, Utils;
 
@@ -135,7 +211,7 @@ function rando() {
     Inline = require('./Inline');
 
     Dumper = (function () {
-      function Dumper() { }
+      function Dumper() {}
 
       Dumper.indentation = 4;
 
@@ -185,7 +261,11 @@ function rando() {
     module.exports = Dumper;
 
 
-  }, { "./Inline": 6, "./Utils": 10 }], 2: [function (require, module, exports) {
+  }, {
+    "./Inline": 6,
+    "./Utils": 10
+  }],
+  2: [function (require, module, exports) {
     var Escaper, Pattern;
 
     Pattern = require('./Pattern');
@@ -193,7 +273,7 @@ function rando() {
     Escaper = (function () {
       var ch;
 
-      function Escaper() { }
+      function Escaper() {}
 
       Escaper.LIST_ESCAPEES = ['\\', '\\\\', '\\"', '"', "\x00", "\x01", "\x02", "\x03", "\x04", "\x05", "\x06", "\x07", "\x08", "\x09", "\x0a", "\x0b", "\x0c", "\x0d", "\x0e", "\x0f", "\x10", "\x11", "\x12", "\x13", "\x14", "\x15", "\x16", "\x17", "\x18", "\x19", "\x1a", "\x1b", "\x1c", "\x1d", "\x1e", "\x1f", (ch = String.fromCharCode)(0x0085), ch(0x00A0), ch(0x2028), ch(0x2029)];
 
@@ -243,9 +323,24 @@ function rando() {
     module.exports = Escaper;
 
 
-  }, { "./Pattern": 8 }], 3: [function (require, module, exports) {
+  }, {
+    "./Pattern": 8
+  }],
+  3: [function (require, module, exports) {
     var DumpException,
-      extend = function (child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+      extend = function (child, parent) {
+        for (var key in parent) {
+          if (hasProp.call(parent, key)) child[key] = parent[key];
+        }
+
+        function ctor() {
+          this.constructor = child;
+        }
+        ctor.prototype = parent.prototype;
+        child.prototype = new ctor();
+        child.__super__ = parent.prototype;
+        return child;
+      },
       hasProp = {}.hasOwnProperty;
 
     DumpException = (function (superClass) {
@@ -273,9 +368,22 @@ function rando() {
     module.exports = DumpException;
 
 
-  }, {}], 4: [function (require, module, exports) {
+  }, {}],
+  4: [function (require, module, exports) {
     var ParseException,
-      extend = function (child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+      extend = function (child, parent) {
+        for (var key in parent) {
+          if (hasProp.call(parent, key)) child[key] = parent[key];
+        }
+
+        function ctor() {
+          this.constructor = child;
+        }
+        ctor.prototype = parent.prototype;
+        child.prototype = new ctor();
+        child.__super__ = parent.prototype;
+        return child;
+      },
       hasProp = {}.hasOwnProperty;
 
     ParseException = (function (superClass) {
@@ -303,9 +411,22 @@ function rando() {
     module.exports = ParseException;
 
 
-  }, {}], 5: [function (require, module, exports) {
+  }, {}],
+  5: [function (require, module, exports) {
     var ParseMore,
-      extend = function (child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+      extend = function (child, parent) {
+        for (var key in parent) {
+          if (hasProp.call(parent, key)) child[key] = parent[key];
+        }
+
+        function ctor() {
+          this.constructor = child;
+        }
+        ctor.prototype = parent.prototype;
+        child.prototype = new ctor();
+        child.__super__ = parent.prototype;
+        return child;
+      },
       hasProp = {}.hasOwnProperty;
 
     ParseMore = (function (superClass) {
@@ -333,9 +454,15 @@ function rando() {
     module.exports = ParseMore;
 
 
-  }, {}], 6: [function (require, module, exports) {
+  }, {}],
+  6: [function (require, module, exports) {
     var DumpException, Escaper, Inline, ParseException, ParseMore, Pattern, Unescaper, Utils,
-      indexOf = [].indexOf || function (item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+      indexOf = [].indexOf || function (item) {
+        for (var i = 0, l = this.length; i < l; i++) {
+          if (i in this && this[i] === item) return i;
+        }
+        return -1;
+      };
 
     Pattern = require('./Pattern');
 
@@ -352,7 +479,7 @@ function rando() {
     DumpException = require('./Exception/DumpException');
 
     Inline = (function () {
-      function Inline() { }
+      function Inline() {}
 
       Inline.REGEX_QUOTED_STRING = '(?:"(?:[^"\\\\]*(?:\\\\.[^"\\\\]*)*)"|\'(?:[^\']*(?:\'\'[^\']*)*)\')';
 
@@ -820,7 +947,16 @@ function rando() {
     module.exports = Inline;
 
 
-  }, { "./Escaper": 2, "./Exception/DumpException": 3, "./Exception/ParseException": 4, "./Exception/ParseMore": 5, "./Pattern": 8, "./Unescaper": 9, "./Utils": 10 }], 7: [function (require, module, exports) {
+  }, {
+    "./Escaper": 2,
+    "./Exception/DumpException": 3,
+    "./Exception/ParseException": 4,
+    "./Exception/ParseMore": 5,
+    "./Pattern": 8,
+    "./Unescaper": 9,
+    "./Utils": 10
+  }],
+  7: [function (require, module, exports) {
     var Inline, ParseException, ParseMore, Parser, Pattern, Utils;
 
     Inline = require('./Inline');
@@ -1425,7 +1561,14 @@ function rando() {
     module.exports = Parser;
 
 
-  }, { "./Exception/ParseException": 4, "./Exception/ParseMore": 5, "./Inline": 6, "./Pattern": 8, "./Utils": 10 }], 8: [function (require, module, exports) {
+  }, {
+    "./Exception/ParseException": 4,
+    "./Exception/ParseMore": 5,
+    "./Inline": 6,
+    "./Pattern": 8,
+    "./Utils": 10
+  }],
+  8: [function (require, module, exports) {
     var Pattern;
 
     Pattern = (function () {
@@ -1546,7 +1689,8 @@ function rando() {
     module.exports = Pattern;
 
 
-  }, {}], 9: [function (require, module, exports) {
+  }, {}],
+  9: [function (require, module, exports) {
     var Pattern, Unescaper, Utils;
 
     Utils = require('./Utils');
@@ -1554,7 +1698,7 @@ function rando() {
     Pattern = require('./Pattern');
 
     Unescaper = (function () {
-      function Unescaper() { }
+      function Unescaper() {}
 
       Unescaper.PATTERN_ESCAPED_CHARACTER = new Pattern('\\\\([0abt\tnvfre "\\/\\\\N_LP]|x[0-9a-fA-F]{2}|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8})');
 
@@ -1631,14 +1775,18 @@ function rando() {
     module.exports = Unescaper;
 
 
-  }, { "./Pattern": 8, "./Utils": 10 }], 10: [function (require, module, exports) {
+  }, {
+    "./Pattern": 8,
+    "./Utils": 10
+  }],
+  10: [function (require, module, exports) {
     var Pattern, Utils,
       hasProp = {}.hasOwnProperty;
 
     Pattern = require('./Pattern');
 
     Utils = (function () {
-      function Utils() { }
+      function Utils() {}
 
       Utils.REGEX_LEFT_TRIM_BY_CHAR = {};
 
@@ -1877,7 +2025,7 @@ function rando() {
               name = ref[j];
               try {
                 xhr = new ActiveXObject(name);
-              } catch (undefined) { }
+              } catch (undefined) {}
             }
           }
         }
@@ -1930,7 +2078,10 @@ function rando() {
     module.exports = Utils;
 
 
-  }, { "./Pattern": 8 }], 11: [function (require, module, exports) {
+  }, {
+    "./Pattern": 8
+  }],
+  11: [function (require, module, exports) {
     var Dumper, Parser, Utils, Yaml;
 
     Parser = require('./Parser');
@@ -1940,7 +2091,7 @@ function rando() {
     Utils = require('./Utils');
 
     Yaml = (function () {
-      function Yaml() { }
+      function Yaml() {}
 
       Yaml.parse = function (input, exceptionOnInvalidType, objectDecoder) {
         if (exceptionOnInvalidType == null) {
@@ -2025,5 +2176,9 @@ function rando() {
     module.exports = Yaml;
 
 
-  }, { "./Dumper": 1, "./Parser": 7, "./Utils": 10 }]
+  }, {
+    "./Dumper": 1,
+    "./Parser": 7,
+    "./Utils": 10
+  }]
 }, {}, [11]);

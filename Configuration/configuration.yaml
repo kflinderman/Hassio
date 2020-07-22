@@ -2,7 +2,7 @@ homeassistant:
   customize: !include _structure/customize.yaml
   customize_domain: {}
   customize_glob: {}
-  
+
 http:
   ssl_certificate: /ssl/fullchain.pem
   ssl_key: /ssl/privkey.pem
@@ -11,7 +11,7 @@ http:
   
 recorder:
   auto_purge: true
-  purge_keep_days: 7
+  purge_keep_days: 4
   db_url: !secret db_secret
 
 system_health:
@@ -79,16 +79,6 @@ logbook:
       - device_tracker.mere_lap
       - device_tracker.pc
 
-# hacs:
-  # token: !secret hacs_token
-  # sidepanel_title: Custom
-  # sidepanel_icon: "mdi:home-plus"
-  # appdaemon: true
-  # python_script: true
-  # theme: true
-  # options:
-    # country: US
-
 breaking_changes:
   scan_interval: 1800
     
@@ -107,11 +97,11 @@ zwave:
     light.dining_lights_level:
       refresh_value: true
 
-emulated_hue: !include assistant/emulated_hue.yaml
+# emulated_hue: !include assistant/emulated_hue.yaml
 
 # cloud: !include assistant/cloud.yaml
 
-# alexa: !include assistant/alexa.yaml
+alexa: !include assistant/alexa.yaml
 
 api:
       
@@ -140,24 +130,24 @@ zeroconf:
 device_tracker:
   # - platform: bluetooth_le_tracker
     # track_new_devices: true
-  - platform: bluetooth_tracker
-    request_rssi: true
-  - platform: netgear
-    # url: !secret router_url
-    host: !secret router_ip
-    username: !secret wifi_username
-    password: !secret wifi_password
-    port: 5000
-    devices:
-      - !secret kcell_mac
-      - !secret mcell_mac
-      - !secret kworkcell_mac
-      - !secret mlap_mac
-      - !secret nswitch_mac
-      - !secret ktab_mac
-    # accesspoints:
+  # - platform: bluetooth_tracker
+    # request_rssi: true
+  # - platform: netgear
+    # # url: !secret router_url
+    # host: !secret router_ip
+    # username: !secret wifi_username
+    # password: !secret wifi_password
+    # port: 5000
+    # devices:
       # - !secret kcell_mac
       # - !secret mcell_mac
+      # - !secret kworkcell_mac
+      # - !secret mlap_mac
+      # - !secret nswitch_mac
+      # - !secret ktab_mac
+    # # accesspoints:
+      # # - !secret kcell_mac
+      # # - !secret mcell_mac
 
 switch: !include _components/switch.yaml
 
@@ -174,7 +164,6 @@ input_select:
       - "Standard"
       - "Medium"
       - "Turbo"
-      - "Gentle"
 
 input_number:
   ssl_cert:
@@ -235,12 +224,6 @@ hue:
       allow_hue_groups: true
       
 speedtestdotnet:
-  scan_interval:
-    hours: 1
-  monitored_conditions:
-    - ping
-    - download
-    - upload
     
 stream:
     
@@ -282,9 +265,6 @@ camera:
     - avatar
     - activity
     activity_name: "Last Activity"
-  - platform: mqtt
-    name: "My Computer - Screen 0"
-    topic: "iotlink/workgroup/desktop-q6f6v0s/windows-monitor/stats/display/0/screen"
 
 vacuum:
   - platform: xiaomi_miio
@@ -332,6 +312,6 @@ notify:
       - service: mobile_app_iphone
       - service: living_room_tv
 
-auto_backup:
-  auto_purge: true
-  backup_timeout: 2400
+# auto_backup:
+  # auto_purge: true
+  # backup_timeout: 2400

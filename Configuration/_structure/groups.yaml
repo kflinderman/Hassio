@@ -330,6 +330,7 @@ basement_auto:
     - automation.basement_stereo_off
     - automation.basement_off_check
     - automation.basement_stop_motion
+    - automation.remote_stereo_control
 
 guest_auto:
   name: Guest Room Automations

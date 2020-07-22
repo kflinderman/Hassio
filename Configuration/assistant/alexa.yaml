@@ -34,31 +34,20 @@ smart_home:
       - input_boolean.visitor
       - input_boolean.window
       - input_boolean.goodnight
+      - input_boolean.front_door_snooze
+      - input_boolean.vacuum_cancel
+      - light.dining_lights_level
+      - light.kitchen_ceiling
       - media_player.desktop_media
       - media_player.living_room_tv
       - media_player.basement_stereo
       - media_player.stereo
-      # - sensor.basement_bee_temperature
-      # - sensor.bedroom_bee_temperature
-      # - sensor.kitchen_temperature
-      # - sensor.living_room_bee_temperature
-      # - sensor.main_floor_temperature
-      # - sensor.thingy_temperature
-      # - switch.airhockey
-      # - switch.bedfan
-      # - switch.craftfan
       - switch.deck_ceiling_outlet_switch
       - switch.desktoppc
-      # - switch.guestbed
-      # - switch.cabinet_lights
-      # - switch.laundryroom
-      # - switch.masterbath
-      # - switch.nurseryfan
-      # - switch.outlet
-      # - switch.sun_room_market_lights
       - switch.entrance_switch
       - switch.basement_hallway_switch
       - switch.upstairs_hallway_switch
+      - switch.laundryroom
     include_domains:
       - group
       # - light
@@ -77,34 +66,31 @@ smart_home:
       - group.basement_no_aux
       - group.calendar
       - group.hue_lights
-      - group.light_off_auto
-      - group.light_on_auto
       - group.livingroom
+      - group.residents
+      - group.switch_lights
+      - group.basement_auto
+      - group.bedroom_auto
+      - group.bedtime_auto
+      - group.craft_auto
+      - group.dining_auto
+      - group.guest_auto
+      - group.ha_auto
+      - group.kitchen_auto
+      - group.living_auto
       - group.location_auto
       - group.mastersw_auto
       - group.notify_auto
-      - group.nursery
+      - group.nursery_auto
       - group.other_auto
+      - group.outside_auto
       - group.pc_auto
-      - group.residents
-      - group.switch_lights
+      - group.sun_auto
       - group.theme_auto
       - group.vacuum_auto
-      - light.basement_1
-      - light.basement_2
-      - light.basement_3
-      - light.basement_4
-      - light.basement_hue
-      - light.basement_hue_2
-      - light.kitchen_hue
-      - light.living_room_hue
-      - light.master_bedroom_hue
-      - light.outside_hue
-      - light.sun_room
-      - light.craft_room
-      - light.front_door
-      - light.living_room_lights
-      - light.entrance_dimmer_level
+      - group.weather_auto
+      - group.occupancy
+      - group.occupancy_other
     exclude_domains:
       - automation
       - binary_sensor
@@ -115,15 +101,12 @@ smart_home:
       - sensor
       - switch
   entity_config:
-    # switch.airhockey:
-      # display_categories: SMARTPLUG
-    # switch.outlet:
-      # display_categories: SMARTPLUG
-      # name: Floor Light
-    # switch.sun_room_market_lights:
-      # display_categories: SMARTPLUG
     switch.deck_ceiling_outlet_switch:
       display_categories: SMARTPLUG
+    media_player.basement_stereo:
+      display_categories: SPEAKER
+    media_player.stereo:
+      display_categories: SPEAKER
     script.windows_open:
       name: Windows Open
     script.away_mode:
