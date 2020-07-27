@@ -269,46 +269,38 @@ occupancy_other:
 bedroom_auto:
   name: Bedroom Automations
   entities:
-    - automation.bedroom_lights_on
-    - automation.bedroom_lights_off
+    - automation.bedroom_lights
     - automation.allow_motion_bedroom
     - automation.bedroom_stop_motion
-    - automation.bedroom_fan_on
-    - automation.bedroom_fan_off
+    - automation.bedroom_fan
     
 nursery_auto:
   name: Nursery Automations
   entities:
     - automation.thingy_sensor_battery
+    - automation.night_nursery
     
 craft_auto:
   name: Craft Room Automations
   entities:
-    - automation.turn_on_sewing
-    - automation.turn_off_sewing
+    - automation.sewing_lights
     - automation.craft_occupancy
-    - automation.craft_occupancy_off
     - automation.craft_room_no_occupancy        
 
 living_auto:
   name: Living Room Automations
   entities:
     - automation.living_room_motion
-    - automation.turn_on_lights_day_dark
-    - automation.turn_off_lights_day_dark
-    - automation.living_room_stop_on
+    - automation.lights_day_dark
     - automation.living_room_lights_off
-    - automation.watch_tv
     - automation.tv_off
-    - automation.stereo_off
+    - automation.living_room_stereo
     - automation.living_room_stop_motion
 
 kitchen_auto:
   name: Kitchen Automations
   entities:
-    - automation.kitchen_lights_on_bright
-    - automation.kitchen_lights_on_dark
-    - automation.kitchen_lights_off
+    - automation.kitchen_lights
     - automation.kitchen_sensor_battery
     - automation.kitchen_stop_motion
 
@@ -316,7 +308,6 @@ dining_auto:
   name: Dining Room Automations
   entities:
     - automation.dining_light_occupancy
-    - automation.dining_light_occupancy_off
     - automation.dining_one_person_move_off_lights
     - automation.dining_two_people_move_off_lights
 
@@ -336,18 +327,12 @@ guest_auto:
   name: Guest Room Automations
   entities:
     - automation.guest_occupancy
-    - automation.guest_occupancy_off
 
 sun_auto:
   name: Sun Room Automations
   entities:
     - automation.turn_on_sun_room_lights_at_sunset
-    - automation.turn_on_sun_room
-    - automation.turn_on_sun_room_2
-    - automation.turn_off_sun_room
-    - automation.turn_off_sun_room_2
     - automation.sun_occupancy
-    - automation.sun_occupancy_off
     - automation.money_thirsty
 
 outside_auto:
@@ -358,8 +343,6 @@ outside_auto:
     - automation.turn_off_outside_light_at_sunrise
     - automation.door_activity
     - automation.front_door_motion_snooze
-    - automation.front_door_motion_snooze_off
-    - automation.vacation_bedtime
 
 bedtime_auto:
   name: Bedtime Automations
@@ -369,14 +352,14 @@ bedtime_auto:
     - automation.mere_wake_up
     - automation.mere_wake_up_gym_day
     - automation.kenny_bed
+    - automation.vacation_bedtime
     - automation.bedtime
     - automation.goodnight_automation
 
 location_auto:
   name: Location Automations
   entities:
-    - automation.off_lights_kenny_leave
-    - automation.off_lights_mere_leave
+    - automation.off_lights_leave
     - automation.mere_leave_gym_day
     - automation.vacation_on
     - automation.vacation_off
@@ -386,16 +369,14 @@ location_auto:
     - automation.turn_off_home_switch
     - automation.ecobee_fasle_positive
     - automation.turn_on_lights_after_sunset
-    - automation.turn_on_lights_after_sunset_visitors
-
+    
 pc_auto:
   name: PC Automations
   entities:
     - automation.turn_on_pc_morning
     - automation.turn_off_pc_night_weekend
     - automation.turn_off_pc_night_weekday
-    - automation.turn_off_pc_not_home
-    - automation.turn_on_pc_home
+    - automation.pc_state_home
     - automation.pc_after_dark
     - automation.lightpack_cpu_on
     - automation.lightpack_cpu_go
@@ -403,50 +384,41 @@ pc_auto:
 vacuum_auto:
   name: Vacuum Automations
   entities:
+    - automation.complete_vacuum
+    - automation.daily_vacuum
+    - automation.run_daily_vacuum
+    - automation.run_daily_vacuum_covid
+    - automation.charged_daily_vacuum
+    - automation.low_battery_vacuum
+    - automation.set_fan_mode
+    - automation.update_input_select_fan_mode
+    - automation.vacuum_upstairs_reset
+    - automation.vacuum_basement_reset
+    - automation.vacuum_error
+    - automation.vacuum_reset_counter
+    - automation.vacuum_really_stuck
+    - automation.increment_day_since_vacuum
+    - automation.vacuum_remote
     - automation.main_brush_replace
     - automation.side_brush_replace
     - automation.filter_replace
     - automation.vacuum_sensor_cleaning
-    - automation.vacuum_error
     - automation.vacuum_finish
     - automation.empty_bin
     - automation.vacuum_basement_notification
     - automation.vacuum_upstairs_notification
-    - automation.set_fan_mode
-    - automation.update_input_select_fan_mode
-    - automation.complete_vacuum
-    - automation.daily_vacuum
-    - automation.charged_daily_vacuum
-    - automation.low_battery_vacuum
-    - automation.run_daily_vacuum
-    - automation.run_daily_vacuum_covid
-    - automation.vacuum_upstairs_reset
-    - automation.vacuum_basement_reset
-    - automation.vacuum_reset_counter
-    - automation.vacuum_really_stuck
-    - automation.increment_day_since_vacuum
-    - automation.turn_on_remote
-    - automation.turn_off_remote
 
 mastersw_auto:
   name: Master Switches Automations
   entities:
-    - automation.turn_on_all_first_floor
-    - automation.turn_on_all_second_floor
-    - automation.turn_on_all_basement_floor
-    - automation.turn_on_all_outside
-    - automation.turn_off_all_first_floor
-    - automation.turn_off_all_second_floor
-    - automation.turn_off_all_basement_floor
-    - automation.turn_off_all_outside
-    - automation.turn_ib_first_floor
-    - automation.turn_ib_second_floor
-    - automation.turn_ib_basement_floor
-    - automation.turn_ib_outside
-    - automation.turn_off_ib_first_floor
-    - automation.turn_off_ib_second_floor
-    - automation.turn_off_ib_basement_floor
-    - automation.turn_off_ib_outside
+    - automation.ib_first_floor
+    - automation.ib_second_floor
+    - automation.ib_basement_floor
+    - automation.ib_outside
+    - automation.toggle_all_first_floor
+    - automation.toggle_all_second_floor
+    - automation.toggle_all_basement_floor
+    - automation.toggle_all_outside
 
 notify_auto:
   name: Notifications Automations
@@ -461,22 +433,14 @@ notify_auto:
 weather_auto:
   name: Weather Automations
   entities:
-    - automation.close_windows
-    - automation.open_windows
+    - automation.windows
     - automation.close_windows_auto
     - automation.keep_windows_open
-
-theme_auto:
-  name: Theme Automations
-  entities:
-    - automation.set_theme_at_startup_day
-    - automation.set_theme_at_startup_night
-    - automation.set_night_theme
-    - automation.set_day_theme
 
 ha_auto:
   name: Home Assistant Automations
   entities:
+    - automation.theme_set
     - automation.delay_automations_on_restart
     - automation.daily_snapshot_clean_up
     - automation.perform_auto_backup
@@ -486,10 +450,8 @@ ha_auto:
     - automation.cpu_hour_data
     - automation.light_hour_data
     - automation.watt_hour_data
-    - automation.visitor_on
-    - automation.visitor_off
-    - automation.party_on
-    - automation.party_off
+    - automation.visitor
+    - automation.party
     - automation.update_watt_hour
     - automation.drive_watthour_update
     - automation.allow_motion
@@ -499,11 +461,11 @@ ha_auto:
 other_auto:
   name: Other Automations
   entities:
-    - automation.temperature_party
-    - automation.update_alli
-    - automation.dog_meds_flag
     - automation.fade_in_lights_for_sunset
     - automation.turn_off_all_lights_at_night
     - automation.turn_off_all_lights_at_night_party
     - automation.turn_off_all_lights_at_night_on_vacation
     - automation.turn_off_all_lights_at_morning_on_vacation
+    - automation.temperature_party
+    - automation.update_alli
+    - automation.dog_meds_flag

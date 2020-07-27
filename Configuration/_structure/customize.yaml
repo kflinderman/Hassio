@@ -42,7 +42,7 @@ binary_sensor.trash_day:
 binary_sensor.recycling_day:
   icon: mdi:delete-restore
 sensor.pickup_day:
-  icon: mdi:truck
+  icon: mdi:dump-truck
 sensor.since_last_boot:
   icon: mdi:history
 sensor.alli_button:
@@ -97,9 +97,9 @@ sensor.space:
   ##### Lights #####
 
 light.front_outside:
-  icon: mdi:spotlight-beam
+  icon: mdi:coach-lamp
 light.deck_light:
-  icon: mdi:spotlight-beam
+  icon: mdi:coach-lamp
 light.floor_lamp:
   icon: mdi:floor-lamp
 light.rock_lamp:
@@ -113,7 +113,7 @@ light.nursery_light:
 light.swirl_lamp:
   icon: mdi:lamp
 light.basement_ceiling_lights:
-  icon: mdi:ceiling-light
+  icon: mdi:dome-light
 light.lightpack:
   icon: mdi:television-ambient-light
 light.tripod_lamp:
@@ -184,7 +184,7 @@ switch.basement_floor_light:
   icon: mdi:floor-lamp
 switch.bedfan:
   friendly_name: Bedroom Fan
-  icon: mdi:ceiling-light
+  icon: mdi:dome-light
 switch.nurseryfan:
   friendly_name: Nursery Fan
   icon: mdi:ceiling-light
@@ -214,7 +214,7 @@ switch.deck_ceiling_outlet_switch:
   
 light.dining_lights_level:
   friendly_name: Dining Room Lights
-  icon: mdi:ceiling-light
+  icon: mdi:vanity-light
 light.sink_light:
   friendly_name: Sink Light
   icon: mdi:ceiling-light

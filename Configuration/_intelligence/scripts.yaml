@@ -39,34 +39,6 @@
 #####################
 #0 Location Scripts #
 #####################
-
-home_mode:
-  sequence:
-    - service: vacuum.set_fan_speed
-      data_template:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-        fan_speed: "Silent"
-    - service: vacuum.return_to_base
-      entity_id: vacuum.xiaomi_vacuum_cleaner
-    - condition: state
-      entity_id: input_boolean.window
-      state: 'off'
-    - service: script.turn_on
-      entity_id: script.home_mode_check1
-    - condition: time
-      weekday:
-          - mon
-          - tue
-          - wed
-          - thu
-          - fri
-    - condition: time
-      after: '9:00:00'
-      before: '16:30:00'
-    - service: climate.set_preset_mode
-      data:
-        entity_id: climate.main_floor
-        preset_mode: 'Home'
         
 home_mode_check1:
   sequence:
@@ -93,37 +65,6 @@ home_mode_check2:
           - sun
     - service: ecobee.resume_program
       entity_id: climate.main_floor
-        
-away_mode:
-  sequence:
-    - service: vacuum.set_fan_speed
-      data_template:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-        fan_speed: "Turbo"
-    - service: input_boolean.turn_off
-      data:
-        entity_id: input_boolean.all_firstfloor
-    - service: input_boolean.turn_off
-      data:
-        entity_id: input_boolean.all_secondfloor
-    - service: input_boolean.turn_off
-      data:
-        entity_id: input_boolean.all_basement
-    - service: light.turn_off
-      entity_id: light.deck_light
-    - service: homeassistant.turn_off
-      entity_id: group.holiday
-    - service: switch.turn_off
-      entity_id: switch.deck_ceiling_outlet_switch
-    - service: script.turn_on
-      entity_id: script.run_vacuum
-    - condition: state
-      entity_id: input_boolean.window
-      state: 'off'
-    - service: climate.set_preset_mode
-      data:
-        entity_id: climate.main_floor
-        preset_mode: 'Away'
 
 ###############
 #1 PC Scripts #
@@ -149,13 +90,6 @@ cpu_off:
       # data:
         # entity_id: light.lightpack
       
-after_dark:
-  sequence:
-    # - service: light.turn_on
-      # entity_id: light.lightpack
-    - service: homeassistant.turn_off
-      entity_id: group.basement_no_aux
-      
 timed_cpu_off:
   sequence:
     - delay:
@@ -179,21 +113,6 @@ windows_open:
     - service: input_boolean.turn_on
       data:
         entity_id: input_boolean.window
-        
-vacation_temp:
-  sequence:
-    - service: climate.set_preset_mode
-      data:
-        entity_id: climate.main_floor
-        preset_mode: 'Vac'
-        
-wakeup_temp:
-  sequence:
-    - service: climate.set_preset_mode
-      data:
-        entity_id: climate.main_floor
-        preset_mode: 'Wake'
-                
 party_temp:
   sequence:
     - service: climate.set_preset_mode
@@ -203,13 +122,6 @@ party_temp:
         
 climate_reset:
   sequence:
-    - service: ecobee.resume_program
-      entity_id: climate.main_floor
-        
-ecobee_reset:
-  sequence:
-    - delay:
-        seconds: 30
     - service: ecobee.resume_program
       entity_id: climate.main_floor
 
@@ -405,23 +317,23 @@ vacuum_error_notify:
         title: Robot Vacuum Error
         message: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'error') }}"
 
-vacuum_basement_reset:
-  sequence:
-    - service: counter.reset
-      entity_id: counter.basement_vacuum
-    - delay:
-        seconds: 5
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.vacuum_basement
+# vacuum_basement_reset:
+  # sequence:
+    # - service: counter.reset
+      # entity_id: counter.basement_vacuum
+    # - delay:
+        # seconds: 5
+    # - service: input_boolean.turn_off
+      # entity_id: input_boolean.vacuum_basement
 
-vacuum_upstairs_reset:
-  sequence:
-    - service: counter.reset
-      entity_id: counter.upstairs_vacuum
-    - delay:
-        seconds: 5
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.vacuum_upstairs
+# vacuum_upstairs_reset:
+  # sequence:
+    # - service: counter.reset
+      # entity_id: counter.upstairs_vacuum
+    # - delay:
+        # seconds: 5
+    # - service: input_boolean.turn_off
+      # entity_id: input_boolean.vacuum_upstairs
 
 ##################
 #5 Other Scripts #
@@ -441,45 +353,6 @@ sunset_switch:
       state: 'on'
     - service: switch.turn_on
       entity_id: switch.guestbed
-        
-goodnight_kenny:
-  sequence:
-    - service: switch.turn_on
-      entity_id: switch.entrance_switch
-    - delay:
-        minutes: 5
-    - service: switch.turn_off
-      entity_id: switch.entrance_switch
-      
-night_time:
-  sequence:
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.bedroom
-    - service: homeassistant.turn_off
-      entity_id: group.bedroom
-    - condition: time
-      after: '21:00:00'
-    - service: light.turn_off
-      entity_id: light.basement_ceiling_lights
-    - service: light.turn_on
-      entity_id: light.basement_ceiling_lights
-    - service: light.turn_off
-      entity_id: light.basement_ceiling_lights
-    - service: light.turn_on
-      entity_id: light.basement_ceiling_lights
-    - service: light.turn_off
-      entity_id: light.basement_ceiling_lights
-    - service: light.turn_on
-      entity_id: light.basement_ceiling_lights
-      
-door:
-  sequence:
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.door
-    - delay:
-        minutes: 3
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.door
         
 first_floor_break:
   sequence:
@@ -520,87 +393,6 @@ outside_break:
       entity_id: input_boolean.all_outside
     - service: input_boolean.turn_off
       entity_id: input_boolean.all_break
-      
-bedroom_off:
-  sequence:
-    - delay:
-        minutes: 5
-    - condition: numeric_state
-      entity_id: sensor.bedroom_multisensor_burglar
-      below: 4 
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.bedroom_motion
-    - delay:
-        seconds: 2
-    - service: homeassistant.turn_off
-      entity_id: group.bedroom
-    - delay:
-        seconds: 2
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.bedroom_motion
-      
-kitchen_off:
-  sequence:
-    - delay:
-        minutes: 5
-    - condition: numeric_state
-      entity_id: sensor.kitchen_burglar
-      below: 4 
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.kitchen_motion
-    - delay:
-        seconds: 2
-    - service: homeassistant.turn_off
-      entity_id: group.kitchen
-    - delay:
-        seconds: 2
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.kitchen_motion
-      
-basement_off:
-  sequence:
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.basement_motion
-    - delay:
-        seconds: 2
-    - service: homeassistant.turn_off
-      entity_id: group.basement_no_aux
-    - delay:
-        seconds: 2
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.basement_motion
-
-livingroom_stop_on:
-  sequence:
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.livingroom
-    - delay:
-        seconds: 30
-    - condition: time
-      before: '21:00:00'
-    - condition: time
-      after: '8:00:00'
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.livingroom
-
-livingroom_off:
-  sequence:
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.livingroom_motion
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.livingroom
-    - delay:
-        seconds: 2
-    - service: light.turn_off
-      entity_id: group.livingroom
-    - delay:
-        seconds: 2
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.livingroom_motion
-    - delay:
-        seconds: 10
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.livingroom
       
 basement_check:
   sequence:
@@ -671,25 +463,6 @@ front_door_snooze:
         minutes: 60
     - service: input_boolean.turn_off
       entity_id: input_boolean.front_door_snooze
-
-dining_occupancy_off:
-  sequence:
-    - delay:
-        minutes: 30
-    - condition: numeric_state
-      entity_id: counter.occupancy
-      above: 1
-    - condition: numeric_state
-      entity_id: sensor.numhome
-      below: 3
-      above: 1
-    - condition: state
-      entity_id: group.dining_room
-      state: 'on'
-    - service: homeassistant.turn_off
-      entity_id: group.dining_room
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.dining_room_occupancy
 
 ############################
 #6 Random Vacation Scripts #

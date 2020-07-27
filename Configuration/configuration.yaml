@@ -65,13 +65,18 @@ logbook:
       - group
       - sensor
       - device_tracker
-      - android_ip_webcam
     entities:
       - switch.webcam_video_recording
       - automation.update_watt_hour
       - automation.keep_windows_open
       - automation.temperature_vacation
   include:
+    domains:
+      - light
+      - switch
+      - input_boolean
+      - binary_sensor
+      - media_player
     entities:
       - device_tracker.kenny_pixelc
       - person.kenny
@@ -217,11 +222,11 @@ tplink:
 
 momentary:
 
-hue:
-  bridges:
-    - host: !secret hue_ip
-      allow_unreachable: true
-      allow_hue_groups: true
+# hue:
+  # bridges:
+    # - host: !secret hue_ip
+      # allow_unreachable: true
+      # allow_hue_groups: true
       
 speedtestdotnet:
     
