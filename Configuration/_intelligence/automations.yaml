@@ -240,13 +240,13 @@
   trigger:
     - platform: state
       entity_id: switch.upstairs_hallway_switch
-  condition:
-    - condition: or
-      conditions:
-      - condition: time
-        after: '22:00:00'
-      - condition: time
-        before: '7:00:00'
+  # condition:
+    # - condition: or
+      # conditions:
+      # - condition: time
+        # after: '22:00:00'
+      # - condition: time
+        # before: '7:00:00'
   action:
     - choose:
       - conditions:
@@ -1481,7 +1481,7 @@
     - service: vacuum.set_fan_speed
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-        fan_speed: "Turbo"
+        fan_speed: 100
     - service: input_boolean.turn_off
       data:
         entity_id: input_boolean.all_firstfloor
@@ -1621,7 +1621,7 @@
     - service: vacuum.set_fan_speed
       data_template:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-        fan_speed: "Silent"
+        fan_speed: 38
     - service: vacuum.return_to_base
       entity_id: vacuum.xiaomi_vacuum_cleaner
     - condition: state
@@ -1928,7 +1928,7 @@
     - service: input_select.select_option
       entity_id: input_select.fanmode
       data_template:
-        option: "Turbo"
+        option: "Max"
     - service: script.turn_on
       entity_id: script.run_vacuum
 
@@ -1962,10 +1962,43 @@
     - platform: state
       entity_id: input_select.fanmode
   action:
-    - service: vacuum.set_fan_speed
-      data_template:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-        fan_speed: "{{ states('input_select.fanmode') }}"
+    - choose:
+      - conditions:
+          - condition: state
+            entity_id: input_select.fanmode
+            state: "Silent"
+        sequence:
+          - service: vacuum.set_fan_speed
+            data_template:
+              entity_id: vacuum.xiaomi_vacuum_cleaner
+              fan_speed: '38'
+      - conditions:
+          - condition: state
+            entity_id: input_select.fanmode
+            state: "Standard"
+        sequence:
+          - service: vacuum.set_fan_speed
+            data_template:
+              entity_id: vacuum.xiaomi_vacuum_cleaner
+              fan_speed: '60'
+      - conditions:
+          - condition: state
+            entity_id: input_select.fanmode
+            state: "Turbo"
+        sequence:
+          - service: vacuum.set_fan_speed
+            data_template:
+              entity_id: vacuum.xiaomi_vacuum_cleaner
+              fan_speed: '75'
+      - conditions:
+          - condition: state
+            entity_id: input_select.fanmode
+            state: "Max"
+        sequence:
+          - service: vacuum.set_fan_speed
+            data_template:
+              entity_id: vacuum.xiaomi_vacuum_cleaner
+              fan_speed: '100'
 
 - id: update_input_select_fan_mode
   alias: Update Input Select Fan Mode
@@ -1974,14 +2007,60 @@
       event: start
     - platform: state
       entity_id: sensor.vacuum_fan
-  condition:
-    - condition: template
-      value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed') != states('input_select.fanmode') }}"
   action:
-    - service: input_select.select_option
-      entity_id: input_select.fanmode
-      data_template:
-        option: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed') }}"
+    - choose:
+      - conditions:
+          - condition: and
+            conditions:
+              - condition: state
+                entity_id: sensor.vacuum_fan
+                state: '38'
+              - condition: template
+                value_template: "{{ states('input_select.fanmode') != 'Silent' }}"
+        sequence:
+          - service: input_select.select_option
+            entity_id: input_select.fanmode
+            data_template:
+              option: "Silent"
+      - conditions:
+          - condition: and
+            conditions:
+              - condition: state
+                entity_id: sensor.vacuum_fan
+                state: '60'
+              - condition: template
+                value_template: "{{ states('input_select.fanmode') != 'Standard' }}"
+        sequence:
+          - service: input_select.select_option
+            entity_id: input_select.fanmode
+            data_template:
+              option: "Standard"
+      - conditions:
+          - condition: and
+            conditions:
+              - condition: state
+                entity_id: sensor.vacuum_fan
+                state: '75'
+              - condition: template
+                value_template: "{{ states('input_select.fanmode') != 'Turbo' }}"
+        sequence:
+          - service: input_select.select_option
+            entity_id: input_select.fanmode
+            data_template:
+              option: "Turbo"
+      - conditions:
+          - condition: and
+            conditions:
+              - condition: state
+                entity_id: sensor.vacuum_fan
+                state: '100'
+              - condition: template
+                value_template: "{{ states('input_select.fanmode') != 'Max' }}"
+        sequence:
+          - service: input_select.select_option
+            entity_id: input_select.fanmode
+            data_template:
+              option: "Max"
 
 - id: vacuum_upstairs_reset
   alias: Vacuum Upstairs Reset

@@ -70,6 +70,7 @@ logbook:
       - automation.update_watt_hour
       - automation.keep_windows_open
       - automation.temperature_vacation
+      - binary_sensor.backyard_camera_motion_detected
   include:
     domains:
       - light
@@ -109,7 +110,7 @@ zwave:
 alexa: !include assistant/alexa.yaml
 
 api:
-      
+
 automation: !include _intelligence/automations.yaml
 
 scene: !include _intelligence/scene.yaml
@@ -167,8 +168,8 @@ input_select:
     options:
       - "Silent"
       - "Standard"
-      - "Medium"
       - "Turbo"
+      - "Max"
 
 input_number:
   ssl_cert:
