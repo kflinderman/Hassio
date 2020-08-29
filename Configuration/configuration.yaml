@@ -6,7 +6,7 @@ homeassistant:
 http:
   ssl_certificate: /ssl/fullchain.pem
   ssl_key: /ssl/privkey.pem
-  base_url: !secret url4_secret
+  # base_url: !secret url4_secret
   server_port: 443
   
 recorder:
@@ -47,7 +47,8 @@ logger:
     custom_components.lightpack.sensor: critical
     # custom_components.auto_backup: debug
     # homeassistant.components.python_script: debug
-    
+    # homeassistant.components.zoneminder.camera: debug
+
 history: !include _structure/history.yaml
 
 influxdb:
@@ -78,6 +79,7 @@ logbook:
       - input_boolean
       - binary_sensor
       - media_player
+      - automation
     entities:
       - device_tracker.kenny_pixelc
       - person.kenny
@@ -87,7 +89,7 @@ logbook:
 
 breaking_changes:
   scan_interval: 1800
-    
+
 frontend:
   extra_module_url:
     - /hacsfiles/custom-sidebar/custom-sidebar.js
@@ -121,8 +123,6 @@ group: !include _structure/groups.yaml
 
 config:
 
-# config_check:
-
 updater:
 
 discovery:
@@ -138,29 +138,29 @@ device_tracker:
     # track_new_devices: true
   # - platform: bluetooth_tracker
     # request_rssi: true
-  # - platform: netgear
-    # # url: !secret router_url
-    # host: !secret router_ip
-    # username: !secret wifi_username
-    # password: !secret wifi_password
-    # port: 5000
-    # devices:
+  - platform: netgear
+    # url: !secret router_url
+    host: !secret router_ip
+    username: !secret wifi_username
+    password: !secret wifi_password
+    port: 5000
+    devices:
+      - !secret kcell_mac
+      - !secret mcell_mac
+      - !secret kworkcell_mac
+      - !secret mlap_mac
+      - !secret nswitch_mac
+      - !secret ktab_mac
+    # accesspoints:
       # - !secret kcell_mac
       # - !secret mcell_mac
-      # - !secret kworkcell_mac
-      # - !secret mlap_mac
-      # - !secret nswitch_mac
-      # - !secret ktab_mac
-    # # accesspoints:
-      # # - !secret kcell_mac
-      # # - !secret mcell_mac
 
 switch: !include _components/switch.yaml
 
 binary_sensor: !include _components/binary_sensor.yaml
 
 input_boolean: !include _components/input_boolean.yaml
-    
+
 input_select:
   fanmode:
     name: Fan Mode
@@ -209,34 +209,37 @@ media_player: !include _components/media_player.yaml
 light: !include _components/lights.yaml
 
 tplink:
-  # discovery: false
-  # switch:
-    # - host: !secret outlet_ip
-    # - host: !secret airhockey_ip
-    # - host: !secret bedfan_ip
-    # - host: !secret nurseryfan_ip
-    # - host: !secret craftfan_ip
-    # - host: !secret masterbath_ip
-    # - host: !secret kitchen_ip
-    # - host: !secret guestbed_ip
-    # - host: !secret sunroom_ip
+  discovery: false
+  switch:
+    - host: !secret outlet_ip
+    - host: !secret basementfloor_ip
+    - host: !secret sunroom_ip
+    - host: !secret bedfan_ip
+    - host: !secret nurseryfan_ip
+    - host: !secret craftfan_ip
+    - host: !secret masterbath_ip
+    - host: !secret guestbed_ip
+    - host: !secret cabinet1_ip
+    - host: !secret cabinet2_ip
+  dimmer:
+    - host: !secret sink_ip
 
 momentary:
 
-# hue:
-  # bridges:
-    # - host: !secret hue_ip
-      # allow_unreachable: true
-      # allow_hue_groups: true
-      
 speedtestdotnet:
-    
+  scan_interval:
+    minutes: 10
+
+pi_hole:
+  - host: !secret pihole_url
+    api_key: !secret pihole_api
+
 stream:
-    
+
 skybell:
     username: !secret kemail
     password: !secret skybell_secret
-      
+
 amcrest:
   - host: !secret backyard_IP
     username: !secret backyard_user
@@ -263,6 +266,13 @@ amcrest:
     port: !secret amcrest3_port
     scan_interval: 20
 
+zoneminder:
+  - host: !secret zoneminder_url
+    username: !secret zoneminder_user
+    password: !secret zoneminder_pswd
+    ssl: true
+    verify_ssl: false
+
 ffmpeg:
 
 camera:
@@ -271,22 +281,23 @@ camera:
     - avatar
     - activity
     activity_name: "Last Activity"
+  - platform: zoneminder
 
 vacuum:
   - platform: xiaomi_miio
     host: !secret cop_vac_IP
     token: !secret cop_vac_secret
-      
+
 ifttt:
   key: !secret ifttt_key
 
 google:
   client_id: !secret gcal_ID
   client_secret: !secret gcal_secret
- 
+
 ecobee:
   api_key: !secret ecobee_key
-  
+
 webostv:
   host: !secret lg_ip
   name: Living Room TV
@@ -302,7 +313,7 @@ webostv:
       - Netflix
       - YouTube
       - YouTube TV
- 
+
 notify:
   - platform: alexa_media
     name: alexa_media
@@ -318,6 +329,6 @@ notify:
       - service: mobile_app_iphone
       - service: living_room_tv
 
-# auto_backup:
-  # auto_purge: true
-  # backup_timeout: 2400
+auto_backup:
+  auto_purge: true
+  backup_timeout: 1000

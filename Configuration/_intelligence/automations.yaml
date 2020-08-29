@@ -49,8 +49,8 @@
   action:
     - choose:
       - conditions:
-         - condition: and
-           conditions:
+        - condition: and
+          conditions:
             - condition: numeric_state
               entity_id: sensor.bedroom_multisensor_burglar
               above: 4
@@ -97,10 +97,10 @@
               entity_id: input_boolean.vacation
               state: 'off'
             - condition: time
-              after: '8:00:00'
+              after: '08:00:00'
         sequence:
-          - delay:
-              minutes: 5
+          # - delay:
+              # minutes: 5
           - condition: numeric_state
             entity_id: sensor.bedroom_multisensor_burglar
             below: 4 
@@ -132,7 +132,7 @@
       - condition: or
         conditions:
         - condition: time
-          after: '8:00:00'
+          after: '08:00:00'
           weekday:
           - mon
           - tue
@@ -166,9 +166,9 @@
       - condition: or
         conditions:
         - condition: time
-          after: '20:30:00'
+          after: '21:30:00'
         - condition: time
-          before: '8:00:00'
+          before: '08:00:00'
   action:
     - service: input_boolean.turn_on
       entity_id: input_boolean.goodnight
@@ -235,11 +235,11 @@
         title: Thingy Sensor Low Battery
         message: "The thingy sensor has very low battery."
 
-- id: night_nursery
-  alias: Night Nursery
-  trigger:
-    - platform: state
-      entity_id: switch.upstairs_hallway_switch
+# - id: night_nursery
+  # alias: Night Nursery
+  # trigger:
+    # - platform: state
+      # entity_id: switch.upstairs_hallway_switch
   # condition:
     # - condition: or
       # conditions:
@@ -247,22 +247,22 @@
         # after: '22:00:00'
       # - condition: time
         # before: '7:00:00'
-  action:
-    - choose:
-      - conditions:
-          - condition: state
-            entity_id: switch.upstairs_hallway_switch
-            state: 'on'
-        sequence:
-          - service: light.turn_on
-            entity_id: light.nursery_light
-      - conditions:
-          - condition: state
-            entity_id: switch.upstairs_hallway_switch
-            state: 'off'
-        sequence:
-          - service: light.turn_off
-            entity_id: light.nursery_light
+  # action:
+    # - choose:
+      # - conditions:
+          # - condition: state
+            # entity_id: switch.upstairs_hallway_switch
+            # state: 'on'
+        # sequence:
+          # - service: light.turn_on
+            # entity_id: light.nursery_light
+      # - conditions:
+          # - condition: state
+            # entity_id: switch.upstairs_hallway_switch
+            # state: 'off'
+        # sequence:
+          # - service: light.turn_off
+            # entity_id: light.nursery_light
 
 ###########################
 #2 Craft Room Automations #
@@ -329,7 +329,7 @@
       entity_id: binary_sensor.craft_room_occupancy
       to: 'off'
       for:
-        minutes: 15
+        minutes: 5
   condition:
     - condition: state
       entity_id: group.craft
@@ -344,6 +344,7 @@
 
 - id: living_room_motion
   alias: Living Room Motion
+  initial_state: false
   trigger:
     - platform: state
       entity_id: binary_sensor.living_room_bay_occupancy
@@ -354,7 +355,7 @@
     - condition: time
       before: '23:30:00'
     - condition: time
-      after: '5:30:00'
+      after: '05:30:00'
     - condition: numeric_state
       entity_id: sensor.living_room_light_level
       below: 15
@@ -426,7 +427,7 @@
       entity_id: binary_sensor.living_room_bay_occupancy
       to: 'off'
       for:
-        minutes: 15
+        minutes: 5 #15
   condition:
     - condition: state
       entity_id: group.livingroom
@@ -537,7 +538,7 @@
         - condition: time
           after: '22:00:00'
         - condition: time
-          before: '8:00:00'
+          before: '08:00:00'
   action:
     - service: input_boolean.turn_off
       entity_id: input_boolean.livingroom
@@ -628,10 +629,10 @@
               entity_id: group.kitchen
               state: 'on'
             - condition: time
-              after: '8:00:00'
+              after: '08:00:00'
         sequence:
-          - delay:
-              minutes: 5
+          # - delay:
+              # minutes: 5
           - condition: numeric_state
             entity_id: sensor.kitchen_burglar
             below: 4 
@@ -678,7 +679,7 @@
         - condition: time
           after: '22:00:00'
         - condition: time
-          before: '8:00:00'
+          before: '08:00:00'
   action:
     - service: input_boolean.turn_off
       entity_id: input_boolean.kitchen
@@ -865,7 +866,7 @@
       entity_id: binary_sensor.basement_bay_occupancy
       to: 'off'
       for:
-        minutes: 5
+        minutes: 2 #5
   condition:
     condition: and
     conditions:
@@ -878,7 +879,7 @@
       entity_id: group.basement_no_aux
       state: 'on'
     - condition: time
-      after: '8:00:00'
+      after: '08:00:00'
   action:
     - service: input_boolean.turn_on
       entity_id: input_boolean.basement_motion
@@ -899,7 +900,7 @@
       entity_id: binary_sensor.basement_occupancy
       to: 'off'
       for:
-        minutes: 5
+        minutes: 2 #5
   condition:
     condition: and
     conditions:
@@ -985,11 +986,15 @@
       for:
         minutes: 2
   condition:
+    condition: or
+    conditions:
     - condition: state
       entity_id:
         - light.basement_ceiling_lights
         - input_boolean.basement_light_off_loop
       state: 'on'
+    - condition: template
+      value_template: "{{ not is_state('light.basement_1', 'on') and not is_state('light.basement_2', 'on') and not is_state('light.basement_3', 'on') and not is_state('light.basement_4', 'on') }}"
   action:
     - service: input_boolean.turn_off
       entity_id: input_boolean.basement_light_off_loop
@@ -1013,7 +1018,7 @@
         - condition: time
           after: '22:00:00'
         - condition: time
-          before: '8:00:00'
+          before: '08:00:00'
   action:
     - service: input_boolean.turn_off
       entity_id: input_boolean.basement
@@ -1279,11 +1284,16 @@
       entity_id: group.kitchen
     - service: homeassistant.turn_on
       entity_id: group.dining_room
-    - service: switch.turn_on
-      entity_id: switch.entrance_switch
+    # - service: switch.turn_on
+      # entity_id: switch.entrance_switch
+    - service: climate.set_preset_mode
+      data:
+        entity_id: climate.main_floor
+        preset_mode: 'Home'
 
 - id: mere_wake_up
   alias: Mere Wake Up
+  initial_state: false
   trigger:
     - platform: time
       at: '06:30:00'
@@ -1311,6 +1321,7 @@
 
 - id: mere_wake_up_gym_day
   alias: Mere Wake Up Gym Day
+  initial_state: false
   trigger:
     - platform: time
       at: '05:00:00'
@@ -1356,9 +1367,9 @@
     condition: or
     conditions:
       - condition: time
-        after: '23:31'
+        after: '23:31:00'
       - condition: time
-        before: '3:30'
+        before: '03:30:00'
   action:
     - service: switch.turn_on
       entity_id: switch.entrance_switch
@@ -1427,7 +1438,7 @@
       - condition: time
         after: '20:30:00'
       - condition: time
-        before: '8:00:00'
+        before: '08:00:00'
   action:
     - service: input_boolean.turn_off
       entity_id: input_boolean.bedroom
@@ -1522,7 +1533,7 @@
     - condition: and
       conditions:
       - condition: time
-        before: '7:00:00'
+        before: '07:00:00'
       - condition: time
         weekday:
         - mon
@@ -1637,7 +1648,7 @@
           - thu
           - fri
     - condition: time
-      after: '9:00:00'
+      after: '09:00:00'
       before: '16:30:00'
     - service: climate.set_preset_mode
       data:
@@ -1742,7 +1753,7 @@
   alias: Turn on PC morning
   trigger:
     - platform: time
-      at: '7:00:00'
+      at: '07:00:00'
   condition:
     condition: and
     conditions:
@@ -1750,7 +1761,7 @@
       entity_id: person.kenny
       state: home
     - condition: state
-      entity_id: switch.desktopPC
+      entity_id: switch.desktoppc
       state: 'off'
   action:
     - service: switch.turn_on
@@ -1820,7 +1831,7 @@
             - condition: time
               before: '23:00:00'
             - condition: state
-              entity_id: switch.desktopPC
+              entity_id: switch.desktoppc
               state: 'off'
         sequence:
           - service: switch.turn_on
@@ -1830,56 +1841,70 @@
   alias: PC after dark
   trigger:
     - platform: state
-      entity_id: media_player.desktop_media
-      to: playing
+      entity_id: media_player.plex_plex_web_firefox
+      to: 'playing'
   condition:
     - condition: time
       after: '22:00:00'
   action:
-    # - service: light.turn_on
-      # entity_id: light.lightpack
+    - service: light.turn_on
+      entity_id: light.lightpack
     - service: homeassistant.turn_off
       entity_id: group.basement_no_aux
     
-# - id: lightpack_cpu_on
-  # alias: Lightpack CPU On
-  # trigger:
-    # - platform: state
-      # entity_id: light.lightpack
-      # from: 'unavailable'
-  # action:
-    # - service: input_boolean.turn_on
-      # entity_id: input_boolean.cpu_lightpack
-    # - delay:
-        # seconds: 10
-    # - service: light.turn_on
-      # entity_id: light.lightpack
-    # - delay:
-        # seconds: 10
-    # - service: light.turn_off
-      # entity_id: light.lightpack
+- id: lightpack_cpu_on
+  alias: Lightpack CPU On
+  trigger:
+    - platform: state
+      entity_id: sensor.desktop_q6f6v0s_current_username
+      to: 'kenny'
+  action:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.cpu_lightpack
+    - delay:
+        seconds: 60
+    - service: light.turn_on
+      entity_id: light.lightpack
+    - delay:
+        seconds: 5
+    - service: light.turn_off
+      entity_id: light.lightpack
 
-# - id: lightpack_cpu_go
-  # alias: Lightpack CPU Go
-  # trigger:
-    # - platform: state
-      # entity_id:  media_player.desktop_media
-      # to: 'paused'
-  # condition:
-    # - condition: state
-      # entity_id: input_boolean.cpu_lightpack
-      # state: 'on'
-  # action:
-    # - service: input_boolean.turn_off
-      # entity_id: input_boolean.cpu_lightpack
-    # - delay:
-        # seconds: 1
-    # - service: light.turn_on
-      # entity_id: light.lightpack
-    # - delay:
-        # seconds: 1
-    # - service: light.turn_off
-      # entity_id: light.lightpack
+- id: lightpack_cpu_go
+  alias: Lightpack CPU Go
+  trigger:
+    - platform: state
+      entity_id: media_player.plex_plex_web_firefox
+      to: 'paused'
+  condition:
+    - condition: state
+      entity_id: input_boolean.cpu_lightpack
+      state: 'on'
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.cpu_lightpack
+    - delay:
+        seconds: 1
+    - service: light.turn_on
+      entity_id: light.lightpack
+    - delay:
+        seconds: 1
+    - service: light.turn_off
+      entity_id: light.lightpack
+
+- id: ps4_lightpack
+  alias: PS4 Lightpack
+  trigger:
+    - platform: state
+      entity_id: media_player.playstation_4
+      to: 'playing'
+  condition:
+    - condition: state
+      entity_id: light.lightpack
+      state: 'on'
+  action:
+    - service: light.turn_off
+      entity_id: light.lightpack
 
 #######################
 #D Vacuum Automations #
@@ -1910,7 +1935,7 @@
   alias: Run Daily Vacuum
   trigger:
     - platform: time
-      at: '9:30:00'
+      at: '09:30:00'
   condition:
     - condition: state
       entity_id: group.residents
@@ -2293,8 +2318,8 @@
             entity_id: group.first_floor
             state: 'off'
         sequence:
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.all_firstfloor
+          - service: input_boolean.turn_off
+            entity_id: input_boolean.all_firstfloor
 
 - id: ib_second_floor
   alias: IB Second Floor
@@ -2315,8 +2340,8 @@
             entity_id: group.second_floor
             state: 'off'
         sequence:
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.all_secondfloor
+          - service: input_boolean.turn_off
+            entity_id: input_boolean.all_secondfloor
 
 - id: ib_basement_floor
   alias: IB Basement Floor
@@ -2337,8 +2362,8 @@
             entity_id: group.basement_floor
             state: 'off'
         sequence:
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.all_basement
+          - service: input_boolean.turn_off
+            entity_id: input_boolean.all_basement
 
 - id: ib_outside
   alias: IB Outside
@@ -2359,8 +2384,8 @@
             entity_id: group.outside
             state: 'off'
         sequence:
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.all_outside      
+          - service: input_boolean.turn_off
+            entity_id: input_boolean.all_outside      
 
 - id: toggle_all_first_floor
   alias: Toggle All First Floor
@@ -2659,8 +2684,6 @@
 - id: theme_set
   alias: Theme Set
   trigger:
-    - platform: homeassistant
-      event: start
     - platform: state
       entity_id: sun.sun
   action:
@@ -2682,35 +2705,65 @@
             data:
               name: red_day
 
-- id: delay_automations_on_restart
-  alias: Delay automations on restart
-  trigger:
-     - platform: homeassistant
-       event: start
-  action:
-    - service: automation.turn_off
-      data:
-        entity_id:
-          - group.all_automations
-    - delay:
-        seconds: 5
-    - service: automation.turn_on
-      data:
-        entity_id:
-          - group.all_automations
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.basement_light_off_loop
+# - id: delay_automations_on_restart
+  # alias: Delay automations on restart
+  # trigger:
+    # - platform: homeassistant
+      # event: start
+  # action:
+    # - service: automation.turn_off
+      # data:
+        # entity_id:
+          # - group.all_automations
+    # - delay:
+        # seconds: 5
+    # - service: automation.turn_on
+      # data:
+        # entity_id:
+          # - group.all_automations
+    # - service: input_boolean.turn_on
+      # entity_id: input_boolean.basement_light_off_loop
 
 - id: daily_snapshot_clean_up
   alias: Daily snapshot clean up
+  # initial_state: false
   trigger: 
     - platform: time
       at: '03:00:00'
   action:
     - service: clean_up_snapshots_service.clean_up
 
+- id: recently_restarted
+  alias: Recently Restarted
+  trigger:
+    - platform: homeassistant
+      event: start
+  condition:
+    - condition: state
+      entity_id: input_boolean.recently_restarted
+      state: 'off'
+  action:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.recently_restarted
+    - service: counter.reset
+      entity_id: counter.backup
+
+- id: backup_new_day
+  alias: Backup New Day
+  trigger:
+    - platform: time
+      at: "00:01:00"
+  condition:
+    - condition: state
+      entity_id: input_boolean.recently_restarted
+      state: 'on'
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.recently_restarted
+
 - id: perform_auto_backup
   alias: Perform Auto Backup
+  # initial_state: false
   trigger:
     - platform: time_pattern # Perform backup every 3 hours.
       hours: "/3"
@@ -2727,6 +2780,10 @@
         password: !secret backup_password
         addons:
           - Mosquitto broker
+          - Duck DNS
+          - Let's Encrypt
+          - SSH & Web Terminal
+          - Visual Studio Code
         folders:
           - homeassistant
           - share
@@ -2736,6 +2793,7 @@
 
 - id: perform_daily_backup
   alias: Perform Daily Backup
+  # initial_state: false
   trigger:
     - platform: time
       at: "02:30:00"
@@ -2744,7 +2802,7 @@
     conditions:
     - condition: numeric_state
       entity_id: counter.backup
-      below: 12
+      below: 10
     - condition: time # Perform backup every day except Mondays.
       weekday:
         - tue
@@ -2764,6 +2822,7 @@
 
 - id: perform_weekly_backup
   alias: Perform Weekly Backup
+  # initial_state: false
   trigger:
     - platform: time
       at: "02:30:00"
@@ -2918,7 +2977,7 @@
     - condition: time
       before: '22:00:00'
     - condition: time
-      after: '8:00:00'
+      after: '08:00:00'
     - condition: or
       conditions:
       - condition: state
@@ -2942,6 +3001,7 @@
 
 - id: occupancy_counter
   alias: Occupancy Counter
+  initial_state: false
   trigger:
     - platform: homeassistant
       event: start
@@ -2952,6 +3012,7 @@
     
 - id: occupancy_python_script
   alias: Occupancy Python Script
+  # initial_state: false
   trigger:
     - platform: time_pattern
       minutes: '/1'
@@ -2976,6 +3037,7 @@
 
 - id: fade_in_lights_for_sunset
   alias: Fade in lights for sunset
+  initial_state: false
   trigger:
     - platform: sun
       event: sunset
@@ -3064,7 +3126,7 @@
   alias: Turn off all lights at morning on vacation
   trigger:
     - platform: time
-      at: '8:00:00'
+      at: '08:00:00'
   condition:
     - condition: state
       entity_id: input_boolean.vacation

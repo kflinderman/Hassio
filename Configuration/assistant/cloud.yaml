@@ -10,9 +10,9 @@ alexa:
       - light.dining_lights_level
       - light.lightpack
     exclude_entities:
-    
+
     ##### Groups #####
-    
+
       - group.bedroom_constant
       - group.light_on_auto
       - group.light_off_auto
@@ -31,9 +31,9 @@ alexa:
       - group.basement_left
       - group.basement_right
       - group.default_view
-      
+
     ##### Scripts #####
-      
+
       - script.away_mode
       - script.cable_watch_off
       - script.netflix_watch_off
@@ -75,9 +75,9 @@ alexa:
       - script.basement_off
       - script.bedroom_off
       - script.basement_floor_break
-      
+
     ##### Switches #####
-      
+
       - switch.webcam_night_vision
       - switch.webcam_exposure_lock
       - switch.webcam_focus

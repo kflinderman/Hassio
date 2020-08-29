@@ -24,7 +24,7 @@ upstairs_vacuum:
 backup:
   initial: 0
   step: 1
-  restore: false
+  restore: true
   minimum: 0
 occupancy:
   initial: 0

@@ -9,6 +9,8 @@
   enable_notification: false
 - platform: uptime
 - platform: version
+- platform: zoneminder
+  include_archived: false
 - platform: time_date
   display_options:
     - 'time'
@@ -46,29 +48,29 @@
 # - platform: average
   # name: 'Sun Room Temperature'
   # entities:
-   # - sensor.money_plant_temperature_round
+    # - sensor.money_plant_temperature_round
 # - platform: average
   # name: 'Sun Room Light'
   # entities:
-   # - sensor.money_plant_light_intensity
-- platform: average
-  name: Average Download Speed
-  duration:
-    hours: 1
-  entities:
-    - sensor.my_computer_network_download_mbps
+    # - sensor.money_plant_light_intensity
+# - platform: average
+  # name: Average Download Speed
+  # duration:
+    # hours: 1
+  # entities:
+    # - sensor.my_computer_network_download_mbps
 - platform: average
   name: Average Swap
   duration:
     hours: 1
   entities:
     - sensor.swap_use_percent
-- platform: average
-  name: Average Upload Speed
-  duration:
-    hours: 1
-  entities:
-    - sensor.my_computer_network_upload_mbps
+# - platform: average
+  # name: Average Upload Speed
+  # duration:
+    # hours: 1
+  # entities:
+    # - sensor.my_computer_network_upload_mbps
 # - platform: netgear_enhanced
   # host: !secret router_ip
   # username: !secret wifi_username
@@ -82,66 +84,66 @@
     # - speed_test_result
     # - 2g_wifi_info
     # - 5g_wifi_info
-  
+
   ##### Template Sensors #####
-  
+
 - platform: template
   sensors:
-  
+
     blank:
       friendly_name: "Blank"
       value_template: "{{ state }}"
-    
+
     space:
       friendly_name: "Space"
       value_template: "{{ ' ' }}"
-      
+
     kenny_pixelxl_batt:
       friendly_name: "Pixel XL Battery"
       unit_of_measurement: 'V'
       device_class: battery
       value_template: "{{ state_attr('device_tracker.pixel_3a_xl', 'battery_level') }}"
-      
+
     outside_temp:
       friendly_name: "Outside Temperature"
       unit_of_measurement: '°F'
       value_template: "{{ state_attr('weather.main_floor', 'temperature') }}"
-      
+
     tomorrow_high:
       friendly_name: "Tomrrow High"
       unit_of_measurement: '°F'
       value_template: "{{ state_attr('weather.main_floor', 'forecast')[1].temperature }}"
-      
+
     tomorrow_low:
       friendly_name: "Tomrrow Low"
       unit_of_measurement: '°F'
       value_template: "{{ state_attr('weather.main_floor', 'forecast')[1].templow }}"
-      
+
     tomorrow_condition:
       friendly_name: "Tomrrow Condition"
       value_template: "{{ state_attr('weather.main_floor', 'forecast')[1].condition.capitalize() }}"
-      
+
     target_temp_high:
       friendly_name: "Target Temp High"
       unit_of_measurement: '°F'
       value_template: "{{ state_attr('climate.main_floor', 'target_temp_high') }}"
-      
+
     target_temp_low:
       friendly_name: "Target Temp Low"
       unit_of_measurement: '°F'
       value_template: "{{ state_attr('climate.main_floor', 'target_temp_low') }}"
-      
+
     kitchensensorbatt:
       friendly_name: "Kitchen Sensor Battery"
       unit_of_measurement: '%'
       device_class: battery
       value_template: "{{ state_attr('zwave.kitchen_multisensor', 'battery_level') }}"
-        
+
     basementbay:
       friendly_name: "Basement Bay Value"
       unit_of_measurement: 'probability'
       value_template: "{{ state_attr('binary_sensor.basement_bay_occupancy', 'probability') }}"
-      
+
     livingbay:
       friendly_name: "Living Room Bay Value"
       unit_of_measurement: 'probability'
@@ -154,26 +156,26 @@
     vacuum_status:
       friendly_name: "Vacuum Status"
       value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'status') }}"
-      
+
     vacuum_fan:
       friendly_name: "Vacuum Fan"
       value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed') }}"
-      
+
     vacuum_main_brush:
       friendly_name: "Vacuum Main Brush"
       value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'main_brush_left') }}"
       unit_of_measurement: 'h'
-      
+
     vacuum_side_brush:
       friendly_name: "Vacuum Side Brush"
       value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'side_brush_left') }}"
       unit_of_measurement: 'h'
-      
+
     vacuum_filter:
       friendly_name: "Vacuum Filter"
       value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'filter_left') }}"
       unit_of_measurement: 'h'
-      
+
     vacuum_sensor:
       friendly_name: "Vacuum Sensor"
       value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'sensor_dirty_left') }}"
@@ -183,28 +185,28 @@
       friendly_name: "Vacuum Time"
       value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'cleaning_time') }}"
       unit_of_measurement: 'min'
-      
+
     vacuum_area:
       friendly_name: "Vacuum Area"
       value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'cleaned_area')  }}"
       unit_of_measurement: 'm2'
-      
+
     vacuum_battery:
       friendly_name: "Vacuum Battery"
       value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'battery_level') }}"
       device_class: battery
       unit_of_measurement: '%'
 
-    my_computer_network_download_mbps:
-      friendly_name: "My Computer - Network Download"
-      value_template: "{{ (states('sensor.desktop_q6f6v0s_network_0_bps_received')|int / 1000000) | round(3) }}"
-      unit_of_measurement: 'Mbps'
-      
-    my_computer_network_upload_mbps:
-      friendly_name: "My Computer - Network Upload"
-      value_template: "{{ (states('sensor.desktop_q6f6v0s_network_0_bps_sent')|int / 1000000) | round(3) }}"
-      unit_of_measurement: 'Mbps'
-      
+    # my_computer_network_download_mbps:
+      # friendly_name: "My Computer - Network Download"
+      # value_template: "{{ (states('sensor.desktop_q6f6v0s_network_0_bps_received')|int / 1000000) | round(3) }}"
+      # unit_of_measurement: 'Mbps'
+
+    # my_computer_network_upload_mbps:
+      # friendly_name: "My Computer - Network Upload"
+      # value_template: "{{ (states('sensor.desktop_q6f6v0s_network_0_bps_sent')|int / 1000000) | round(3) }}"
+      # unit_of_measurement: 'Mbps'
+
     pickup_day:
       friendly_name: "Pickup Day"
       value_template: >-
@@ -213,7 +215,7 @@
         {% else %}
           Thu
         {% endif %}
-      
+
     numhome:
       value_template: >-
         {% if is_state('person.kenny', 'home') %}
@@ -229,7 +231,7 @@
             0
           {% endif %}
         {% endif %}
-        
+
     alli_location:
       friendly_name: "Alli Location"
       value_template: >-
@@ -268,7 +270,7 @@
         {% else %}
           Nowhere
         {% endif %}
-        
+
     alli_button:
       friendly_name: "Alli Button"
       value_template: >-
@@ -288,7 +290,7 @@
             or is_state('sensor.basement_alli_beacon', '1') %}
           2
         {% endif %}
-      
+
     alli_battery:
       friendly_name: "Alli Battery"
       device_class: battery
@@ -326,7 +328,7 @@
             or states('sensor.bedroom_alli_battery')|float == 0) %}
           {{ states('sensor.basement_alli_battery')|float }}
         {% endif %}
-        
+
     alli_spreadsheet:
       value_template: >-
         {% if is_state('input_boolean.alli_bed', 'on') %}
@@ -350,7 +352,7 @@
         {% else %}
           None
         {% endif %}
-        
+
     last_alexa:
       entity_id:
         - media_player.basement_dot
@@ -359,17 +361,17 @@
         - media_player.sun_room_dot
       value_template: >
         {{ states.media_player | selectattr('attributes.last_called','eq',True) | map(attribute='entity_id') | first }}
-  
+
   ##### Rounding Sensors #####
-      
+
     load_1m_round:
       friendly_name: "Load (1m) Round"
       value_template: "{{ states('sensor.load_1m') | round(3) }}"
-      
+
     rock_lamp_light_hours_round:
       friendly_name: "Rock Lamp Light Hours Round"
       value_template: "{{ states('sensor.rock_lamp_light_hours') | round(1) }}"
-      
+
     floor_lamp_light_hours_round:
       friendly_name: "Floor Lamp Light Hours Round"
       value_template: "{{ states('sensor.floor_lamp_light_hours') | round(1) }}"
@@ -385,11 +387,11 @@
     sink_light_hours_round:
       friendly_name: "Sink Light Hours Round"
       value_template: "{{ states('sensor.sink_light_hours') | round(1) }}"
-      
+
     tripod_light_hours_round:
       friendly_name: "Tripod Light Hours Round"
       value_template: "{{ states('sensor.tripod_light_hours') | round(1) }}"
-      
+
     sun_room_market_hours_round:
       friendly_name: "Sun Room Market Hours Round"
       value_template: "{{ states('sensor.sun_room_market_hours') | round(1) }}"
@@ -409,15 +411,15 @@
     entrance_light_hours_round:
       friendly_name: "Entrance Light Hours Round"
       value_template: "{{ states('sensor.entrance_light_hours') | round(1) }}"
-      
+
     basement_hallway_light_hours_round:
       friendly_name: "Basement Hallway Light Hours Round"
       value_template: "{{ states('sensor.basement_hallway_light_hours') | round(1) }}"
-      
+
     upstairs_hallway_light_hours_round:
       friendly_name: "Upstairs Hallway Light Hours Round"
       value_template: "{{ states('sensor.upstairs_hallway_light_hours') | round(1) }}"
-      
+
     basement_1_light_hours_round:
       friendly_name: "Basement 1 Light Hours Round"
       value_template: "{{ states('sensor.basement_1_light_hours') | round(1) }}"
@@ -453,7 +455,7 @@
     nursery_light_hours_round:
       friendly_name: "Nursery Light Hours Round"
       value_template: "{{ states('sensor.nursery_light_hours') | round(1) }}"
-      
+
     cabinet_light_hours_round:
       friendly_name: "Cabinet Light Hours Round"
       value_template: "{{ states('sensor.cabinet_light_hours') | round(1) }}"
@@ -461,11 +463,11 @@
     cabinet_light_2_hours_round:
       friendly_name: "Cabinet Light Hours Round"
       value_template: "{{ states('sensor.cabinet_light_2_hours') | round(1) }}"
-      
+
     kitchen_ceiling_light_hours_round:
       friendly_name: "Cabinet Light Hours Round"
       value_template: "{{ states('sensor.kitchen_ceiling_light_hours') | round(1) }}"
-      
+
     guest_bedroom_fan_hours_round:
       friendly_name: "Guest Bedroom Fan Hours Round"
       value_template: "{{ states('sensor.guest_bedroom_fan_hours') | round(1) }}"
@@ -489,13 +491,13 @@
     washroom_light_hours_round:
       friendly_name: "Washroom Light Hours Round"
       value_template: "{{ states('sensor.washroom_light_hours') | round(1) }}"
-      
+
     money_plant_temperature_round:
       friendly_name: "Money Plant Temperature Round"
       value_template: "{{ states('sensor.money_plant_temperature') | round(1) }}"
 
   ##### MQTT Sensors #####
-  
+
 - platform: mqtt
   name: "Nursery Alli Signal"
   state_topic: "ble/cd648cdff2ab/office/rssi"
@@ -562,27 +564,27 @@
   name: "Money Plant Battery"
   state_topic: "flora/C4:7C:8D:6A:E5:ED/battery"
   unit_of_measurement: 'V'
-  expire_after: 2000
+  expire_after: 10000
 - platform: mqtt
   name: "Money Plant Temperature"
   state_topic: "flora/C4:7C:8D:6A:E5:ED/temperature"
   unit_of_measurement: '°C'
-  expire_after: 2000
+  expire_after: 10000
 - platform: mqtt
   name: "Money Plant Moisture"
   state_topic: "flora/C4:7C:8D:6A:E5:ED/moisture"
   unit_of_measurement: '%'
-  expire_after: 2000
+  expire_after: 10000
 - platform: mqtt
   name: "Money Plant Light Intensity"
   state_topic: "flora/C4:7C:8D:6A:E5:ED/light"
   unit_of_measurement: 'lux'
-  expire_after: 2000
+  expire_after: 10000
 - platform: mqtt
   name: "Money Plant Conductivity"
   state_topic: "flora/C4:7C:8D:6A:E5:ED/conductivity"
   unit_of_measurement: 'μS/cm'
-  expire_after: 2000
+  expire_after: 10000
 # - platform: mqtt
   # name: "My Computer - Current User"
   # state_topic: "iotlink/workgroup/desktop-q6f6v0s/windows-monitor/stats/system/current-user"
@@ -644,9 +646,8 @@
   # payload_not_available: "OFF"
   # qos: 1
 
-  
   ##### History Stats #####
-  
+
 - platform: history_stats
   name: Meredith
   entity_id: person.meredith

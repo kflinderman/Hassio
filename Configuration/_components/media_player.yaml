@@ -1,64 +1,64 @@
-  - platform: gpmdp
-    host: !secret pc_ip
-    name: Desktop Media
-  - platform: yamaha
-    host: !secret livingroom_yam
-    name: Stereo
-    zone_ignore :
-      - "Zone_2"
-    source_ignore:
-      - "Napster"
-      - "SiriusXM"
-      - "Spotify"
-      - "TIDAL"
-      - "Deezer"
-      - "AirPlay"
-      - "AV1"
-      - "AUDIO2"
-      - "AUDIO3"
-      - "AUDIO4"
-      - "PHONO"
-      - "VIDEO AUX"
-    source_names:
-       HDMI1: "Steam"
-       HDMI2: "Cable"
-       HDMI3: "Switch"
-       HDMI4: "Wii U"
-       HDMI5: "PS3"
-       AVI2: "VHS"
-       AUDIO1: "TV"
-       AUDIO5: "Turntable"
-  - platform: yamaha
-    host: !secret basement_yam
-    name: Basement Stereo
-    zone_ignore :
-      - "Zone_2"
-    source_ignore:
-      - "Rhapsody"
-      - "SIRIUS InternetRadio"
-      - "NET RADIO"
-      - "DOCK"
-      - "USB"
-      - "SIRIUS"
-      - "AV2"
-      - "AV3"
-      - "AV4"
-      - "iPod (USB)"
-      - "iPod"
-      - "UAW"
-      - "Bluetooth"
-      - "AUDIO1"
-      - "PC"
-    source_names:
-       AUDIO2: "Vinyl"
-       AV1: "Wii"
-       AV5: "GameCube"
-       AV6: "Retro"
-       HDMI1: "PC"
-       HDMI2: "Cable"
-       HDMI3: "Pi"
-       HDMI4: "Switch"
-       HDMI5: "PS4"
-       Pandora: "Pandora"
-       TUNER: "Radio"
-       V-AUX: "V-AUX"
+- platform: gpmdp
+  host: !secret pc_ip
+  name: Desktop Media
+- platform: yamaha
+  host: !secret livingroom_yam
+  name: Stereo
+  zone_ignore :
+    - "Zone_2"
+  source_ignore:
+    - "Napster"
+    - "SiriusXM"
+    - "Spotify"
+    - "TIDAL"
+    - "Deezer"
+    - "AirPlay"
+    - "AV1"
+    - "AUDIO2"
+    - "AUDIO3"
+    - "AUDIO4"
+    - "PHONO"
+    - "VIDEO AUX"
+  source_names:
+      HDMI1: "Steam"
+      HDMI2: "Cable"
+      HDMI3: "Switch"
+      HDMI4: "Wii U"
+      HDMI5: "PS3"
+      AVI2: "VHS"
+      AUDIO1: "TV"
+      AUDIO5: "Turntable"
+- platform: yamaha
+  host: !secret basement_yam
+  name: Basement Stereo
+  zone_ignore :
+    - "Zone_2"
+  source_ignore:
+    - "Rhapsody"
+    - "SIRIUS InternetRadio"
+    - "NET RADIO"
+    - "DOCK"
+    - "USB"
+    - "SIRIUS"
+    - "AV2"
+    - "AV3"
+    - "AV4"
+    - "iPod (USB)"
+    - "iPod"
+    - "UAW"
+    - "Bluetooth"
+    - "AUDIO1"
+    - "PC"
+  source_names:
+      AUDIO2: "Vinyl"
+      AV1: "Wii"
+      AV5: "GameCube"
+      AV6: "Retro"
+      HDMI1: "PC"
+      HDMI2: "Cable"
+      HDMI3: "Pi"
+      HDMI4: "Switch"
+      HDMI5: "PS4"
+      Pandora: "Pandora"
+      TUNER: "Radio"
+      V-AUX: "V-AUX"

@@ -1,141 +1,141 @@
-  include:
-  
-      domains:
-        - light
-        - media_player
-        - binary_sensor
-      entities:
-      
-      ##### Device Trackers #####
-      
-        - device_tracker.kennyworkphone
-        - device_tracker.kennyworkphone_bt
-        - device_tracker.mere_iphone
-        - device_tracker.mere_iphone_bt
-        - device_tracker.iphone_meredith
-        - device_tracker.kenny_pixelxl
-        - device_tracker.kenny_pixelxl_bt
-        - device_tracker.kenny_pixelxl_gps_2
-        - device_tracker.pixel_xl
-        - person.kenny
-        - person.meredith
-        
-      ##### Sensors #####
-      
-        - sensor.alli_battery
-        - sensor.alli_button
-        - sensor.alli_location
-        - sensor.average_download_speed
-        - sensor.average_upload_speed
-        - sensor.basement_bee_temperature
-        - sensor.basement_multisensor_luminance
-        - sensor.basement_multisensor_relative_humidity
-        - sensor.basement_multisensor_temperature
-        - sensor.bedroom_bee_temperature
-        - sensor.bedroom_multisensor_luminance
-        - sensor.bedroom_multisensor_relative_humidity
-        - sensor.bedroom_multisensor_temperature
-        - sensor.kenny_pixelxl_batt
-        - sensor.kitchen_luminance
-        - sensor.kitchen_relative_humidity
-        - sensor.kitchen_temperature
-        - sensor.kitchensensorbatt
-        - sensor.last_alexa
-        - sensor.last_boot
-        - sensor.living_room_bee_temperature
-        - sensor.living_room_light_level
-        - sensor.load_1m
-        - sensor.main_floor_humidity
-        - sensor.main_floor_temperature
-        - sensor.memory_use_percent
-        - sensor.merediths_iphone_battery_level
-        - sensor.money_plant_battery
-        - sensor.money_plant_conductivity
-        - sensor.money_plant_light_intensity
-        - sensor.money_plant_moisture
-        - sensor.money_plant_temperature
-        - sensor.my_computer_cpu_usage
-        - sensor.my_computer_current_user
-        - sensor.my_computer_idle_time
-        - sensor.my_computer_ram_usage
-        - sensor.nursery_light_level
-        - sensor.basementbay
-        - sensor.outside_temp
-        - sensor.processor_use
-        - sensor.speedtest_download
-        - sensor.speedtest_ping
-        - sensor.speedtest_upload
-        - sensor.swap_use_percent
-        - sensor.thingy_air_quality
-        - sensor.thingy_atmospheric_pressure
-        - sensor.thingy_battery_level
-        - sensor.thingy_carbon_dioxide
-        - sensor.thingy_humidity
-        - sensor.thingy_temperature
-        - sensor.uptime
-        - sensor.vacuum_area
-        - sensor.vacuum_battery
-        - sensor.vacuum_fan
-        - sensor.vacuum_status
-        - sensor.vacuum_time
-        
-      ##### Switches #####
-        
-        - switch.outlet
-        - switch.bedfan
-        - switch.nurseryfan
-        - switch.craftfan
-        - switch.masterbath
-        - switch.cabinet_lights
-        - switch.guestbed
-        - switch.airhockey
-        - switch.deck_ceiling_outlet_switch
-        - switch.entrance_switch
-        - switch.upstairs_hallway_switch
-        - switch.basement_hallway_switch
-        - switch.desktoppc
-        - switch.laundryroom
-        - switch.sun_room_market_lights
-        - switch.ng_enhanced_reboot
-        - switch.ng_enhanced_run_speed_test
-        - switch.cabinet_lights
-        - switch.cabinet_lights_2
-        
-      ##### Input Booleans #####
-        
-        - input_boolean.vacation
-        - input_boolean.visitor
-        - input_boolean.party
-        - input_boolean.alli_bed
-        - input_boolean.alli_nursery
-        - input_boolean.alli_craft
-        - input_boolean.alli_living
-        - input_boolean.alli_kitchen
-        - input_boolean.alli_dining
-        - input_boolean.alli_guest
-        - input_boolean.alli_basement
-        - input_boolean.im_home
-        - input_boolean.window
-        
-      ##### Other #####
-        
-        - group.residents
-        - climate.main_floor
-        - vacuum.xiaomi_vacuum_cleaner
-        - plant.money_plant
-        - counter.basement_vacuum
-        - counter.upstairs_vacuum
-        
-  exclude:
-      entities:
-        - binary_sensor.bedroom_multisensor_sensor
-        - binary_sensor.basement_multisensor_sensor
-        - binary_sensor.vacuum_dnd
-        - binary_sensor.basement_bee_occupancy_local
-        - binary_sensor.bedroom_bee_occupancy_local
-        - binary_sensor.living_room_bee_occupancy_local
-        - binary_sensor.main_floor_occupancy_local
-        - binary_sensor.weather_alert
-        - media_player.kenneths_alexa_apps
-        - media_player.merediths_alexa_apps
-        - media_player.this_device
+include:
+
+    domains:
+      - light
+      - media_player
+      - binary_sensor
+    entities:
+
+    ##### Device Trackers #####
+
+      - device_tracker.kennyworkphone
+      - device_tracker.kennyworkphone_bt
+      - device_tracker.mere_iphone
+      - device_tracker.mere_iphone_bt
+      - device_tracker.iphone_meredith
+      - device_tracker.kenny_pixelxl
+      - device_tracker.kenny_pixelxl_bt
+      - device_tracker.kenny_pixelxl_gps_2
+      - device_tracker.pixel_xl
+      - person.kenny
+      - person.meredith
+
+    ##### Sensors #####
+
+      - sensor.alli_battery
+      - sensor.alli_button
+      - sensor.alli_location
+      - sensor.average_download_speed
+      - sensor.average_upload_speed
+      - sensor.basement_bee_temperature
+      - sensor.basement_multisensor_luminance
+      - sensor.basement_multisensor_relative_humidity
+      - sensor.basement_multisensor_temperature
+      - sensor.bedroom_bee_temperature
+      - sensor.bedroom_multisensor_luminance
+      - sensor.bedroom_multisensor_relative_humidity
+      - sensor.bedroom_multisensor_temperature
+      - sensor.kenny_pixelxl_batt
+      - sensor.kitchen_luminance
+      - sensor.kitchen_relative_humidity
+      - sensor.kitchen_temperature
+      - sensor.kitchensensorbatt
+      - sensor.last_alexa
+      - sensor.last_boot
+      - sensor.living_room_bee_temperature
+      - sensor.living_room_light_level
+      - sensor.load_1m
+      - sensor.main_floor_humidity
+      - sensor.main_floor_temperature
+      - sensor.memory_use_percent
+      - sensor.merediths_iphone_battery_level
+      - sensor.money_plant_battery
+      - sensor.money_plant_conductivity
+      - sensor.money_plant_light_intensity
+      - sensor.money_plant_moisture
+      - sensor.money_plant_temperature
+      - sensor.my_computer_cpu_usage
+      - sensor.my_computer_current_user
+      - sensor.my_computer_idle_time
+      - sensor.my_computer_ram_usage
+      - sensor.nursery_light_level
+      - sensor.basementbay
+      - sensor.outside_temp
+      - sensor.processor_use
+      - sensor.speedtest_download
+      - sensor.speedtest_ping
+      - sensor.speedtest_upload
+      - sensor.swap_use_percent
+      - sensor.thingy_air_quality
+      - sensor.thingy_atmospheric_pressure
+      - sensor.thingy_battery_level
+      - sensor.thingy_carbon_dioxide
+      - sensor.thingy_humidity
+      - sensor.thingy_temperature
+      - sensor.uptime
+      - sensor.vacuum_area
+      - sensor.vacuum_battery
+      - sensor.vacuum_fan
+      - sensor.vacuum_status
+      - sensor.vacuum_time
+
+    ##### Switches #####
+
+      - switch.outlet
+      - switch.bedfan
+      - switch.nurseryfan
+      - switch.craftfan
+      - switch.masterbath
+      - switch.cabinet_lights
+      - switch.guestbed
+      - switch.airhockey
+      - switch.deck_ceiling_outlet_switch
+      - switch.entrance_switch
+      - switch.upstairs_hallway_switch
+      - switch.basement_hallway_switch
+      - switch.desktoppc
+      - switch.laundryroom
+      - switch.sun_room_market_lights
+      - switch.ng_enhanced_reboot
+      - switch.ng_enhanced_run_speed_test
+      - switch.cabinet_lights
+      - switch.cabinet_lights_2
+
+    ##### Input Booleans #####
+
+      - input_boolean.vacation
+      - input_boolean.visitor
+      - input_boolean.party
+      - input_boolean.alli_bed
+      - input_boolean.alli_nursery
+      - input_boolean.alli_craft
+      - input_boolean.alli_living
+      - input_boolean.alli_kitchen
+      - input_boolean.alli_dining
+      - input_boolean.alli_guest
+      - input_boolean.alli_basement
+      - input_boolean.im_home
+      - input_boolean.window
+
+    ##### Other #####
+
+      - group.residents
+      - climate.main_floor
+      - vacuum.xiaomi_vacuum_cleaner
+      - plant.money_plant
+      - counter.basement_vacuum
+      - counter.upstairs_vacuum
+
+exclude:
+    entities:
+      - binary_sensor.bedroom_multisensor_sensor
+      - binary_sensor.basement_multisensor_sensor
+      - binary_sensor.vacuum_dnd
+      - binary_sensor.basement_bee_occupancy_local
+      - binary_sensor.bedroom_bee_occupancy_local
+      - binary_sensor.living_room_bee_occupancy_local
+      - binary_sensor.main_floor_occupancy_local
+      - binary_sensor.weather_alert
+      - media_player.kenneths_alexa_apps
+      - media_player.merediths_alexa_apps
+      - media_player.this_device

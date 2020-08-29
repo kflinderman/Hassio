@@ -14,42 +14,42 @@ for entity_id in hueEntities:
   
   if state.state is not 'unknown':
      wattHour = wattHour + (int(float(state.state)) * 8.5)
-	 
+
 for entity_id in lightbulbEntities:
   # copy it's state
   state = hass.states.get(entity_id)
   
   if state.state is not 'unknown':
      wattHour = wattHour + (int(float(state.state)) * 60)
-	 
+
 for entity_id in ledEntities:
   # copy it's state
   state = hass.states.get(entity_id)
   
   if state.state is not 'unknown':
      wattHour = wattHour + (int(float(state.state)) * 20)
-	 
+
 for entity_id in marketEntities:
   # copy it's state
   state = hass.states.get(entity_id)
   
   if state.state is not 'unknown':
      wattHour = wattHour + (int(float(state.state)) * 110)
-	 
+
 for entity_id in halogenEntities:
   # copy it's state
   state = hass.states.get(entity_id)
   
   if state.state is not 'unknown':
      wattHour = wattHour + (int(float(state.state)) * 26)
-     
+
 for entity_id in compEntities:
   # copy it's state
   state = hass.states.get(entity_id)
   
   if state.state is not 'unknown':
      cpuWhr = cpuWhr + (int(float(state.state)) * 450)
-     
+
 totalWhr = wattHour + cpuWhr
 totalWhr = round(totalWhr / 1000, 2)
 wattHour = round(wattHour / 1000, 2)

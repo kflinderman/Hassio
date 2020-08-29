@@ -39,7 +39,35 @@
 #####################
 #0 Location Scripts #
 #####################
-        
+
+# home_mode:
+  # sequence:
+    # - service: vacuum.set_fan_speed
+      # data_template:
+        # entity_id: vacuum.xiaomi_vacuum_cleaner
+        # fan_speed: "Silent"
+    # - service: vacuum.return_to_base
+      # entity_id: vacuum.xiaomi_vacuum_cleaner
+    # - condition: state
+      # entity_id: input_boolean.window
+      # state: 'off'
+    # - service: script.turn_on
+      # entity_id: script.home_mode_check1
+    # - condition: time
+      # weekday:
+          # - mon
+          # - tue
+          # - wed
+          # - thu
+          # - fri
+    # - condition: time
+      # after: '9:00:00'
+      # before: '16:30:00'
+    # - service: climate.set_preset_mode
+      # data:
+        # entity_id: climate.main_floor
+        # preset_mode: 'Home'
+
 home_mode_check1:
   sequence:
     - service: script.turn_on
@@ -53,10 +81,10 @@ home_mode_check1:
           - fri
     - condition: time
       after: '16:30:00'
-      before: '9:00:00'
+      before: '09:00:00'
     - service: ecobee.resume_program
       entity_id: climate.main_floor
-        
+
 home_mode_check2:
   sequence:
     - condition: time
@@ -65,6 +93,37 @@ home_mode_check2:
           - sun
     - service: ecobee.resume_program
       entity_id: climate.main_floor
+
+# away_mode:
+  # sequence:
+    # - service: vacuum.set_fan_speed
+      # data_template:
+        # entity_id: vacuum.xiaomi_vacuum_cleaner
+        # fan_speed: "Turbo"
+    # - service: input_boolean.turn_off
+      # data:
+        # entity_id: input_boolean.all_firstfloor
+    # - service: input_boolean.turn_off
+      # data:
+        # entity_id: input_boolean.all_secondfloor
+    # - service: input_boolean.turn_off
+      # data:
+        # entity_id: input_boolean.all_basement
+    # - service: light.turn_off
+      # entity_id: light.deck_light
+    # - service: homeassistant.turn_off
+      # entity_id: group.holiday
+    # - service: switch.turn_off
+      # entity_id: switch.deck_ceiling_outlet_switch
+    # - service: script.turn_on
+      # entity_id: script.run_vacuum
+    # - condition: state
+      # entity_id: input_boolean.window
+      # state: 'off'
+    # - service: climate.set_preset_mode
+      # data:
+        # entity_id: climate.main_floor
+        # preset_mode: 'Away'
 
 ###############
 #1 PC Scripts #
@@ -80,7 +139,7 @@ cpu_off:
       data:
         addon: core_rpc_shutdown
         input: Desktop-Shutdown
-      
+
 # lightpack_off:
   # sequence:
     # - condition: state
@@ -89,7 +148,14 @@ cpu_off:
     # - service: light.turn_off
       # data:
         # entity_id: light.lightpack
-      
+
+# after_dark:
+  # sequence:
+    # # - service: light.turn_on
+      # # entity_id: light.lightpack
+    # - service: homeassistant.turn_off
+      # entity_id: group.basement_no_aux
+
 timed_cpu_off:
   sequence:
     - delay:
@@ -99,11 +165,11 @@ timed_cpu_off:
       state: not_home
     - service: script.turn_on
       entity_id: script.cpu_off
-        
+
 ########################
 #2 Temperature Scripts #
 ########################
-        
+
 windows_open:
   sequence:
     - service: climate.set_preset_mode
@@ -113,22 +179,44 @@ windows_open:
     - service: input_boolean.turn_on
       data:
         entity_id: input_boolean.window
+
+# vacation_temp:
+  # sequence:
+    # - service: climate.set_preset_mode
+      # data:
+        # entity_id: climate.main_floor
+        # preset_mode: 'Vac'
+
+# wakeup_temp:
+  # sequence:
+    # - service: climate.set_preset_mode
+      # data:
+        # entity_id: climate.main_floor
+        # preset_mode: 'Wake'
+
 party_temp:
   sequence:
     - service: climate.set_preset_mode
       data:
         entity_id: climate.main_floor
         preset_mode: 'Party'
-        
+
 climate_reset:
   sequence:
     - service: ecobee.resume_program
       entity_id: climate.main_floor
 
+# ecobee_reset:
+  # sequence:
+    # - delay:
+        # seconds: 30
+    # - service: ecobee.resume_program
+      # entity_id: climate.main_floor
+
 ########################
 #3 Manual Call Scripts #
 ########################
-        
+
 movie_time:
   sequence:
     - service: light.turn_off
@@ -145,7 +233,7 @@ movie_time:
       entity_id: scene.red_lamp_scene
     - service: script.turn_on
       entity_id: script.netflix_watch_on
-      
+
 movie_finish:
   sequence:
     - service: light.turn_on
@@ -160,7 +248,7 @@ movie_finish:
       entity_id: light.floor_lamp
       data:
         brightness: 255
-        
+
 dinner_time:
   sequence:
     - service: switch.turn_off
@@ -175,7 +263,7 @@ dinner_time:
       entity_id: light.dining_lights_level
       data:
         brightness: 75
-      
+
 game_on:
   alias: "Game On"
   sequence:
@@ -207,7 +295,7 @@ game_on:
         seconds: 1
     - service: scene.turn_on
       entity_id: scene.fun_basement_2
-        
+
 ###################
 #4 Vacuum Scripts #
 ###################
@@ -242,7 +330,7 @@ vacuum_the_house:
   sequence:
     - service: vacuum.start
       entity_id: vacuum.xiaomi_vacuum_cleaner
-      
+
 tv_area_vacuum:
   alias: "TV Area Vacuum"
   sequence:
@@ -252,7 +340,7 @@ tv_area_vacuum:
         repeats: 1
         zone:
           - !secret vac_living1
-        
+
 back_living_room_vacuum:
   alias: "Back Living Room Vacuum"
   sequence:
@@ -262,7 +350,7 @@ back_living_room_vacuum:
         repeats: 1
         zone:
           - !secret vac_living2
-        
+
 dining_room_vacuum:
   alias: "Dining Room Vacuum"
   sequence:
@@ -272,7 +360,7 @@ dining_room_vacuum:
         repeats: 1
         zone: 
           - !secret vac_dining
-        
+
 kitchen_vacuum:
   alias: "Kitchen Vacuum"
   sequence:
@@ -282,7 +370,7 @@ kitchen_vacuum:
         repeats: 1
         zone:
           - !secret vac_kitchen
-        
+
 hallway_vacuum:
   alias: "Hallway Vacuum"
   sequence:
@@ -292,7 +380,7 @@ hallway_vacuum:
         repeats: 1
         zone: 
           - !secret vac_hallway
-        
+
 vacuum_error_brush:
   sequence:
     - condition: template
@@ -304,7 +392,7 @@ vacuum_error_brush:
       above: 0
     - service: vacuum.start
       entity_id: vacuum.xiaomi_vacuum_cleaner
-  
+
 vacuum_error_notify:
   sequence:
     - condition: template
@@ -353,7 +441,46 @@ sunset_switch:
       state: 'on'
     - service: switch.turn_on
       entity_id: switch.guestbed
-        
+
+# goodnight_kenny:
+  # sequence:
+    # - service: switch.turn_on
+      # entity_id: switch.entrance_switch
+    # - delay:
+        # minutes: 5
+    # - service: switch.turn_off
+      # entity_id: switch.entrance_switch
+
+# night_time:
+  # sequence:
+    # - service: input_boolean.turn_off
+      # entity_id: input_boolean.bedroom
+    # - service: homeassistant.turn_off
+      # entity_id: group.bedroom
+    # - condition: time
+      # after: '21:00:00'
+    # - service: light.turn_off
+      # entity_id: light.basement_ceiling_lights
+    # - service: light.turn_on
+      # entity_id: light.basement_ceiling_lights
+    # - service: light.turn_off
+      # entity_id: light.basement_ceiling_lights
+    # - service: light.turn_on
+      # entity_id: light.basement_ceiling_lights
+    # - service: light.turn_off
+      # entity_id: light.basement_ceiling_lights
+    # - service: light.turn_on
+      # entity_id: light.basement_ceiling_lights
+
+# door:
+  # sequence:
+    # - service: input_boolean.turn_on
+      # entity_id: input_boolean.door
+    # - delay:
+        # minutes: 3
+    # - service: input_boolean.turn_off
+      # entity_id: input_boolean.door
+
 first_floor_break:
   sequence:
     - service: input_boolean.turn_on
@@ -362,7 +489,7 @@ first_floor_break:
       entity_id: input_boolean.all_firstfloor
     - service: input_boolean.turn_off
       entity_id: input_boolean.all_break
-        
+
 second_floor_break:
   sequence:
     - service: input_boolean.turn_on
@@ -371,7 +498,7 @@ second_floor_break:
       entity_id: input_boolean.all_secondfloor
     - service: input_boolean.turn_off
       entity_id: input_boolean.all_break
-      
+
 basement_floor_break:
   sequence:
     - service: input_boolean.turn_on
@@ -380,11 +507,11 @@ basement_floor_break:
       entity_id: input_boolean.all_basement
     - service: input_boolean.turn_off
       entity_id: input_boolean.all_break
-      
+
 check_config:
   sequence: []
   alias: Check Configuration
-      
+
 outside_break:
   sequence:
     - service: input_boolean.turn_on
@@ -393,7 +520,88 @@ outside_break:
       entity_id: input_boolean.all_outside
     - service: input_boolean.turn_off
       entity_id: input_boolean.all_break
+
+# bedroom_off:
+  # sequence:
+    # - delay:
+        # minutes: 5
+    # - condition: numeric_state
+      # entity_id: sensor.bedroom_multisensor_burglar
+      # below: 4 
+    # - service: input_boolean.turn_on
+      # entity_id: input_boolean.bedroom_motion
+    # - delay:
+        # seconds: 2
+    # - service: homeassistant.turn_off
+      # entity_id: group.bedroom
+    # - delay:
+        # seconds: 2
+    # - service: input_boolean.turn_off
+      # entity_id: input_boolean.bedroom_motion
+
+# kitchen_off:
+  # sequence:
+    # - delay:
+        # minutes: 5
+    # - condition: numeric_state
+      # entity_id: sensor.kitchen_burglar
+      # below: 4 
+    # - service: input_boolean.turn_on
+      # entity_id: input_boolean.kitchen_motion
+    # - delay:
+        # seconds: 2
+    # - service: homeassistant.turn_off
+      # entity_id: group.kitchen
+    # - delay:
+        # seconds: 2
+    # - service: input_boolean.turn_off
+      # entity_id: input_boolean.kitchen_motion
       
+# basement_off:
+  # sequence:
+    # - service: input_boolean.turn_on
+      # entity_id: input_boolean.basement_motion
+    # - delay:
+        # seconds: 2
+    # - service: homeassistant.turn_off
+      # entity_id: group.basement_no_aux
+    # - delay:
+        # seconds: 2
+    # - service: input_boolean.turn_off
+      # entity_id: input_boolean.basement_motion
+
+# livingroom_stop_on:
+  # sequence:
+    # - service: input_boolean.turn_off
+      # entity_id: input_boolean.livingroom
+    # - delay:
+        # seconds: 30
+    # - condition: time
+      # before: '21:00:00'
+    # - condition: time
+      # after: '8:00:00'
+    # - service: input_boolean.turn_on
+      # entity_id: input_boolean.livingroom
+
+# livingroom_off:
+  # sequence:
+    # - service: input_boolean.turn_on
+      # entity_id: input_boolean.livingroom_motion
+    # - service: input_boolean.turn_off
+      # entity_id: input_boolean.livingroom
+    # - delay:
+        # seconds: 2
+    # - service: light.turn_off
+      # entity_id: group.livingroom
+    # - delay:
+        # seconds: 2
+    # - service: input_boolean.turn_off
+      # entity_id: input_boolean.livingroom_motion
+    # - delay:
+        # seconds: 10
+    # - service: input_boolean.turn_on
+      # entity_id: input_boolean.livingroom
+
 basement_check:
   sequence:
     - service: light.turn_off
@@ -402,7 +610,7 @@ basement_check:
         minutes: 2
     - service: script.turn_on
       entity_id: script.basement_loop
-      
+
 basement_loop:
   sequence:
     - service: input_boolean.turn_on
@@ -414,7 +622,7 @@ basement_loop:
       entity_id: input_boolean.basement_light_off_loop
     - service: script.turn_on
       entity_id: script.basement_check
-      
+
 medications:
   sequence:
     - service: notify.residents
@@ -424,7 +632,7 @@ medications:
     - service: script.turn_on
       data:
         entity_id: script.medications_loop
-        
+
 medications_loop:
   sequence:
     - delay:
@@ -435,7 +643,7 @@ medications_loop:
     - service: script.turn_on
       data:
         entity_id: script.medications
-      
+
 alli_location_spreadsheet:
   sequence:
     - condition: state
@@ -463,6 +671,25 @@ front_door_snooze:
         minutes: 60
     - service: input_boolean.turn_off
       entity_id: input_boolean.front_door_snooze
+
+# dining_occupancy_off:
+  # sequence:
+    # - delay:
+        # minutes: 30
+    # - condition: numeric_state
+      # entity_id: counter.occupancy
+      # above: 1
+    # - condition: numeric_state
+      # entity_id: sensor.numhome
+      # below: 3
+      # above: 1
+    # - condition: state
+      # entity_id: group.dining_room
+      # state: 'on'
+    # - service: homeassistant.turn_off
+      # entity_id: group.dining_room
+    # - service: input_boolean.turn_off
+      # entity_id: input_boolean.dining_room_occupancy
 
 ############################
 #6 Random Vacation Scripts #
@@ -629,7 +856,8 @@ rand_vac10:
     - service: script.turn_on
       data:
         entity_id: script.vac_craft
-        
+
+
 vac_living:
   sequence:
     - delay: '{{ (range(0, 1)|random|int) }}:{{ (range(1, 59)|random|int) }}:00'
@@ -665,7 +893,7 @@ vac_craft:
     - delay: '{{ (range(0, 2)|random|int) }}:{{ (range(1, 59)|random|int) }}:00'
     - service: homeassistant.turn_off
       entity_id: group.craft
-        
+
 ###################
 #7 Stereo Scripts #
 ###################
@@ -691,7 +919,7 @@ vinyl_on:
       data:
         entity_id: media_player.stereo
         source: AUDIO5
-        
+
 vinyl_off:
   sequence:
     - delay:
@@ -730,7 +958,7 @@ netflix_watch_on:
       data:
         entity_id: media_player.stereo
         source: AUDIO1
-        
+
 netflix_watch_off:
   sequence:
     - delay:
@@ -747,7 +975,7 @@ netflix_watch_off:
       data:
         entity_id: media_player.stereo
         source: AUDIO1
-        
+
 cable_watch_on:
   alias: "The Stereo to Watch Cable"
   sequence:
@@ -769,7 +997,7 @@ cable_watch_on:
       data:
         entity_id: media_player.stereo
         source: HDMI2
-        
+
 cable_watch_off:
   sequence:
     - delay:
@@ -786,8 +1014,7 @@ cable_watch_off:
       data:
         entity_id: media_player.stereo
         source: HDMI2
-  
-        
+
 pandora_listen_on:
   alias: "The Stereo Music"
   sequence:
@@ -809,7 +1036,7 @@ pandora_listen_on:
       data:
         entity_id: media_player.stereo
         source: Pandora
-        
+
 pandora_listen_off:
   sequence:
     - delay:
@@ -826,7 +1053,7 @@ pandora_listen_off:
       data:
         entity_id: media_player.stereo
         source: Pandora
-        
+
 radio_listen_on:
   alias: "The Stereo Radio"
   sequence:
@@ -848,7 +1075,7 @@ radio_listen_on:
       data:
         entity_id: media_player.stereo
         source: TUNER
-        
+
 radio_listen_off:
   sequence:
     - delay:
@@ -865,7 +1092,7 @@ radio_listen_off:
       data:
         entity_id: media_player.stereo
         source: TUNER
-        
+
 ps3_on:
   alias: "The PS3"
   sequence:
@@ -887,7 +1114,7 @@ ps3_on:
       data:
         entity_id: media_player.stereo
         source: HDMI5
-        
+
 ps3_off:
   sequence:
     - delay:
@@ -904,7 +1131,7 @@ ps3_off:
       data:
         entity_id: media_player.stereo
         source: HDMI5
-        
+
 wiiu_on:
   alias: "The Wii U"
   sequence:
@@ -926,7 +1153,7 @@ wiiu_on:
       data:
         entity_id: media_player.stereo
         source: HDMI4
-        
+
 wiiu_off:
   sequence:
     - delay:
@@ -943,7 +1170,7 @@ wiiu_off:
       data:
         entity_id: media_player.stereo
         source: HDMI4
-        
+
 steam_on:
   alias: "Steam"
   sequence:
@@ -965,7 +1192,7 @@ steam_on:
       data:
         entity_id: media_player.stereo
         source: HDMI1
-        
+
 steam_off:
   sequence:
     - delay:
@@ -982,7 +1209,7 @@ steam_off:
       data:
         entity_id: media_player.stereo
         source: HDMI1
-        
+
 switch_on:
   alias: "Switch"
   sequence:
@@ -1006,7 +1233,7 @@ switch_on:
       data:
         entity_id: media_player.stereo
         source: HDMI3
-        
+
 switch_off:
   sequence:
     - delay:
@@ -1023,7 +1250,7 @@ switch_off:
       data:
         entity_id: media_player.stereo
         source: HDMI3
-        
+
 bluetooth_on:
   alias: "The Stereo Bluetooth"
   sequence:
@@ -1045,7 +1272,7 @@ bluetooth_on:
       data:
         entity_id: media_player.stereo
         source: Bluetooth
-        
+
 bluetooth_off:
   sequence:
     - delay:

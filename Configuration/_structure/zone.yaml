@@ -1,17 +1,17 @@
- - name: Home
-   latitude: !secret lat_secret
-   longitude: !secret lon_secret
-   radius: 50
-   icon: mdi:home
+- name: Home
+  latitude: !secret lat_secret
+  longitude: !secret lon_secret
+  radius: 50
+  icon: mdi:home
 
- - name: Work
-   latitude: !secret k_work_lat
-   longitude: !secret k_work_lon
-   radius: 50
-   icon: mdi:briefcase
+- name: Work
+  latitude: !secret k_work_lat
+  longitude: !secret k_work_lon
+  radius: 50
+  icon: mdi:briefcase
 
- - name: Work
-   latitude: !secret m_work_lat
-   longitude: !secret m_work_lon
-   radius: 100
-   icon: mdi:briefcase
+- name: Work
+  latitude: !secret m_work_lat
+  longitude: !secret m_work_lon
+  radius: 100
+  icon: mdi:briefcase

@@ -1,9 +1,9 @@
 ###################
 # Friendly Naming #
 ###################
-  
+
   ##### Sensors #####
-  
+
 sensor.bedroom_bee_temperature:
   friendly_name: Bedroom Temperature
 sensor.basement_bee_temperature:
@@ -16,9 +16,9 @@ sensor.bedroom_multisensor_burglar:
   friendly_name: Bedroom Motion
 sensor.kitchen_burglar:
   friendly_name: Kitchen Motion
-  
+
   ##### Other #####
-  
+
 media_player.yamaha_receiver:
   emulated_hue_name: stereo
   friendly_name: Stereo
@@ -30,13 +30,13 @@ group.all_scripts:
   friendly_name: All Scripts
 plant.money_plant:
   friendly_name: Money Plant
-  
+
 #################
 # Icon Changing #
 #################
-  
+
   ##### Sensors #####
-  
+
 binary_sensor.trash_day:
   icon: mdi:delete
 binary_sensor.recycling_day:
@@ -93,7 +93,7 @@ sensor.blank:
   icon: mdi:fake
 sensor.space:
   icon: mdi:fake
-  
+
   ##### Lights #####
 
 light.front_outside:
@@ -122,9 +122,9 @@ light.entrance_dimmer_level:
   icon: mdi:ceiling-light
 light.consoles:
   icon: mdi:gamepad-variant
-  
+
   ##### Switches #####
-  
+
 switch.skybell_front_door_do_not_disturb:
   icon: mdi:bell-sleep
 switch.skybell_front_door_motion_sensor:
@@ -139,19 +139,19 @@ switch.basement_hallway_switch:
   icon: mdi:arrow-down-box
 switch.upstairs_hallway_switch:
   icon: mdi:arrow-up-box
-  
+
   ##### Other #####
 script.vacuumed_basement:
   icon: mdi:arrow-down-bold-box
 script.vacuumed_upstairs:
   icon: mdi:numeric-2-box
-  
+
 ########
 # Both #
 ########
-  
+
   ##### Sensors #####
-  
+
 sensor.speedtest_upload:
   friendly_name: Upload Speed
   icon: mdi:arrow-up-bold-circle-outline
@@ -170,9 +170,9 @@ sensor.bedroom_multisensor_luminance:
 sensor.kitchen_luminance:
   friendly_name: Kitchen Light
   icon: mdi:flashlight
-  
+
   ##### Switches #####
-  
+
 switch.outlet:
   friendly_name: Misc Switch
   # friendly_name: Spooky Lights
@@ -209,9 +209,9 @@ switch.desktopPC:
 switch.deck_ceiling_outlet_switch:
   friendly_name: Market Lights
   icon: mdi:string-lights
-  
+
   ##### Other #####
-  
+
 light.dining_lights_level:
   friendly_name: Dining Room Lights
   icon: mdi:vanity-light
@@ -221,13 +221,13 @@ light.sink_light:
 light.kitchen_ceiling:
   friendly_name: Kitchen Ceiling Light
   icon: mdi:lightbulb-group
-  
+
 #######################
 # Unit of Measurement #
 #######################
-  
+
   ##### Sensors #####
-  
+
 sensor.webcam_motion:
   friendly_name: Living Room Motion Raw
   unit_of_measurement: motion

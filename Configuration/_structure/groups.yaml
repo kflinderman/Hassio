@@ -27,7 +27,7 @@ Second Floor:
     - group.craft
     - group.nursery
     - switch.upstairs_hallway_switch
-    
+
 Basement Floor:
   icon: mdi:arrow-down-bold-box
   entities:
@@ -35,7 +35,7 @@ Basement Floor:
     - group.basement_no_pc
     - group.sun_room
     - switch.basement_hallway_switch
-    
+
 ##############################
 #           GROUPS           #
 ##############################
@@ -43,14 +43,14 @@ Basement Floor:
 ################
 # Default View #
 ################
-    
+
 outside:
   name: Outside Lights
   entities:
     - light.front_outside
     - light.deck_light
     - switch.deck_ceiling_outlet_switch
-    
+
 ###############
 # First Floor #
 ###############
@@ -92,30 +92,30 @@ dining_room:
   name: Dining Room
   entities:
     - light.dining_lights_level
-    
+
 ################
 # Second Floor #
 ################
-    
+
 craft:
   name: Craft Room
   entities:
     - switch.craftfan
     - light.sewing_light
-    
+
 bedroom:
   name: Bedroom
   entities:
     - light.swirl_lamp
     - switch.bedfan
     - switch.masterbath
-    
+
 nursery:
   name: Nursery
   entities:
     - switch.nurseryfan
     - light.nursery_light
-    
+
 ##################
 # Basement Floor #
 ##################
@@ -124,42 +124,42 @@ guest:
   name: Guest Room
   entities:
     - switch.guestbed
-    
+
 basement:
   name: Basement Lights
   entities:
-   - switch.basement_floor_light
-   - light.basement_ceiling_lights
-   - switch.laundryroom
-   - media_player.desktop_media
-   - switch.desktopPC
-   - light.lightpack
-   - media_player.basement_stereo
-   - light.consoles
-   
+    - switch.basement_floor_light
+    - light.basement_ceiling_lights
+    - switch.laundryroom
+    - media_player.desktop_media
+    - switch.desktopPC
+    - light.lightpack
+    - media_player.basement_stereo
+    - light.consoles
+
 basement_no_pc:
   name: Basement Lights
   entities:
-   - switch.basement_floor_light
-   - light.basement_ceiling_lights
-   - switch.laundryroom
-   - media_player.basement_stereo
-   - light.consoles
-   
+    - switch.basement_floor_light
+    - light.basement_ceiling_lights
+    - switch.laundryroom
+    - media_player.basement_stereo
+    - light.consoles
+
 basement_no_aux:
   name: Basement Lights
   entities:
-   - switch.basement_floor_light
-   - light.basement_ceiling_lights
-   - switch.laundryroom
-   - light.consoles
-   
+    - switch.basement_floor_light
+    - light.basement_ceiling_lights
+    - switch.laundryroom
+    - light.consoles
+
 sun_room:
   name: Sun Room
   entities:
   - light.tripod_lamp
   - switch.sun_room_market_lights
-    
+
 ################
 # Other Groups #
 ################
@@ -175,7 +175,7 @@ Hue Lights:
     - light.basement_4
     - light.sewing_light
     - light.deck_light
-    
+
 Switch Lights:
   entities:
     - switch.outlet
@@ -187,7 +187,7 @@ Switch Lights:
     - switch.cabinet_lights
     - switch.cabinet_lights_2
     - switch.guestbed
-   
+
 residents:
   name: Residents
   entities:
@@ -213,7 +213,7 @@ firstfloor:
     - switch.cabinet_lights
     - switch.cabinet_lights_2
     - switch.entrance_switch
-    
+
 secondfloor:
   name: Second Floor Lights
   entities:
@@ -225,13 +225,13 @@ secondfloor:
     - light.nursery_light
     - switch.nurseryfan
     - switch.upstairs_hallway_switch
-    
+
 holiday:
   name: Holiday Lights
   entities:
     # - switch.outlet
     - input_boolean.holiday
-    
+
 ###############
 # Automations #
 ###############
@@ -273,13 +273,13 @@ bedroom_auto:
     - automation.allow_motion_bedroom
     - automation.bedroom_stop_motion
     - automation.bedroom_fan
-    
+
 nursery_auto:
   name: Nursery Automations
   entities:
     - automation.thingy_sensor_battery
     - automation.night_nursery
-    
+
 craft_auto:
   name: Craft Room Automations
   entities:
@@ -369,7 +369,7 @@ location_auto:
     - automation.turn_off_home_switch
     - automation.ecobee_fasle_positive
     - automation.turn_on_lights_after_sunset
-    
+
 pc_auto:
   name: PC Automations
   entities:
@@ -380,6 +380,7 @@ pc_auto:
     - automation.pc_after_dark
     - automation.lightpack_cpu_on
     - automation.lightpack_cpu_go
+    - automation.ps4_lightpack
 
 vacuum_auto:
   name: Vacuum Automations
@@ -441,7 +442,9 @@ ha_auto:
   name: Home Assistant Automations
   entities:
     - automation.theme_set
-    - automation.delay_automations_on_restart
+    # - automation.delay_automations_on_restart
+    - automation.recently_restarted
+    - automation.backup_new_day
     - automation.daily_snapshot_clean_up
     - automation.perform_auto_backup
     - automation.perform_daily_backup
@@ -450,7 +453,7 @@ ha_auto:
     - automation.cpu_hour_data
     - automation.light_hour_data
     - automation.watt_hour_data
-    - automation.visitor
+    - automation.visitors
     - automation.party
     - automation.update_watt_hour
     - automation.drive_watthour_update

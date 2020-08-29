@@ -13,7 +13,7 @@
           {{ is_state_attr('vacuum.xiaomi_vacuum_cleaner', 'do_not_disturb', 'on')
               and (state_attr('vacuum.xiaomi_vacuum_cleaner', 'do_not_disturb_start').split(':')[0]|float <= now().hour 
               or state_attr('vacuum.xiaomi_vacuum_cleaner', 'do_not_disturb_end').split(':')[0]|float > now().hour) }}
-          
+
       craft_room_occupancy:
         friendly_name: Craft Room Occupancy
         value_template: >-
@@ -21,18 +21,18 @@
             {%- if is_state('switch.craftfan', 'on') -%}
               {%- if is_state('person.kenny', 'not_home') -%}
                 {{ is_state('binary_sensor.basement_occupancy', 'off')
-                   and is_state('binary_sensor.bedroom_occupancy', 'off')
-                   and is_state('binary_sensor.kitchen_occupancy', 'off')
-                   and is_state('binary_sensor.living_room_bay_occupancy', 'off') }}
+                    and is_state('binary_sensor.bedroom_occupancy', 'off')
+                    and is_state('binary_sensor.kitchen_occupancy', 'off')
+                    and is_state('binary_sensor.living_room_bay_occupancy', 'off') }}
               {%- else -%}
                 {{ is_state('person.meredith', 'home') }}
               {%- endif -%}
             {%- elif is_state(' light.sewing_light', 'on') -%}
               {%- if is_state('person.kenny', 'not_home') -%}
                 {{ is_state('binary_sensor.basement_occupancy', 'off')
-                   and is_state('binary_sensor.bedroom_occupancy', 'off')
-                   and is_state('binary_sensor.kitchen_occupancy', 'off')
-                   and is_state('binary_sensor.living_room_bay_occupancy', 'off') }}
+                    and is_state('binary_sensor.bedroom_occupancy', 'off')
+                    and is_state('binary_sensor.kitchen_occupancy', 'off')
+                    and is_state('binary_sensor.living_room_bay_occupancy', 'off') }}
               {%- else -%}
                 {{ is_state('person.meredith', 'home') }}
               {%- endif -%}
@@ -42,7 +42,7 @@
           {%- else -%}
             {{ is_state('person.meredith', 'home') }}
           {%- endif -%}
-          
+
       trash_day:
         friendly_name: Trash Day
         value_template: >-
@@ -56,39 +56,39 @@
         value_template: >-
           {{ is_state_attr('calendar.trash_pickup', 'message', 'Recycling blue week and household garbage')
               or is_state_attr('calendar.trash_pickup', 'message', 'Recycling blue week, household garbage, yard waste, and bulky item') }}
-      
+
       weather_alert:
         friendly_name: Weather Alert
         value_template: >-
           {{ states('sensor.weatheralerts')|int > 0 }}
-          
+
       nursery_occupancy:
         friendly_name: Nursery Occupancy
         value_template: >-
           {{ is_state('binary_sensor.nursery_camera_motion_detected', 'on') }}
-          
+
       craft_occupancy:
         friendly_name: Craft Room Occupancy
         value_template: >-
           {{ is_state('input_boolean.craftroom_occupancy', 'on') }}
-          
+
       guest_occupancy:
         friendly_name: Guest Room Occupancy
         value_template: >-
           {{ is_state('input_boolean.guest_occupancy', 'on') }}
-          
+
       sunroom_occupancy:
         friendly_name: Sun Room Occupancy
         value_template: >-
           {{ is_state('input_boolean.sunroom_occupancy', 'on') }}
-          
+
       dining_occupancy:
         friendly_name: Dining Room Occupancy
         value_template: >-
           {{ is_state('input_boolean.dining_room_occupancy', 'on') }}
-      
+
 ##### Occupancy Threshold Sensors #####
-          
+
   - platform: threshold
     name: Bedroom Occupancy
     entity_id: sensor.bedroom_multisensor_burglar
@@ -101,14 +101,14 @@
     name: Kitchen Occupancy
     entity_id: sensor.kitchen_burglar
     upper: 4
-    
+
   - platform: threshold
     name: Potential Breaking Changes
     entity_id: sensor.potential_breaking_changes
     upper: 1
-    
+
 ##### Bayesian Sensors #####
-    
+
   - platform: bayesian
     name: Living Room Bay Occupancy
     prior: 0.5
@@ -154,12 +154,12 @@
         prob_given_false: 0.3
         platform: state
         to_state: 'off'
-      - entity_id: 'media_player.desktop_media'
-        prob_given_true: 0.7
-        prob_given_false: 0.3
-        platform: state
-        to_state: 'paused'
-      - entity_id: 'media_player.desktop_media'
+      # - entity_id: 'media_player.plex_plex_web_firefox'
+        # prob_given_true: 0.7
+        # prob_given_false: 0.3
+        # platform: state
+        # to_state: 'paused'
+      - entity_id: 'media_player.plex_plex_web_firefox'
         prob_given_true: 0.9
         prob_given_false: 0.1
         platform: state
@@ -184,3 +184,8 @@
         prob_given_false: 0.2
         platform: state
         to_state: 'on'
+      - entity_id: 'media_player.playstation_4'
+        prob_given_true: 1.0
+        prob_given_false: 0.0
+        platform: state
+        to_state: 'playing'

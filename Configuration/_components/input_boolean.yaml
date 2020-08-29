@@ -12,9 +12,9 @@
   window:
     name: Windows
     icon: mdi:window-closed
-    
+
   ##### Occupancy Sensors #####
-  
+
   craftroom_occupancy:
     name: Craft Room Occupancy
   dining_room_occupancy:
@@ -23,9 +23,9 @@
     name: Guest Room Occupancy
   sunroom_occupancy:
     name: Sun Room Occupancy
-    
+
   ##### Motion Manual Sensors #####
-    
+
   bedroom:
     name: Bedroom Motion Manual
   basement:
@@ -34,9 +34,9 @@
     name: Kitchen Motion Manual
   livingroom:
     name: Living Room Motion Manual
-    
+
   ##### Motion Control Sensors #####
-    
+
   bedroom_motion:
     name: Bedroom Motion Control
   basement_motion:
@@ -45,9 +45,9 @@
     name: Kitchen Motion Control
   livingroom_motion:
     name: Living Room Motion Control
-    
+
   ##### Master Switches #####
-    
+
   all_firstfloor:
     name: All First Floor
     icon: mdi:numeric-1-box
@@ -62,9 +62,9 @@
     icon: mdi:pine-tree-box
   all_break:
     name: Break for All
-    
+
   ##### Alli #####
-  
+
   alli_bed:
     name: Alli Bedroom
     icon: mdi:dog
@@ -92,9 +92,9 @@
   alli_sun_room:
     name: Alli Sun Room
     icon: mdi:dog
-  
+
   ##### Vacuum #####
-  
+
   vacuum_zone_living1:
     name: TV Area
     icon: mdi:television
@@ -131,9 +131,9 @@
   run_vacuum:
     name: Run Vacuum
     icon: mdi:robot-vacuum
-    
+
   ##### Other #####
-  
+
   basement_light_off_loop:
     name: Basement Light Off Loop
   front_door_snooze:
@@ -157,3 +157,5 @@
   goodnight:
     name: Goodnight
     initial: off
+  recently_restarted:
+    name: Recently Restarted

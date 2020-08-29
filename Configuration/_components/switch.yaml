@@ -1,25 +1,25 @@
-  - platform: wake_on_lan
-    mac: !secret mac_secret
-    name: desktopPC
-    host: !secret pc_ip
-    turn_off:
-      service: script.turn_on
-      entity_id: script.cpu_off
-  - platform: skybell
-    monitored_conditions:
-      - do_not_disturb
-      - motion_sensor
-  - platform: momentary
-    name: Weather Alert Notification
-    mode: on
-    toggle_for: 
-      hours: 2
-    cancellable: true
-  # - platform: netgear_enhanced
-    # host: !secret router_ip
-    # username: !secret wifi_username
-    # password: !secret wifi_password
-    # resources:
-      # # - 'traffic_meter'
-      # - 'run_speed_test'
-      # - 'reboot'
+- platform: wake_on_lan
+  mac: !secret mac_secret
+  name: desktopPC
+  host: !secret pc_ip
+  turn_off:
+    service: script.turn_on
+    entity_id: script.cpu_off
+- platform: skybell
+  monitored_conditions:
+    - do_not_disturb
+    - motion_sensor
+- platform: momentary
+  name: Weather Alert Notification
+  mode: on
+  toggle_for: 
+    hours: 2
+  cancellable: true
+# - platform: netgear_enhanced
+  # host: !secret router_ip
+  # username: !secret wifi_username
+  # password: !secret wifi_password
+  # resources:
+    # # - 'traffic_meter'
+    # - 'run_speed_test'
+    # - 'reboot'
