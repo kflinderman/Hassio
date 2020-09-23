@@ -1,0 +1,188 @@
+project_id: !secret home_id
+service_account: !include SERVICE_ACCOUNT.JSON
+report_state: true
+exposed_domains:
+  - group
+  - vacuum
+entity_config:
+  script.movie_time:
+    expose: true
+    name: Movie Time
+  script.steam_on:
+    expose: true
+  script.wiiu_on:
+    expose: true
+  script.bluetooth_on:
+    expose: true
+  script.netflix_watch_on:
+    expose: true
+  script.game_on:
+    expose: true
+  script.switch_on:
+    expose: true
+  script.windows_open:
+    expose: true
+    name: Windows Open
+  script.pandora_listen_on:
+    expose: true
+  script.cable_watch_on:
+    expose: true
+  script.dinner_time:
+    expose: true
+    name: Dinner Time
+  script.vinyl_on:
+    expose: true
+  script.ps3_on:
+    expose: true
+  script.movie_finish:
+    expose: true
+    name: Movie Finish
+  script.radio_listen_on:
+    expose: true
+  script.vacuum_the_house:
+    expose: true
+  script.tv_area_vacuum:
+    expose: true
+  script.back_living_room_vacuum:
+    expose: true
+  script.dining_room_vacuum:
+    expose: true
+  script.kitchen_vacuum:
+    expose: true
+  script.hallway_vacuum:
+    expose: true
+  script.away_mode:
+    expose: true
+    name: Away Mode
+  input_boolean.all_basement:
+    expose: true
+  input_boolean.all_firstfloor:
+    expose: true
+  input_boolean.all_outside:
+    expose: true
+  input_boolean.all_secondfloor:
+    expose: true
+  input_boolean.im_home:
+    expose: true
+  input_boolean.party:
+    expose: true
+  input_boolean.sexy_time:
+    expose: true
+  input_boolean.vacation:
+    expose: true
+  input_boolean.visitor:
+    expose: true
+  input_boolean.window:
+    expose: true
+  input_boolean.goodnight:
+    expose: true
+  input_boolean.front_door_snooze:
+    expose: true
+  input_boolean.vacuum_cancel:
+    expose: true
+  light.dining_lights_level:
+    expose: true
+  light.kitchen_ceiling:
+    expose: true
+  media_player.desktop_media:
+    expose: true
+  media_player.basement_stereo:
+    expose: true
+  media_player.stereo:
+    expose: true
+  switch.deck_ceiling_outlet_switch:
+    expose: true
+  switch.desktoppc:
+    expose: true
+  switch.entrance_switch:
+    expose: true
+  switch.basement_hallway_switch:
+    expose: true
+  switch.upstairs_hallway_switch:
+    expose: true
+  switch.laundryroom:
+    expose: true
+
+  group.all_automations:
+    expose: false
+  group.all_devices:
+    expose: false
+  group.all_lights:
+    expose: false
+  group.all_plants:
+    expose: false
+  group.all_scripts:
+    expose: false
+  group.all_switches:
+    expose: false
+  group.all_vacuum_cleaners:
+    expose: false
+  group.alli_locate:
+    expose: false
+  group.default_view:
+    expose: false
+  group.basement:
+    expose: false
+  group.basement_no_aux:
+    expose: false
+  group.calendar:
+    expose: false
+  group.hue_lights:
+    expose: false
+  group.livingroom:
+    expose: false
+  group.residents:
+    expose: false
+  group.switch_lights:
+    expose: false
+  group.basement_auto:
+    expose: false
+  group.bedroom_auto:
+    expose: false
+  group.bedtime_auto:
+    expose: false
+  group.craft_auto:
+    expose: false
+  group.dining_auto:
+    expose: false
+  group.guest_auto:
+    expose: false
+  group.ha_auto:
+    expose: false
+  group.kitchen_auto:
+    expose: false
+  group.living_auto:
+    expose: false
+  group.location_auto:
+    expose: false
+  group.mastersw_auto:
+    expose: false
+  group.notify_auto:
+    expose: false
+  group.nursery_auto:
+    expose: false
+  group.other_auto:
+    expose: false
+  group.outside_auto:
+    expose: false
+  group.pc_auto:
+    expose: false
+  group.sun_auto:
+    expose: false
+  group.theme_auto:
+    expose: false
+  group.vacuum_auto:
+    expose: false
+  group.weather_auto:
+    expose: false
+  group.occupancy:
+    expose: false
+  group.occupancy_other:
+    expose: false
+
+  group.basement_floor:
+    name: All of the Basement
+  group.first_floor:
+    name: All of the First Floor
+  group.second_floor:
+    name: All of the Second Floor

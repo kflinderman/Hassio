@@ -496,6 +496,10 @@
       friendly_name: "Money Plant Temperature Round"
       value_template: "{{ states('sensor.money_plant_temperature') | round(1) }}"
 
+    vine_plant_temperature_round:
+      friendly_name: "Vine Plant Temperature Round"
+      value_template: "{{ states('sensor.vine_plant_temperature') | round(1) }}"
+
   ##### MQTT Sensors #####
 
 - platform: mqtt
@@ -583,6 +587,31 @@
 - platform: mqtt
   name: "Money Plant Conductivity"
   state_topic: "flora/C4:7C:8D:6A:E5:ED/conductivity"
+  unit_of_measurement: 'μS/cm'
+  expire_after: 10000
+- platform: mqtt
+  name: "Vine Plant Battery"
+  state_topic: "flora/C4:7C:8D:6B:59:4C/battery"
+  unit_of_measurement: 'V'
+  expire_after: 10000
+- platform: mqtt
+  name: "Vine Plant Temperature"
+  state_topic: "flora/C4:7C:8D:6B:59:4C/temperature"
+  unit_of_measurement: '°C'
+  expire_after: 10000
+- platform: mqtt
+  name: "Vine Plant Moisture"
+  state_topic: "flora/C4:7C:8D:6B:59:4C/moisture"
+  unit_of_measurement: '%'
+  expire_after: 10000
+- platform: mqtt
+  name: "Vine Plant Light Intensity"
+  state_topic: "flora/C4:7C:8D:6B:59:4C/light"
+  unit_of_measurement: 'lux'
+  expire_after: 10000
+- platform: mqtt
+  name: "Vine Plant Conductivity"
+  state_topic: "flora/C4:7C:8D:6B:59:4C/conductivity"
   unit_of_measurement: 'μS/cm'
   expire_after: 10000
 # - platform: mqtt

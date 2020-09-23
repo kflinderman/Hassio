@@ -631,8 +631,8 @@
             - condition: time
               after: '08:00:00'
         sequence:
-          # - delay:
-              # minutes: 5
+          - delay:
+              minutes: 2
           - condition: numeric_state
             entity_id: sensor.kitchen_burglar
             below: 4 
@@ -993,8 +993,7 @@
         - light.basement_ceiling_lights
         - input_boolean.basement_light_off_loop
       state: 'on'
-    - condition: template
-      value_template: "{{ not is_state('light.basement_1', 'on') and not is_state('light.basement_2', 'on') and not is_state('light.basement_3', 'on') and not is_state('light.basement_4', 'on') }}"
+    - "{{ not is_state('light.basement_1', 'on') and not is_state('light.basement_2', 'on') and not is_state('light.basement_3', 'on') and not is_state('light.basement_4', 'on') }}"
   action:
     - service: input_boolean.turn_off
       entity_id: input_boolean.basement_light_off_loop
@@ -1841,7 +1840,7 @@
   alias: PC after dark
   trigger:
     - platform: state
-      entity_id: media_player.plex_plex_web_firefox
+      entity_id: media_player.plex_plexamp_desktop_q6f6v0s
       to: 'playing'
   condition:
     - condition: time
@@ -1851,6 +1850,8 @@
       entity_id: light.lightpack
     - service: homeassistant.turn_off
       entity_id: group.basement_no_aux
+    - service: light.turn_on
+      entity_id: light.consoles
     
 - id: lightpack_cpu_on
   alias: Lightpack CPU On
@@ -1874,7 +1875,7 @@
   alias: Lightpack CPU Go
   trigger:
     - platform: state
-      entity_id: media_player.plex_plex_web_firefox
+      entity_id: media_player.plex_plexamp_desktop_q6f6v0s
       to: 'paused'
   condition:
     - condition: state
@@ -1948,7 +1949,7 @@
   alias: Run Daily Vacuum CoVID
   trigger:
     - platform: time
-      at: '14:00:00'
+      at: '16:00:00'
   action:
     - service: input_select.select_option
       entity_id: input_select.fanmode
@@ -2040,8 +2041,7 @@
               - condition: state
                 entity_id: sensor.vacuum_fan
                 state: '38'
-              - condition: template
-                value_template: "{{ states('input_select.fanmode') != 'Silent' }}"
+              - "{{ states('input_select.fanmode') != 'Silent' }}"
         sequence:
           - service: input_select.select_option
             entity_id: input_select.fanmode
@@ -2053,8 +2053,7 @@
               - condition: state
                 entity_id: sensor.vacuum_fan
                 state: '60'
-              - condition: template
-                value_template: "{{ states('input_select.fanmode') != 'Standard' }}"
+              - "{{ states('input_select.fanmode') != 'Standard' }}"
         sequence:
           - service: input_select.select_option
             entity_id: input_select.fanmode
@@ -2066,8 +2065,7 @@
               - condition: state
                 entity_id: sensor.vacuum_fan
                 state: '75'
-              - condition: template
-                value_template: "{{ states('input_select.fanmode') != 'Turbo' }}"
+              - "{{ states('input_select.fanmode') != 'Turbo' }}"
         sequence:
           - service: input_select.select_option
             entity_id: input_select.fanmode
@@ -2079,8 +2077,7 @@
               - condition: state
                 entity_id: sensor.vacuum_fan
                 state: '100'
-              - condition: template
-                value_template: "{{ states('input_select.fanmode') != 'Max' }}"
+              - "{{ states('input_select.fanmode') != 'Max' }}"
         sequence:
           - service: input_select.select_option
             entity_id: input_select.fanmode
@@ -2529,9 +2526,12 @@
     - platform: state
       entity_id: sensor.weatheralerts
   condition:
-    - condition: state
-      entity_id: binary_sensor.weather_alert
-      state: 'on'
+    - condition: and
+      conditions:
+      - condition: state
+        entity_id: binary_sensor.weather_alert
+        state: 'on'
+      - "{{ trigger.from_state.state != 'unavailable' }}"
   action:
     - service: switch.turn_on
       entity_id: switch.momentary_weather_alert_notification
@@ -2584,8 +2584,7 @@
     - platform: time
       at: '18:00:00'
   condition:
-    - condition: template
-      value_template: "{{ now().day == 1 }}"
+    - "{{ now().day == 1 }}"
   action:
     - service: input_boolean.turn_off
       entity_id: input_boolean.dog_med
@@ -2845,8 +2844,7 @@
     - platform: state
       entity_id: sensor.ssl_certificate_expiry
   condition:
-    - condition: template
-      value_template: "{{ states('sensor.ssl_certificate_expiry') != 'unavailable' }}"
+    - "{{ states('sensor.ssl_certificate_expiry') != 'unavailable' }}"
   action:
     - service: input_number.set_value
       data_template:
@@ -2859,8 +2857,7 @@
     - platform: state
       entity_id: sensor.totalwhr
   condition:
-    - condition: template
-      value_template: "{{ states('sensor.totalwhr') != 'unavailable' }}"
+    - "{{ states('sensor.totalwhr') != 'unavailable' }}"
   action:
     - service: input_number.set_value
       data_template:
@@ -2873,8 +2870,7 @@
     - platform: state
       entity_id: sensor.cpuwhr
   condition:
-    - condition: template
-      value_template: "{{ states('sensor.cpuwhr') != 'unavailable' }}"
+    - "{{ states('sensor.cpuwhr') != 'unavailable' }}"
   action:
     - service: input_number.set_value
       data_template:
@@ -2887,8 +2883,7 @@
     - platform: state
       entity_id: sensor.watthour
   condition:
-    - condition: template
-      value_template: "{{ states('sensor.watthour') != 'unavailable' }}"
+    - "{{ states('sensor.watthour') != 'unavailable' }}"
   action:
     - service: input_number.set_value
       data_template:
@@ -3064,8 +3059,7 @@
   alias: Turn off all lights at night
   trigger:
     - platform: time
-      at: '23:30:00'
-      # at: '02:30:00'
+      at: '02:30:00'
   condition:
     - condition: state
       entity_id: input_boolean.party

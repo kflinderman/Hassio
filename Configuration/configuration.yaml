@@ -48,6 +48,7 @@ logger:
     # custom_components.auto_backup: debug
     # homeassistant.components.python_script: debug
     # homeassistant.components.zoneminder.camera: debug
+    homeassistant.components.prismatik.light: critical
 
 history: !include _structure/history.yaml
 
@@ -110,6 +111,8 @@ zwave:
 # cloud: !include assistant/cloud.yaml
 
 alexa: !include assistant/alexa.yaml
+
+google_assistant: !include assistant/home.yaml
 
 api:
 

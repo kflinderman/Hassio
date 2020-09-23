@@ -145,13 +145,13 @@
         platform: state
         to_state: 'on'
       - entity_id: 'light.lightpack'
-        prob_given_true: 0.8
-        prob_given_false: 0.2
+        prob_given_true: 0.6
+        prob_given_false: 0.4
         platform: state
         to_state: 'on'
       - entity_id: 'light.lightpack'
-        prob_given_true: 0.7
-        prob_given_false: 0.3
+        prob_given_true: 0.6
+        prob_given_false: 0.4
         platform: state
         to_state: 'off'
       # - entity_id: 'media_player.plex_plex_web_firefox'
@@ -159,24 +159,24 @@
         # prob_given_false: 0.3
         # platform: state
         # to_state: 'paused'
-      - entity_id: 'media_player.plex_plex_web_firefox'
+      - entity_id: 'media_player.plex_plexamp_desktop_q6f6v0s'
         prob_given_true: 0.9
         prob_given_false: 0.1
         platform: state
         to_state: 'playing'
-      - entity_id: 'sensor.desktop_q6f6v0s_current_username'
-        prob_given_true: 0.6
-        prob_given_false: 0.2
-        platform: state
-        to_state: 'kenny'
+      # - entity_id: 'sensor.desktop_q6f6v0s_current_username'
+        # prob_given_true: 0.6
+        # prob_given_false: 0.2
+        # platform: state
+        # to_state: 'kenny'
       - entity_id: 'sensor.desktop_q6f6v0s_system_idle_time'
         prob_given_true: 1.0
         prob_given_false: 0.0
         platform: numeric_state
-        below: 600
+        below: 300
       - entity_id: 'binary_sensor.basement_bee_occupancy'
-        prob_given_true: 0.9
-        prob_given_false: 0.2
+        prob_given_true: 0.7
+        prob_given_false: 0.3
         platform: state
         to_state: 'on'
       - entity_id: 'binary_sensor.basement_occupancy'

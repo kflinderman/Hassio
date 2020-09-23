@@ -131,8 +131,8 @@ home_mode_check2:
 
 cpu_off:
   sequence:
-    # - service: script.turn_on
-      # entity_id: script.lightpack_off
+    - service: script.turn_on
+      entity_id: script.lightpack_off
     - delay:
         seconds: 30
     - service: hassio.addon_stdin
@@ -313,9 +313,9 @@ run_vacuum:
     - condition: state
       entity_id: input_boolean.vacation
       state: 'off'
-    # - condition: state
-      # entity_id: input_boolean.visitor
-      # state: 'off'
+    - condition: state
+      entity_id: input_boolean.visitor
+      state: 'off'
     - condition: state
       entity_id: input_boolean.party
       state: 'off'
@@ -383,8 +383,12 @@ hallway_vacuum:
 
 vacuum_error_brush:
   sequence:
-    - condition: template
-      value_template: "{{ is_state_attr('vacuum.xiaomi_vacuum_cleaner', 'error', 'Clean main brush') }}"
+    - condition: state
+      entity_id: vacuum.xiaomi_vacuum_cleaner
+      attribute: error
+      state: "Clean main brush"
+    # - condition: template
+      # value_template: "{{ is_state_attr('vacuum.xiaomi_vacuum_cleaner', 'error', 'Clean main brush') }}"
     - service: counter.decrement
       entity_id: counter.robo_error
     - condition: numeric_state

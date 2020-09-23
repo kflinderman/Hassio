@@ -885,31 +885,36 @@ views:
           - element1: light.sink_light
           - element1_tap: toggle
           - element1_hold: more-info
-      - template: room_template
-        type: 'custom:decluttering-card'
-        variables:
-          - group: group.dining_room
-          - off_pic: /local/room_pic/Dining_off.jpg
-          - on_pic: /local/room_pic/Dining_all.jpg
-          - room_name: Dining Room
-          - occupancy: binary_sensor.dining_occupancy
-          - occupancy_action: more-info
-          - brightness: sensor.space
-          - brightness_action: none
-          - temperature: sensor.space
-          - temperature_action: none
-          - element4: sensor.blank
-          - element4_tap: none
-          - element4_hold: none
-          - element3: sensor.blank
-          - element3_tap: none
-          - element3_hold: none
-          - element2: sensor.blank
-          - element2_tap: none
-          - element2_hold: none
-          - element1: light.dining_lights_level
-          - element1_tap: toggle
-          - element1_hold: more-info
+      - cards:
+          - template: room_template
+            type: 'custom:decluttering-card'
+            variables:
+              - group: group.dining_room
+              - off_pic: /local/room_pic/Dining_off.jpg
+              - on_pic: /local/room_pic/Dining_all.jpg
+              - room_name: Dining Room
+              - occupancy: binary_sensor.dining_occupancy
+              - occupancy_action: more-info
+              - brightness: sensor.vine_plant_light_intensity
+              - brightness_action: more-info
+              - temperature: sensor.vine_plant_temperature_round
+              - temperature_action: more-info
+              - element4: sensor.blank
+              - element4_tap: none
+              - element4_hold: none
+              - element3: sensor.blank
+              - element3_tap: none
+              - element3_hold: none
+              - element2: sensor.blank
+              - element2_tap: none
+              - element2_hold: none
+              - element1: light.dining_lights_level
+              - element1_tap: toggle
+              - element1_hold: more-info
+          - entity: plant.vine_plant
+            name: Pathos Plant
+            type: plant-status
+        type: vertical-stack
       - template: room_template
         type: 'custom:decluttering-card'
         variables:
@@ -1754,13 +1759,14 @@ views:
             volume_stateless: true
             volume_step: 2
           - artwork: cover
-            entity: media_player.plex_plex_web_firefox
+            entity: media_player.plex_plexamp_desktop_q6f6v0s
             hide:
               mute: true
               power: true
             idle_view:
               when_paused: true
             info: scroll
+            name: Plex
             type: 'custom:mini-media-player'
           - artwork: cover
             entity: media_player.playstation_4

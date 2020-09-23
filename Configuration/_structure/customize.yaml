@@ -77,6 +77,8 @@ sensor.money_plant_conductivity:
   icon: mdi:emoticon-poop
 sensor.money_plant_light_intensity:
   icon: mdi:white-balance-sunny
+sensor.vine_plant_light_intensity:
+  icon: mdi:white-balance-sunny
 sensor.sun_room_temperature:
   icon: mdi:thermometer
 sensor.sun_room_light:
@@ -238,5 +240,8 @@ sensor.alli_battery:
   icon: mdi:battery
   unit_of_measurement: V
 sensor.money_plant_temperature_round:
+  icon: mdi:thermometer
+  unit_of_measurement: '°F'
+sensor.vine_plant_temperature_round:
   icon: mdi:thermometer
   unit_of_measurement: '°F'

@@ -4,10 +4,14 @@ var Hacky_Hackerson = setInterval(run, 1000 / 60);
 var Loaded = false;
 var Haobj = null;
 var Root = null;
+var TitleElement = null;
 
 function Current_Order(config) {
   var return_order = null;
   if (config) {
+    if(config.title){
+      setTitle(config.title);
+    }
     if (config.order) {
       return_order = config.order;
     }
@@ -101,13 +105,21 @@ function Current_Order(config) {
 }
 
 function rearrange(order) {
-  for (var i = order.length - 1; i >= 0; i--) {
-    if (order[i].new_item == true) {
-      createItem(Root, order[i]);
+  if (order) {
+    for (var i = order.length - 1; i >= 0; i--) {
+      if (order[i].new_item == true) {
+        createItem(Root, order[i]);
+      }
+    }
+    for (var i = order.length - 1; i >= 0; i--) {
+      moveItem(Root, order[i]);
     }
   }
-  for (var i = order.length - 1; i >= 0; i--) {
-    moveItem(Root, order[i]);
+}
+
+function setTitle(title){
+  if(TitleElement){
+    TitleElement.innerHTML = title;
   }
 }
 
@@ -139,6 +151,7 @@ function getSidebar() {
   root = root && root.querySelector("app-drawer-layout app-drawer");
   root = root && root.querySelector("ha-sidebar");
   root = root && root.shadowRoot;
+  TitleElement = root && root.querySelector('.title') ? root.querySelector('.title') : null ;
   root = root && root.querySelector("paper-listbox");
   return root;
 }
