@@ -154,7 +154,7 @@ These are the remaining items that I have running on my system.  Most are pulled
 
 # Unraid Server
 
-* M/B: ASRock B450M Pro4 Version - s/n: M80-D5009603104
+* M/B: ASRock B450M Pro4 Version
 * BIOS: American Megatrends Inc. Version P3.90. Dated: 12/09/2019
 * CPU: AMD Ryzen 3 3200G with Radeon Vega Graphics @ 3600 MHz
 * Memory: 32 GiB DDR4 (max. installable capacity 128 GiB)
