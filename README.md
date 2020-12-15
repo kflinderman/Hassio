@@ -7,7 +7,7 @@ This is my primary [Home Assistant](https://home-assistant.io/) configuration, T
 * [Check Home Assistant configuration](https://github.com/home-assistant/addons/tree/master/check_config)
 * [Configurator](https://www.home-assistant.io/addons/configurator/)
 * [DuckDNS](https://www.home-assistant.io/addons/duckdns/)
-* [Glances](hhttps://github.com/hassio-addons/addon-glances)
+* [Glances](https://github.com/hassio-addons/addon-glances)
 * [Grafana](https://github.com/hassio-addons/addon-grafana)
 * [InfuxDB](https://github.com/hassio-addons/addon-influxdb)
 * [Let's Encrypt](https://www.home-assistant.io/addons/lets_encrypt/)
@@ -98,7 +98,6 @@ Here is a list of all of the devices and services that I use.  I will link to ea
 ### Switches
 | Component | Integration | Requires Purchase | Part | Comment |
 |-----------|-------------|-------------------|------|---------|
-| [Amazon](https://www.amazon.com/) | None | Yes | [Amazon Smart Plug](https://www.amazon.com/Amazon-Smart-Plug-works-Alexa/dp/B01MZEEFNX) | This is not tied to Home Assistant, but it is connected to the power source for the Raspberry Pi.  This way, if push comes to shove I can remotely power cycle Home Assistant without needing access to it. |
 | [TP-Link](https://www.tp-link.com/us/) | [Link](https://www.home-assistant.io/integrations/tplink/) | Yes | [HS100](https://www.kasasmart.com/us/products/smart-plugs/kasa-smart-wifi-plug-hs100) | |
 | [TP-Link](https://www.tp-link.com/us/) | [Link](https://www.home-assistant.io/integrations/tplink/) | Yes | [HS105](https://www.kasasmart.com/us/products/smart-plugs/kasa-smart-wifi-plug-mini) | |
 | [TP-Link](https://www.tp-link.com/us/) | [Link](https://www.home-assistant.io/integrations/tplink/) | Yes | [HS200](https://www.kasasmart.com/us/products/smart-switches/kasa-smart-wi-fi-light-switch-hs200) | |
