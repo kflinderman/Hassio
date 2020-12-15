@@ -39,9 +39,9 @@
 - platform: cert_expiry
   host: !secret url2_secret
   # port: 8123
-# - platform: illuminance
-  # name: DSS Illuminance
-  # entity_id: sensor.dark_sky_icon
+- platform: illuminance
+  name: Estimated Illuminance
+  entity_id: weather.main_floor
 - platform: weatheralerts
   state: NC
   zone: "025"
@@ -54,36 +54,12 @@
   # entities:
     # - sensor.money_plant_light_intensity
 # - platform: average
-  # name: Average Download Speed
+  # name: Average Swap
   # duration:
     # hours: 1
   # entities:
-    # - sensor.my_computer_network_download_mbps
-- platform: average
-  name: Average Swap
-  duration:
-    hours: 1
-  entities:
-    - sensor.swap_use_percent
-# - platform: average
-  # name: Average Upload Speed
-  # duration:
-    # hours: 1
-  # entities:
-    # - sensor.my_computer_network_upload_mbps
-# - platform: netgear_enhanced
-  # host: !secret router_ip
-  # username: !secret wifi_username
-  # password: !secret wifi_password
-  # resources:
-    # - firmware
-    # # - traffic_meter
-    # # - traffic_meter_on
-    # # - traffic_meter_options
-    # - info
-    # - speed_test_result
-    # - 2g_wifi_info
-    # - 5g_wifi_info
+    # - sensor.swap_use_percent
+
 
   ##### Template Sensors #####
 
@@ -97,12 +73,6 @@
     space:
       friendly_name: "Space"
       value_template: "{{ ' ' }}"
-
-    kenny_pixelxl_batt:
-      friendly_name: "Pixel XL Battery"
-      unit_of_measurement: 'V'
-      device_class: battery
-      value_template: "{{ state_attr('device_tracker.pixel_3a_xl', 'battery_level') }}"
 
     outside_temp:
       friendly_name: "Outside Temperature"
@@ -196,16 +166,6 @@
       value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'battery_level') }}"
       device_class: battery
       unit_of_measurement: '%'
-
-    # my_computer_network_download_mbps:
-      # friendly_name: "My Computer - Network Download"
-      # value_template: "{{ (states('sensor.desktop_q6f6v0s_network_0_bps_received')|int / 1000000) | round(3) }}"
-      # unit_of_measurement: 'Mbps'
-
-    # my_computer_network_upload_mbps:
-      # friendly_name: "My Computer - Network Upload"
-      # value_template: "{{ (states('sensor.desktop_q6f6v0s_network_0_bps_sent')|int / 1000000) | round(3) }}"
-      # unit_of_measurement: 'Mbps'
 
     pickup_day:
       friendly_name: "Pickup Day"
@@ -353,15 +313,6 @@
           None
         {% endif %}
 
-    last_alexa:
-      entity_id:
-        - media_player.basement_dot
-        - media_player.bedroom_dot
-        - media_player.living_room_dot
-        - media_player.sun_room_dot
-      value_template: >
-        {{ states.media_player | selectattr('attributes.last_called','eq',True) | map(attribute='entity_id') | first }}
-
   ##### Rounding Sensors #####
 
     load_1m_round:
@@ -444,9 +395,9 @@
       friendly_name: "Craft Room Fan Hours Round"
       value_template: "{{ states('sensor.craft_room_fan_hours') | round(1) }}"
 
-    master_bathroom_hours_round:
-      friendly_name: "Master Bathroom Hours Round"
-      value_template: "{{ states('sensor.master_bathroom_hours') | round(1) }}"
+    main_bathroom_hours_round:
+      friendly_name: "Main Bathroom Hours Round"
+      value_template: "{{ states('sensor.main_bathroom_hours') | round(1) }}"
 
     nursery_fan_hours_round:
       friendly_name: "Nursery Fan Hours Round"
@@ -614,66 +565,6 @@
   state_topic: "flora/C4:7C:8D:6B:59:4C/conductivity"
   unit_of_measurement: 'μS/cm'
   expire_after: 10000
-# - platform: mqtt
-  # name: "My Computer - Current User"
-  # state_topic: "iotlink/workgroup/desktop-q6f6v0s/windows-monitor/stats/system/current-user"
-  # unit_of_measurement: ''
-  # icon: mdi:account
-  # value_template: "{{ value }}"
-  # availability_topic: "iotlink/workgroup/desktop-q6f6v0s/lwt"
-  # payload_available: "ON"
-  # payload_not_available: "OFF"
-  # qos: 1
-# - platform: mqtt
-  # name: "My Computer - Idle Time"
-  # state_topic: "iotlink/workgroup/desktop-q6f6v0s/windows-monitor/stats/system/idle-time"
-  # unit_of_measurement: 'seconds'
-  # icon: mdi:timer
-  # value_template: "{{ value }}"
-  # availability_topic: "iotlink/workgroup/desktop-q6f6v0s/lwt"
-  # payload_available: "ON"
-  # payload_not_available: "OFF"
-  # qos: 1
-# - platform: mqtt
-  # name: "My Computer - CPU Usage"
-  # state_topic: "iotlink/workgroup/desktop-q6f6v0s/windows-monitor/stats/cpu/usage"
-  # unit_of_measurement: '%'
-  # icon: mdi:speedometer
-  # value_template: "{{ value }}"
-  # availability_topic: "iotlink/workgroup/desktop-q6f6v0s/lwt"
-  # payload_available: "ON"
-  # payload_not_available: "OFF"
-  # qos: 1
-# - platform: mqtt
-  # name: "My Computer - RAM Usage"
-  # state_topic: "iotlink/workgroup/desktop-q6f6v0s/windows-monitor/stats/memory/usage"
-  # unit_of_measurement: '%'
-  # icon: mdi:memory
-  # value_template: "{{ value }}"
-  # availability_topic: "iotlink/workgroup/desktop-q6f6v0s/lwt"
-  # payload_available: "ON"
-  # payload_not_available: "OFF"
-  # qos: 1
-# - platform: mqtt
-  # name: "My Computer - Network Upload"
-  # state_topic: "iotlink/workgroup/desktop-q6f6v0s/windows-monitor/stats/network/0/bytes-sent-per-second"
-  # unit_of_measurement: 'bps'
-  # icon: mdi:speedometer
-  # value_template: "{{ value }}"
-  # availability_topic: "iotlink/workgroup/desktop-q6f6v0s/lwt"
-  # payload_available: "ON"
-  # payload_not_available: "OFF"
-  # qos: 1
-# - platform: mqtt
-  # name: "My Computer - Network Download"
-  # state_topic: "iotlink/workgroup/desktop-q6f6v0s/windows-monitor/stats/network/0/bytes-received-per-second"
-  # unit_of_measurement: 'bps'
-  # icon: mdi:speedometer
-  # value_template: "{{ value }}"
-  # availability_topic: "iotlink/workgroup/desktop-q6f6v0s/lwt"
-  # payload_available: "ON"
-  # payload_not_available: "OFF"
-  # qos: 1
 
   ##### History Stats #####
 
@@ -860,8 +751,8 @@
   duration:
     days: 1
 - platform: history_stats
-  name: Master Bathroom Hours
-  entity_id: switch.masterbath
+  name: Main Bathroom Hours
+  entity_id: switch.mainbath
   state: 'on'
   end: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
   duration:

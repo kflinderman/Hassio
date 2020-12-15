@@ -136,27 +136,38 @@ ssdp:
 
 zeroconf:
 
+asuswrt:
+  host: !secret router_ip
+  username: !secret wifi_username
+  password: !secret wifi_password
+  sensors:
+    - devices
+    - upload
+    - download
+    - upload_speed
+    - download_speed
+
 device_tracker:
   # - platform: bluetooth_le_tracker
     # track_new_devices: true
   # - platform: bluetooth_tracker
     # request_rssi: true
-  - platform: netgear
-    # url: !secret router_url
-    host: !secret router_ip
-    username: !secret wifi_username
-    password: !secret wifi_password
-    port: 5000
-    devices:
-      - !secret kcell_mac
-      - !secret mcell_mac
-      - !secret kworkcell_mac
-      - !secret mlap_mac
-      - !secret nswitch_mac
-      - !secret ktab_mac
-    # accesspoints:
+  # - platform: netgear
+    # # url: !secret router_url
+    # host: !secret router_ip
+    # username: !secret wifi_username
+    # password: !secret wifi_password
+    # port: 5000
+    # devices:
       # - !secret kcell_mac
       # - !secret mcell_mac
+      # - !secret kworkcell_mac
+      # - !secret mlap_mac
+      # - !secret nswitch_mac
+      # - !secret ktab_mac
+    # # accesspoints:
+      # # - !secret kcell_mac
+      # # - !secret mcell_mac
 
 switch: !include _components/switch.yaml
 
@@ -220,7 +231,7 @@ tplink:
     - host: !secret bedfan_ip
     - host: !secret nurseryfan_ip
     - host: !secret craftfan_ip
-    - host: !secret masterbath_ip
+    - host: !secret mainbath_ip
     - host: !secret guestbed_ip
     - host: !secret cabinet1_ip
     - host: !secret cabinet2_ip
@@ -279,6 +290,17 @@ zoneminder:
 ffmpeg:
 
 camera:
+  - platform: xiaomi_cloud_map_extractor
+    host: !secret cop_vac_IP
+    token: !secret cop_vac_secret
+    username: !secret xiaomi_username
+    password: !secret xiaomi_password
+    draw: ['all']
+    attributes:
+      - calibration_points
+    scan_interval:
+      seconds: 10
+    auto_update: true 
   - platform: skybell
     monitored_conditions:
     - avatar

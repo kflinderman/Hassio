@@ -513,7 +513,9 @@ views:
   - badges: []
     cards:
       - cards:
-          - cards:
+          - type: grid
+            columns: 2
+            cards:
               - entity: person.kenny
                 image: /local/kenny_home.jpg
                 name: Kenny
@@ -528,13 +530,9 @@ views:
                   Work: /local/mere_away.jpg
                   home: /local/mere_home.jpg
                 type: picture-entity
-            type: horizontal-stack
-          - cards:
-              - entity: input_boolean.im_home
+              - type: picture-entity
+                entity: input_boolean.im_home
                 image: /local/imhome3.jpg
-                tap_action:
-                  action: toggle
-                type: picture-entity
               - elements:
                   - entity: sensor.alli_location
                     image: /local/alli_gone.jpg
@@ -609,7 +607,6 @@ views:
                     type: state-label
                 image: /local/alli.jpg
                 type: picture-elements
-            type: horizontal-stack
           - block:
               exemptions:
                 - user: kenny
@@ -748,7 +745,7 @@ views:
             - input_boolean.all_secondfloor
             - input_boolean.all_basement
             - input_boolean.all_outside
-          title: Master Switches
+          title: Main Switches
           type: entities
         type: 'custom:restriction-card'
       - entities:
@@ -828,9 +825,9 @@ views:
               - brightness_action: more-info
               - temperature: sensor.living_room_bee_temperature
               - temperature_action: more-info
-              - element4: sensor.blank
-              - element4_tap: none
-              - element4_hold: none
+              - element4: switch.outlet
+              - element4_tap: toggle
+              - element4_hold: more-info
               - element3: light.floor_lamp
               - element3_tap: toggle
               - element3_hold: more-info
@@ -1297,7 +1294,9 @@ views:
                           --iron-icon-fill-color: #FFFFFF
                         {% endif %}
                       }
-                    type: entity-button
+                    tap-action:
+                      action: toggle
+                    type: button
                   - entity: input_boolean.vacuum_stop_notify
                     style: |
                       ha-card {
@@ -1307,7 +1306,9 @@ views:
                           --iron-icon-fill-color: #FFFFFF
                         {% endif %}
                       }
-                    type: entity-button
+                    tap-action:
+                      action: toggle
+                    type: button
                   - entity: input_boolean.vacuum_basement
                     style: |
                       ha-card {
@@ -1317,7 +1318,9 @@ views:
                           --iron-icon-fill-color: #FFFFFF
                         {% endif %}
                       }
-                    type: entity-button
+                    tap-action:
+                      action: toggle
+                    type: button
                   - entity: input_boolean.vacuum_upstairs
                     style: |
                       ha-card {
@@ -1327,33 +1330,18 @@ views:
                           --iron-icon-fill-color: #FFFFFF
                         {% endif %}
                       }
-                    type: entity-button
-                type: horizontal-stack
+                    tap-action:
+                      action: toggle
+                    type: button
+                type: grid
+                columns: 4
               - entities:
                   - entity: input_select.fanmode
                 type: entities
             type: vertical-stack
-          - calibration_points:
-              - map:
-                  x: 946
-                  'y': 839
-                vacuum:
-                  x: 25500
-                  'y': 25500
-              - map:
-                  x: 1101
-                  'y': 705
-                vacuum:
-                  x: 26500
-                  'y': 26500
-              - map:
-                  x: 946
-                  'y': 705
-                vacuum:
-                  x: 25500
-                  'y': 26500
+          - camera_calibration: true
             entity: vacuum.xiaomi_vacuum_cleaner
-            map_image: /local/Xiaomi_Map_Edit.png
+            map_camera: camera.xiaomi_cloud_map_extractor
             type: 'custom:xiaomi-vacuum-map-card'
             zones:
               - - - 19772
@@ -1377,148 +1365,142 @@ views:
                   - 23309
                   - 26611
           - cards:
-              - cards:
-                  - entity: vacuum.xiaomi_vacuum_cleaner
-                    hold_action:
-                      action: none
-                    icon: 'mdi:rotate-left'
-                    show_icon: true
-                    show_name: false
-                    tap_action:
-                      action: call-service
-                      data:
-                        duration: 1500
-                        entity_id: vacuum.xiaomi_vacuum_cleaner
-                        rotation: 90
-                        velocity: 0.2
-                      service: vacuum.xiaomi_remote_control_move
-                    type: entity-button
-                  - entity: vacuum.xiaomi_vacuum_cleaner
-                    hold_action:
-                      action: none
-                    icon: 'mdi:arrow-up'
-                    show_icon: true
-                    show_name: false
-                    tap_action:
-                      action: call-service
-                      data:
-                        duration: 1500
-                        entity_id: vacuum.xiaomi_vacuum_cleaner
-                        rotation: 90
-                        velocity: 0.2
-                      service: vacuum.xiaomi_remote_control_move
-                    type: entity-button
-                  - entity: vacuum.xiaomi_vacuum_cleaner
-                    hold_action:
-                      action: none
-                    icon: 'mdi:rotate-right'
-                    show_icon: true
-                    show_name: false
-                    tap_action:
-                      action: call-service
-                      data:
-                        duration: 1500
-                        entity_id: vacuum.xiaomi_vacuum_cleaner
-                        rotation: 90
-                        velocity: 0.2
-                      service: vacuum.xiaomi_remote_control_move
-                    type: entity-button
-                type: horizontal-stack
-              - cards:
-                  - entity: vacuum.xiaomi_vacuum_cleaner
-                    hold_action:
-                      action: none
-                    icon: 'mdi:arrow-left'
-                    show_icon: true
-                    show_name: false
-                    tap_action:
-                      action: call-service
-                      data:
-                        duration: 1500
-                        entity_id: vacuum.xiaomi_vacuum_cleaner
-                        rotation: 90
-                        velocity: 0.2
-                      service: vacuum.xiaomi_remote_control_move
-                    type: entity-button
-                  - entity: input_boolean.vacuum_remote
-                    hold_action:
-                      action: more-info
-                    show_name: false
-                    style: |
-                      ha-card {
-                        {% if is_state('input_boolean.vacuum_remote', 'on') %}
-                          background: #73000A;
-                          color: #FFFFFF;
-                          --iron-icon-fill-color: #FFFFFF
-                        {% endif %}
-                      }
-                    tap_action:
-                      action: toggle
-                    type: entity-button
-                  - entity: vacuum.xiaomi_vacuum_cleaner
-                    hold_action:
-                      action: none
-                    icon: 'mdi:arrow-right'
-                    show_icon: true
-                    show_name: false
-                    tap_action:
-                      action: call-service
-                      data:
-                        duration: 1500
-                        entity_id: vacuum.xiaomi_vacuum_cleaner
-                        rotation: 90
-                        velocity: 0.2
-                      service: vacuum.xiaomi_remote_control_move
-                    type: entity-button
-                type: horizontal-stack
-              - cards:
-                  - entity: vacuum.xiaomi_vacuum_cleaner
-                    hold_action:
-                      action: none
-                    icon: 'mdi:subdirectory-arrow-left'
-                    show_icon: true
-                    show_name: false
-                    tap_action:
-                      action: call-service
-                      data:
-                        duration: 1500
-                        entity_id: vacuum.xiaomi_vacuum_cleaner
-                        rotation: 90
-                        velocity: 0.2
-                      service: vacuum.xiaomi_remote_control_move
-                    type: entity-button
-                  - entity: vacuum.xiaomi_vacuum_cleaner
-                    hold_action:
-                      action: none
-                    icon: 'mdi:arrow-down'
-                    show_icon: true
-                    show_name: false
-                    tap_action:
-                      action: call-service
-                      data:
-                        duration: 1500
-                        entity_id: vacuum.xiaomi_vacuum_cleaner
-                        rotation: 90
-                        velocity: 0.2
-                      service: vacuum.xiaomi_remote_control_move
-                    type: entity-button
-                  - entity: vacuum.xiaomi_vacuum_cleaner
-                    hold_action:
-                      action: none
-                    icon: 'mdi:subdirectory-arrow-right'
-                    show_icon: true
-                    show_name: false
-                    tap_action:
-                      action: call-service
-                      data:
-                        duration: 1500
-                        entity_id: vacuum.xiaomi_vacuum_cleaner
-                        rotation: 90
-                        velocity: 0.2
-                      service: vacuum.xiaomi_remote_control_move
-                    type: entity-button
-                type: horizontal-stack
-            type: vertical-stack
+              - entity: vacuum.xiaomi_vacuum_cleaner
+                hold_action:
+                  action: none
+                icon: 'mdi:rotate-left'
+                show_icon: true
+                show_name: false
+                tap_action:
+                  action: call-service
+                  data:
+                    duration: 1500
+                    entity_id: vacuum.xiaomi_vacuum_cleaner
+                    rotation: 90
+                    velocity: 0.2
+                  service: vacuum.xiaomi_remote_control_move
+                type: entity-button
+              - entity: vacuum.xiaomi_vacuum_cleaner
+                hold_action:
+                  action: none
+                icon: 'mdi:arrow-up'
+                show_icon: true
+                show_name: false
+                tap_action:
+                  action: call-service
+                  data:
+                    duration: 1500
+                    entity_id: vacuum.xiaomi_vacuum_cleaner
+                    rotation: 90
+                    velocity: 0.2
+                  service: vacuum.xiaomi_remote_control_move
+                type: entity-button
+              - entity: vacuum.xiaomi_vacuum_cleaner
+                hold_action:
+                  action: none
+                icon: 'mdi:rotate-right'
+                show_icon: true
+                show_name: false
+                tap_action:
+                  action: call-service
+                  data:
+                    duration: 1500
+                    entity_id: vacuum.xiaomi_vacuum_cleaner
+                    rotation: 90
+                    velocity: 0.2
+                  service: vacuum.xiaomi_remote_control_move
+                type: entity-button
+              - entity: vacuum.xiaomi_vacuum_cleaner
+                hold_action:
+                  action: none
+                icon: 'mdi:arrow-left'
+                show_icon: true
+                show_name: false
+                tap_action:
+                  action: call-service
+                  data:
+                    duration: 1500
+                    entity_id: vacuum.xiaomi_vacuum_cleaner
+                    rotation: 90
+                    velocity: 0.2
+                  service: vacuum.xiaomi_remote_control_move
+                type: entity-button
+              - entity: input_boolean.vacuum_remote
+                hold_action:
+                  action: more-info
+                show_name: false
+                style: |
+                  ha-card {
+                    {% if is_state('input_boolean.vacuum_remote', 'on') %}
+                      background: #73000A;
+                      color: #FFFFFF;
+                      --iron-icon-fill-color: #FFFFFF
+                    {% endif %}
+                  }
+                tap_action:
+                  action: toggle
+                type: entity-button
+              - entity: vacuum.xiaomi_vacuum_cleaner
+                hold_action:
+                  action: none
+                icon: 'mdi:arrow-right'
+                show_icon: true
+                show_name: false
+                tap_action:
+                  action: call-service
+                  data:
+                    duration: 1500
+                    entity_id: vacuum.xiaomi_vacuum_cleaner
+                    rotation: 90
+                    velocity: 0.2
+                  service: vacuum.xiaomi_remote_control_move
+                type: entity-button
+              - entity: vacuum.xiaomi_vacuum_cleaner
+                hold_action:
+                  action: none
+                icon: 'mdi:subdirectory-arrow-left'
+                show_icon: true
+                show_name: false
+                tap_action:
+                  action: call-service
+                  data:
+                    duration: 1500
+                    entity_id: vacuum.xiaomi_vacuum_cleaner
+                    rotation: 90
+                    velocity: 0.2
+                  service: vacuum.xiaomi_remote_control_move
+                type: entity-button
+              - entity: vacuum.xiaomi_vacuum_cleaner
+                hold_action:
+                  action: none
+                icon: 'mdi:arrow-down'
+                show_icon: true
+                show_name: false
+                tap_action:
+                  action: call-service
+                  data:
+                    duration: 1500
+                    entity_id: vacuum.xiaomi_vacuum_cleaner
+                    rotation: 90
+                    velocity: 0.2
+                  service: vacuum.xiaomi_remote_control_move
+                type: entity-button
+              - entity: vacuum.xiaomi_vacuum_cleaner
+                hold_action:
+                  action: none
+                icon: 'mdi:subdirectory-arrow-right'
+                show_icon: true
+                show_name: false
+                tap_action:
+                  action: call-service
+                  data:
+                    duration: 1500
+                    entity_id: vacuum.xiaomi_vacuum_cleaner
+                    rotation: 90
+                    velocity: 0.2
+                  service: vacuum.xiaomi_remote_control_move
+                type: entity-button
+            type: grid
         parameters:
           centeredSlides: true
           grabCursor: true
@@ -1582,7 +1564,7 @@ views:
               - element2: switch.bedfan
               - element2_tap: toggle
               - element2_hold: more-info
-              - element3: switch.masterbath
+              - element3: switch.mainbath
               - element3_tap: toggle
               - element3_hold: more-info
               - element4: sensor.blank
@@ -1844,7 +1826,13 @@ views:
     icon: 'mdi:arrow-down-bold-box'
     id: 3
     title: Basement
-  - badges: []
+  - icon: 'mdi:chart-bar'
+    id: 4
+    title: Statistics
+    visible:
+      - user: 6056bf6349ae4549b027474195fb72fc
+      - user: 639381cd8ec44777b706b039d48563fa
+    badges: []
     cards:
       - elements:
           - entity: sensor.load_1m
@@ -2086,9 +2074,11 @@ views:
           - block:
               exemptions:
                 - kenny
+                - meredith
             card:
-              entity: switch.pi_hole
-              type: entity
+              entities:
+                - switch.pi_hole
+              type: entities
             type: 'custom:restriction-card'
           - cards:
               - entity: sensor.pi_hole_ads_blocked_today
@@ -2326,10 +2316,10 @@ views:
               yellow: 18
             theme: default
             type: gauge
-          - entity: sensor.master_bathroom_hours_round
+          - entity: sensor.main_bathroom_hours_round
             max: 24
             min: 0
-            name: Master Bath
+            name: Main Bath
             severity:
               green: 12
               red: 24
@@ -2521,11 +2511,6 @@ views:
         show_header_toggle: false
         title: Check Configuration
         type: entities
-    icon: 'mdi:chart-bar'
-    id: 4
-    title: Statistics
-    visible:
-      - user: 6056bf6349ae4549b027474195fb72fc
   - badges: []
     cards:
       - head: group.bedroom_auto
@@ -2556,7 +2541,7 @@ views:
         type: 'custom:fold-entity-row'
       - head: group.vacuum_auto
         type: 'custom:fold-entity-row'
-      - head: group.mastersw_auto
+      - head: group.mainsw_auto
         type: 'custom:fold-entity-row'
       - head: group.notify_auto
         type: 'custom:fold-entity-row'
@@ -3252,6 +3237,112 @@ views:
             type: state-label
         image: /local/nRF6936_SPL.jpg
         type: picture-elements
+      - cards:
+          - cards:
+              - entity: person.kenny
+                image: /local/kenny_home.jpg
+                name: Kenny
+                state_image:
+                  Work: /local/kenny_away.jpg
+                  not_home: /local/kenny_away.jpg
+                type: picture-entity
+              - entity: person.meredith
+                image: /local/mere_away.jpg
+                name: Meredith
+                state_image:
+                  Work: /local/mere_away.jpg
+                  home: /local/mere_home.jpg
+                type: picture-entity
+            type: horizontal-stack
+          - cards:
+              - entity: input_boolean.im_home
+                image: /local/imhome3.jpg
+                tap_action:
+                  action: toggle
+                type: picture-entity
+              - elements:
+                  - entity: sensor.alli_location
+                    image: /local/alli_gone.jpg
+                    state_image:
+                      Basement: /local/alli.jpg
+                      Bedroom: /local/alli.jpg
+                      Living Room: /local/alli.jpg
+                      Nowhere: /local/alli_gone.jpg
+                      Nursery: /local/alli.jpg
+                    style:
+                      left: 50%
+                      top: 50%
+                      width: 100%
+                    type: image
+                  - entity: sensor.alli_location
+                    style:
+                      background-color: 'rgba(0, 0, 0, 0.5)'
+                      bottom: 0
+                      color: white
+                      font-size: 16px
+                      left: 0
+                      line-height: 32px
+                      padding: 0 8px
+                      transform: initial
+                      width: 100%
+                    type: state-label
+                  - entity: sensor.alli_button
+                    style:
+                      '--paper-item-icon-color': 'rgb(255,255,255)'
+                      color: 'rgba(255,255,255,1)'
+                      line-height: 32px
+                      margin: 3px 5px 0 0
+                      right: 0
+                      top: 0
+                      transform: scale(0.8)
+                    type: state-icon
+                  - entity: sensor.alli_button
+                    style:
+                      color: 'rgba(255,255,255,1)'
+                      font-size: 12px
+                      font-weight: bold
+                      line-height: 32px
+                      margin: 1px 35px
+                      pointer-events: none
+                      right: 0
+                      text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                      top: 0
+                      transform: initial
+                    type: state-label
+                  - entity: sensor.alli_battery
+                    style:
+                      '--paper-item-icon-color': 'rgb(255,255,255)'
+                      color: 'rgba(255,255,255,1)'
+                      line-height: 32px
+                      margin: 35px 5px 0 0
+                      right: 0
+                      top: 0
+                      transform: scale(0.8)
+                    type: state-icon
+                  - entity: sensor.alli_battery
+                    style:
+                      color: 'rgba(255,255,255,1)'
+                      font-size: 12px
+                      font-weight: bold
+                      line-height: 32px
+                      margin: 33px 35px
+                      pointer-events: none
+                      right: 0
+                      text-shadow: 'rgba(0, 0, 0, 0.8) 0px 0px 2px'
+                      top: 0
+                      transform: initial
+                    type: state-label
+                image: /local/alli.jpg
+                type: picture-elements
+            type: horizontal-stack
+          - block:
+              exemptions:
+                - user: kenny
+            card:
+              head: group.alli_locate
+              type: 'custom:fold-entity-row'
+            type: 'custom:restriction-card'
+        type: vertical-stack
     icon: 'mdi:test-tube'
     path: test-bench
     title: Test Bench

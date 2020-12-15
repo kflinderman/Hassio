@@ -1,6 +1,3 @@
-# - platform: gpmdp
-  # host: !secret pc_ip
-  # name: Desktop Media
 - platform: yamaha
   host: !secret livingroom_yam
   name: Stereo

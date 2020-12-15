@@ -1,16 +1,15 @@
 smart_home:
   filter:
     include_entities:
+      ##### Scripts #####
       - script.movie_time
       - script.steam_on
       - script.wiiu_on
       - script.bluetooth_on
       - script.netflix_watch_on
-      - script.game_on
       - script.switch_on
       - script.windows_open
       - script.pandora_listen_on
-      - script.cable_watch_on
       - script.dinner_time
       - script.vinyl_on
       - script.ps3_on
@@ -23,6 +22,8 @@ smart_home:
       - script.kitchen_vacuum
       - script.hallway_vacuum
       - script.away_mode
+      
+      ##### Input Booleans #####
       - input_boolean.all_basement
       - input_boolean.all_firstfloor
       - input_boolean.all_outside
@@ -36,30 +37,35 @@ smart_home:
       - input_boolean.goodnight
       - input_boolean.front_door_snooze
       - input_boolean.vacuum_cancel
+      
+      ##### Lights #####
       - light.dining_lights_level
       - light.kitchen_ceiling
-      - media_player.desktop_media
+      - light.lightpack
+      
+      ##### Media Players #####
       - media_player.living_room_tv
       - media_player.basement_stereo
       - media_player.stereo
+      - media_player.playstation_4
+      
+      ##### Switches #####
       - switch.deck_ceiling_outlet_switch
       - switch.desktoppc
       - switch.entrance_switch
       - switch.basement_hallway_switch
       - switch.upstairs_hallway_switch
       - switch.laundryroom
+      - switch.pi_hole
     include_domains:
       - group
-      # - light
     exclude_entities:
       - climate.main_floor_local
       - group.all_automations
-      - group.all_devices
       - group.all_lights
       - group.all_plants
       - group.all_scripts
       - group.all_switches
-      - group.all_vacuum_cleaners
       - group.alli_locate
       - group.default_view
       - group.basement
@@ -79,7 +85,7 @@ smart_home:
       - group.kitchen_auto
       - group.living_auto
       - group.location_auto
-      - group.mastersw_auto
+      - group.mainsw_auto
       - group.notify_auto
       - group.nursery_auto
       - group.other_auto

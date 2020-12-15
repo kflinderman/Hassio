@@ -9,8 +9,8 @@ entities:
     hidden: false    
   light.kitchen_ceiling:
     hidden: false
-  # light.lightpack:
-    # hidden: false
+  light.lightpack:
+    hidden: false
 
   ##### Switches #####
 
@@ -25,6 +25,8 @@ entities:
   switch.basement_hallway_switch:
     hidden: false
   switch.upstairs_hallway_switch:
+    hidden: false
+  switch.pi_hole:
     hidden: false
 
   ##### Input Booleans #####
@@ -51,6 +53,10 @@ entities:
     hidden: false
   input_boolean.goodnight:
     hidden: false
+  input_boolean.front_door_snooze:
+    hidden: false
+  input_boolean.vacuum_cancel:
+    hidden: false
 
   ##### Groups #####
 
@@ -58,17 +64,21 @@ entities:
     hidden: false
   group.bedroom:
     hidden: false
-  group.firstfloor:
-    hidden: false
   group.nursery:
     hidden: false
   group.craft:
     hidden: false
-  group.master:
-    hidden: false
   group.kitchen:
     hidden: false
+  group.dining_room:
+    hidden: false
   group.kitchen_no_ceiling:
+    hidden: false
+  group.first_floor:
+    hidden: false
+  group.firstfloor:
+    hidden: false
+  group.second_floor:
     hidden: false
   group.secondfloor:
     hidden: false
@@ -93,6 +103,8 @@ entities:
     hidden: false
   media_player.living_room_tv:
     hidden: false
+  media_player.playstation_4:
+    hidden: false
 
     ##### Scripts #####
 
@@ -106,18 +118,12 @@ entities:
     hidden: false
   script.netflix_watch_on:
     hidden: false
-  # script.after_dark:
-    # hidden: false
-  script.game_on:
-    hidden: false
   script.switch_on:
     hidden: false
   script.windows_open:
     hidden: false
   script.pandora_listen_on:
     hidden: false
-  # script.cable_watch_on:
-    # hidden: false
   script.dinner_time:
     hidden: false
   script.vinyl_on:
@@ -128,15 +134,17 @@ entities:
     hidden: false
   script.radio_listen_on:
     hidden: false
-  # script.vacuum_the_house:
-    # hidden: false
-  # script.tv_area_vacuum:
-    # hidden: false
-  # script.back_living_room_vacuum:
-    # hidden: false
-  # script.dining_room_vacuum:
-    # hidden: false
-  # script.kitchen_vacuum:
-    # hidden: false
-  # script.hallway_vacuum:
-    # hidden: false
+  script.vacuum_the_house:
+    hidden: false
+  script.tv_area_vacuum:
+    hidden: false
+  script.back_living_room_vacuum:
+    hidden: false
+  script.dining_room_vacuum:
+    hidden: false
+  script.kitchen_vacuum:
+    hidden: false
+  script.hallway_vacuum:
+    hidden: false
+  script.away_mode:
+    hidden: false

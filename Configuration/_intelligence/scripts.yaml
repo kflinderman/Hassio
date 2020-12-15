@@ -40,17 +40,19 @@
 #0 Location Scripts #
 #####################
 
-# home_mode:
-  # sequence:
-    # - service: vacuum.set_fan_speed
-      # data_template:
-        # entity_id: vacuum.xiaomi_vacuum_cleaner
-        # fan_speed: "Silent"
-    # - service: vacuum.return_to_base
-      # entity_id: vacuum.xiaomi_vacuum_cleaner
-    # - condition: state
-      # entity_id: input_boolean.window
-      # state: 'off'
+home_mode:
+  sequence:
+    - service: vacuum.set_fan_speed
+      data_template:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        fan_speed: 38
+    - service: vacuum.return_to_base
+      entity_id: vacuum.xiaomi_vacuum_cleaner
+    - condition: state
+      entity_id: input_boolean.window
+      state: 'off'
+    - service: ecobee.resume_program
+      entity_id: climate.main_floor
     # - service: script.turn_on
       # entity_id: script.home_mode_check1
     # - condition: time
@@ -68,62 +70,62 @@
         # entity_id: climate.main_floor
         # preset_mode: 'Home'
 
-home_mode_check1:
-  sequence:
-    - service: script.turn_on
-      entity_id: script.home_mode_check2
-    - condition: time
-      weekday:
-          - mon
-          - tue
-          - wed
-          - thu
-          - fri
-    - condition: time
-      after: '16:30:00'
-      before: '09:00:00'
-    - service: ecobee.resume_program
-      entity_id: climate.main_floor
-
-home_mode_check2:
-  sequence:
-    - condition: time
-      weekday:
-          - sat
-          - sun
-    - service: ecobee.resume_program
-      entity_id: climate.main_floor
-
-# away_mode:
+# home_mode_check1:
   # sequence:
-    # - service: vacuum.set_fan_speed
-      # data_template:
-        # entity_id: vacuum.xiaomi_vacuum_cleaner
-        # fan_speed: "Turbo"
-    # - service: input_boolean.turn_off
-      # data:
-        # entity_id: input_boolean.all_firstfloor
-    # - service: input_boolean.turn_off
-      # data:
-        # entity_id: input_boolean.all_secondfloor
-    # - service: input_boolean.turn_off
-      # data:
-        # entity_id: input_boolean.all_basement
-    # - service: light.turn_off
-      # entity_id: light.deck_light
-    # - service: homeassistant.turn_off
-      # entity_id: group.holiday
-    # - service: switch.turn_off
-      # entity_id: switch.deck_ceiling_outlet_switch
     # - service: script.turn_on
-      # entity_id: script.run_vacuum
-    # - condition: state
-      # entity_id: input_boolean.window
-      # state: 'off'
-    # - service: climate.set_preset_mode
-      # data:
-        # entity_id: climate.main_floor
-        # preset_mode: 'Away'
+      # entity_id: script.home_mode_check2
+    # - condition: time
+      # weekday:
+          # - mon
+          # - tue
+          # - wed
+          # - thu
+          # - fri
+    # - condition: time
+      # after: '16:30:00'
+      # before: '09:00:00'
+    # - service: ecobee.resume_program
+      # entity_id: climate.main_floor
+
+# home_mode_check2:
+  # sequence:
+    # - condition: time
+      # weekday:
+          # - sat
+          # - sun
+    # - service: ecobee.resume_program
+      # entity_id: climate.main_floor
+
+away_mode:
+  sequence:
+    - service: vacuum.set_fan_speed
+      data_template:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        fan_speed: 100
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.all_firstfloor
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.all_secondfloor
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.all_basement
+    - service: light.turn_off
+      entity_id: light.deck_light
+    - service: homeassistant.turn_off
+      entity_id: group.holiday
+    - service: switch.turn_off
+      entity_id: switch.deck_ceiling_outlet_switch
+    - service: script.turn_on
+      entity_id: script.run_vacuum
+    - condition: state
+      entity_id: input_boolean.window
+      state: 'off'
+    - service: climate.set_preset_mode
+      data:
+        entity_id: climate.main_floor
+        preset_mode: 'Away'
 
 ###############
 #1 PC Scripts #
@@ -140,29 +142,13 @@ cpu_off:
         addon: core_rpc_shutdown
         input: Desktop-Shutdown
 
-# lightpack_off:
-  # sequence:
-    # - condition: state
-      # entity_id: light.lightpack
-      # state: 'on'
-    # - service: light.turn_off
-      # data:
-        # entity_id: light.lightpack
-
-# after_dark:
-  # sequence:
-    # # - service: light.turn_on
-      # # entity_id: light.lightpack
-    # - service: homeassistant.turn_off
-      # entity_id: group.basement_no_aux
-
 timed_cpu_off:
   sequence:
     - delay:
         minutes: 5
     - condition: state
       entity_id: person.kenny
-      state: not_home
+      state: 'not_home'
     - service: script.turn_on
       entity_id: script.cpu_off
 
@@ -179,39 +165,6 @@ windows_open:
     - service: input_boolean.turn_on
       data:
         entity_id: input_boolean.window
-
-# vacation_temp:
-  # sequence:
-    # - service: climate.set_preset_mode
-      # data:
-        # entity_id: climate.main_floor
-        # preset_mode: 'Vac'
-
-# wakeup_temp:
-  # sequence:
-    # - service: climate.set_preset_mode
-      # data:
-        # entity_id: climate.main_floor
-        # preset_mode: 'Wake'
-
-party_temp:
-  sequence:
-    - service: climate.set_preset_mode
-      data:
-        entity_id: climate.main_floor
-        preset_mode: 'Party'
-
-climate_reset:
-  sequence:
-    - service: ecobee.resume_program
-      entity_id: climate.main_floor
-
-# ecobee_reset:
-  # sequence:
-    # - delay:
-        # seconds: 30
-    # - service: ecobee.resume_program
-      # entity_id: climate.main_floor
 
 ########################
 #3 Manual Call Scripts #
@@ -264,37 +217,37 @@ dinner_time:
       data:
         brightness: 75
 
-game_on:
-  alias: "Game On"
-  sequence:
-    - service: scene.turn_on
-      entity_id: scene.fun_basement
-    - delay:
-        seconds: 2
-    - service: light.turn_on
-      entity_id: light.basement_left
-      data:
-        brightness: 255
-    - service: light.turn_off
-      entity_id: light.basement_left
-    - service: light.turn_on
-      entity_id: light.basement_right
-      data:
-        brightness: 255
-    - service: light.turn_off
-      entity_id: light.basement_right
-    - service: light.turn_on
-      entity_id: light.basement_left
-    - service: light.turn_off
-      entity_id: light.basement_left
-    - service: light.turn_on
-      entity_id: light.basement_right
-    - service: light.turn_off
-      entity_id: light.basement_right
-    - delay:
-        seconds: 1
-    - service: scene.turn_on
-      entity_id: scene.fun_basement_2
+# game_on:
+  # alias: "Game On"
+  # sequence:
+    # - service: scene.turn_on
+      # entity_id: scene.fun_basement
+    # - delay:
+        # seconds: 2
+    # - service: light.turn_on
+      # entity_id: light.basement_left
+      # data:
+        # brightness: 255
+    # - service: light.turn_off
+      # entity_id: light.basement_left
+    # - service: light.turn_on
+      # entity_id: light.basement_right
+      # data:
+        # brightness: 255
+    # - service: light.turn_off
+      # entity_id: light.basement_right
+    # - service: light.turn_on
+      # entity_id: light.basement_left
+    # - service: light.turn_off
+      # entity_id: light.basement_left
+    # - service: light.turn_on
+      # entity_id: light.basement_right
+    # - service: light.turn_off
+      # entity_id: light.basement_right
+    # - delay:
+        # seconds: 1
+    # - service: scene.turn_on
+      # entity_id: scene.fun_basement_2
 
 ###################
 #4 Vacuum Scripts #
@@ -386,9 +339,7 @@ vacuum_error_brush:
     - condition: state
       entity_id: vacuum.xiaomi_vacuum_cleaner
       attribute: error
-      state: "Clean main brush"
-    # - condition: template
-      # value_template: "{{ is_state_attr('vacuum.xiaomi_vacuum_cleaner', 'error', 'Clean main brush') }}"
+      state: 'Clean main brush'
     - service: counter.decrement
       entity_id: counter.robo_error
     - condition: numeric_state
@@ -396,6 +347,23 @@ vacuum_error_brush:
       above: 0
     - service: vacuum.start
       entity_id: vacuum.xiaomi_vacuum_cleaner
+
+vacuum_error_brush_notify:
+  sequence:
+    - condition: state
+      entity_id: vacuum.xiaomi_vacuum_cleaner
+      attribute: error
+      state: 'Clean main brush'
+    - condition: state
+      entity_id: counter.robo_error
+      state: '0'
+    - condition: state
+      entity_id: input_boolean.vacuum_stop_notify
+      state: 'off'
+    - service: notify.mobile_app_pixel_3a_xl
+      data:
+        title: Robot Vacuum Error
+        message: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'error') }} - Too Many"
 
 vacuum_error_notify:
   sequence:
@@ -409,51 +377,24 @@ vacuum_error_notify:
         title: Robot Vacuum Error
         message: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'error') }}"
 
-# vacuum_basement_reset:
-  # sequence:
-    # - service: counter.reset
-      # entity_id: counter.basement_vacuum
-    # - delay:
-        # seconds: 5
-    # - service: input_boolean.turn_off
-      # entity_id: input_boolean.vacuum_basement
-
-# vacuum_upstairs_reset:
-  # sequence:
-    # - service: counter.reset
-      # entity_id: counter.upstairs_vacuum
-    # - delay:
-        # seconds: 5
-    # - service: input_boolean.turn_off
-      # entity_id: input_boolean.vacuum_upstairs
-
 ##################
 #5 Other Scripts #
 ##################
-sunset_switch:
-  sequence:
-    - delay:
-        minutes: 30
-    - service: switch.turn_on
-      entity_id: switch.cabinet_lights
-    - service: homeassistant.turn_on
-      entity_id: group.holiday
-    - service: light.turn_on
-      entity_id: light.dining_lights_level
-    - condition: state
-      entity_id: input_boolean.visitor
-      state: 'on'
-    - service: switch.turn_on
-      entity_id: switch.guestbed
-
-# goodnight_kenny:
+# sunset_switch:
   # sequence:
-    # - service: switch.turn_on
-      # entity_id: switch.entrance_switch
     # - delay:
-        # minutes: 5
-    # - service: switch.turn_off
-      # entity_id: switch.entrance_switch
+        # minutes: 30
+    # - service: switch.turn_on
+      # entity_id: switch.cabinet_lights
+    # - service: homeassistant.turn_on
+      # entity_id: group.holiday
+    # - service: light.turn_on
+      # entity_id: light.dining_lights_level
+    # - condition: state
+      # entity_id: input_boolean.visitor
+      # state: 'on'
+    # - service: switch.turn_on
+      # entity_id: switch.guestbed
 
 # night_time:
   # sequence:
@@ -475,15 +416,6 @@ sunset_switch:
       # entity_id: light.basement_ceiling_lights
     # - service: light.turn_on
       # entity_id: light.basement_ceiling_lights
-
-# door:
-  # sequence:
-    # - service: input_boolean.turn_on
-      # entity_id: input_boolean.door
-    # - delay:
-        # minutes: 3
-    # - service: input_boolean.turn_off
-      # entity_id: input_boolean.door
 
 first_floor_break:
   sequence:
@@ -525,54 +457,54 @@ outside_break:
     - service: input_boolean.turn_off
       entity_id: input_boolean.all_break
 
-# bedroom_off:
-  # sequence:
-    # - delay:
-        # minutes: 5
-    # - condition: numeric_state
-      # entity_id: sensor.bedroom_multisensor_burglar
-      # below: 4 
-    # - service: input_boolean.turn_on
-      # entity_id: input_boolean.bedroom_motion
-    # - delay:
-        # seconds: 2
-    # - service: homeassistant.turn_off
-      # entity_id: group.bedroom
-    # - delay:
-        # seconds: 2
-    # - service: input_boolean.turn_off
-      # entity_id: input_boolean.bedroom_motion
+bedroom_off:
+  sequence:
+    - delay:
+        minutes: 5
+    - condition: numeric_state
+      entity_id: sensor.bedroom_multisensor_burglar
+      below: 4 
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.bedroom_motion
+    - delay:
+        seconds: 2
+    - service: homeassistant.turn_off
+      entity_id: group.bedroom
+    - delay:
+        seconds: 2
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.bedroom_motion
 
-# kitchen_off:
-  # sequence:
-    # - delay:
-        # minutes: 5
-    # - condition: numeric_state
-      # entity_id: sensor.kitchen_burglar
-      # below: 4 
-    # - service: input_boolean.turn_on
-      # entity_id: input_boolean.kitchen_motion
-    # - delay:
-        # seconds: 2
-    # - service: homeassistant.turn_off
-      # entity_id: group.kitchen
-    # - delay:
-        # seconds: 2
-    # - service: input_boolean.turn_off
-      # entity_id: input_boolean.kitchen_motion
+kitchen_off:
+  sequence:
+    - delay:
+        minutes: 5
+    - condition: numeric_state
+      entity_id: sensor.kitchen_burglar
+      below: 4 
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.kitchen_motion
+    - delay:
+        seconds: 2
+    - service: homeassistant.turn_off
+      entity_id: group.kitchen
+    - delay:
+        seconds: 2
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.kitchen_motion
       
-# basement_off:
-  # sequence:
-    # - service: input_boolean.turn_on
-      # entity_id: input_boolean.basement_motion
-    # - delay:
-        # seconds: 2
-    # - service: homeassistant.turn_off
-      # entity_id: group.basement_no_aux
-    # - delay:
-        # seconds: 2
-    # - service: input_boolean.turn_off
-      # entity_id: input_boolean.basement_motion
+basement_off:
+  sequence:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.basement_motion
+    - delay:
+        seconds: 2
+    - service: homeassistant.turn_off
+      entity_id: group.basement_no_aux
+    - delay:
+        seconds: 2
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.basement_motion
 
 # livingroom_stop_on:
   # sequence:
@@ -587,24 +519,24 @@ outside_break:
     # - service: input_boolean.turn_on
       # entity_id: input_boolean.livingroom
 
-# livingroom_off:
-  # sequence:
-    # - service: input_boolean.turn_on
-      # entity_id: input_boolean.livingroom_motion
-    # - service: input_boolean.turn_off
-      # entity_id: input_boolean.livingroom
-    # - delay:
-        # seconds: 2
-    # - service: light.turn_off
-      # entity_id: group.livingroom
-    # - delay:
-        # seconds: 2
-    # - service: input_boolean.turn_off
-      # entity_id: input_boolean.livingroom_motion
-    # - delay:
-        # seconds: 10
-    # - service: input_boolean.turn_on
-      # entity_id: input_boolean.livingroom
+livingroom_off:
+  sequence:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.livingroom_motion
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.livingroom
+    - delay:
+        seconds: 2
+    - service: light.turn_off
+      entity_id: group.livingroom
+    - delay:
+        seconds: 2
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.livingroom_motion
+    - delay:
+        seconds: 10
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.livingroom
 
 basement_check:
   sequence:
@@ -617,44 +549,42 @@ basement_check:
 
 basement_loop:
   sequence:
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.basement_light_off_loop
     - condition: state
       entity_id: light.basement_ceiling_lights
       state: 'on'
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.basement_light_off_loop
+    - condition: template
+      value_template: "{{ not (not is_state('light.basement_1', 'off') and not is_state('light.basement_2', 'off') and not is_state('light.basement_3', 'off') and not is_state('light.basement_4', 'off')) }}"
     - service: script.turn_on
       entity_id: script.basement_check
 
-medications:
-  sequence:
-    - service: notify.residents
-      data:
-        title: Alli Needs Her Meds
-        message: "Make sure to give Alli her meds for the month!"
-    - service: script.turn_on
-      data:
-        entity_id: script.medications_loop
+# medications:
+  # sequence:
+    # - service: notify.residents
+      # data:
+        # title: Alli Needs Her Meds
+        # message: "Make sure to give Alli her meds for the month!"
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.medications_loop
 
-medications_loop:
-  sequence:
-    - delay:
-        days: 1
-    - condition: state
-      entity_id: input_boolean.dog_med
-      state: 'off'
-    - service: script.turn_on
-      data:
-        entity_id: script.medications
+# medications_loop:
+  # sequence:
+    # - delay:
+        # days: 1
+    # - condition: state
+      # entity_id: input_boolean.dog_med
+      # state: 'off'
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.medications
 
 alli_location_spreadsheet:
   sequence:
     - condition: state
       entity_id: group.alli_locate
       state: 'on'
-    - service: ifttt.trigger
-      data_template: {"event":"Alli_Location", "value1":"{{ states('sensor.alli_spreadsheet') }}", "value2":"{{ states('sensor.alli_location') }}", "value3":"{{ states('sensor.basement_alli_signal') }}, {{ states('sensor.bedroom_alli_signal') }}, {{ states('sensor.living_room_alli_signal') }}, {{ states('sensor.nursery_alli_signal') }}"}
+    # - service: ifttt.trigger
+      # data_template: {"event":"Alli_Location", "value1":"{{ states('sensor.alli_spreadsheet') }}", "value2":"{{ states('sensor.alli_location') }}", "value3":"{{ states('sensor.basement_alli_signal') }}, {{ states('sensor.bedroom_alli_signal') }}, {{ states('sensor.living_room_alli_signal') }}, {{ states('sensor.nursery_alli_signal') }}"}
     - service: script.turn_on
       data:
         entity_id: script.alli_location_spreadsheet_loop
@@ -699,167 +629,167 @@ front_door_snooze:
 #6 Random Vacation Scripts #
 ############################
 
-rand_vac1:
-  sequence:
-    - condition: numeric_state
-      entity_id: sensor.vacation_randomizer
-      above: 0
-    - service: script.turn_on
-      data:
-        entity_id: script.rand_vac2
-    - condition: numeric_state
-      entity_id: sensor.vacation_randomizer
-      below: 2
-    - service: script.turn_on
-      data:
-        entity_id: script.vac_living
-    - service: script.turn_on
-      data:
-        entity_id: script.vac_bed
+# rand_vac1:
+  # sequence:
+    # - condition: numeric_state
+      # entity_id: sensor.vacation_randomizer
+      # above: 0
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.rand_vac2
+    # - condition: numeric_state
+      # entity_id: sensor.vacation_randomizer
+      # below: 2
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.vac_living
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.vac_bed
 
-rand_vac2:
-  sequence:
-    - condition: numeric_state
-      entity_id: sensor.vacation_randomizer
-      above: 1
-    - service: script.turn_on
-      data:
-        entity_id: script.rand_vac3
-    - condition: numeric_state
-      entity_id: sensor.vacation_randomizer
-      below: 3
-    - service: script.turn_on
-      data:
-        entity_id: script.vac_living
-    - service: script.turn_on
-      data:
-        entity_id: script.vac_nursery
+# rand_vac2:
+  # sequence:
+    # - condition: numeric_state
+      # entity_id: sensor.vacation_randomizer
+      # above: 1
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.rand_vac3
+    # - condition: numeric_state
+      # entity_id: sensor.vacation_randomizer
+      # below: 3
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.vac_living
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.vac_nursery
 
-rand_vac3:
-  sequence:
-    - condition: numeric_state
-      entity_id: sensor.vacation_randomizer
-      above: 2
-    - service: script.turn_on
-      data:
-        entity_id: script.rand_vac4
-    - condition: numeric_state
-      entity_id: sensor.vacation_randomizer
-      below: 4
-    - service: script.turn_on
-      data:
-        entity_id: script.vac_living
-    - service: script.turn_on
-      data:
-        entity_id: script.vac_craft
+# rand_vac3:
+  # sequence:
+    # - condition: numeric_state
+      # entity_id: sensor.vacation_randomizer
+      # above: 2
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.rand_vac4
+    # - condition: numeric_state
+      # entity_id: sensor.vacation_randomizer
+      # below: 4
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.vac_living
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.vac_craft
 
-rand_vac4:
-  sequence:
-    - condition: numeric_state
-      entity_id: sensor.vacation_randomizer
-      above: 3
-    - service: script.turn_on
-      data:
-        entity_id: script.rand_vac5
-    - condition: numeric_state
-      entity_id: sensor.vacation_randomizer
-      below: 5
-    - service: script.turn_on
-      data:
-        entity_id: script.vac_living
+# rand_vac4:
+  # sequence:
+    # - condition: numeric_state
+      # entity_id: sensor.vacation_randomizer
+      # above: 3
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.rand_vac5
+    # - condition: numeric_state
+      # entity_id: sensor.vacation_randomizer
+      # below: 5
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.vac_living
 
-rand_vac5:
-  sequence:
-    - condition: numeric_state
-      entity_id: sensor.vacation_randomizer
-      above: 4
-    - service: script.turn_on
-      data:
-        entity_id: script.rand_vac6
-    - condition: numeric_state
-      entity_id: sensor.vacation_randomizer
-      below: 6
-    - service: script.turn_on
-      data:
-        entity_id: script.vac_bed
-    - service: script.turn_on
-      data:
-        entity_id: script.vac_nursery
+# rand_vac5:
+  # sequence:
+    # - condition: numeric_state
+      # entity_id: sensor.vacation_randomizer
+      # above: 4
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.rand_vac6
+    # - condition: numeric_state
+      # entity_id: sensor.vacation_randomizer
+      # below: 6
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.vac_bed
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.vac_nursery
 
-rand_vac6:
-  sequence:
-    - condition: numeric_state
-      entity_id: sensor.vacation_randomizer
-      above: 5
-    - service: script.turn_on
-      data:
-        entity_id: script.rand_vac7
-    - condition: numeric_state
-      entity_id: sensor.vacation_randomizer
-      below: 7
-    - service: script.turn_on
-      data:
-        entity_id: script.vac_bed
-    - service: script.turn_on
-      data:
-        entity_id: script.vac_craft
+# rand_vac6:
+  # sequence:
+    # - condition: numeric_state
+      # entity_id: sensor.vacation_randomizer
+      # above: 5
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.rand_vac7
+    # - condition: numeric_state
+      # entity_id: sensor.vacation_randomizer
+      # below: 7
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.vac_bed
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.vac_craft
 
-rand_vac7:
-  sequence:
-    - condition: numeric_state
-      entity_id: sensor.vacation_randomizer
-      above: 6
-    - service: script.turn_on
-      data:
-        entity_id: script.rand_vac8
-    - condition: numeric_state
-      entity_id: sensor.vacation_randomizer
-      below: 8
-    - service: script.turn_on
-      data:
-        entity_id: script.vac_bed
+# rand_vac7:
+  # sequence:
+    # - condition: numeric_state
+      # entity_id: sensor.vacation_randomizer
+      # above: 6
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.rand_vac8
+    # - condition: numeric_state
+      # entity_id: sensor.vacation_randomizer
+      # below: 8
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.vac_bed
 
-rand_vac8:
-  sequence:
-    - condition: numeric_state
-      entity_id: sensor.vacation_randomizer
-      above: 7
-    - service: script.turn_on
-      data:
-        entity_id: script.rand_vac9
-    - condition: numeric_state
-      entity_id: sensor.vacation_randomizer
-      below: 9
-    - service: script.turn_on
-      data:
-        entity_id: script.vac_nursery
-    - service: script.turn_on
-      data:
-        entity_id: script.vac_craft
+# rand_vac8:
+  # sequence:
+    # - condition: numeric_state
+      # entity_id: sensor.vacation_randomizer
+      # above: 7
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.rand_vac9
+    # - condition: numeric_state
+      # entity_id: sensor.vacation_randomizer
+      # below: 9
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.vac_nursery
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.vac_craft
 
-rand_vac9:
-  sequence:
-    - condition: numeric_state
-      entity_id: sensor.vacation_randomizer
-      above: 8
-    - service: script.turn_on
-      data:
-        entity_id: script.rand_vac10
-    - condition: numeric_state
-      entity_id: sensor.vacation_randomizer
-      below: 10
-    - service: script.turn_on
-      data:
-        entity_id: script.vac_nursery
+# rand_vac9:
+  # sequence:
+    # - condition: numeric_state
+      # entity_id: sensor.vacation_randomizer
+      # above: 8
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.rand_vac10
+    # - condition: numeric_state
+      # entity_id: sensor.vacation_randomizer
+      # below: 10
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.vac_nursery
 
-rand_vac10:
-  sequence:
-    - condition: numeric_state
-      entity_id: sensor.vacation_randomizer
-      above: 9
-    - service: script.turn_on
-      data:
-        entity_id: script.vac_craft
+# rand_vac10:
+  # sequence:
+    # - condition: numeric_state
+      # entity_id: sensor.vacation_randomizer
+      # above: 9
+    # - service: script.turn_on
+      # data:
+        # entity_id: script.vac_craft
 
 
 vac_living:
@@ -942,7 +872,7 @@ vinyl_off:
         source: AUDIO5
 
 netflix_watch_on:
-  alias: "The Stereo Movies"
+  alias: "The Stereo TV"
   sequence:
     - service: script.turn_on
       data:
@@ -979,45 +909,6 @@ netflix_watch_off:
       data:
         entity_id: media_player.stereo
         source: AUDIO1
-
-cable_watch_on:
-  alias: "The Stereo to Watch Cable"
-  sequence:
-    - service: script.turn_on
-      data:
-        entity_id: script.cable_watch_off
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: media_player.stereo
-          state: 'on'
-        - condition: state
-          entity_id: media_player.stereo
-          state: 'playing'
-        - condition: state
-          entity_id: media_player.stereo
-          state: 'idle'
-    - service: media_player.select_source
-      data:
-        entity_id: media_player.stereo
-        source: HDMI2
-
-cable_watch_off:
-  sequence:
-    - delay:
-        seconds: 1
-    - condition: state
-      entity_id: media_player.stereo
-      state: 'off'
-    - service: media_player.turn_on
-      data:
-        entity_id: media_player.stereo
-    - delay:
-        seconds: 5
-    - service: media_player.select_source
-      data:
-        entity_id: media_player.stereo
-        source: HDMI2
 
 pandora_listen_on:
   alias: "The Stereo Music"

@@ -13,10 +13,9 @@ include:
       - device_tracker.mere_iphone
       - device_tracker.mere_iphone_bt
       - device_tracker.iphone_meredith
-      - device_tracker.kenny_pixelxl
-      - device_tracker.kenny_pixelxl_bt
-      - device_tracker.kenny_pixelxl_gps_2
-      - device_tracker.pixel_xl
+      - device_tracker.kenny_pixel3axl
+      - device_tracker.kenny_pixel3axl_bt
+      - device_tracker.pixel_3a_xl
       - person.kenny
       - person.meredith
 
@@ -25,12 +24,13 @@ include:
       - sensor.alli_battery
       - sensor.alli_button
       - sensor.alli_location
-      - sensor.average_download_speed
-      - sensor.average_upload_speed
+      - sensor.asuswrt_download_speed
+      - sensor.asuswrt_upload_speed
       - sensor.basement_bee_temperature
       - sensor.basement_multisensor_luminance
       - sensor.basement_multisensor_relative_humidity
       - sensor.basement_multisensor_temperature
+      - sensor.basementbay
       - sensor.bedroom_bee_temperature
       - sensor.bedroom_multisensor_luminance
       - sensor.bedroom_multisensor_relative_humidity
@@ -40,7 +40,6 @@ include:
       - sensor.kitchen_relative_humidity
       - sensor.kitchen_temperature
       - sensor.kitchensensorbatt
-      - sensor.last_alexa
       - sensor.last_boot
       - sensor.living_room_bee_temperature
       - sensor.living_room_light_level
@@ -54,12 +53,8 @@ include:
       - sensor.money_plant_light_intensity
       - sensor.money_plant_moisture
       - sensor.money_plant_temperature
-      - sensor.my_computer_cpu_usage
-      - sensor.my_computer_current_user
-      - sensor.my_computer_idle_time
-      - sensor.my_computer_ram_usage
       - sensor.nursery_light_level
-      - sensor.basementbay
+      - sensor.livingbay
       - sensor.outside_temp
       - sensor.processor_use
       - sensor.speedtest_download
@@ -72,23 +67,29 @@ include:
       - sensor.thingy_carbon_dioxide
       - sensor.thingy_humidity
       - sensor.thingy_temperature
+      - sensor.target_temp_high
+      - sensor.target_temp_low
       - sensor.uptime
       - sensor.vacuum_area
       - sensor.vacuum_battery
       - sensor.vacuum_fan
       - sensor.vacuum_status
       - sensor.vacuum_time
+      - sensor.vine_plant_battery
+      - sensor.vine_plant_conductivity
+      - sensor.vine_plant_light_intensity
+      - sensor.vine_plant_moisture
+      - sensor.vine_plant_temperature
 
     ##### Switches #####
 
       - switch.outlet
       - switch.bedfan
+      - switch.basement_floor_light
       - switch.nurseryfan
       - switch.craftfan
-      - switch.masterbath
-      - switch.cabinet_lights
+      - switch.mainbath
       - switch.guestbed
-      - switch.airhockey
       - switch.deck_ceiling_outlet_switch
       - switch.entrance_switch
       - switch.upstairs_hallway_switch
@@ -96,16 +97,11 @@ include:
       - switch.desktoppc
       - switch.laundryroom
       - switch.sun_room_market_lights
-      - switch.ng_enhanced_reboot
-      - switch.ng_enhanced_run_speed_test
       - switch.cabinet_lights
       - switch.cabinet_lights_2
 
     ##### Input Booleans #####
 
-      - input_boolean.vacation
-      - input_boolean.visitor
-      - input_boolean.party
       - input_boolean.alli_bed
       - input_boolean.alli_nursery
       - input_boolean.alli_craft
@@ -114,8 +110,13 @@ include:
       - input_boolean.alli_dining
       - input_boolean.alli_guest
       - input_boolean.alli_basement
+      
+      - input_boolean.vacation
+      - input_boolean.visitor
+      - input_boolean.party
       - input_boolean.im_home
       - input_boolean.window
+      - input_boolean.door
 
     ##### Other #####
 
@@ -123,6 +124,7 @@ include:
       - climate.main_floor
       - vacuum.xiaomi_vacuum_cleaner
       - plant.money_plant
+      - plant.vine_plant
       - counter.basement_vacuum
       - counter.upstairs_vacuum
 
@@ -136,6 +138,8 @@ exclude:
       - binary_sensor.living_room_bee_occupancy_local
       - binary_sensor.main_floor_occupancy_local
       - binary_sensor.weather_alert
+      - binary_sensor.updater
+      - binary_sensor.trash_day
       - media_player.kenneths_alexa_apps
       - media_player.merediths_alexa_apps
       - media_player.this_device

@@ -108,7 +108,7 @@ bedroom:
   entities:
     - light.swirl_lamp
     - switch.bedfan
-    - switch.masterbath
+    - switch.mainbath
 
 nursery:
   name: Nursery
@@ -183,7 +183,7 @@ Switch Lights:
     - switch.nurseryfan
     - switch.bedfan
     - switch.craftfan
-    - switch.masterbath
+    - switch.mainbath
     - switch.cabinet_lights
     - switch.cabinet_lights_2
     - switch.guestbed
@@ -219,7 +219,7 @@ secondfloor:
   entities:
     - light.swirl_lamp
     - switch.bedfan
-    - switch.masterbath
+    - switch.mainbath
     - switch.craftfan
     - light.sewing_light
     - light.nursery_light
@@ -229,7 +229,7 @@ secondfloor:
 holiday:
   name: Holiday Lights
   entities:
-    # - switch.outlet
+    - switch.outlet
     - input_boolean.holiday
 
 ###############
@@ -273,12 +273,13 @@ bedroom_auto:
     - automation.allow_motion_bedroom
     - automation.bedroom_stop_motion
     - automation.bedroom_fan
+    - automation.bedroom_off_wfh
 
 nursery_auto:
   name: Nursery Automations
   entities:
     - automation.thingy_sensor_battery
-    - automation.night_nursery
+    - automation.nursery_off_wfh
 
 craft_auto:
   name: Craft Room Automations
@@ -319,6 +320,7 @@ basement_auto:
     - automation.basement_lights_off_no_one
     - automation.basement_stereo_on
     - automation.basement_stereo_off
+    - automation.lightpack_stereo_off
     - automation.basement_off_check
     - automation.basement_stop_motion
     - automation.remote_stereo_control
@@ -347,6 +349,7 @@ outside_auto:
 bedtime_auto:
   name: Bedtime Automations
   entities:
+    - automation.nfc_bed
     - automation.kenny_wake_up
     - automation.kenny_awake
     - automation.mere_wake_up
@@ -378,6 +381,7 @@ pc_auto:
     - automation.turn_off_pc_night_weekday
     - automation.pc_state_home
     - automation.pc_after_dark
+    - automation.pc_after_dark_tag
     - automation.lightpack_cpu_on
     - automation.lightpack_cpu_go
     - automation.ps4_lightpack
@@ -409,8 +413,8 @@ vacuum_auto:
     - automation.vacuum_basement_notification
     - automation.vacuum_upstairs_notification
 
-mastersw_auto:
-  name: Master Switches Automations
+mainsw_auto:
+  name: Main Switches Automations
   entities:
     - automation.ib_first_floor
     - automation.ib_second_floor
@@ -442,7 +446,6 @@ ha_auto:
   name: Home Assistant Automations
   entities:
     - automation.theme_set
-    # - automation.delay_automations_on_restart
     - automation.recently_restarted
     - automation.backup_new_day
     - automation.daily_snapshot_clean_up
@@ -472,3 +475,4 @@ other_auto:
     - automation.temperature_party
     - automation.update_alli
     - automation.dog_meds_flag
+    - automation.pi_hole_restart

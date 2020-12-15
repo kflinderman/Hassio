@@ -176,11 +176,11 @@ sensor.kitchen_luminance:
   ##### Switches #####
 
 switch.outlet:
-  friendly_name: Misc Switch
+  # friendly_name: Misc Switch
   # friendly_name: Spooky Lights
   # icon: mdi:ghost
-  # friendly_name: Christmas Lights
-  # icon: mdi:pine-tree
+  friendly_name: Christmas Lights
+  icon: mdi:pine-tree
 switch.basement_floor_light:
   friendly_name: Basement Floor Light
   icon: mdi:floor-lamp
@@ -193,8 +193,8 @@ switch.nurseryfan:
 switch.craftfan:
   friendly_name: Craft Room Fan
   icon: mdi:ceiling-light
-switch.masterbath:
-  friendly_name: Master Bathroom Lights
+switch.mainbath:
+  friendly_name: Main Bathroom Lights
   icon: mdi:water
 switch.cabinet_lights:
   friendly_name: Cabinet Lights

@@ -5,6 +5,7 @@ exposed_domains:
   - group
   - vacuum
 entity_config:
+  ##### Scripts #####
   script.movie_time:
     expose: true
     name: Movie Time
@@ -16,16 +17,12 @@ entity_config:
     expose: true
   script.netflix_watch_on:
     expose: true
-  script.game_on:
-    expose: true
   script.switch_on:
     expose: true
   script.windows_open:
     expose: true
     name: Windows Open
   script.pandora_listen_on:
-    expose: true
-  script.cable_watch_on:
     expose: true
   script.dinner_time:
     expose: true
@@ -54,6 +51,8 @@ entity_config:
   script.away_mode:
     expose: true
     name: Away Mode
+    
+  ##### Input Booleans #####
   input_boolean.all_basement:
     expose: true
   input_boolean.all_firstfloor:
@@ -80,16 +79,26 @@ entity_config:
     expose: true
   input_boolean.vacuum_cancel:
     expose: true
+    
+  ##### Lights #####
   light.dining_lights_level:
     expose: true
   light.kitchen_ceiling:
     expose: true
-  media_player.desktop_media:
+  light.lightpack:
     expose: true
+    
+  ##### Media Players #####
   media_player.basement_stereo:
     expose: true
   media_player.stereo:
     expose: true
+  media_player.living_room_tv:
+    expose: true
+  media_player.playstation_4:
+    expose: true
+    
+  ##### Switches #####
   switch.deck_ceiling_outlet_switch:
     expose: true
   switch.desktoppc:
@@ -102,10 +111,10 @@ entity_config:
     expose: true
   switch.laundryroom:
     expose: true
+  switch.pi_hole:
+    expose: true
 
   group.all_automations:
-    expose: false
-  group.all_devices:
     expose: false
   group.all_lights:
     expose: false
@@ -114,8 +123,6 @@ entity_config:
   group.all_scripts:
     expose: false
   group.all_switches:
-    expose: false
-  group.all_vacuum_cleaners:
     expose: false
   group.alli_locate:
     expose: false
@@ -155,7 +162,7 @@ entity_config:
     expose: false
   group.location_auto:
     expose: false
-  group.mastersw_auto:
+  group.mainsw_auto:
     expose: false
   group.notify_auto:
     expose: false

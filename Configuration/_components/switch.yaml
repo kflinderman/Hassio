@@ -15,11 +15,3 @@
   toggle_for: 
     hours: 2
   cancellable: true
-# - platform: netgear_enhanced
-  # host: !secret router_ip
-  # username: !secret wifi_username
-  # password: !secret wifi_password
-  # resources:
-    # # - 'traffic_meter'
-    # - 'run_speed_test'
-    # - 'reboot'

@@ -6,9 +6,9 @@
     sensors:
       vacuum_dnd:
         friendly_name: "Vacuum DND"
-        entity_id:
-          - sensor.time
-          - vacuum.xiaomi_vacuum_cleaner
+        # entity_id:
+          # - sensor.time
+          # - vacuum.xiaomi_vacuum_cleaner
         value_template: >-
           {{ is_state_attr('vacuum.xiaomi_vacuum_cleaner', 'do_not_disturb', 'on')
               and (state_attr('vacuum.xiaomi_vacuum_cleaner', 'do_not_disturb_start').split(':')[0]|float <= now().hour 
@@ -154,11 +154,6 @@
         prob_given_false: 0.4
         platform: state
         to_state: 'off'
-      # - entity_id: 'media_player.plex_plex_web_firefox'
-        # prob_given_true: 0.7
-        # prob_given_false: 0.3
-        # platform: state
-        # to_state: 'paused'
       - entity_id: 'media_player.plex_plexamp_desktop_q6f6v0s'
         prob_given_true: 0.9
         prob_given_false: 0.1

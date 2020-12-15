@@ -151,6 +151,9 @@ async def _catch_login_errors(func, instance, args, kwargs) -> Any:
     if instance is None and args:
         instance = args[0]
     if hasattr(instance, "check_login_changes"):
+        # _LOGGER.debug(
+        #     "%s checking for login changes", instance,
+        # )
         instance.check_login_changes()
     try:
         result = await func(*args, **kwargs)
@@ -205,11 +208,18 @@ def report_relogin_required(hass, login, email) -> bool:
     if hass and login and email:
         if login.status:
             _LOGGER.debug(
-                "Reporting need to relogin to %s with %s", login.url, hide_email(email)
+                "Reporting need to relogin to %s with %s stats: %s",
+                login.url,
+                hide_email(email),
+                login.stats,
             )
             hass.bus.async_fire(
                 "alexa_media_relogin_required",
-                event_data={"email": hide_email(email), "url": login.url},
+                event_data={
+                    "email": hide_email(email),
+                    "url": login.url,
+                    "stats": login.stats,
+                },
             )
             return True
     return False

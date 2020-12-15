@@ -15,7 +15,7 @@
 # #B Location Automations        #
 # #C PC Automations              #
 # #D Vacuum Automations          #
-# #E Master Switches Automations #
+# #E Main Switches Automations   #
 # #F Notifications Automations   #
 # #G Weather Automations         #
 # #H Home Assistant Automations  #
@@ -37,6 +37,77 @@
 ########################
 #0 Bedroom Automations #
 ########################
+#z
+# - id: bedroom_lights
+  # alias: Bedroom Lights
+  # mode: restart
+  # trigger:
+    # - platform: state
+      # entity_id: sensor.bedroom_multisensor_burglar
+    # - platform: state
+      # entity_id: input_boolean.sexy_time
+  # action:
+    # - choose:
+      # - conditions:
+        # - condition: and
+          # conditions:
+            # - condition: numeric_state
+              # entity_id: sensor.bedroom_multisensor_burglar
+              # above: 4
+            # - condition: numeric_state
+              # entity_id: sensor.bedroom_multisensor_luminance
+              # below: 13
+            # - condition: state
+              # entity_id: input_boolean.bedroom
+              # state: 'on'
+            # - condition: state
+              # entity_id:
+                # - input_boolean.sexy_time
+                # - light.swirl_lamp
+                # - switch.bedfan
+              # state: 'off'
+            # - condition: or
+              # conditions:
+                # - condition: state
+                  # entity_id: group.residents
+                  # state: home
+                # - condition: state
+                  # entity_id: input_boolean.im_home
+                  # state: 'on'
+        # sequence:
+          # - service: light.turn_on
+            # entity_id: light.swirl_lamp
+          # - service: switch.turn_on
+            # entity_id: switch.bedfan
+      # - conditions:
+          # - condition: and
+            # conditions:
+            # - condition: numeric_state
+              # entity_id: sensor.bedroom_multisensor_burglar
+              # below: 4
+              # for:
+                # minutes: 5
+            # - condition: state
+              # entity_id:
+                # - input_boolean.sexy_time
+                # - group.bedroom
+              # state: 'on'
+            # - condition: state
+              # entity_id: input_boolean.vacation
+              # state: 'off'
+            # - condition: time
+              # after: '08:00:00'
+        # sequence:
+          # - service: input_boolean.turn_on
+            # entity_id: input_boolean.bedroom_motion
+          # - delay:
+              # seconds: 2
+          # - service: homeassistant.turn_off
+            # entity_id: group.bedroom
+          # - delay:
+              # seconds: 2
+          # - service: input_boolean.turn_off
+            # entity_id: input_boolean.bedroom_motion
 
 - id: bedroom_lights
   alias: Bedroom Lights
@@ -74,9 +145,6 @@
                 - condition: state
                   entity_id: input_boolean.im_home
                   state: 'on'
-                - condition: state
-                  entity_id: input_boolean.sexy_time
-                  state: 'off'
         sequence:
           - service: light.turn_on
             entity_id: light.swirl_lamp
@@ -91,29 +159,16 @@
             - condition: state
               entity_id:
                 - input_boolean.sexy_time
-                - group.bedroom
-              state: 'on'
-            - condition: state
-              entity_id: input_boolean.vacation
+                - input_boolean.vacation
               state: 'off'
+            - condition: state
+              entity_id: group.bedroom
+              state: 'on'
             - condition: time
               after: '08:00:00'
         sequence:
-          # - delay:
-              # minutes: 5
-          - condition: numeric_state
-            entity_id: sensor.bedroom_multisensor_burglar
-            below: 4 
-          - service: input_boolean.turn_on
-            entity_id: input_boolean.bedroom_motion
-          - delay:
-              seconds: 2
-          - service: homeassistant.turn_off
-            entity_id: group.bedroom
-          - delay:
-              seconds: 2
-          - service: input_boolean.turn_off
-            entity_id: input_boolean.bedroom_motion
+          - service: script.turn_on
+            entity_id: script.bedroom_off
 
 - id: allow_motion_bedroom
   alias: Allow Motion Bedroom
@@ -206,7 +261,7 @@
           - service: group.set
             data:
               object_id: bedroom
-              entities: light.swirl_lamp, switch.masterbath
+              entities: light.swirl_lamp, switch.mainbath
       - conditions:
           - condition: numeric_state
             entity_id: sensor.outside_temp
@@ -215,7 +270,24 @@
           - service: group.set
             data:
               object_id: bedroom
-              entities: light.swirl_lamp, switch.bedfan, switch.masterbath
+              entities: light.swirl_lamp, switch.bedfan, switch.mainbath
+
+- id: bedroom_off_wfh
+  alias: Bedroom Off WFH
+  trigger:
+    - platform: time
+      at: '09:00:00'
+  condition:
+    - condition: time
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+  action:
+    - service: homeassistant.turn_off
+      entity_id: group.bedroom
 
 ########################
 #1 Nursery Automations #
@@ -235,34 +307,22 @@
         title: Thingy Sensor Low Battery
         message: "The thingy sensor has very low battery."
 
-# - id: night_nursery
-  # alias: Night Nursery
-  # trigger:
-    # - platform: state
-      # entity_id: switch.upstairs_hallway_switch
-  # condition:
-    # - condition: or
-      # conditions:
-      # - condition: time
-        # after: '22:00:00'
-      # - condition: time
-        # before: '7:00:00'
-  # action:
-    # - choose:
-      # - conditions:
-          # - condition: state
-            # entity_id: switch.upstairs_hallway_switch
-            # state: 'on'
-        # sequence:
-          # - service: light.turn_on
-            # entity_id: light.nursery_light
-      # - conditions:
-          # - condition: state
-            # entity_id: switch.upstairs_hallway_switch
-            # state: 'off'
-        # sequence:
-          # - service: light.turn_off
-            # entity_id: light.nursery_light
+- id: nursery_off_wfh
+  alias: Nursery Off WFH
+  trigger:
+    - platform: time
+      at: '09:00:00'
+  condition:
+    - condition: time
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+  action:
+    - service: homeassistant.turn_off
+      entity_id: group.nursery
 
 ###########################
 #2 Craft Room Automations #
@@ -444,22 +504,8 @@
           entity_id: media_player.living_room_tv
           state: 'off'
   action:
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.livingroom_motion
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.livingroom
-    - delay:
-        seconds: 2
-    - service: light.turn_off
-      entity_id: group.livingroom
-    - delay:
-        seconds: 2
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.livingroom_motion
-    - delay:
-        seconds: 10
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.livingroom
+    - service: script.turn_on
+      entity_id: script.livingroom_off
 
 - id: living_room_stereo
   alias: Living Room Stereo
@@ -482,20 +528,15 @@
           - service: media_player.turn_on
             entity_id: media_player.stereo
       - conditions:
-          - condition: and
-            conditions:
-            - condition: state
-              entity_id: media_player.living_room_tv
-              state: 'off'
-            - condition: state
-              entity_id: media_player.stereo
-              state: 'on'
-        sequence:
-          - delay:
-              minutes: 1
           - condition: state
             entity_id: media_player.living_room_tv
             state: 'off'
+            for:
+              minutes: 1
+        sequence:
+          # - condition: state
+            # entity_id: media_player.stereo
+            # state: 'on'
           - service: media_player.turn_off
             entity_id: media_player.stereo
 
@@ -546,6 +587,103 @@
 ########################
 #4 Kitchen Automations #
 ########################
+#z
+# - id: kitchen_lights
+  # alias: Kitchen Lights
+  # mode: restart
+  # trigger:
+    # - platform: state
+      # entity_id: sensor.kitchen_burglar
+  # action:
+    # - choose:
+      # - conditions:
+          # - condition: and
+            # conditions:
+            # - condition: numeric_state
+              # entity_id: sensor.kitchen_burglar
+              # above: 4
+            # - condition: numeric_state
+              # entity_id: sensor.kitchen_luminance
+              # above: 15
+            # - condition: state
+              # entity_id: input_boolean.kitchen
+              # state: 'on'
+            # - condition: state
+              # entity_id:
+                # - light.sink_light
+                # - switch.cabinet_lights
+                # - switch.cabinet_lights_2
+              # state: 'off'
+            # - condition: or
+              # conditions:
+                # - condition: state
+                  # entity_id: group.residents
+                  # state: home
+                # - condition: state
+                  # entity_id: input_boolean.im_home
+                  # state: 'on'
+        # sequence:
+          # - service: homeassistant.turn_on
+            # entity_id: group.kitchen_no_ceiling
+      # - conditions:
+          # - condition: and
+            # conditions:
+            # - condition: numeric_state
+              # entity_id: sensor.kitchen_burglar
+              # above: 4
+            # - condition: numeric_state
+              # entity_id: sensor.kitchen_luminance
+              # below: 16
+            # - condition: state
+              # entity_id: input_boolean.kitchen
+              # state: 'on'
+            # - condition: state
+              # entity_id:
+                # - light.sink_light
+                # - switch.cabinet_lights
+                # - switch.cabinet_lights_2
+                # - switch.kitchen_ceiling
+              # state: 'off'
+            # - condition: or
+              # conditions:
+                # - condition: state
+                  # entity_id: group.residents
+                  # state: home
+                # - condition: state
+                  # entity_id: input_boolean.im_home
+                  # state: 'on'
+        # sequence:
+          # - service: homeassistant.turn_on
+            # entity_id: group.kitchen
+      # - conditions:
+          # - condition: and
+            # conditions:
+            # - condition: numeric_state
+              # entity_id: sensor.kitchen_burglar
+              # below: 4
+              # for:
+                # minutes: 2
+            # - condition: state
+              # entity_id:
+                # - input_boolean.vacation
+                # - input_boolean.party
+              # state: 'off'
+            # - condition: state
+              # entity_id: group.kitchen
+              # state: 'on'
+            # - condition: time
+              # after: '08:00:00'
+        # sequence:
+          # - service: input_boolean.turn_on
+            # entity_id: input_boolean.kitchen_motion
+          # - delay:
+              # seconds: 2
+          # - service: homeassistant.turn_off
+            # entity_id: group.kitchen
+          # - delay:
+              # seconds: 2
+          # - service: input_boolean.turn_off
+            # entity_id: input_boolean.kitchen_motion
 
 - id: kitchen_lights
   alias: Kitchen Lights
@@ -631,21 +769,8 @@
             - condition: time
               after: '08:00:00'
         sequence:
-          - delay:
-              minutes: 2
-          - condition: numeric_state
-            entity_id: sensor.kitchen_burglar
-            below: 4 
-          - service: input_boolean.turn_on
-            entity_id: input_boolean.kitchen_motion
-          - delay:
-              seconds: 2
-          - service: homeassistant.turn_off
-            entity_id: group.kitchen
-          - delay:
-              seconds: 2
-          - service: input_boolean.turn_off
-            entity_id: input_boolean.kitchen_motion
+          - service: script.turn_on
+            entity_id: script.kitchen_off
 
 - id: kitchen_sensor_battery
   alias: Kitchen Sensor Battery
@@ -758,6 +883,68 @@
       entity_id: group.dining_room
     - service: input_boolean.turn_off
       entity_id: input_boolean.dining_room_occupancy
+#z
+# - id: dining_two_people_move_off_lights
+  # alias: Dining Two People Move Off Lights
+  # mode: restart
+  # trigger:
+    # - platform: state
+      # entity_id: binary_sensor.basement_occupancy
+      # to: 'on'
+      # for:
+        # minutes: 15
+    # - platform: state
+      # entity_id: binary_sensor.bedroom_occupancy
+      # to: 'on'
+      # for:
+        # minutes: 15
+    # - platform: state
+      # entity_id: binary_sensor.kitchen_occupancy
+      # to: 'on'
+      # for:
+        # minutes: 15
+    # - platform: state
+      # entity_id: binary_sensor.living_room_bay_occupancy
+      # to: 'on'
+      # for:
+        # minutes: 15
+    # - platform: state
+      # entity_id: binary_sensor.craft_room_occupancy
+      # to: 'on'
+      # for:
+        # minutes: 15
+  # condition:
+    # condition: and
+    # conditions:
+    # - condition: numeric_state
+      # entity_id: sensor.numhome
+      # below: 3
+      # above: 1
+    # - condition: numeric_state
+      # entity_id: counter.occupancy
+      # above: 1
+      # for:
+        # minutes: 30
+    # - condition: state
+      # entity_id: group.dining_room
+      # state: 'on'
+    # - condition: state
+      # entity_id:
+        # - input_boolean.party
+        # - input_boolean.visitor
+      # state: 'off'
+  # action:
+    # - condition: numeric_state
+      # entity_id: sensor.numhome
+      # below: 3
+      # above: 1
+    # - condition: state
+      # entity_id: group.dining_room
+      # state: 'on'
+    # - service: homeassistant.turn_off
+      # entity_id: group.dining_room
+    # - service: input_boolean.turn_off
+      # entity_id: input_boolean.dining_room_occupancy
 
 - id: dining_two_people_move_off_lights
   alias: Dining Two People Move Off Lights
@@ -881,16 +1068,8 @@
     - condition: time
       after: '08:00:00'
   action:
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.basement_motion
-    - delay:
-        seconds: 2
-    - service: homeassistant.turn_off
-      entity_id: group.basement_no_aux
-    - delay:
-        seconds: 2
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.basement_motion
+    - service: script.turn_on
+      entity_id: script.basement_off
 
 - id: basement_lights_off_no_one
   alias: Basement Lights OFF No One
@@ -961,6 +1140,27 @@
   action:
     - service: media_player.turn_off
       entity_id: media_player.basement_stereo
+    - service: light.turn_off
+      entity_id: light.consoles
+
+- id: lightpack_stereo_off
+  alias: Lightpack Stereo Off
+  trigger:
+    - platform: state
+      entity_id: media_player.basement_stereo
+      to: 'off'
+  condition:
+    condition: or
+    conditions:
+    - condition: time
+      after: '23:00:00'
+    - condition: time
+      before: '04:00:00'
+  action:
+    - service: light.turn_off
+      entity_id: light.lightpack
+    - service: light.turn_off
+      entity_id: light.consoles
 
 - id: basement_off_check
   alias: Basement Off Check
@@ -986,17 +1186,13 @@
       for:
         minutes: 2
   condition:
-    condition: or
+    condition: and
     conditions:
     - condition: state
-      entity_id:
-        - light.basement_ceiling_lights
-        - input_boolean.basement_light_off_loop
+      entity_id: light.basement_ceiling_lights
       state: 'on'
-    - "{{ not is_state('light.basement_1', 'on') and not is_state('light.basement_2', 'on') and not is_state('light.basement_3', 'on') and not is_state('light.basement_4', 'on') }}"
+    - "{{ not (not is_state('light.basement_1', 'off') and not is_state('light.basement_2', 'off') and not is_state('light.basement_3', 'off') and not is_state('light.basement_4', 'off')) }}"
   action:
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.basement_light_off_loop
     - service: script.turn_on
       entity_id: script.basement_check
 
@@ -1152,8 +1348,8 @@
   action:
     - service: homeassistant.turn_off
       entity_id: group.outside
-    # - service: homeassistant.turn_off
-      # entity_id: group.holiday
+    - service: homeassistant.turn_off
+      entity_id: group.holiday
 
 - id: door_activity
   alias: Door Activity
@@ -1228,6 +1424,64 @@
 ########################
 #A Bedtime Automations #
 ########################
+
+- id: nfc_bed
+  alias: NFC Bed
+  trigger:
+    - platform: tag
+      tag_id: 4fd66ddc-366c-4ced-96d1-689699ae5601
+  action:
+    - choose:
+      - conditions:
+          - condition: and
+            conditions:
+            - condition: or
+              conditions:
+              - condition: time
+                after: '21:30:00'
+              - condition: time
+                before: '04:30:00'
+            - condition: state
+              entity_id:
+                - input_boolean.party
+                - input_boolean.visitor
+              state: 'off'
+        sequence:
+          - service: input_boolean.turn_off
+            entity_id: input_boolean.all_firstfloor
+          - service: input_boolean.turn_off
+            entity_id: input_boolean.all_secondfloor
+          - service: input_boolean.turn_off
+            entity_id: input_boolean.all_basement
+          - service: input_boolean.turn_off
+            entity_id: input_boolean.all_outside
+          - service: homeassistant.turn_off
+            entity_id: group.holiday
+          - service: script.turn_on
+            entity_id: script.cpu_off
+          - service: media_player.turn_off
+            entity_id: media_player.basement_stereo
+      - conditions:
+          - condition: and
+            conditions:
+            - condition: time
+              after: '04:30:00'
+            - condition: time
+              before: '10:30:00'
+            - condition: time
+              weekday:
+              - mon
+              - tue
+              - wed
+              - thu
+              - fri
+        sequence:
+          - service: switch.turn_on
+            entity_id: switch.mainbath
+          - service: homeassistant.turn_on
+            entity_id: group.dining_room
+          - service: switch.turn_on
+            entity_id: group.cabinet_lights
 
 - id: kenny_wake_up
   alias: Kenny Wake Up
@@ -1315,8 +1569,8 @@
       entity_id: group.kitchen
     - service: homeassistant.turn_on
       entity_id: group.dining_room
-    - service: switch.turn_on
-      entity_id: switch.entrance_switch
+    # - service: switch.turn_on
+      # entity_id: switch.entrance_switch
 
 - id: mere_wake_up_gym_day
   alias: Mere Wake Up Gym Day
@@ -1346,8 +1600,8 @@
       entity_id: group.kitchen
     - service: homeassistant.turn_on
       entity_id: group.dining_room
-    - service: switch.turn_on
-      entity_id: switch.entrance_switch
+    # - service: switch.turn_on
+      # entity_id: switch.entrance_switch
 
 - id: kenny_bed
   alias: Kenny Bed
@@ -1398,8 +1652,7 @@
   alias: Bedtime
   trigger:
     - platform: time
-      at: '22:30:00'
-      # at: '23:30:00'
+      at: '23:30:00'
     - platform: state
       entity_id: binary_sensor.living_room_bay_occupancy
       to: 'off'
@@ -1412,8 +1665,7 @@
         - input_boolean.party
       state: 'off'
     - condition: time
-      after: '22:30:00'
-      # after: '23:30:00'
+      after: '23:30:00'
   action:
     - service: homeassistant.turn_off
       entity_id: group.dining_room
@@ -1488,34 +1740,8 @@
         - not_home
         - Work
   action:
-    - service: vacuum.set_fan_speed
-      data_template:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-        fan_speed: 100
-    - service: input_boolean.turn_off
-      data:
-        entity_id: input_boolean.all_firstfloor
-    - service: input_boolean.turn_off
-      data:
-        entity_id: input_boolean.all_secondfloor
-    - service: input_boolean.turn_off
-      data:
-        entity_id: input_boolean.all_basement
-    - service: light.turn_off
-      entity_id: light.deck_light
-    - service: homeassistant.turn_off
-      entity_id: group.holiday
-    - service: switch.turn_off
-      entity_id: switch.deck_ceiling_outlet_switch
     - service: script.turn_on
-      entity_id: script.run_vacuum
-    - condition: state
-      entity_id: input_boolean.window
-      state: 'off'
-    - service: climate.set_preset_mode
-      data:
-        entity_id: climate.main_floor
-        preset_mode: 'Away'
+      entity_id: script.away_mode
 
 - id: mere_leave_gym_day
   alias: Mere Leave Gym Day
@@ -1615,8 +1841,101 @@
       entity_id: input_boolean.vacation
       state: 'on'
   action:
-    - service: script.turn_on
-      entity_id: script.rand_vac1
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: sensor.vacation_randomizer
+              state: '1'
+          sequence:
+            - service: script.turn_on
+              data:
+                entity_id: script.vac_living
+            - service: script.turn_on
+              data:
+                entity_id: script.vac_bed
+        - conditions:
+            - condition: state
+              entity_id: sensor.vacation_randomizer
+              state: '2'
+          sequence:
+            - service: script.turn_on
+              data:
+                entity_id: script.vac_living
+            - service: script.turn_on
+              data:
+                entity_id: script.vac_nursery
+        - conditions:
+            - condition: state
+              entity_id: sensor.vacation_randomizer
+              state: '3'
+          sequence:
+            - service: script.turn_on
+              data:
+                entity_id: script.vac_living
+            - service: script.turn_on
+              data:
+                entity_id: script.vac_craft
+        - conditions:
+            - condition: state
+              entity_id: sensor.vacation_randomizer
+              state: '4'
+          sequence:
+            - service: script.turn_on
+              data:
+                entity_id: script.vac_living
+        - conditions:
+            - condition: state
+              entity_id: sensor.vacation_randomizer
+              state: '5'
+          sequence:
+            - service: script.turn_on
+              data:
+                entity_id: script.vac_bed
+            - service: script.turn_on
+              data:
+                entity_id: script.vac_nursery
+        - conditions:
+            - condition: state
+              entity_id: sensor.vacation_randomizer
+              state: '6'
+          sequence:
+            - service: script.turn_on
+              data:
+                entity_id: script.vac_bed
+            - service: script.turn_on
+              data:
+                entity_id: script.vac_craft
+        - conditions:
+            - condition: state
+              entity_id: sensor.vacation_randomizer
+              state: '7'
+          sequence:
+            - service: script.turn_on
+              data:
+                entity_id: script.vac_bed
+        - conditions:
+            - condition: state
+              entity_id: sensor.vacation_randomizer
+              state: '8'
+          sequence:
+            - service: script.turn_on
+              data:
+                entity_id: script.vac_nursery
+            - service: script.turn_on
+              data:
+                entity_id: script.vac_craft
+        - conditions:
+            - condition: state
+              entity_id: sensor.vacation_randomizer
+              state: '9'
+          sequence:
+            - service: script.turn_on
+              data:
+                entity_id: script.vac_nursery
+      default:
+        - service: script.turn_on
+          data:
+            entity_id: script.vac_craft
 
 - id: turn_off_away_mode
   alias: Turn off away mode
@@ -1628,31 +1947,8 @@
       entity_id: input_boolean.im_home
       to: 'on'
   action:
-    - service: vacuum.set_fan_speed
-      data_template:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-        fan_speed: 38
-    - service: vacuum.return_to_base
-      entity_id: vacuum.xiaomi_vacuum_cleaner
-    - condition: state
-      entity_id: input_boolean.window
-      state: 'off'
     - service: script.turn_on
-      entity_id: script.home_mode_check1
-    - condition: time
-      weekday:
-          - mon
-          - tue
-          - wed
-          - thu
-          - fri
-    - condition: time
-      after: '09:00:00'
-      before: '16:30:00'
-    - service: climate.set_preset_mode
-      data:
-        entity_id: climate.main_floor
-        preset_mode: 'Home'
+      entity_id: script.home_mode
 
 - id: turn_off_home_switch
   alias: Turn off home switch
@@ -1732,8 +2028,8 @@
   action:
     - service: homeassistant.turn_on
       entity_id: group.dining_room
-    - service: switch.turn_on
-      entity_id: switch.entrance_switch
+    # - service: switch.turn_on
+      # entity_id: switch.entrance_switch
     - service: light.turn_on
       entity_id: light.deck_light
     - service: switch.turn_on
@@ -1852,6 +2148,19 @@
       entity_id: group.basement_no_aux
     - service: light.turn_on
       entity_id: light.consoles
+
+- id: pc_after_dark_tag
+  alias: PC after dark tag
+  trigger:
+    - platform: tag
+      tag_id: ef8cd33c-6749-42f4-83d1-90c9bf079620
+  action:
+    - service: light.turn_on
+      entity_id: light.lightpack
+    - service: homeassistant.turn_off
+      entity_id: group.basement_no_aux
+    - service: light.turn_on
+      entity_id: light.consoles
     
 - id: lightpack_cpu_on
   alias: Lightpack CPU On
@@ -1917,6 +2226,8 @@
     - platform: numeric_state
       entity_id: sensor.vacuum_area
       above: 35
+  condition:
+    - "{{ trigger.from_state.state != 'unavailable' }}"
   action:
     - service: input_boolean.turn_off
       entity_id: input_boolean.vacuum_daily
@@ -1950,6 +2261,14 @@
   trigger:
     - platform: time
       at: '16:00:00'
+  condition:
+    - condition: time
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
   action:
     - service: input_select.select_option
       entity_id: input_select.fanmode
@@ -2095,7 +2414,7 @@
     - service: counter.reset
       entity_id: counter.upstairs_vacuum
     - delay:
-        seconds: 5
+        seconds: 3
     - service: input_boolean.turn_off
       entity_id: input_boolean.vacuum_upstairs
 
@@ -2110,7 +2429,7 @@
     - service: counter.reset
       entity_id: counter.basement_vacuum
     - delay:
-        seconds: 5
+        seconds: 3
     - service: input_boolean.turn_off
       entity_id: input_boolean.vacuum_basement
 
@@ -2134,6 +2453,8 @@
     - platform: state
       entity_id: vacuum.xiaomi_vacuum_cleaner
       to: 'docked'
+  condition:
+    - "{{ trigger.from_state.state != 'unavailable' }}"
   action:
     - service: counter.reset
       entity_id: counter.robo_error
@@ -2247,6 +2568,7 @@
         - input_boolean.vacuum_stop_notify
         - input_boolean.vacuum_daily
       state: 'off'
+    - "{{ trigger.from_state.state != 'unavailable' }}"
   action:
     - service: notify.mobile_app_pixel_3a_xl
       data:
@@ -2293,7 +2615,7 @@
         message: "It's been a while since you vacuumed upstairs. Might want to use the robot vacuum upstairs!"
 
 ################################
-#E Master Switches Automations #
+#E Main Switches Automations #
 ################################
 
 - id: ib_first_floor
@@ -2480,6 +2802,7 @@
           - service: homeassistant.turn_off
             entity_id: group.basement_floor
           - service: media_player.turn_off
+          - service: media_player.turn_off
             entity_id: media_player.basement_stereo
           - service: script.turn_on
             entity_id: script.timed_cpu_off
@@ -2580,6 +2903,7 @@
 
 - id: alli_meds
   alias: Alli Meds
+  mode: single
   trigger:
     - platform: time
       at: '18:00:00'
@@ -2588,8 +2912,21 @@
   action:
     - service: input_boolean.turn_off
       entity_id: input_boolean.dog_med
-    - service: script.turn_on
-      entity_id: script.medications
+    # - service: script.turn_on
+      # entity_id: script.medications
+    - alias: Notifications until Flagged
+      repeat:
+        sequence:
+          - service: notify.residents
+            data:
+              title: Alli Needs Her Meds
+              message: "Make sure to give Alli her meds for the month!"
+          - delay:
+              days: 1
+        until:
+          - condition: state
+            entity_id: input_boolean.dog_med
+            state: 'off'
 
 - id: trash_alert
   alias: Trash Alert
@@ -2619,8 +2956,8 @@
             entity_id: input_boolean.window
             state: 'off'
         sequence:
-          - service: script.turn_on
-            entity_id: script.climate_reset
+          - service: ecobee.resume_program
+            entity_id: climate.main_floor
           - service: input_boolean.turn_off
             entity_id: input_boolean.window
       - conditions:
@@ -2645,8 +2982,8 @@
       entity_id: input_boolean.window
       state: 'on'
   action:
-    - service: script.turn_on
-      entity_id: script.climate_reset
+    - service: ecobee.resume_program
+      entity_id: climate.main_floor
     - service: input_boolean.turn_off
       entity_id: input_boolean.window
     - service: notify.residents
@@ -2703,25 +3040,6 @@
           - service: frontend.set_theme
             data:
               name: red_day
-
-# - id: delay_automations_on_restart
-  # alias: Delay automations on restart
-  # trigger:
-    # - platform: homeassistant
-      # event: start
-  # action:
-    # - service: automation.turn_off
-      # data:
-        # entity_id:
-          # - group.all_automations
-    # - delay:
-        # seconds: 5
-    # - service: automation.turn_on
-      # data:
-        # entity_id:
-          # - group.all_automations
-    # - service: input_boolean.turn_on
-      # entity_id: input_boolean.basement_light_off_loop
 
 - id: daily_snapshot_clean_up
   alias: Daily snapshot clean up
@@ -3030,30 +3348,30 @@
 #I Other Automations #
 ######################
 
-- id: fade_in_lights_for_sunset
-  alias: Fade in lights for sunset
-  initial_state: false
-  trigger:
-    - platform: sun
-      event: sunset
-      offset: -01:00:00
-  condition:
-    condition: or
-    conditions:
-    - condition: state
-      entity_id: group.residents
-      state: home
-    - condition: state
-      entity_id:
-        - input_boolean.vacation
-        - input_boolean.im_home
-        - input_boolean.visitor
-      state: 'on'
-  action:
-    - service: scene.turn_on
-      entity_id: scene.sunset
-    - service: script.turn_on
-      entity_id: script.sunset_switch
+# - id: fade_in_lights_for_sunset
+  # alias: Fade in lights for sunset
+  # initial_state: false
+  # trigger:
+    # - platform: sun
+      # event: sunset
+      # offset: -01:00:00
+  # condition:
+    # condition: or
+    # conditions:
+    # - condition: state
+      # entity_id: group.residents
+      # state: home
+    # - condition: state
+      # entity_id:
+        # - input_boolean.vacation
+        # - input_boolean.im_home
+        # - input_boolean.visitor
+      # state: 'on'
+  # action:
+    # - service: scene.turn_on
+      # entity_id: scene.sunset
+    # - service: script.turn_on
+      # entity_id: script.sunset_switch
 
 - id: turn_off_all_lights_at_night
   alias: Turn off all lights at night
@@ -3145,8 +3463,10 @@
       entity_id: input_boolean.party
       state: 'on'
   action:
-    - service: script.turn_on
-      entity_id: script.party_temp
+    - service: climate.set_preset_mode
+      data:
+        entity_id: climate.main_floor
+        preset_mode: 'Party'
     
 - id: update_alli
   alias: Update Alli
@@ -3161,6 +3481,8 @@
 - id: dog_meds_flag
   alias: Dog Meds Flag
   trigger:
+    - platform: tag
+      tag_id: ec3d71be-4b7a-4690-9f40-9c6583ecc3b6
     - entity_id: sensor.alli_button
       platform: numeric_state
       above: 0
@@ -3168,3 +3490,19 @@
   action:
     - service: input_boolean.turn_on
       entity_id: input_boolean.dog_med
+    - service: notify.residents
+      data:
+        title: Alli Has Been Given Her Meds
+        message: "Alli is so happy to be healthy!"
+
+- id: pi_hole_restart
+  alias: Pi Hole Restart
+  trigger:
+    - platform: state
+      entity_id: switch.pi_hole
+      to: 'off'
+      for:
+        hours: 1
+  action:
+    - service: switch.turn_on
+      entity_id: switch.pi_hole

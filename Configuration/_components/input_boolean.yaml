@@ -46,7 +46,7 @@
   livingroom_motion:
     name: Living Room Motion Control
 
-  ##### Master Switches #####
+  ##### Main Switches #####
 
   all_firstfloor:
     name: All First Floor
@@ -95,21 +95,21 @@
 
   ##### Vacuum #####
 
-  vacuum_zone_living1:
-    name: TV Area
-    icon: mdi:television
-  vacuum_zone_living2:
-    name: Back Living Room
-    icon: mdi:seat
-  vacuum_zone_dining:
-    name: Dining Room
-    icon: mdi:silverware
-  vacuum_zone_kitchen:
-    name: Kitchen
-    icon: mdi:microwave
-  vacuum_zone_hall:
-    name: Hallway
-    icon: mdi:door-closed
+  # vacuum_zone_living1:
+    # name: TV Area
+    # icon: mdi:television
+  # vacuum_zone_living2:
+    # name: Back Living Room
+    # icon: mdi:seat
+  # vacuum_zone_dining:
+    # name: Dining Room
+    # icon: mdi:silverware
+  # vacuum_zone_kitchen:
+    # name: Kitchen
+    # icon: mdi:microwave
+  # vacuum_zone_hall:
+    # name: Hallway
+    # icon: mdi:door-closed
   vacuum_daily:
     name: Daily Vacuum
     icon: mdi:robot-vacuum
@@ -134,8 +134,6 @@
 
   ##### Other #####
 
-  basement_light_off_loop:
-    name: Basement Light Off Loop
   front_door_snooze:
     name: Front Door Motion Snooze
     icon: mdi:alarm-snooze
@@ -148,8 +146,8 @@
   sexy_time:
     name: Sexy Time
     initial: off
-  cpu_lightpack:
-    name: CPU Lightpack
+  # cpu_lightpack:
+    # name: CPU Lightpack
   holiday:
     name: Holiday Group Dummy
   dog_med:
@@ -157,5 +155,5 @@
   goodnight:
     name: Goodnight
     initial: off
-  recently_restarted:
-    name: Recently Restarted
+  # recently_restarted:
+    # name: Recently Restarted
