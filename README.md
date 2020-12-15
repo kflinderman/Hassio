@@ -1,17 +1,20 @@
 # Home Assistant Configuration
-This is my primary [Home Assistant](https://home-assistant.io/) configuration, This instance is running 0.113.2 on a Raspberry Pi 3B+ with the [HassOS](https://github.com/home-assistant/hassos) operating system running HassIO.  It was installed [following this guide](https://www.home-assistant.io/hassio/installation/).
+This is my primary [Home Assistant](https://home-assistant.io/) configuration, This instance is running 2020.12.0 on a Virtual Machine within my UnRaid Server with the [HassOS](https://github.com/home-assistant/hassos) operating system running HassIO.  It was installed [following this guide](https://www.home-assistant.io/hassio/installation/).
 
-## Structure
+## Add-ons
+* [Alexa Smart Home Skill](https://www.home-assistant.io/integrations/alexa.smart_home/)
 * [AppDaemon](https://github.com/hassio-addons/addon-appdaemon3)
+* [Check Home Assistant configuration](https://github.com/home-assistant/addons/tree/master/check_config)
 * [Configurator](https://www.home-assistant.io/addons/configurator/)
 * [DuckDNS](https://www.home-assistant.io/addons/duckdns/)
-* [Alexa Smart Home Skill](https://www.home-assistant.io/integrations/alexa.smart_home/)
+* [Glances](hhttps://github.com/hassio-addons/addon-glances)
 * [Grafana](https://github.com/hassio-addons/addon-grafana)
 * [InfuxDB](https://github.com/hassio-addons/addon-influxdb)
 * [Let's Encrypt](https://www.home-assistant.io/addons/lets_encrypt/)
 * [MariaDB](https://www.home-assistant.io/addons/mariadb/)
 * [Mosquitto](https://www.home-assistant.io/docs/mqtt/)
 * [SSH & Web Terminal](https://github.com/hassio-addons/addon-ssh)
+* [Visual Studio Code](https://github.com/hassio-addons/addon-vscode)
 * [Z-Wave](https://www.home-assistant.io/docs/z-wave/) - [Z-Stick Gen 5](https://aeotec.com/z-wave-usb-stick/)
 
 ## Integrations, Devices, and Services
@@ -23,6 +26,7 @@ Here is a list of all of the devices and services that I use.  I will link to ea
 | [Amcrest](https://amcrest.com/) | [Link](https://www.home-assistant.io/integrations/amcrest/) | Yes | [IP3M-943B](https://amcrest.com/amcrest-3mp-bullet-wifi-video-security-ip-camera-pt-ip3m-943b.html) | |
 | [Amcrest](https://amcrest.com/) | [Link](https://www.home-assistant.io/integrations/amcrest/) | Yes | [IP2M-841B](https://amcrest.com/amcrest-1080p-wifi-video-security-ip-camera-pt.html) | |
 | [SkyBell](http://www.skybell.com/) | [Link](https://www.home-assistant.io/integrations/skybell/) | Yes | [SkyBell Trim Plus](http://www.skybell.com/product/skybell-video-doorbell-trim-plus/) | |
+| [Zoneminder](https://zoneminder.com/) | [Link](https://www.home-assistant.io/integrations/zoneminder) | No | | |
 
 ### Device Trackers
 | Component | Integration | Requires Purchase | Part | Comment |
@@ -30,7 +34,7 @@ Here is a list of all of the devices and services that I use.  I will link to ea
 | Home Assistant Bluetooth | [Link](https://www.home-assistant.io/integrations/bluetooth_tracker/) | No | | |
 | Home Assistant IOS | [Link](https://companion.home-assistant.io/) | No | [Home Assistant Companion](https://apps.apple.com/us/app/home-assistant-open-source-home-automation/id1099568401) | |
 | Home Assistant Android | [Link](https://companion.home-assistant.io/) | No | [Home Assistant](https://play.google.com/store/apps/details?id=io.homeassistant.companion.android) | |
-| [Netgear](https://www.netgear.com/default.aspx) | [Link](https://www.home-assistant.io/integrations/netgear/) | Yes | [Netgear R7000](https://www.netgear.com/home/products/networking/wifi-routers/R7000.aspx) | Currently not functioning correctly.  It does not update status correctly and is often unreliable | 
+| [ASUS](https://www.asus.com/) | [Link](https://www.home-assistant.io/integrations/asuswrt) | Yes | [RT-AX3000](https://www.asus.com/us/Networking/RT-AX3000/) |   | 
 
 ### HVAC
 | Component | Integration | Requires Purchase | Part | Comment |
@@ -47,10 +51,11 @@ Here is a list of all of the devices and services that I use.  I will link to ea
 ### Media Players
 | Component | Integration | Requires Purchase | Part | Comment |
 |-----------|-------------|-------------------|------|---------|
-| [Google Play Music Desktop Player](https://www.googleplaymusicdesktopplayer.com/) | [Link](https://www.home-assistant.io/integrations/gpmdp/) | No | | |
-| [LG Netcast](https://www.lg.com/us/tvs) | [Link](https://www.home-assistant.io/integrations/webostv/) | Yes | [LG 49in 4k WebOS](https://www.lg.com/us/tvs/lg-49SM8600PUA-4k-uhd-tv) | |
+| [Plex](https://www.plex.tv/) | [Link](https://www.home-assistant.io/integrations/plex) | No | | |
+| [LG webOS](https://www.lg.com/us/tvs) | [Link](https://www.home-assistant.io/integrations/webostv/) | Yes | [LG 49in 4k WebOS](https://www.lg.com/us/tvs/lg-49SM8600PUA-4k-uhd-tv) | |
 | [Yamaha AVR](https://usa.yamaha.com/products/audio_visual/av_receivers_amps/index.html) | [Link](https://www.home-assistant.io/integrations/yamaha/) | Yes | [RX-V671](https://usa.yamaha.com/products/audio_visual/av_receivers_amps/rx-v671/index.html) | |
 | [Yamaha AVR](https://usa.yamaha.com/products/audio_visual/av_receivers_amps/index.html) | [Link](https://www.home-assistant.io/integrations/yamaha/) | Yes | [RX-V683](https://usa.yamaha.com/products/audio_visual/av_receivers_amps/rx-v683_u/index.html) | |
+| [Playstation 4](https://www.playstation.com/en-us/ps4/) | [Link](https://www.home-assistant.io/integrations/ps4) | Yes | [PS4 Slim](https://www.playstation.com/en-ca/ps4/buy-ps4/) | |
 
 ### Notifications
 | Component | Integration | Requires Purchase | Part | Comment |
@@ -69,6 +74,7 @@ Here is a list of all of the devices and services that I use.  I will link to ea
 |-----------|-------------|-------------------|------|---------|
 | RPC Shutdown | [Link](https://www.home-assistant.io/addons/rpc_shutdown/) | No | | |
 | Wake on LAN | [Link](https://www.home-assistant.io/integrations/wake_on_lan/) | No | | |
+| [Pi-hole](https://pi-hole.net/) | [Link](https://www.home-assistant.io/integrations/pi_hole) | No | | |
 
 ### Sensors
 | Component | Integration | Requires Purchase | Part | Comment |
@@ -124,18 +130,18 @@ These are the remaining items that I have running on my system.  Most are pulled
   * Average Sensor
   * Breaking Changes
   * Favicon Changer
+  * Illuminance
   * Lightpack - Requires Purchase
-  * Logbook Cache
   * Momentary Switch Component
   * Thingy:52 Sensor - Requires Purchase
   * WeatherAlerts
+  * Xiaomi Cloud Map Extractor
 * Plugins
   * Card-Mod
   * Card-Tools
-  * Custom Header
-  * Custom Sidebar
   * Decluttering Card
   * Fold-Entity-Row
+  * Lovelace Swipe Navigation
   * Lovelace Xiaomi Vacuum Map Card
   * Mini Media Player
   * Restriction Card
@@ -146,6 +152,15 @@ These are the remaining items that I have running on my system.  Most are pulled
 * Themes
   * Red Day Theme
   * Red Night Theme
+
+# Unraid Server
+
+* M/B: ASRock B450M Pro4 Version - s/n: M80-D5009603104
+* BIOS: American Megatrends Inc. Version P3.90. Dated: 12/09/2019
+* CPU: AMD Ryzen 3 3200G with Radeon Vega Graphics @ 3600 MHz
+* Memory: 32 GiB DDR4 (max. installable capacity 128 GiB)
+* Kernel: Linux 5.9.13-Unraid x86_64
+* UnRaid Version: 6.9.0-rc1
 
 # To Do List
 
